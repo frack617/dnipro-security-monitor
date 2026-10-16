@@ -24,7 +24,7 @@ KEEP_HOURS = int(os.getenv("KEEP_HOURS", "72"))
 MAX_PAGES = int(os.getenv("MAX_PAGES", "12"))
 KYIV = ZoneInfo("Europe/Kyiv")
 
-LOCAL_CHANNELS = {"adm_dp", "dniprocityofficial", "gunpvdp", "cek_info"}
+LOCAL_CHANNELS = {"adm_dp", "dniprocityofficial", "gunpvdp", "cek_info", "borys_filatovv", "dnipropetrovskaoda"}
 REGION_TERMS = (
     "дніпр", "кривий ріг", "нікопол", "павлоград", "кам’янськ", "кам'янськ",
     "синельник", "марган", "покров", "новомосков", "самар", "першотравен",
