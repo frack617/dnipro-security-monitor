@@ -147,6 +147,11 @@ def collect_channel(channel, session, cutoff):
 def read_existing():
     if not POSTS_FILE.exists():
         return []
+    try:
+        posts = json.loads(POSTS_FILE.read_text(encoding="utf-8"))
+        return posts if isinstance(posts, list) else []
+    except (OSError, json.JSONDecodeError):
+        return []
 
 
 def read_alert_state():
