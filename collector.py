@@ -39,6 +39,30 @@ ALERT_TERMS = (
     "диверсі", "коригувальник",
 )
 
+ATTACK_TERMS = (
+    "обстріл", "атакував", "атакувала", "атакували", "ворожа атака",
+    "ракетний удар", "ракетна атака", "ударний безпілотник", "бпла",
+    "шахед", "влучання", "ворог завдав удару",
+)
+ROAD_TERMS = (
+    "перекрито рух", "перекриття руху", "обмежено рух", "обмеження руху",
+    "зміни у русі", "тимчасово не курсуват", "змінено маршрут",
+)
+BLAST_WORK_TERMS = (
+    "планові вибух", "вибухові роботи", "контрольований вибух",
+    "буде чутно вибух", "можна почути вибух",
+)
+SERVICE_TERMS = (
+    "аварійне відключення", "екстрене відключення", "відсутнє водопостачання",
+    "припинено водопостачання", "теплопостачання", "знеструмлен",
+    "масштабна пожежа", "аварія на", "затримка руху", "не курсуватиме",
+)
+WEAPON_TERMS = ("збро", "гранат", "вибухівк", "боєприпас")
+ENFORCEMENT_TERMS = ("незакон", "вилуч", "затрим", "підозр", "обшук", "збут")
+MINING_TERMS = ("замінуван", "псевдомінув", "повідомлення про мінування")
+UXO_TERMS = ("вибухонебезпечн", "нерозірван", "боєприпас")
+DISCOVERY_TERMS = ("виявил", "знайшл", "знешкодил", "знищил")
+
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Linux; Android 16) AppleWebKit/537.36 "
@@ -232,11 +256,6 @@ def process_alerts(new_posts, checked_at):
     ALERT_STATE_FILE.write_text(
         json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    try:
-        data = json.loads(POSTS_FILE.read_text(encoding="utf-8"))
-        return data if isinstance(data, list) else []
-    except (OSError, json.JSONDecodeError):
-        return []
 
 
 def completed_report_window(checked_at):
@@ -249,6 +268,143 @@ def completed_report_window(checked_at):
         end_local,
         start_local.astimezone(timezone.utc),
         end_local.astimezone(timezone.utc),
+    )
+
+
+def is_regional(post):
+    channel = post.get("channel", "").lower()
+    text = post.get("text", "").lower()
+    return channel in LOCAL_CHANNELS or any(term in text for term in REGION_TERMS)
+
+
+def contains_any(text, terms):
+    return any(term in text for term in terms)
+
+
+def classify_post(post):
+    text = post.get("text", "").lower()
+    if contains_any(text, MINING_TERMS):
+        return "2.3"
+    if contains_any(text, UXO_TERMS) and contains_any(text, DISCOVERY_TERMS):
+        return "2.4"
+    if contains_any(text, WEAPON_TERMS) and contains_any(text, ENFORCEMENT_TERMS):
+        return "2.2"
+    if contains_any(text, ATTACK_TERMS):
+        return "2.1"
+    if contains_any(text, BLAST_WORK_TERMS):
+        return "1.3"
+    if contains_any(text, ROAD_TERMS):
+        return "1.2"
+    if contains_any(text, SERVICE_TERMS):
+        return "1.4"
+    return None
+
+
+def compact_text(value, limit=420):
+    text = re.sub(r"\s+", " ", value or "").strip()
+    if len(text) <= limit:
+        return text
+    shortened = text[:limit].rsplit(" ", 1)[0].rstrip(" ,;:")
+    return shortened + "…"
+
+
+def fact_line(post):
+    published = parse_datetime(post["published_at"]).astimezone(KYIV)
+    return (
+        f"• {published.strftime('%d.%m %H:%M')} · @{post['channel']}: "
+        f"{compact_text(post.get('text'))}\n{post['url']}"
+    )
+
+
+def section_text(posts):
+    if not posts:
+        return "У перевірених джерелах повідомлень за звітний період не виявлено."
+    return "\n".join(fact_line(post) for post in posts[:6])
+
+
+def build_morning_report(posts, statuses, checked_at):
+    start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
+    report_posts = [
+        post for post in posts
+        if start_utc <= parse_datetime(post.get("published_at")) < end_utc
+        and is_regional(post)
+    ]
+    groups = {key: [] for key in ("1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")}
+    for post in sorted(report_posts, key=lambda item: item["published_at"]):
+        category = classify_post(post)
+        if category:
+            groups[category].append(post)
+
+    failed = [f"@{channel}" for channel, state in statuses.items() if not state.get("ok")]
+    if groups["2.1"]:
+        general = (
+            f"У перевірених офіційних Telegram-джерелах виявлено "
+            f"{len(groups['2.1'])} повідомлень про атаки або їхні наслідки "
+            "у Дніпропетровській області. Деталі наведено у пункті 2.1."
+        )
+    else:
+        general = "У перевірених джерелах повідомлень про підтверджені зміни безпекової ситуації за звітний період не виявлено."
+    if failed:
+        general += " Обмеження перевірки: не отримано актуальні дані з " + ", ".join(failed) + "."
+
+    return (
+        "Доброго дня.\n\n"
+        f"Звіт по Дніпропетровській області станом на 08:00 {end_local.strftime('%d.%m.%Y')}.\n"
+        f"Звітний період: з 08:00 {start_local.strftime('%d.%m.%Y')} до 08:00 "
+        f"{end_local.strftime('%d.%m.%Y')}, за Києвом.\n"
+        f"Фактичний час автоматичної перевірки: {checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y')}.\n\n"
+        "1. Загальна ситуація в області:\n"
+        f"1.1. {general}\n\n"
+        f"1.2. {section_text(groups['1.2'])}\n\n"
+        f"1.3. {section_text(groups['1.3'])}\n\n"
+        f"1.4. {section_text(groups['1.4'])}\n\n"
+        "2. Події:\n"
+        f"2.1. {section_text(groups['2.1'])}\n\n"
+        f"2.2. {section_text(groups['2.2'])}\n\n"
+        f"2.3. {section_text(groups['2.3'])}\n\n"
+        f"2.4. {section_text(groups['2.4'])}\n\n"
+        "Примітка: це автоматичний огляд офіційних Telegram-джерел станом на вказаний час. "
+        "Для негайних дій слід стежити за офіційними сповіщеннями про повітряну тривогу."
+    )
+
+
+def send_long_bot_message(text, limit=3900):
+    paragraphs = text.split("\n\n")
+    parts = []
+    current = ""
+    for paragraph in paragraphs:
+        candidate = paragraph if not current else current + "\n\n" + paragraph
+        if len(candidate) <= limit:
+            current = candidate
+            continue
+        if current:
+            parts.append(current)
+        while len(paragraph) > limit:
+            cut = paragraph.rfind("\n", 0, limit)
+            if cut < limit // 2:
+                cut = limit
+            parts.append(paragraph[:cut])
+            paragraph = paragraph[cut:].lstrip()
+        current = paragraph
+    if current:
+        parts.append(current)
+    for index, part in enumerate(parts, start=1):
+        prefix = f"Частина {index}/{len(parts)}\n\n" if len(parts) > 1 else ""
+        send_bot_message(prefix + part)
+
+
+def process_morning_report(posts, statuses, checked_at):
+    local_now = checked_at.astimezone(KYIV)
+    if local_now.hour != 8:
+        return
+    state = read_alert_state()
+    report_date = completed_report_window(checked_at)[1].date().isoformat()
+    if state.get("last_daily_report") == report_date:
+        return
+    send_long_bot_message(build_morning_report(posts, statuses, checked_at))
+    state["last_daily_report"] = report_date
+    ALERT_STATE_FILE.write_text(
+        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
 
@@ -409,6 +565,7 @@ def main():
     posts.sort(key=lambda item: (item["published_at"], item["channel"], item["post_id"]))
     write_outputs(posts, statuses, checked_at)
     process_alerts([post for post in posts if post["key"] not in existing_keys], checked_at)
+    process_morning_report(posts, statuses, checked_at)
 
 
 if __name__ == "__main__":
