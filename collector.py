@@ -24,7 +24,10 @@ KEEP_HOURS = int(os.getenv("KEEP_HOURS", "72"))
 MAX_PAGES = int(os.getenv("MAX_PAGES", "12"))
 KYIV = ZoneInfo("Europe/Kyiv")
 
-LOCAL_CHANNELS = {"adm_dp", "dniprocityofficial", "gunpvdp", "cek_info", "borys_filatovv", "dnipropetrovskaoda"}
+LOCAL_CHANNELS = {
+    "adm_dp", "dniprocityofficial", "gunpvdp", "cek_info",
+    "borys_filatovv", "dnipropetrovskaoda",
+}
 REGION_TERMS = (
     "дніпр", "кривий ріг", "нікопол", "павлоград", "кам’янськ", "кам'янськ",
     "синельник", "марган", "покров", "новомосков", "самар", "першотравен",
@@ -322,6 +325,51 @@ def section_text(posts):
     return "\n".join(fact_line(post) for post in posts[:6])
 
 
+def practical_note(section, posts):
+    if section == "1.1":
+        return (
+            "Рекомендація: стежити за офіційними сигналами повітряної тривоги, "
+            "тримати зарядженими телефон і павербанк та заздалегідь знати найближче укриття."
+        )
+    if not posts:
+        return ""
+    notes = {
+        "1.2": (
+            "Практично: під час пересування враховувати лише підтверджені вище "
+            "обмеження та передбачити додатковий час у дорозі."
+        ),
+        "1.3": (
+            "Практично: не наближатися до місця оголошених робіт і виконувати "
+            "вказівки відповідальних служб."
+        ),
+        "1.4": (
+            "Практично: тримати зарядженими засоби зв’язку й павербанки; за "
+            "підтверджених перебоїв підготувати мінімальний запас води."
+        ),
+        "2.1": (
+            "Практично: реагувати на сигнали тривоги, не наближатися до місць "
+            "ударів та не публікувати роботу ППО або місця влучань."
+        ),
+        "2.2": (
+            "Практично: не торкатися підозрілої зброї чи вибухівки та повідомити поліцію за номером 102."
+        ),
+        "2.3": (
+            "Практично: виконувати вказівки адміністрації та поліції; не намагатися "
+            "самостійно перевіряти підозрілий об’єкт."
+        ),
+        "2.4": (
+            "Практично: не торкатися знахідки, відійти на безпечну відстань і повідомити 101 або 102."
+        ),
+    }
+    return notes.get(section, "")
+
+
+def section_with_note(section, posts):
+    text = section_text(posts)
+    note = practical_note(section, posts)
+    return text + ("\n" + note if note else "")
+
+
 def build_morning_report(posts, statuses, checked_at):
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
     report_posts = [
@@ -338,9 +386,10 @@ def build_morning_report(posts, statuses, checked_at):
     failed = [f"@{channel}" for channel, state in statuses.items() if not state.get("ok")]
     if groups["2.1"]:
         general = (
-            f"У перевірених офіційних Telegram-джерелах виявлено "
-            f"{len(groups['2.1'])} повідомлень про атаки або їхні наслідки "
-            "у Дніпропетровській області. Деталі наведено у пункті 2.1."
+            "У перевірених офіційних Telegram-джерелах є підтверджені повідомлення "
+            "про атаки або їхні наслідки у Дніпропетровській області. Основний "
+            "зафіксований ризик за звітний період пов’язаний із повітряними ударами "
+            "та їхніми наслідками. Деталі наведено у пункті 2.1."
         )
     else:
         general = "У перевірених джерелах повідомлень про підтверджені зміни безпекової ситуації за звітний період не виявлено."
@@ -354,15 +403,15 @@ def build_morning_report(posts, statuses, checked_at):
         f"{end_local.strftime('%d.%m.%Y')}, за Києвом.\n"
         f"Фактичний час автоматичної перевірки: {checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y')}.\n\n"
         "1. Загальна ситуація в області:\n"
-        f"1.1. {general}\n\n"
-        f"1.2. {section_text(groups['1.2'])}\n\n"
-        f"1.3. {section_text(groups['1.3'])}\n\n"
-        f"1.4. {section_text(groups['1.4'])}\n\n"
+        f"1.1. {general}\n{practical_note('1.1', report_posts)}\n\n"
+        f"1.2. {section_with_note('1.2', groups['1.2'])}\n\n"
+        f"1.3. {section_with_note('1.3', groups['1.3'])}\n\n"
+        f"1.4. {section_with_note('1.4', groups['1.4'])}\n\n"
         "2. Події:\n"
-        f"2.1. {section_text(groups['2.1'])}\n\n"
-        f"2.2. {section_text(groups['2.2'])}\n\n"
-        f"2.3. {section_text(groups['2.3'])}\n\n"
-        f"2.4. {section_text(groups['2.4'])}\n\n"
+        f"2.1. {section_with_note('2.1', groups['2.1'])}\n\n"
+        f"2.2. {section_with_note('2.2', groups['2.2'])}\n\n"
+        f"2.3. {section_with_note('2.3', groups['2.3'])}\n\n"
+        f"2.4. {section_with_note('2.4', groups['2.4'])}\n\n"
         "Примітка: це автоматичний огляд офіційних Telegram-джерел станом на вказаний час. "
         "Для негайних дій слід стежити за офіційними сповіщеннями про повітряну тривогу."
     )
