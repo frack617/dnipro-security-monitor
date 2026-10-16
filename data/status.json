@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-16T17:01:47.036173+00:00",
+  "checked_at": "2026-10-16T17:12:03.095946+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-15T08:00:00+03:00",
@@ -9,9 +9,9 @@
   "channels": {
     "adm_dp": {
       "ok": true,
-      "posts_found": 7,
+      "posts_found": 8,
       "oldest_collected_at": "2026-10-13T17:35:05+00:00",
-      "newest_collected_at": "2026-10-16T16:39:26+00:00"
+      "newest_collected_at": "2026-10-16T17:01:34+00:00"
     },
     "dsns_telegram": {
       "ok": true,
@@ -42,6 +42,18 @@
       "posts_found": 20,
       "oldest_collected_at": "2026-10-09T15:07:06+00:00",
       "newest_collected_at": "2026-10-15T16:50:38+00:00"
+    },
+    "borys_filatovv": {
+      "ok": true,
+      "posts_found": 4,
+      "oldest_collected_at": "2026-10-13T05:55:15+00:00",
+      "newest_collected_at": "2026-10-16T16:28:03+00:00"
+    },
+    "dnipropetrovskaODA": {
+      "ok": true,
+      "posts_found": 32,
+      "oldest_collected_at": "2026-10-13T04:30:38+00:00",
+      "newest_collected_at": "2026-10-16T16:39:19+00:00"
     }
   }
 }
