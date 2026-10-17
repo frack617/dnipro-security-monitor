@@ -1,6 +1,11 @@
 import unittest
 
-from ai_report import normalize_completed_morning_forecast, sanitize_fallback, validate_report
+from ai_report import (
+    enforce_report_frame,
+    normalize_completed_morning_forecast,
+    sanitize_fallback,
+    validate_report,
+)
 
 
 VALID_REPORT = """Доброго дня.
@@ -45,6 +50,14 @@ class ReportValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_report(report, "17.10.2026")
 
+    def test_rejects_city_claimed_to_be_suburb(self):
+        report = VALID_REPORT.replace(
+            "1.1. Підтверджені повідомлення викладено нижче.",
+            "1.1. У Дніпрі під ударом було передмістя.",
+        )
+        with self.assertRaises(ValueError):
+            validate_report(report, "17.10.2026")
+
     def test_rejects_past_morning_forecast_in_future_tense(self):
         report = VALID_REPORT.replace(
             "1.4. У перевірених джерелах повідомлень за звітний період не виявлено.",
@@ -60,6 +73,22 @@ class ReportValidationTests(unittest.TestCase):
         )
         normalized = normalize_completed_morning_forecast(report, "17.10.2026")
         self.assertIn("17 жовтня прогнозувався туман", normalized)
+        self.assertEqual(validate_report(normalized, "17.10.2026"), normalized.strip())
+
+    def test_enforces_fixed_report_frame(self):
+        altered = VALID_REPORT.replace(
+            "Звітний період: з 08:00 16.10.2026 до 08:00 17.10.2026, за Києвом.\n"
+            "Фактичний час автоматичної перевірки: 08:05 17.10.2026.\n\n",
+            "Звітний період без часового поясу.\n\n",
+        )
+        normalized = enforce_report_frame(
+            altered,
+            "08:00 16.10.2026",
+            "08:00 17.10.2026",
+            "08:05 17.10.2026",
+        )
+        self.assertIn(", за Києвом.", normalized)
+        self.assertIn("Фактичний час автоматичної перевірки: 08:05", normalized)
         self.assertEqual(validate_report(normalized, "17.10.2026"), normalized.strip())
 
     def test_fallback_hides_channel_and_link(self):

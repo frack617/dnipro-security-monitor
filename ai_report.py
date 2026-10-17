@@ -180,6 +180,20 @@ def normalize_completed_morning_forecast(text, end_date_label):
     return text[:section_match.start(1)] + normalized_section + text[section_match.end(1):]
 
 
+def enforce_report_frame(text, start_label, end_label, checked_label):
+    body_match = re.search(r"(?m)^1\. Загальна ситуація в області:\s*$", text or "")
+    if not body_match:
+        return text
+    body = text[body_match.start():].lstrip()
+    return (
+        "Доброго дня.\n\n"
+        f"Звіт по Дніпропетровській області станом на {end_label}.\n"
+        f"Звітний період: з {start_label} до {end_label}, за Києвом.\n"
+        f"Фактичний час автоматичної перевірки: {checked_label}.\n\n"
+        + body
+    )
+
+
 def validate_report(text, end_date_label):
     problems = []
     stripped = (text or "").strip()
@@ -192,6 +206,10 @@ def validate_report(text, end_date_label):
         problems.append("source reference")
     if end_date_label not in stripped:
         problems.append("report date")
+    if ", за Києвом." not in stripped:
+        problems.append("timezone missing")
+    if "Фактичний час автоматичної перевірки:" not in stripped:
+        problems.append("checked time missing")
     word_count = len(re.findall(r"\b[\w’'-]+\b", stripped, re.UNICODE))
     if word_count < 90 or word_count > 520:
         problems.append(f"word count {word_count}")
@@ -211,7 +229,11 @@ def validate_report(text, end_date_label):
     section_22 = re.search(r"(?ms)^2\.2\.\s+(.*?)(?=^2\.3\.)", stripped)
     if section_22 and re.search(r"вбивств|наркот|декларуван", section_22.group(1), re.IGNORECASE):
         problems.append("unrelated crime in section 2.2")
-    if re.search(r"\b(?:у|в)\s+Дніпрі\s+та\s+(?:його\s+)?передміст", stripped, re.IGNORECASE):
+    if re.search(
+        r"\b(?:у|в)\s+Дніпрі\b[^.!?]{0,120}\bпередміст",
+        stripped,
+        re.IGNORECASE,
+    ):
         problems.append("city and suburb conflated")
     section_14 = re.search(r"(?ms)^1\.4\.\s+(.*?)(?=^2\.\s+Події:)", stripped)
     end_date_words = _date_words(end_date_label)
@@ -272,6 +294,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             )
         text = _request_report(endpoint, api_key, prompt + retry_note)
         try:
+            text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
             draft = validate_report(text, end_date_label)
             break
@@ -291,6 +314,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             )
         try:
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note)
+            reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
             return validate_report(reviewed, end_date_label)
         except (RuntimeError, ValueError) as error:
