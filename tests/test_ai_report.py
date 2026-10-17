@@ -37,6 +37,22 @@ class ReportValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_report(VALID_REPORT.replace("2.4. ", ""), "17.10.2026")
 
+    def test_rejects_city_and_suburb_conflation(self):
+        report = VALID_REPORT.replace(
+            "1.1. Підтверджені повідомлення викладено нижче.",
+            "1.1. У Дніпрі та передмісті зафіксовано наслідки атаки.",
+        )
+        with self.assertRaises(ValueError):
+            validate_report(report, "17.10.2026")
+
+    def test_rejects_past_morning_forecast_in_future_tense(self):
+        report = VALID_REPORT.replace(
+            "1.4. У перевірених джерелах повідомлень за звітний період не виявлено.",
+            "1.4. Вночі та зранку 17 жовтня прогнозується туман.",
+        )
+        with self.assertRaises(ValueError):
+            validate_report(report, "17.10.2026")
+
     def test_fallback_hides_channel_and_link(self):
         source = "• 16.10 12:00 · @example: Факт\nhttps://t.me/example/1"
         result = sanitize_fallback(source)

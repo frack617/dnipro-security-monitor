@@ -1,12 +1,17 @@
 import json
 import os
 import re
+from datetime import datetime
 
 import requests
 
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
 REQUIRED_SECTIONS = ("1.1.", "1.2.", "1.3.", "1.4.", "2.1.", "2.2.", "2.3.", "2.4.")
+UA_MONTH_NAMES = (
+    "січня", "лютого", "березня", "квітня", "травня", "червня",
+    "липня", "серпня", "вересня", "жовтня", "листопада", "грудня",
+)
 
 
 def _source_text(posts):
@@ -61,6 +66,14 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 - для кожної події називай місто, громаду або район, якщо це є у джерелі;
 - не вигадуй кількість тривог, постраждалих, пошкоджень чи збитих цілей;
 - попередні та остаточні цифри не підсумовуй; подавай останнє уточнення;
+- перед написанням згрупуй дописи про ту саму подію за місцем, приблизним часом і
+  наслідками; початкове повідомлення та пізніше уточнення подавай одним епізодом,
+  використовуючи найновіші підтверджені дані та не повторюючи ранню версію окремо;
+- не об’єднуй місто, район, громаду або передмістя в одну локацію. Якщо наслідки
+  стосуються різних територій, опиши їх окремо; не замінюй назву міста словом «райцентр»;
+- звіт описує вже завершене вікно. Події й прогнози, строк яких закінчився до 08:00,
+  подавай у минулому часі. Майбутній час використовуй лише для обмежень або ризиків,
+  які діятимуть після завершення звітного вікна;
 - візити посадовців згадуй лише за практичного або безпекового значення, одним реченням,
   без промов, цитат і світських подробиць;
 - рекомендації мають бути короткими та практичними, без зайвої аналітики;
@@ -100,6 +113,43 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 """
 
 
+def build_review_prompt(report, posts, start_label, end_label):
+    return f"""Ти виконуєш фінальний контроль службової безпекової довідки.
+
+Перевір чернетку за першоджерелами і поверни повний виправлений текст довідки без
+коментарів про перевірку. Не додавай фактів. Збережи рівно пункти 1.1–1.4 і 2.1–2.4,
+початок, дати та завершальне речення.
+
+Контрольні правила:
+- звітне вікно: {start_label} — {end_label}; старий контекст не включай;
+- зведи початкові та пізніші повідомлення про одну подію в один епізод і використай
+  останнє підтверджене уточнення; не дублюй загиблих, поранених або пошкодження;
+- не змішуй місто Дніпро, Дніпровський район, окремі громади й передмістя;
+- називай конкретний населений пункт або громаду замість слів «райцентр» чи «передмістя»,
+  якщо точна назва є у джерелі; якщо її немає, не вигадуй;
+- завершені до 08:00 події та погодні явища описуй у минулому часі; майбутній час
+  залишай лише для того, що діятиме після {end_label};
+- не перенось факт до іншого пункту: використовуй «Дозволений пункт довідки»;
+- не додавай URL, назви каналів, цитати, час публікації або нові розділи;
+- пункт 1.1 — лише короткий огляд без повторення детального пункту 2.1;
+- загальний обсяг — не більше 500 слів.
+
+ЧЕРНЕТКА:
+{report}
+
+ПЕРШОДЖЕРЕЛА ДЛЯ ЗВІРКИ:
+{_source_text(posts)}
+"""
+
+
+def _date_words(date_label):
+    try:
+        value = datetime.strptime(date_label, "%d.%m.%Y")
+    except ValueError:
+        return ""
+    return f"{value.day} {UA_MONTH_NAMES[value.month - 1]}"
+
+
 def validate_report(text, end_date_label):
     problems = []
     stripped = (text or "").strip()
@@ -131,6 +181,14 @@ def validate_report(text, end_date_label):
     section_22 = re.search(r"(?ms)^2\.2\.\s+(.*?)(?=^2\.3\.)", stripped)
     if section_22 and re.search(r"вбивств|наркот|декларуван", section_22.group(1), re.IGNORECASE):
         problems.append("unrelated crime in section 2.2")
+    if re.search(r"\b(?:у|в)\s+Дніпрі\s+та\s+(?:його\s+)?передміст", stripped, re.IGNORECASE):
+        problems.append("city and suburb conflated")
+    section_14 = re.search(r"(?ms)^1\.4\.\s+(.*?)(?=^2\.\s+Події:)", stripped)
+    end_date_words = _date_words(end_date_label)
+    if section_14 and end_date_words:
+        morning_forecast = rf"(?:вночі|уночі|зранку|вранці)[^.]*{re.escape(end_date_words)}[^.]*\b(?:прогнозується|очікується|буде)\b"
+        if re.search(morning_forecast, section_14.group(1), re.IGNORECASE):
+            problems.append("completed morning forecast uses future tense")
     seen_sentences = set()
     for sentence in re.split(r"(?<=[.!?])\s+", stripped):
         normalized = re.sub(r"\W+", " ", sentence.lower()).strip()
@@ -174,6 +232,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
     endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     prompt = build_prompt(posts, start_label, end_label, checked_label, failed_sources)
     last_error = None
+    draft = None
     for attempt in range(2):
         retry_note = ""
         if last_error is not None:
@@ -183,10 +242,28 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             )
         text = _request_report(endpoint, api_key, prompt + retry_note)
         try:
-            return validate_report(text, end_date_label)
+            draft = validate_report(text, end_date_label)
+            break
         except ValueError as error:
             last_error = error
-    raise RuntimeError(f"Gemini report failed validation: {last_error}")
+    if draft is None:
+        raise RuntimeError(f"Gemini report failed validation: {last_error}")
+
+    review_prompt = build_review_prompt(draft, posts, start_label, end_label)
+    review_error = None
+    for attempt in range(2):
+        retry_note = ""
+        if review_error is not None:
+            retry_note = (
+                "\n\nПОПЕРЕДНЯ РЕДАКЦІЯ НЕ ПРОЙШЛА АВТОМАТИЧНИЙ КОНТРОЛЬ. "
+                f"Причина: {review_error}. Поверни повністю виправлену довідку."
+            )
+        try:
+            reviewed = _request_report(endpoint, api_key, review_prompt + retry_note)
+            return validate_report(reviewed, end_date_label)
+        except (RuntimeError, ValueError) as error:
+            review_error = error
+    raise RuntimeError(f"Gemini review failed validation: {review_error}")
 
 
 def sanitize_fallback(report):
