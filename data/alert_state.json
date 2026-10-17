@@ -1,5 +1,7 @@
 {
   "initialized": true,
-  "alerted_keys": [],
+  "alerted_keys": [
+    "dsns_telegram/77997"
+  ],
   "last_daily_report": "2026-10-17"
 }
