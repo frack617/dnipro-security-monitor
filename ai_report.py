@@ -150,6 +150,36 @@ def _date_words(date_label):
     return f"{value.day} {UA_MONTH_NAMES[value.month - 1]}"
 
 
+def normalize_completed_morning_forecast(text, end_date_label):
+    end_date_words = _date_words(end_date_label)
+    if not end_date_words:
+        return text
+    section_match = re.search(r"(?ms)^1\.4\.\s+(.*?)(?=^2\.\s+Події:)", text or "")
+    if not section_match:
+        return text
+    section_text = section_match.group(1)
+    sentence_pattern = rf"(?:вночі|уночі|зранку|вранці)[^.]*{re.escape(end_date_words)}[^.]*\."
+
+    def replace_tense(match):
+        sentence = match.group(0)
+        replacements = {
+            "прогнозується": "прогнозувався",
+            "очікується": "очікувався",
+            "передбачається": "передбачався",
+        }
+        for present, past in replacements.items():
+            sentence = re.sub(rf"\b{present}\b", past, sentence, flags=re.IGNORECASE)
+        return sentence
+
+    normalized_section = re.sub(
+        sentence_pattern,
+        replace_tense,
+        section_text,
+        flags=re.IGNORECASE,
+    )
+    return text[:section_match.start(1)] + normalized_section + text[section_match.end(1):]
+
+
 def validate_report(text, end_date_label):
     problems = []
     stripped = (text or "").strip()
@@ -242,6 +272,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             )
         text = _request_report(endpoint, api_key, prompt + retry_note)
         try:
+            text = normalize_completed_morning_forecast(text, end_date_label)
             draft = validate_report(text, end_date_label)
             break
         except ValueError as error:
@@ -260,6 +291,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             )
         try:
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note)
+            reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
             return validate_report(reviewed, end_date_label)
         except (RuntimeError, ValueError) as error:
             review_error = error

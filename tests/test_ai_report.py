@@ -1,6 +1,6 @@
 import unittest
 
-from ai_report import sanitize_fallback, validate_report
+from ai_report import normalize_completed_morning_forecast, sanitize_fallback, validate_report
 
 
 VALID_REPORT = """Доброго дня.
@@ -52,6 +52,15 @@ class ReportValidationTests(unittest.TestCase):
         )
         with self.assertRaises(ValueError):
             validate_report(report, "17.10.2026")
+
+    def test_normalizes_completed_morning_forecast_tense(self):
+        report = VALID_REPORT.replace(
+            "1.4. У перевірених джерелах повідомлень за звітний період не виявлено.",
+            "1.4. Вночі та зранку 17 жовтня прогнозується туман.",
+        )
+        normalized = normalize_completed_morning_forecast(report, "17.10.2026")
+        self.assertIn("17 жовтня прогнозувався туман", normalized)
+        self.assertEqual(validate_report(normalized, "17.10.2026"), normalized.strip())
 
     def test_fallback_hides_channel_and_link(self):
         source = "• 16.10 12:00 · @example: Факт\nhttps://t.me/example/1"
