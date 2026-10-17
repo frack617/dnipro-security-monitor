@@ -58,6 +58,14 @@ class ReportValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_report(report, "17.10.2026")
 
+    def test_rejects_vague_attack_placeholder(self):
+        report = VALID_REPORT.replace(
+            "2.1. У перевірених джерелах повідомлень за звітний період не виявлено.",
+            "2.1. У Дніпрі також були атаковані об'єкти.",
+        )
+        with self.assertRaises(ValueError):
+            validate_report(report, "17.10.2026")
+
     def test_rejects_past_morning_forecast_in_future_tense(self):
         report = VALID_REPORT.replace(
             "1.4. У перевірених джерелах повідомлень за звітний період не виявлено.",
