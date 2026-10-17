@@ -75,6 +75,11 @@ UXO_TERMS = (
     "бойову частину", "бойової частини", "небезпечного предмета",
 )
 DISCOVERY_TERMS = ("виявил", "знайшл", "знешкодил", "знищил", "вилучил")
+NON_EVENT_CONTEXT_TERMS = (
+    "триває відновлення", "відбудов", "відновлення житлов",
+    "з візитом прибу", "робочий візит", "прибула делегація",
+    "обговорили співпрацю", "війна не поставила на паузу",
+)
 UA_MONTHS = {
     "січня": 1,
     "лютого": 2,
@@ -346,6 +351,8 @@ def is_historical_context(post, report_start_local):
 
 def classify_post(post):
     text = post.get("text", "").lower()
+    if contains_any(text, NON_EVENT_CONTEXT_TERMS):
+        return None
     if contains_any(text, MINING_TERMS):
         return "2.3"
     if contains_any(text, UXO_TERMS) and contains_any(text, DISCOVERY_TERMS):
@@ -374,11 +381,7 @@ def compact_text(value, limit=420):
 
 
 def fact_line(post):
-    published = parse_datetime(post["published_at"]).astimezone(KYIV)
-    return (
-        f"• {published.strftime('%d.%m %H:%M')} · @{post['channel']}: "
-        f"{compact_text(post.get('text'))}\n{post['url']}"
-    )
+    return f"• {compact_text(post.get('text'))}"
 
 
 def section_text(posts):
@@ -438,6 +441,7 @@ def build_morning_report(posts, statuses, checked_at):
         post for post in posts
         if start_utc <= parse_datetime(post.get("published_at")) < end_utc
         and is_regional(post)
+        and not is_historical_context(post, start_local)
     ])
     groups = {key: [] for key in ("1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")}
     for post in sorted(report_posts, key=lambda item: item["published_at"]):
@@ -456,7 +460,7 @@ def build_morning_report(posts, statuses, checked_at):
     else:
         general = "У перевірених джерелах повідомлень про підтверджені зміни безпекової ситуації за звітний період не виявлено."
     if failed:
-        general += " Обмеження перевірки: не отримано актуальні дані з " + ", ".join(failed) + "."
+        general += f" Обмеження перевірки: не отримано актуальні дані з {len(failed)} джерел."
 
     return (
         "Доброго дня.\n\n"
@@ -556,7 +560,7 @@ def process_morning_report(posts, statuses, checked_at):
     except Exception as error:
         from ai_report import sanitize_fallback
 
-        print(f"Author report unavailable: {type(error).__name__}")
+        print(f"Author report unavailable: {type(error).__name__}: {error}")
         report = sanitize_fallback(fallback)
         report_kind = "fallback"
 

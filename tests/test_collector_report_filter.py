@@ -38,6 +38,33 @@ class ReportFilterTests(unittest.TestCase):
         }
         self.assertIsNone(collector.classify_post(post))
 
+    def test_reconstruction_story_is_not_current_attack(self):
+        post = {
+            "text": (
+                "У місті триває відновлення житлового будинку, який постраждав "
+                "внаслідок ворожого обстрілу кілька місяців тому."
+            )
+        }
+        self.assertIsNone(collector.classify_post(post))
+
+    def test_official_visit_is_not_security_event(self):
+        post = {
+            "text": "До міста з візитом прибула посадовиця та обговорила співпрацю."
+        }
+        self.assertIsNone(collector.classify_post(post))
+
+    def test_fallback_fact_line_has_no_channel_or_link(self):
+        post = {
+            "published_at": "2026-10-17T04:30:00+00:00",
+            "channel": "example",
+            "url": "https://t.me/example/1",
+            "text": "Підтверджений факт.",
+        }
+        result = collector.fact_line(post)
+        self.assertEqual(result, "• Підтверджений факт.")
+        self.assertNotIn("@example", result)
+        self.assertNotIn("https://", result)
+
 
 if __name__ == "__main__":
     unittest.main()
