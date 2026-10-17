@@ -473,7 +473,12 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
             return validate_report(reviewed, end_date_label, linked_locations)
-        except (RuntimeError, ValueError) as error:
+        except RuntimeError:
+            # The draft has already passed deterministic validation. If the
+            # optional editorial API call is rate-limited or unavailable, keep
+            # that safe author version instead of dropping to the raw fallback.
+            return draft
+        except ValueError as error:
             review_error = error
     raise RuntimeError(f"Gemini review failed validation: {review_error}")
 

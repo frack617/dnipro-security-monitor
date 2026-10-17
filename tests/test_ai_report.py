@@ -1,4 +1,6 @@
+import os
 import unittest
+from unittest.mock import patch
 
 from ai_report import (
     enforce_report_frame,
@@ -6,6 +8,7 @@ from ai_report import (
     normalize_completed_morning_forecast,
     sanitize_fallback,
     validate_report,
+    generate_report,
 )
 
 
@@ -149,6 +152,21 @@ class ReportValidationTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, "full calendar day"):
             validate_report(report, "17.10.2026")
+
+    @patch.dict(os.environ, {"GEMINI_API_KEY": "test-key"})
+    @patch("ai_report._request_report")
+    def test_keeps_validated_draft_when_review_is_rate_limited(self, request_report):
+        request_report.side_effect = [VALID_REPORT, RuntimeError("Gemini HTTP 429")]
+        result = generate_report(
+            [],
+            "08:00 16.10.2026",
+            "08:00 17.10.2026",
+            "08:05 17.10.2026",
+            "17.10.2026",
+            [],
+        )
+        self.assertEqual(result, VALID_REPORT.strip())
+        self.assertEqual(request_report.call_count, 2)
 
     def test_normalizes_completed_morning_forecast_tense(self):
         report = VALID_REPORT.replace(
