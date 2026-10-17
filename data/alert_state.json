@@ -1,5 +1,9 @@
 {
   "initialized": true,
-  "alerted_keys": [],
+  "alerted_keys": [
+    "adm_dp/44949",
+    "dnipropetrovskaODA/32641",
+    "gunpvdp/37194"
+  ],
   "last_daily_report": "2026-10-17"
 }

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T12:20:01.246610+00:00",
+  "checked_at": "2026-10-17T14:22:07.268795+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-16T08:00:00+03:00",
@@ -11,13 +11,13 @@
       "ok": true,
       "posts_found": 11,
       "oldest_collected_at": "2026-10-14T13:48:38+00:00",
-      "newest_collected_at": "2026-10-17T09:12:09+00:00"
+      "newest_collected_at": "2026-10-17T14:14:20+00:00"
     },
     "dsns_telegram": {
       "ok": true,
-      "posts_found": 8,
+      "posts_found": 7,
       "oldest_collected_at": "2026-10-14T12:57:34+00:00",
-      "newest_collected_at": "2026-10-17T12:15:30+00:00"
+      "newest_collected_at": "2026-10-17T13:14:34+00:00"
     },
     "SBUkr": {
       "ok": true,
@@ -27,21 +27,21 @@
     },
     "DniproCityOfficial": {
       "ok": true,
-      "posts_found": 6,
-      "oldest_collected_at": "2026-10-14T12:16:47+00:00",
-      "newest_collected_at": "2026-10-17T11:32:01+00:00"
+      "posts_found": 7,
+      "oldest_collected_at": "2026-10-14T14:31:02+00:00",
+      "newest_collected_at": "2026-10-17T14:11:02+00:00"
     },
     "gunpvdp": {
       "ok": true,
-      "posts_found": 3,
+      "posts_found": 4,
       "oldest_collected_at": "2026-10-14T13:33:24+00:00",
-      "newest_collected_at": "2026-10-17T12:18:23+00:00"
+      "newest_collected_at": "2026-10-17T13:21:54+00:00"
     },
     "cek_info": {
       "ok": true,
       "posts_found": 20,
-      "oldest_collected_at": "2026-10-13T11:01:56+00:00",
-      "newest_collected_at": "2026-10-17T11:31:48+00:00"
+      "oldest_collected_at": "2026-10-13T16:35:58+00:00",
+      "newest_collected_at": "2026-10-17T13:48:29+00:00"
     },
     "borys_filatovv": {
       "ok": true,
@@ -51,9 +51,9 @@
     },
     "dnipropetrovskaODA": {
       "ok": true,
-      "posts_found": 18,
+      "posts_found": 19,
       "oldest_collected_at": "2026-10-14T13:25:25+00:00",
-      "newest_collected_at": "2026-10-17T09:17:28+00:00"
+      "newest_collected_at": "2026-10-17T14:14:14+00:00"
     }
   }
 }
