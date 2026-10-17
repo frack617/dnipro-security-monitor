@@ -12,6 +12,15 @@ UA_MONTH_NAMES = (
     "січня", "лютого", "березня", "квітня", "травня", "червня",
     "липня", "серпня", "вересня", "жовтня", "листопада", "грудня",
 )
+CASUALTY_LOCATION_PATTERNS = {
+    "Дніпро": r"\bДніпр(?:о|а|і|у|ом)\b",
+    "Кривий Ріг": r"\bКрив(?:ий|ому|ого)\s+Р(?:іг|озі|огу)\b",
+    "Нікополь": r"\bНікопол(?:ь|і|я|ю|ем)\b",
+    "Марганець": r"\bМарганц(?:і|я|ю|ем)?\b|\bМарганець\b",
+    "Павлоград": r"\bПавлоград(?:і|а|у|ом)?\b",
+    "Кам’янське": r"\bКам['’]янськ(?:е|ому|ого)\b",
+    "Синельникове": r"\bСинельников(?:е|ому|ого)\b",
+}
 
 
 def _source_text(posts):
@@ -30,6 +39,61 @@ def _source_text(posts):
             )
         )
     return "\n\n---\n\n".join(blocks)
+
+
+def _published_datetime(post):
+    value = post.get("published_at")
+    if value:
+        try:
+            return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            pass
+    value = post.get("published_local", "").replace(" за Києвом", "")
+    try:
+        return datetime.strptime(value, "%d.%m.%Y %H:%M")
+    except (TypeError, ValueError):
+        return None
+
+
+def _casualty_near_location(text, location_pattern, casualty_pattern):
+    return bool(
+        re.search(
+            rf"(?:{location_pattern})[\s\S]{{0,160}}(?:{casualty_pattern})|"
+            rf"(?:{casualty_pattern})[\s\S]{{0,160}}(?:{location_pattern})",
+            text,
+            re.IGNORECASE,
+        )
+    )
+
+
+def linked_casualty_locations(posts, max_gap_hours=3):
+    """Find short official update chains that split deaths and injuries."""
+    attack_posts = [post for post in posts if post.get("category_hint") == "2.1"]
+    linked = set()
+    for index, first in enumerate(attack_posts):
+        first_time = _published_datetime(first)
+        if first_time is None:
+            continue
+        first_text = first.get("text", "")
+        for second in attack_posts[index + 1:]:
+            second_time = _published_datetime(second)
+            if second_time is None:
+                continue
+            if abs((second_time - first_time).total_seconds()) > max_gap_hours * 3600:
+                continue
+            second_text = second.get("text", "")
+            for location, pattern in CASUALTY_LOCATION_PATTERNS.items():
+                first_death = _casualty_near_location(first_text, pattern, r"загин\w*")
+                first_injury = _casualty_near_location(
+                    first_text, pattern, r"поран\w*|постраждал\w*|потерпіл\w*"
+                )
+                second_death = _casualty_near_location(second_text, pattern, r"загин\w*")
+                second_injury = _casualty_near_location(
+                    second_text, pattern, r"поран\w*|постраждал\w*|потерпіл\w*"
+                )
+                if (first_death and second_injury) or (first_injury and second_death):
+                    linked.add(location)
+    return tuple(sorted(linked))
 
 
 def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
@@ -85,6 +149,9 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
   підтверджену загибель і поранених із позначкою «попередньо», якщо цифру не виправлено;
 - не визначай час події за часом публікації: формулювання «цієї ночі» або «за ніч»
   передавай як нічну подію, навіть якщо зведення опубліковане вранці;
+- ранкове зведення, опубліковане до завершення вікна, не описуй як підсумок усього
+  календарного дня. Пиши «у ніч на [дату]» або «станом на ранок [дати]» відповідно
+  до джерела, але не «загалом [дата]»;
 - не замінюй відомі наслідки нечіткими фразами на кшталт «атаковані об’єкти» або
   «зафіксовані наслідки»; назви підтверджені наслідки або вилучи порожню фразу;
 - не об’єднуй місто, район, громаду або передмістя в одну локацію. Якщо наслідки
@@ -167,6 +234,8 @@ def build_review_prompt(report, posts, start_label, end_label):
   зв’язку, живлення або безпеки гуманітарних місій. Не вигадуй непідтверджених наслідків;
 - не підмінюй час події часом публікації: «цієї ночі» та «за ніч» означають ніч,
   а не ранок;
+- не називай ранкове зведення підсумком усього календарного дня: використовуй
+  «у ніч на [дату]» або «станом на ранок [дати]», але не «загалом [дата]»;
 - вилучи нечіткі речення «атаковані об’єкти», «є наслідки» чи подібні, якщо джерела
   містять конкретні відомості про загиблих, поранених, пожежі або пошкодження;
 - не змішуй місто Дніпро, Дніпровський район, окремі громади й передмістя;
@@ -239,7 +308,7 @@ def enforce_report_frame(text, start_label, end_label, checked_label):
     )
 
 
-def validate_report(text, end_date_label):
+def validate_report(text, end_date_label, linked_locations=()):
     problems = []
     stripped = (text or "").strip()
     if not stripped.startswith("Доброго дня."):
@@ -283,6 +352,21 @@ def validate_report(text, end_date_label):
     section_22 = re.search(r"(?ms)^2\.2\.\s+(.*?)(?=^2\.3\.)", stripped)
     if section_22 and re.search(r"вбивств|наркот|декларуван", section_22.group(1), re.IGNORECASE):
         problems.append("unrelated crime in section 2.2")
+    section_21 = re.search(r"(?ms)^2\.1\.\s+(.*?)(?=^2\.2\.)", stripped)
+    if section_21:
+        sentences = re.split(r"(?<=[.!?])\s+", section_21.group(1))
+        for location in linked_locations:
+            location_pattern = CASUALTY_LOCATION_PATTERNS.get(location, re.escape(location))
+            casualty_merged = any(
+                re.search(location_pattern, sentence, re.IGNORECASE)
+                and re.search(r"загин\w*", sentence, re.IGNORECASE)
+                and re.search(
+                    r"поран\w*|постраждал\w*|потерпіл\w*", sentence, re.IGNORECASE
+                )
+                for sentence in sentences
+            )
+            if not casualty_merged:
+                problems.append(f"linked casualties not consolidated for {location}")
     if re.search(
         r"\b(?:у|в)\s+Дніпрі\b[^.!?]{0,120}\bпередміст",
         stripped,
@@ -296,6 +380,10 @@ def validate_report(text, end_date_label):
     ):
         problems.append("vague attack placeholder")
     end_date_words = _date_words(end_date_label)
+    if end_date_words and re.search(
+        rf"\bзагалом\s+{re.escape(end_date_words)}\b", stripped, re.IGNORECASE
+    ):
+        problems.append("morning summary presented as full calendar day")
     if section_14 and end_date_words:
         morning_forecast = rf"(?:вночі|уночі|зранку|вранці)[^.]*{re.escape(end_date_words)}[^.]*\b(?:прогнозується|очікується|буде)\b"
         if re.search(morning_forecast, section_14.group(1), re.IGNORECASE):
@@ -342,6 +430,15 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
     model = os.getenv("GEMINI_MODEL", DEFAULT_MODEL).strip() or DEFAULT_MODEL
     endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     prompt = build_prompt(posts, start_label, end_label, checked_label, failed_sources)
+    linked_locations = linked_casualty_locations(posts)
+    if linked_locations:
+        prompt += (
+            "\n\nПРОГРАМНО ВИЯВЛЕНІ ЛАНЦЮЖКИ УТОЧНЕНЬ: для "
+            + ", ".join(linked_locations)
+            + " повідомлення про загиблих і поранених належать до короткого "
+            "ланцюжка уточнень. Подай загиблого та попередню кількість поранених "
+            "разом в одному реченні одного епізоду."
+        )
     last_error = None
     draft = None
     for attempt in range(2):
@@ -355,7 +452,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
-            draft = validate_report(text, end_date_label)
+            draft = validate_report(text, end_date_label, linked_locations)
             break
         except ValueError as error:
             last_error = error
@@ -375,7 +472,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
-            return validate_report(reviewed, end_date_label)
+            return validate_report(reviewed, end_date_label, linked_locations)
         except (RuntimeError, ValueError) as error:
             review_error = error
     raise RuntimeError(f"Gemini review failed validation: {review_error}")

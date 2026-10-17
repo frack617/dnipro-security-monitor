@@ -2,6 +2,7 @@ import unittest
 
 from ai_report import (
     enforce_report_frame,
+    linked_casualty_locations,
     normalize_completed_morning_forecast,
     sanitize_fallback,
     validate_report,
@@ -105,6 +106,49 @@ class ReportValidationTests(unittest.TestCase):
         prompt = build_prompt([], "08:00 16.10.2026", "08:00 17.10.2026", "08:05 17.10.2026", [])
         self.assertIn("пряме практичне значення для гуманітарних місій", prompt)
         self.assertIn("Не вигадуй", prompt)
+
+    def test_detects_linked_dnipro_casualty_updates(self):
+        posts = [
+            {
+                "published_at": "2026-10-16T16:17:00+00:00",
+                "category_hint": "2.1",
+                "text": "Ворог завдав удару по Дніпру. Попередньо, поранені четверо людей.",
+            },
+            {
+                "published_at": "2026-10-16T16:39:00+00:00",
+                "category_hint": "2.1",
+                "text": "Через російську атаку на Дніпро загинув чоловік.",
+            },
+        ]
+        self.assertEqual(linked_casualty_locations(posts), ("Дніпро",))
+
+    def test_rejects_split_linked_casualties(self):
+        report = VALID_REPORT.replace(
+            "2.1. У перевірених джерелах повідомлень за звітний період не виявлено.",
+            (
+                "2.1. У Дніпрі попередньо поранені четверо людей. "
+                "Пізніше повідомлено, що у Дніпрі загинув чоловік."
+            ),
+        )
+        with self.assertRaisesRegex(ValueError, "linked casualties not consolidated"):
+            validate_report(report, "17.10.2026", ("Дніпро",))
+
+    def test_accepts_linked_casualties_in_one_incident_sentence(self):
+        report = VALID_REPORT.replace(
+            "2.1. У перевірених джерелах повідомлень за звітний період не виявлено.",
+            "2.1. Унаслідок атаки на Дніпро загинув чоловік, попередньо поранені четверо людей.",
+        )
+        self.assertEqual(
+            validate_report(report, "17.10.2026", ("Дніпро",)), report.strip()
+        )
+
+    def test_rejects_morning_summary_as_full_calendar_day(self):
+        report = VALID_REPORT.replace(
+            "1.1. Підтверджені повідомлення викладено нижче.",
+            "1.1. Загалом 17 жовтня зафіксовано майже 20 атак.",
+        )
+        with self.assertRaisesRegex(ValueError, "full calendar day"):
+            validate_report(report, "17.10.2026")
 
     def test_normalizes_completed_morning_forecast_tense(self):
         report = VALID_REPORT.replace(
