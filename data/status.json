@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T12:10:23.474624+00:00",
+  "checked_at": "2026-10-17T12:15:33.137304+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-16T08:00:00+03:00",
@@ -28,7 +28,7 @@
     "DniproCityOfficial": {
       "ok": true,
       "posts_found": 6,
-      "oldest_collected_at": "2026-10-14T11:45:56+00:00",
+      "oldest_collected_at": "2026-10-14T12:16:47+00:00",
       "newest_collected_at": "2026-10-17T11:32:01+00:00"
     },
     "gunpvdp": {
