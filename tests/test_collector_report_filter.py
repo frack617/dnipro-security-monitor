@@ -25,6 +25,10 @@ class ReportFilterTests(unittest.TestCase):
         post = {"text": "Виявили та вилучили бойову частину безпілотника."}
         self.assertEqual(collector.classify_post(post), "2.4")
 
+    def test_inflected_attack_update_is_attack_event(self):
+        post = {"text": "Через російську атаку на Дніпро загинув чоловік."}
+        self.assertEqual(collector.classify_post(post), "2.1")
+
     def test_unrelated_murder_is_not_weapon_event(self):
         post = {"text": "Поліцейські затримали підозрюваного у вбивстві жінки."}
         self.assertIsNone(collector.classify_post(post))
