@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T08:19:31.137121+00:00",
+  "checked_at": "2026-10-17T08:28:24.502398+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-16T08:00:00+03:00",
@@ -11,7 +11,7 @@
       "ok": true,
       "posts_found": 11,
       "oldest_collected_at": "2026-10-14T09:16:01+00:00",
-      "newest_collected_at": "2026-10-17T06:00:09+00:00"
+      "newest_collected_at": "2026-10-17T08:22:43+00:00"
     },
     "dsns_telegram": {
       "ok": true,
@@ -33,8 +33,8 @@
     },
     "gunpvdp": {
       "ok": true,
-      "posts_found": 9,
-      "oldest_collected_at": "2026-10-14T08:16:34+00:00",
+      "posts_found": 3,
+      "oldest_collected_at": "2026-10-14T10:00:05+00:00",
       "newest_collected_at": "2026-10-17T08:15:10+00:00"
     },
     "cek_info": {
@@ -51,9 +51,9 @@
     },
     "dnipropetrovskaODA": {
       "ok": true,
-      "posts_found": 16,
+      "posts_found": 17,
       "oldest_collected_at": "2026-10-14T09:51:35+00:00",
-      "newest_collected_at": "2026-10-17T04:30:03+00:00"
+      "newest_collected_at": "2026-10-17T08:22:07+00:00"
     }
   }
 }
