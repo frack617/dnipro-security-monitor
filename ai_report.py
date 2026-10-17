@@ -17,6 +17,7 @@ def _source_text(posts):
                 [
                     f"Публікація: {post['published_local']}",
                     f"Канал: @{post['channel']}",
+                    f"Дозволений пункт довідки: {post['category_hint']}",
                     f"Посилання для внутрішньої перевірки: {post['url']}",
                     "Текст:",
                     post.get("text", ""),
@@ -46,6 +47,14 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 - не пиши назви каналів, URL, посилання, час публікації або цитати;
 - не переказуй дописи як новинну стрічку: об’єднуй дублікати, уточнення та наслідки
   однієї події в один стислий факт;
+- кожен факт розміщуй тільки в пункті, зазначеному в полі «Дозволений пункт довідки»;
+- пункт 1.1 має бути оглядом максимум із трьох коротких речень і не повинен
+  повторювати переліки наслідків із пункту 2.1;
+- у 1.3 включай лише анонсовані вибухові роботи або контрольовані підриви;
+  виявлені бойові частини, боєприпаси та інші небезпечні знахідки подавай лише у 2.4;
+- у 2.2 включай лише конкретні офіційні факти незаконного поводження зі зброєю
+  або вибухівкою; не включай убивства, наркотики, загальні правила декларування
+  зброї чи інші злочини без такого факту;
 - відрізняй дату публікації від дати події; старі події, згадані як контекст, не включай;
 - події інших областей не включай;
 - не плутай місто Дніпро з Дніпровським районом;
@@ -59,6 +68,8 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
   «У перевірених джерелах повідомлень за звітний період не виявлено»;
 - обсяг 300–500 слів; якщо подій мало, допускається менший обсяг;
 - не використовуй Markdown-посилання, таблиці або примітки про роботу ШІ.
+- кожен номер пункту та його зміст подавай в одному абзаці; не повторюй назву
+  категорії окремим реченням після номера;
 
 Початок відповіді має бути дослівно таким:
 Доброго дня.
@@ -102,40 +113,42 @@ def validate_report(text, end_date_label):
     if end_date_label not in stripped:
         problems.append("report date")
     word_count = len(re.findall(r"\b[\w’'-]+\b", stripped, re.UNICODE))
-    if word_count < 90 or word_count > 650:
+    if word_count < 90 or word_count > 520:
         problems.append(f"word count {word_count}")
+    section_11 = re.search(r"(?ms)^1\.1\.\s+(.*?)(?=^1\.2\.)", stripped)
+    if section_11 and len(re.findall(r"\b[\w’'-]+\b", section_11.group(1))) > 130:
+        problems.append("section 1.1 too long")
+    section_13 = re.search(r"(?ms)^1\.3\.\s+(.*?)(?=^1\.4\.)", stripped)
+    if section_13:
+        section_13_text = section_13.group(1)
+        no_reports = "у перевірених джерелах повідомлень за звітний період не виявлено"
+        if no_reports not in section_13_text.lower() and re.search(
+            r"(виявлен|знайден|бойов\w*\s+частин|нерозірван|вибухонебезпечн\w*\s+предмет)",
+            section_13_text,
+            re.IGNORECASE,
+        ):
+            problems.append("UXO duplicated in section 1.3")
+    section_22 = re.search(r"(?ms)^2\.2\.\s+(.*?)(?=^2\.3\.)", stripped)
+    if section_22 and re.search(r"вбивств|наркот|декларуван", section_22.group(1), re.IGNORECASE):
+        problems.append("unrelated crime in section 2.2")
+    seen_sentences = set()
+    for sentence in re.split(r"(?<=[.!?])\s+", stripped):
+        normalized = re.sub(r"\W+", " ", sentence.lower()).strip()
+        if len(normalized) < 80 or "у перевірених джерелах повідомлень" in normalized:
+            continue
+        if normalized in seen_sentences:
+            problems.append("repeated fact")
+            break
+        seen_sentences.add(normalized)
     if problems:
         raise ValueError("; ".join(problems))
     return stripped
 
 
-def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
-    api_key = os.getenv("GEMINI_API_KEY", "").strip()
-    if not api_key:
-        raise RuntimeError("GEMINI_API_KEY is not configured")
-    model = os.getenv("GEMINI_MODEL", DEFAULT_MODEL).strip() or DEFAULT_MODEL
-    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+def _request_report(endpoint, api_key, prompt):
     payload = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [
-                    {
-                        "text": build_prompt(
-                            posts,
-                            start_label,
-                            end_label,
-                            checked_label,
-                            failed_sources,
-                        )
-                    }
-                ],
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.1,
-            "maxOutputTokens": 2200,
-        },
+        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.1, "maxOutputTokens": 2200},
     }
     response = requests.post(
         endpoint,
@@ -148,10 +161,32 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
         raise RuntimeError(f"Gemini HTTP {response.status_code}")
     try:
         data = response.json()
-        text = data["candidates"][0]["content"]["parts"][0]["text"]
+        return data["candidates"][0]["content"]["parts"][0]["text"]
     except (KeyError, IndexError, TypeError, ValueError) as error:
         raise RuntimeError("Gemini returned no usable text") from error
-    return validate_report(text, end_date_label)
+
+
+def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not configured")
+    model = os.getenv("GEMINI_MODEL", DEFAULT_MODEL).strip() or DEFAULT_MODEL
+    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    prompt = build_prompt(posts, start_label, end_label, checked_label, failed_sources)
+    last_error = None
+    for attempt in range(2):
+        retry_note = ""
+        if last_error is not None:
+            retry_note = (
+                "\n\nПОПЕРЕДНЮ ВІДПОВІДЬ ВІДХИЛЕНО АВТОМАТИЧНО. "
+                f"Причина: {last_error}. Створи виправлену відповідь з нуля."
+            )
+        text = _request_report(endpoint, api_key, prompt + retry_note)
+        try:
+            return validate_report(text, end_date_label)
+        except ValueError as error:
+            last_error = error
+    raise RuntimeError(f"Gemini report failed validation: {last_error}")
 
 
 def sanitize_fallback(report):

@@ -66,12 +66,29 @@ SERVICE_TERMS = (
 )
 WEAPON_TERMS = ("збро", "гранат", "вибухівк", "боєприпас")
 ENFORCEMENT_TERMS = ("незакон", "вилуч", "затрим", "підозр", "обшук", "збут")
+NON_WEAPON_CRIME_TERMS = (
+    "вбивств", "наркотик", "наркозб", "психотроп", "метадон", "канабіс",
+)
 MINING_TERMS = ("замінуван", "псевдомінув", "повідомлення про мінування")
 UXO_TERMS = (
     "вибухонебезпечн", "нерозірван", "боєприпас", "бойова частина",
     "бойову частину", "бойової частини", "небезпечного предмета",
 )
 DISCOVERY_TERMS = ("виявил", "знайшл", "знешкодил", "знищил", "вилучил")
+UA_MONTHS = {
+    "січня": 1,
+    "лютого": 2,
+    "березня": 3,
+    "квітня": 4,
+    "травня": 5,
+    "червня": 6,
+    "липня": 7,
+    "серпня": 8,
+    "вересня": 9,
+    "жовтня": 10,
+    "листопада": 11,
+    "грудня": 12,
+}
 
 HEADERS = {
     "User-Agent": (
@@ -304,12 +321,37 @@ def dedupe_posts(posts):
     return result
 
 
+def explicit_event_dates(post):
+    text = post.get("text", "").lower()
+    published = parse_datetime(post.get("published_at"))
+    if published is None:
+        return []
+    published_local = published.astimezone(KYIV)
+    month_pattern = "|".join(UA_MONTHS)
+    pattern = rf"\b([0-3]?\d)\s+({month_pattern})(?:\s+(20\d{{2}}))?\b"
+    dates = []
+    for day_text, month_text, year_text in re.findall(pattern, text):
+        try:
+            year = int(year_text) if year_text else published_local.year
+            dates.append(datetime(year, UA_MONTHS[month_text], int(day_text)).date())
+        except ValueError:
+            continue
+    return dates
+
+
+def is_historical_context(post, report_start_local):
+    dates = explicit_event_dates(post)
+    return bool(dates) and max(dates) < report_start_local.date()
+
+
 def classify_post(post):
     text = post.get("text", "").lower()
     if contains_any(text, MINING_TERMS):
         return "2.3"
     if contains_any(text, UXO_TERMS) and contains_any(text, DISCOVERY_TERMS):
         return "2.4"
+    if contains_any(text, NON_WEAPON_CRIME_TERMS):
+        return None
     if contains_any(text, WEAPON_TERMS) and contains_any(text, ENFORCEMENT_TERMS):
         return "2.2"
     if contains_any(text, ATTACK_TERMS):
@@ -486,7 +528,11 @@ def process_morning_report(posts, statuses, checked_at):
     )
     ai_posts = []
     for post in regional_posts:
+        category = classify_post(post)
+        if category is None or is_historical_context(post, start_local):
+            continue
         item = dict(post)
+        item["category_hint"] = category
         item["published_local"] = parse_datetime(post["published_at"]).astimezone(KYIV).strftime(
             "%d.%m.%Y %H:%M за Києвом"
         )
