@@ -1,0 +1,48 @@
+import unittest
+
+from ai_report import sanitize_fallback, validate_report
+
+
+VALID_REPORT = """Доброго дня.
+
+Звіт по Дніпропетровській області станом на 08:00 17.10.2026.
+Звітний період: з 08:00 16.10.2026 до 08:00 17.10.2026, за Києвом.
+Фактичний час автоматичної перевірки: 08:05 17.10.2026.
+
+1. Загальна ситуація в області:
+1.1. Підтверджені повідомлення викладено нижче. Рекомендується стежити за сигналами тривоги та мати заряджені засоби зв’язку.
+1.2. У перевірених джерелах повідомлень за звітний період не виявлено.
+1.3. У перевірених джерелах повідомлень за звітний період не виявлено.
+1.4. У перевірених джерелах повідомлень за звітний період не виявлено.
+
+2. Події:
+2.1. У перевірених джерелах повідомлень за звітний період не виявлено.
+2.2. У перевірених джерелах повідомлень за звітний період не виявлено.
+2.3. У перевірених джерелах повідомлень за звітний період не виявлено.
+2.4. У перевірених джерелах повідомлень за звітний період не виявлено.
+
+Це огляд станом на 08:00 17.10.2026. Для негайних дій слід стежити за офіційними сповіщеннями про повітряну тривогу.
+"""
+
+
+class ReportValidationTests(unittest.TestCase):
+    def test_valid_report(self):
+        self.assertEqual(validate_report(VALID_REPORT, "17.10.2026"), VALID_REPORT.strip())
+
+    def test_rejects_source_link(self):
+        with self.assertRaises(ValueError):
+            validate_report(VALID_REPORT + "\nhttps://t.me/example/1", "17.10.2026")
+
+    def test_rejects_missing_section(self):
+        with self.assertRaises(ValueError):
+            validate_report(VALID_REPORT.replace("2.4. ", ""), "17.10.2026")
+
+    def test_fallback_hides_channel_and_link(self):
+        source = "• 16.10 12:00 · @example: Факт\nhttps://t.me/example/1"
+        result = sanitize_fallback(source)
+        self.assertNotIn("@example", result)
+        self.assertNotIn("https://", result)
+
+
+if __name__ == "__main__":
+    unittest.main()

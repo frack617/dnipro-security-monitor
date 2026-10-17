@@ -17,6 +17,7 @@ LATEST_FILE = DATA_DIR / "latest.md"
 REPORT_INPUT_FILE = DATA_DIR / "report_input.md"
 STATUS_FILE = DATA_DIR / "status.json"
 ALERT_STATE_FILE = DATA_DIR / "alert_state.json"
+MORNING_REPORT_FILE = DATA_DIR / "morning_report.md"
 CHANNELS_FILE = ROOT / "channels.txt"
 
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "72"))
@@ -66,8 +67,11 @@ SERVICE_TERMS = (
 WEAPON_TERMS = ("збро", "гранат", "вибухівк", "боєприпас")
 ENFORCEMENT_TERMS = ("незакон", "вилуч", "затрим", "підозр", "обшук", "збут")
 MINING_TERMS = ("замінуван", "псевдомінув", "повідомлення про мінування")
-UXO_TERMS = ("вибухонебезпечн", "нерозірван", "боєприпас")
-DISCOVERY_TERMS = ("виявил", "знайшл", "знешкодил", "знищил")
+UXO_TERMS = (
+    "вибухонебезпечн", "нерозірван", "боєприпас", "бойова частина",
+    "бойову частину", "бойової частини", "небезпечного предмета",
+)
+DISCOVERY_TERMS = ("виявил", "знайшл", "знешкодил", "знищил", "вилучил")
 
 HEADERS = {
     "User-Agent": (
@@ -338,7 +342,7 @@ def fact_line(post):
 def section_text(posts):
     if not posts:
         return "У перевірених джерелах повідомлень за звітний період не виявлено."
-    return "\n".join(fact_line(post) for post in posts[:6])
+    return "\n".join(fact_line(post) for post in posts[-6:])
 
 
 def practical_note(section, posts):
@@ -464,10 +468,59 @@ def process_morning_report(posts, statuses, checked_at):
     if local_now < today_at_eight:
         return
     state = read_alert_state()
-    report_date = completed_report_window(checked_at)[1].date().isoformat()
-    if state.get("last_daily_report") == report_date:
+    start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
+    report_date = end_local.date().isoformat()
+    force_report = os.getenv("FORCE_MORNING_REPORT", "").lower() in {"1", "true", "yes"}
+    send_enabled = os.getenv("SEND_MORNING_REPORT", "true").lower() in {"1", "true", "yes"}
+    if state.get("last_daily_report") == report_date and not force_report:
         return
-    send_long_bot_message(build_morning_report(posts, statuses, checked_at))
+
+    fallback = build_morning_report(posts, statuses, checked_at)
+    regional_posts = dedupe_posts(
+        [
+            post
+            for post in posts
+            if start_utc <= parse_datetime(post.get("published_at")) < end_utc
+            and is_regional(post)
+        ]
+    )
+    ai_posts = []
+    for post in regional_posts:
+        item = dict(post)
+        item["published_local"] = parse_datetime(post["published_at"]).astimezone(KYIV).strftime(
+            "%d.%m.%Y %H:%M за Києвом"
+        )
+        ai_posts.append(item)
+    failed_sources = [
+        f"@{channel}" for channel, status in statuses.items() if not status.get("ok")
+    ]
+
+    try:
+        from ai_report import generate_report
+
+        report = generate_report(
+            ai_posts,
+            start_local.strftime("%H:%M %d.%m.%Y"),
+            end_local.strftime("%H:%M %d.%m.%Y"),
+            checked_at.astimezone(KYIV).strftime("%H:%M %d.%m.%Y"),
+            end_local.strftime("%d.%m.%Y"),
+            failed_sources,
+        )
+        report_kind = "author"
+    except Exception as error:
+        from ai_report import sanitize_fallback
+
+        print(f"Author report unavailable: {type(error).__name__}")
+        report = sanitize_fallback(fallback)
+        report_kind = "fallback"
+
+    MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
+    print(f"Morning report prepared: {report_kind}")
+    if not send_enabled:
+        print("Morning report dry run: Telegram sending disabled")
+        return
+
+    send_long_bot_message(report)
     state["last_daily_report"] = report_date
     ALERT_STATE_FILE.write_text(
         json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
