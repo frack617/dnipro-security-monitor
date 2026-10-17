@@ -65,6 +65,22 @@ class ReportFilterTests(unittest.TestCase):
         self.assertNotIn("@example", result)
         self.assertNotIn("https://", result)
 
+    def test_fallback_fog_guidance_is_about_travel_time(self):
+        posts = [{"text": "В області туман, видимість 200-500 метрів."}]
+        result = collector.practical_note("1.4", posts)
+        self.assertIn("збільшення часу в дорозі", result)
+        self.assertNotIn("павербанк", result)
+
+    def test_fallback_outage_guidance_mentions_powerbanks(self):
+        posts = [{"text": "Застосовуються аварійні відключення електроенергії."}]
+        result = collector.practical_note("1.4", posts)
+        self.assertIn("павербанки", result)
+
+    def test_fallback_fuel_station_strike_guidance_is_contextual(self):
+        posts = [{"text": "Внаслідок удару пошкоджено АЗС."}]
+        result = collector.practical_note("2.1", posts)
+        self.assertIn("альтернативне місце заправлення", result)
+
 
 if __name__ == "__main__":
     unittest.main()

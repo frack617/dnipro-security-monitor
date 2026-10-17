@@ -74,6 +74,38 @@ class ReportValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_report(report, "17.10.2026")
 
+    def test_rejects_weather_duplicated_in_overview_and_practical_section(self):
+        report = VALID_REPORT.replace(
+            "1.1. Підтверджені повідомлення викладено нижче.",
+            "1.1. Підтверджені повідомлення викладено нижче. В області спостерігався туман.",
+        ).replace(
+            "1.4. У перевірених джерелах повідомлень за звітний період не виявлено.",
+            "1.4. Вночі та зранку спостерігався туман з обмеженою видимістю.",
+        )
+        with self.assertRaisesRegex(ValueError, "weather duplicated"):
+            validate_report(report, "17.10.2026")
+
+    def test_prompt_requires_linked_casualties_to_be_one_episode(self):
+        from ai_report import build_prompt, build_review_prompt
+
+        prompt = build_prompt([], "08:00 16.10.2026", "08:00 17.10.2026", "08:05 17.10.2026", [])
+        review = build_review_prompt("Чернетка", [], "08:00 16.10.2026", "08:00 17.10.2026")
+        self.assertIn("підтверджену загибель і поранених", prompt)
+        self.assertIn("підтверджену загибель, попередню кількість поранених", review)
+
+    def test_prompt_keeps_secondary_weather_out_of_overview(self):
+        from ai_report import build_prompt
+
+        prompt = build_prompt([], "08:00 16.10.2026", "08:00 17.10.2026", "08:05 17.10.2026", [])
+        self.assertIn("другорядні погодні фактори подавай лише у 1.4", prompt)
+
+    def test_prompt_requires_fact_based_practical_guidance(self):
+        from ai_report import build_prompt
+
+        prompt = build_prompt([], "08:00 16.10.2026", "08:00 17.10.2026", "08:05 17.10.2026", [])
+        self.assertIn("пряме практичне значення для гуманітарних місій", prompt)
+        self.assertIn("Не вигадуй", prompt)
+
     def test_normalizes_completed_morning_forecast_tense(self):
         report = VALID_REPORT.replace(
             "1.4. У перевірених джерелах повідомлень за звітний період не виявлено.",
