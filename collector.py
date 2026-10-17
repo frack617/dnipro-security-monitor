@@ -50,6 +50,8 @@ ATTACK_TERMS = (
 ROAD_TERMS = (
     "перекрито рух", "перекриття руху", "обмежено рух", "обмеження руху",
     "зміни у русі", "тимчасово не курсуват", "змінено маршрут",
+    "призупиняється рух", "кінцева зупинка", "перекриття проїзної частини",
+    "ремонт колії",
 )
 BLAST_WORK_TERMS = (
     "планові вибух", "вибухові роботи", "контрольований вибух",
@@ -59,6 +61,7 @@ SERVICE_TERMS = (
     "аварійне відключення", "екстрене відключення", "відсутнє водопостачання",
     "припинено водопостачання", "теплопостачання", "знеструмлен",
     "масштабна пожежа", "аварія на", "затримка руху", "не курсуватиме",
+    "туман", "видимість",
 )
 WEAPON_TERMS = ("збро", "гранат", "вибухівк", "боєприпас")
 ENFORCEMENT_TERMS = ("незакон", "вилуч", "затрим", "підозр", "обшук", "збут")
@@ -284,6 +287,19 @@ def contains_any(text, terms):
     return any(term in text for term in terms)
 
 
+def dedupe_posts(posts):
+    result = []
+    seen = set()
+    for post in sorted(posts, key=lambda item: item["published_at"]):
+        fingerprint = re.sub(r"\W+", " ", post.get("text", "").lower()).strip()
+        if fingerprint and fingerprint in seen:
+            continue
+        if fingerprint:
+            seen.add(fingerprint)
+        result.append(post)
+    return result
+
+
 def classify_post(post):
     text = post.get("text", "").lower()
     if contains_any(text, MINING_TERMS):
@@ -372,11 +388,11 @@ def section_with_note(section, posts):
 
 def build_morning_report(posts, statuses, checked_at):
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
-    report_posts = [
+    report_posts = dedupe_posts([
         post for post in posts
         if start_utc <= parse_datetime(post.get("published_at")) < end_utc
         and is_regional(post)
-    ]
+    ])
     groups = {key: [] for key in ("1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")}
     for post in sorted(report_posts, key=lambda item: item["published_at"]):
         category = classify_post(post)
@@ -444,7 +460,8 @@ def send_long_bot_message(text, limit=3900):
 
 def process_morning_report(posts, statuses, checked_at):
     local_now = checked_at.astimezone(KYIV)
-    if local_now.hour != 8:
+    today_at_eight = local_now.replace(hour=8, minute=0, second=0, microsecond=0)
+    if local_now < today_at_eight:
         return
     state = read_alert_state()
     report_date = completed_report_window(checked_at)[1].date().isoformat()
