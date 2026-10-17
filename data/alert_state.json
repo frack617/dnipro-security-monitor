@@ -1,9 +1,12 @@
 {
   "initialized": true,
   "alerted_keys": [
-    "adm_dp/44949",
-    "dnipropetrovskaODA/32641",
-    "gunpvdp/37194"
+    "adm_dp/44951",
+    "adm_dp/44954",
+    "dnipropetrovskaODA/32642",
+    "dnipropetrovskaODA/32645",
+    "dsns_telegram/78016",
+    "gunpvdp/37203"
   ],
   "last_daily_report": "2026-10-17"
 }
