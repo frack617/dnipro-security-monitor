@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T08:34:40.217091+00:00",
+  "checked_at": "2026-10-17T11:03:18.188632+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-16T08:00:00+03:00",
@@ -11,13 +11,13 @@
       "ok": true,
       "posts_found": 11,
       "oldest_collected_at": "2026-10-14T09:16:01+00:00",
-      "newest_collected_at": "2026-10-17T08:22:43+00:00"
+      "newest_collected_at": "2026-10-17T09:12:09+00:00"
     },
     "dsns_telegram": {
       "ok": true,
-      "posts_found": 4,
+      "posts_found": 8,
       "oldest_collected_at": "2026-10-14T12:12:43+00:00",
-      "newest_collected_at": "2026-10-17T07:24:47+00:00"
+      "newest_collected_at": "2026-10-17T09:33:00+00:00"
     },
     "SBUkr": {
       "ok": true,
@@ -27,9 +27,9 @@
     },
     "DniproCityOfficial": {
       "ok": true,
-      "posts_found": 12,
+      "posts_found": 10,
       "oldest_collected_at": "2026-10-14T11:45:56+00:00",
-      "newest_collected_at": "2026-10-17T08:09:18+00:00"
+      "newest_collected_at": "2026-10-17T10:28:01+00:00"
     },
     "gunpvdp": {
       "ok": true,
@@ -40,20 +40,20 @@
     "cek_info": {
       "ok": true,
       "posts_found": 20,
-      "oldest_collected_at": "2026-10-11T16:14:45+00:00",
-      "newest_collected_at": "2026-10-17T06:59:53+00:00"
+      "oldest_collected_at": "2026-10-12T16:47:01+00:00",
+      "newest_collected_at": "2026-10-17T09:25:22+00:00"
     },
     "borys_filatovv": {
       "ok": true,
-      "posts_found": 4,
-      "oldest_collected_at": "2026-10-13T05:55:15+00:00",
-      "newest_collected_at": "2026-10-16T16:28:03+00:00"
+      "posts_found": 3,
+      "oldest_collected_at": "2026-10-14T11:59:11+00:00",
+      "newest_collected_at": "2026-10-17T08:56:31+00:00"
     },
     "dnipropetrovskaODA": {
       "ok": true,
-      "posts_found": 17,
+      "posts_found": 18,
       "oldest_collected_at": "2026-10-14T09:51:35+00:00",
-      "newest_collected_at": "2026-10-17T08:22:07+00:00"
+      "newest_collected_at": "2026-10-17T09:17:28+00:00"
     }
   }
 }

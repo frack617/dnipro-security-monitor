@@ -1,5 +1,7 @@
 {
   "initialized": true,
-  "alerted_keys": [],
+  "alerted_keys": [
+    "DniproCityOfficial/14911"
+  ],
   "last_daily_report": "2026-10-17"
 }
