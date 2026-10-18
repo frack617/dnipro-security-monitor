@@ -135,6 +135,16 @@
       "stage": "author",
       "outcome": "http_404",
       "reason": "unknown"
+    },
+    {
+      "id": "39144724282:2026-10-18T16:22:59.519233+00:00:15",
+      "at": "2026-10-18T16:22:59.519233+00:00",
+      "model": "gemini_backup:gemini-2.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39144724282",
+      "stage": "author",
+      "outcome": "http_404",
+      "reason": "unknown"
     }
   ],
   "blocked_until": {}
