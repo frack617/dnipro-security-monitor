@@ -3,6 +3,7 @@ import os
 import re
 from pathlib import Path
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -326,10 +327,12 @@ def normalize_completed_morning_forecast(text, end_date_label):
 
 
 def enforce_report_frame(text, start_label, end_label, checked_label):
-    body_match = re.search(r"(?m)^1\. Загальна ситуація в області:\s*$", text or "")
+    body_match = re.search(r"(?m)^1\.(?: Загальна ситуація в області:)?[ \t]*$", text or "")
     if not body_match:
         return text
     body = text[body_match.start():].lstrip()
+    body = re.sub(r"(?m)^1\.[ \t]*$", "1. Загальна ситуація в області:", body)
+    body = re.sub(r"(?m)^2\.[ \t]*$", "2. Події:", body)
     return (
         "Доброго дня.\n\n"
         f"Звіт по Дніпропетровській області станом на {end_label}.\n"
@@ -359,6 +362,10 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
             if len(re.findall(r"\b[a-z]{3,}\b", prefix)) >= 3:
                 problems.append("non-Ukrainian section caption")
     for heading, first_point in (("1. Загальна ситуація в області:", "1.1."), ("2. Події:", "2.1.")):
+        if len(re.findall(rf"(?m)^{re.escape(heading)}[ \t]*$", stripped)) != 1:
+            problems.append("missing or duplicate main heading: " + heading)
+        elif stripped.find(heading) > stripped.find(first_point):
+            problems.append("main heading out of order: " + heading)
         gap = re.search(rf"(?ms)^{re.escape(heading)}\s*\n(.*?)(?=^{re.escape(first_point)}\s)", stripped)
         if gap and gap.group(1).strip():
             problems.append("extra text outside numbered sections")
@@ -454,6 +461,41 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
         seen_sentences.add(normalized)
     if posts is not None:
         problems.extend(source_problems(stripped, posts))
+        # Dates here identify explicit "today" notices, not the time of an attack.
+        today_notices = []
+        for post in posts:
+            published = _published_datetime(post)
+            local_date = (published.astimezone(ZoneInfo("Europe/Kyiv")).strftime("%d.%m.%Y")
+                          if published is not None else post.get("published_local", "")[:10])
+            if local_date == end_date_label and re.search(r"\bсьогодні\b", post.get("text", ""), re.I):
+                today_notices.append(post)
+        day_weather = any(
+            p.get("category_hint") == "1.4"
+            and re.search(r"впродовж дня|упродовж дня|протягом дня", p.get("text", ""), re.I)
+            and re.search(r"погод|дощ|гроз|туман", p.get("text", ""), re.I)
+            for p in today_notices)
+        if day_weather and section_14:
+            for sentence in re.split(r"(?<=[.!?])\s+", section_14.group(1)):
+                if (re.search(r"до кінця звітного періоду", sentence, re.I)
+                    and re.search(r"погод|дощ|гроз|туман", sentence, re.I)):
+                    problems.append("current-day weather moved before report cutoff")
+        current_transport = any(
+            p.get("category_hint") == "1.2"
+            and re.search(r"діють|призупиняється|працюватимуть", p.get("text", ""), re.I)
+            and not re.search(r"відновлено|скасовано|завершено", p.get("text", ""), re.I)
+            for p in today_notices)
+        if any(p.get("category_hint") == "1.2"
+               and re.search(r"відновлено|скасовано|завершено", p.get("text", ""), re.I)
+               for p in today_notices):
+            # Do not reject legitimate past tense after a later cancellation.
+            # Matching every individual route/update requires deeper event linking.
+            current_transport = False
+        section_12 = re.search(r"(?ms)^1\.2\.\s+(.*?)(?=^1\.3\.)", stripped)
+        if current_transport and section_12:
+            transport = section_12.group(1)
+            if (re.search(r"призупинявся|працювали|була перенесена|перекривали", transport, re.I)
+                and not re.search(r"діють|призупинено|призупиняється|перенесено|перекрито|працюють|працюватимуть", transport, re.I)):
+                problems.append("current transport restrictions shifted into completed past")
     if problems:
         raise ValueError("; ".join(problems))
     return stripped
@@ -494,6 +536,14 @@ def build_repair_note(draft, error):
         elif problem.startswith(("duplicate section", "missing section")):
             instructions.append("Подай кожен пункт рівно один раз, зі змістом; "
                 "без попереднього порожнього переліку або змісту.")
+        elif problem == "current-day weather moved before report cutoff":
+            instructions.append("Попередження стосується дня після 08:00. У 1.4 "
+                "напиши «На [дату] прогнозуються...» з датою з джерела; "
+                "вилучи помилкове «до кінця звітного періоду».")
+        elif problem == "current transport restrictions shifted into completed past":
+            instructions.append("У 1.2 збережи чинний статус оголошених на сьогодні "
+                "обмежень: «рух призупинено», «автобуси працюють», «зупинку перенесено». "
+                "Не подавай їх як завершені без повідомлення про скасування.")
         else:
             instructions.append("Виправ за джерелами порушення: " + problem)
     actions = "\n".join("- " + item for item in dict.fromkeys(instructions))

@@ -153,10 +153,19 @@ def source_problems(report, posts):
         if not any(number_value(m.group(1)) == number_value(match.group(1))
                    for m in re.finditer(total_pattern, attack_text)):
             problems.append("casualty total not explicitly supported by source")
-    for label, pattern in (("children", r"\bдіт\w*|\bдитин\w*"),
-                           ("rescuer", r"\bрятувальник\w*")):
+    for label, pattern in (("children", r"\bдіт\w*|\bдитин\w*"),):
         if re.search(pattern, section21) and not re.search(pattern, attack_text):
             problems.append("unsupported casualty/event detail: " + label)
+    # Mentioning firefighters responding to a fire is not a claim that one
+    # was injured. Check casualty assertions about the role, not the noun.
+    rescuer_casualty = (
+        r"(?:поранен\w*|травмован\w*|постраждав\w*|загинув\w*)\s+(?:(?:один|\d+)\s+)?рятувальник\w*"
+        r"|серед\s+(?:поранених|постраждалих|загиблих)[^.!?;]{0,30}\bрятувальник\w*"
+        r"|\bрятувальник\w*\s+(?:(?:дістав\w*|дістал\w*|отримав\w*|отримал\w*)\s+"
+        r"(?:поран\w*|травм\w*)|був\s+поран\w*|поранен\w*|постраждав\w*|загинув\w*)"
+    )
+    if re.search(rescuer_casualty, section21) and not re.search(rescuer_casualty, attack_text):
+        problems.append("unsupported casualty/event detail: rescuer")
     # Keep named communities from eligible attack reports, including lists
     # like 'Зеленодольська та Грушівська громади'. Inflections may change.
     for post in attacks:
@@ -205,4 +214,14 @@ EDITORIAL_RULES = """
   до 08:00 попередження на поточний день подавай як чинні після 08:00;
 - наслідки удару й ліквідацію спричиненої ним пожежі об'єднуй у 2.1;
 - збережи структуру, але не повторюй шаблонну назву категорії після номера пункту.
+- анонс на поточний день, опублікований до 08:00, не перетворюй на завершену
+  подію до 08:00. Для погоди на день пиши «На [дату] прогнозуються...».
+  Не пиши «до кінця звітного періоду», якщо попередження стосується дня після 08:00;
+- чинні зміни руху передавай як чинні: «рух призупинено», «автобуси працюють»,
+  «зупинку перенесено». Минулий час, який означає завершення обмежень,
+  використовуй лише за прямим повідомленням про їх скасування або закінчення;
+- у 2.1 відокремлюй денний і нічний періоди явними датами та короткими реченнями.
+  Назви громади як частину району («у ... громаді ... району»), а не як додаткову
+  окрему територію («у районі та громаді»). Не об’єднуй усі райони в одне довге речення;
+- у 1.1 не повторюй ту саму думку другим реченням із переліком уже згаданих районів.
 """
