@@ -5,6 +5,8 @@ from datetime import datetime
 
 import requests
 
+from report_rules import EDITORIAL_RULES, source_problems
+
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
 REQUIRED_SECTIONS = ("1.1.", "1.2.", "1.3.", "1.4.", "2.1.", "2.2.", "2.3.", "2.4.")
@@ -111,6 +113,7 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 {start_label} — {end_label}, за Києвом. Фактичний час перевірки: {checked_label}.
 
 Обов’язкові правила:
+{EDITORIAL_RULES}
 - збережи рівно вісім пунктів: 1.1–1.4 і 2.1–2.4;
 - не додавай нових пунктів;
 - не пиши назви каналів, URL, посилання, час публікації або цитати;
@@ -216,6 +219,7 @@ def build_review_prompt(report, posts, start_label, end_label):
 початок, дати та завершальне речення.
 
 Контрольні правила:
+{EDITORIAL_RULES}
 - звітне вікно: {start_label} — {end_label}; старий контекст не включай;
 - зведи початкові та пізніші повідомлення про одну подію в один епізод і використай
   останнє підтверджене уточнення; не дублюй загиблих, поранених або пошкодження;
@@ -308,7 +312,7 @@ def enforce_report_frame(text, start_label, end_label, checked_label):
     )
 
 
-def validate_report(text, end_date_label, linked_locations=()):
+def validate_report(text, end_date_label, linked_locations=(), posts=None):
     problems = []
     stripped = (text or "").strip()
     if not stripped.startswith("Доброго дня."):
@@ -397,6 +401,8 @@ def validate_report(text, end_date_label, linked_locations=()):
             problems.append("repeated fact")
             break
         seen_sentences.add(normalized)
+    if posts is not None:
+        problems.extend(source_problems(stripped, posts))
     if problems:
         raise ValueError("; ".join(problems))
     return stripped
@@ -452,7 +458,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
-            draft = validate_report(text, end_date_label, linked_locations)
+            draft = validate_report(text, end_date_label, linked_locations, posts)
             break
         except ValueError as error:
             last_error = error
@@ -472,11 +478,12 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
-            return validate_report(reviewed, end_date_label, linked_locations)
-        except RuntimeError:
+            return validate_report(reviewed, end_date_label, linked_locations, posts)
+        except (RuntimeError, requests.RequestException) as error:
             # The draft has already passed deterministic validation. If the
             # optional editorial API call is rate-limited or unavailable, keep
             # that safe author version instead of dropping to the raw fallback.
+            print(f"Editorial API unavailable; using validated author draft: {type(error).__name__}")
             return draft
         except ValueError as error:
             review_error = error

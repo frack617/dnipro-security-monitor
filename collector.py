@@ -46,7 +46,7 @@ ALERT_TERMS = (
 ATTACK_TERMS = (
     "обстріл", "атак", "ворожа атака",
     "ракетний удар", "ракетна атака", "ударний безпілотник", "бпла",
-    "шахед", "влучання", "ворог завдав удару",
+    "шахед", "влучання", "ворог завдав удару", "завдав ударів", "завдали удар",
 )
 ROAD_TERMS = (
     "перекрито рух", "перекриття руху", "обмежено рух", "обмеження руху",
@@ -64,6 +64,9 @@ SERVICE_TERMS = (
     "масштабна пожежа", "аварія на", "затримка руху", "не курсуватиме",
     "туман", "видимість", "погодинні відключення", "графік відключень",
     "відключення електроенергії",
+    "гпв", "графіки відключення", "відключення світла",
+    "обмеження електропостачання", "відключення наступних черг",
+    "гроза", "гроз", "рівень небезпечності", "штормове попередження",
 )
 WEAPON_TERMS = ("збро", "гранат", "вибухівк", "боєприпас")
 ENFORCEMENT_TERMS = ("незакон", "вилуч", "затрим", "підозр", "обшук", "збут")
@@ -342,10 +345,29 @@ def explicit_event_dates(post):
             dates.append(datetime(year, UA_MONTHS[month_text], int(day_text)).date())
         except ValueError:
             continue
+    # Require a year for numeric dates: queue 1.2 and route 6.1 are not dates.
+    for day, month, year in re.findall(r"\b([0-3]?\d)\.([01]?\d)\.(20\d{2})\b", text):
+        try:
+            dates.append(datetime(int(year), int(month), int(day)).date())
+        except ValueError:
+            continue
     return dates
 
 
 def is_historical_context(post, report_start_local):
+    text = post.get("text", "").lower()
+    if re.search(
+        r"\b(?:декілька|кілька|декількох|кількох|\d+)\s+"
+        r"(?:тижн\w*|місяц\w*|рок\w*)\s+тому\b|"
+        r"\b(?:минулого|позаминулого)\s+(?:тижня|місяця|року)\b|"
+        r"\bголовні події тижня\b",
+        text,
+    ):
+        return True
+    if re.search(r"\b(?:напередодні|вчора|учора|минулої доби|за минулу добу)\b", text):
+        published = parse_datetime(post.get("published_at"))
+        if published and published.astimezone(KYIV).date() - timedelta(days=1) < report_start_local.date():
+            return True
     dates = explicit_event_dates(post)
     return bool(dates) and max(dates) < report_start_local.date()
 
@@ -766,4 +788,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
