@@ -7,6 +7,7 @@ import requests
 
 from report_rules import EDITORIAL_RULES, source_problems
 from gemini_transport import RequestBudget, request_text
+from quota_budget import UsageLedger
 
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
@@ -429,7 +430,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             "ланцюжка уточнень. Подай загиблого та попередню кількість поранених "
             "разом в одному реченні одного епізоду."
         )
-    budget = RequestBudget(limit=4)
+    budget = RequestBudget(limit=4, ledger=UsageLedger.from_environment(model))
     last_error = None
     draft = None
     for attempt in range(2):
@@ -451,6 +452,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
         raise RuntimeError(f"Gemini report failed validation: {last_error}")
 
     review_prompt = build_review_prompt(draft, posts, start_label, end_label)
+    budget.stage = "editor"
     review_error = None
     for attempt in range(2):
         retry_note = ""

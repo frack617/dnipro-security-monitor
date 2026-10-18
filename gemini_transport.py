@@ -13,6 +13,8 @@ class RequestBudget:
     limit: int = 4
     used: int = 0
     rate_retry_used: bool = False
+    ledger: object = None
+    stage: str = "author"
 
 
 class GeminiAPIError(RuntimeError):
@@ -90,6 +92,7 @@ def request_text(endpoint, api_key, prompt, budget=None, allow_rate_retry=False)
     while True:
         if budget.used >= budget.limit:
             raise RuntimeError("Gemini request budget exhausted")
+        request_id = budget.ledger.reserve(budget.stage) if budget.ledger is not None else None
         budget.used += 1
         try:
             response = requests.post(
@@ -97,14 +100,20 @@ def request_text(endpoint, api_key, prompt, budget=None, allow_rate_retry=False)
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(payload, ensure_ascii=False).encode("utf-8"), timeout=90)
         except requests.RequestException as error:
+            if budget.ledger is not None:
+                budget.ledger.finish(request_id, "transport_error")
             # requests exception messages can contain the URL with its key.
             raise RuntimeError("Gemini transport error: " + type(error).__name__) from None
         if response.status_code == 200:
+            if budget.ledger is not None:
+                budget.ledger.finish(request_id, "http_200")
             try:
                 return response.json()["candidates"][0]["content"]["parts"][0]["text"]
             except (KeyError, IndexError, TypeError, ValueError):
                 raise RuntimeError("Gemini returned no usable text") from None
         diagnostic = diagnose_response(response, api_key)
+        if budget.ledger is not None:
+            budget.ledger.finish(request_id, f"http_{response.status_code}", diagnostic)
         print("Gemini API diagnostic: " + json.dumps(diagnostic, ensure_ascii=False))
         delay = diagnostic.get("retry_seconds")
         can_retry = (
