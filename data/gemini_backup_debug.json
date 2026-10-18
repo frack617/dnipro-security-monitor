@@ -1,0 +1,16 @@
+{
+  "run_id": "39144297394",
+  "attempts": [
+    {
+      "attempt": 1,
+      "stage": "author",
+      "status": "http_404",
+      "diagnostic": {
+        "http": 404,
+        "reason": "unknown",
+        "violations": [],
+        "status": "NOT_FOUND"
+      }
+    }
+  ]
+}
