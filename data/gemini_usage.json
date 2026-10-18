@@ -145,6 +145,33 @@
       "stage": "author",
       "outcome": "http_404",
       "reason": "unknown"
+    },
+    {
+      "id": "39145124252:2026-10-18T16:28:16.229416+00:00:16",
+      "at": "2026-10-18T16:28:16.229416+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39145124252",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39145124252:2026-10-18T16:28:19.264200+00:00:17",
+      "at": "2026-10-18T16:28:19.264200+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39145124252",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39145124252:2026-10-18T16:28:22.089722+00:00:18",
+      "at": "2026-10-18T16:28:22.089722+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39145124252",
+      "stage": "editor",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
