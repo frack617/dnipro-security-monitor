@@ -91,6 +91,9 @@ def casualty_location_problems(section, posts):
 
 
 def source_problems(report, posts):
+    if any(len(re.findall(rf"(?m)^{re.escape(section)}\.\s", report)) > 1
+           for section in ("1.1", "1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")):
+        return ["duplicate report sections; factual checks require an unambiguous structure"]
     problems = []
     attacks = [p for p in posts if p.get("category_hint") == "2.1"]
     attack_text = normalize(" ".join(p.get("text", "") for p in attacks))

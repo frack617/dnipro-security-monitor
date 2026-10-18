@@ -6,7 +6,7 @@ from datetime import datetime
 
 import requests
 
-from report_rules import EDITORIAL_RULES, source_problems
+from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, source_problems
 from gemini_transport import RequestBudget, request_text
 from quota_budget import UsageLedger
 
@@ -102,6 +102,11 @@ def linked_casualty_locations(posts, max_gap_hours=3):
 
 
 def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
+    communities = sorted({
+        name for post in posts if post.get("category_hint") == "2.1"
+        for name in re.findall(COMMUNITY_NAME, post.get("text", ""))
+    })
+    community_checklist = ", ".join(communities) or "У вхідних даних не названі."
     limitations = (
         "Немає помилок отримання каналів."
         if not failed_sources
@@ -185,24 +190,37 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 - кожен номер пункту та його зміст подавай в одному абзаці; не повторюй назву
   категорії окремим реченням після номера;
 
-Початок відповіді має бути дослівно таким:
+Поверни одразу готову довідку. Не друкуй зміст, план або порожній перелік пунктів
+перед її текстом. Кожен номер 1.1.–1.4. та 2.1.–2.4. має з’явитися рівно один раз,
+одразу зі змістом відповідного пункту.
+
+Дослівно відтвори лише ці чотири вступні рядки:
 Доброго дня.
 
 Звіт по Дніпропетровській області станом на {end_label}.
 Звітний період: з {start_label} до {end_label}, за Києвом.
 Фактичний час автоматичної перевірки: {checked_label}.
 
-1. Загальна ситуація в області:
-1.1. Загальна безпекова ситуація та підтверджені ризики.
-1.2. Перекриття, обмеження доріг і зміни руху.
-1.3. Оголошені вибухові роботи та контрольоване знешкодження.
-1.4. Комунальні послуги, транспорт, пожежі, аварії та практичні фактори.
+Після вступу напиши заголовок «1. Загальна ситуація в області:», а під ним
+чотири заповнені пункти. Їх призначення (це інструкція, не текст для копіювання):
+1.1 — загальна безпекова ситуація та підтверджені ризики;
+1.2 — перекриття, обмеження доріг і зміни руху;
+1.3 — оголошені вибухові роботи та контрольоване знешкодження;
+1.4 — комунальні послуги, транспорт, пожежі, аварії та практичні фактори.
 
-2. Події:
-2.1. Обстріли, ракетні атаки, атаки БпЛА та наслідки.
-2.2. Незаконне поводження зі зброєю та вибухівкою.
-2.3. Повідомлення про мінування цивільної інфраструктури.
-2.4. Виявлення вибухонебезпечних предметів.
+Далі напиши заголовок «2. Події:», а під ним чотири заповнені пункти:
+2.1 — обстріли, ракетні атаки, атаки БпЛА та наслідки;
+2.2 — незаконне поводження зі зброєю та вибухівкою;
+2.3 — повідомлення про мінування цивільної інфраструктури;
+2.4 — виявлення вибухонебезпечних предметів.
+
+Номер кожного заповненого пункту закінчуй крапкою, потім пробіл і зміст.
+Назви категорій із цієї інструкції перед змістом не повторюй.
+Перед поверненням перевір, що у 2.1 збережені всі названі у вхідних атаках громади
+(відмінок можна змінювати): {community_checklist}
+Прив’язуй наслідки та постраждалих до їхніх епізодів і локацій.
+Денні й нічні показники кількості атак подай окремо у 2.1, без власного
+арифметичного підсумку та без цих чисел у 1.1.
 
 Заверши реченням:
 «Це огляд станом на {end_label}. Для негайних дій слід стежити за офіційними сповіщеннями про повітряну тривогу.»
@@ -321,8 +339,12 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
     if not stripped.startswith("Доброго дня."):
         problems.append("wrong opening")
     for section in REQUIRED_SECTIONS:
-        if len(re.findall(rf"(?m)^{re.escape(section)}\s", stripped)) != 1:
-            problems.append(f"section {section}")
+        count = len(re.findall(rf"(?m)^{re.escape(section)}\s", stripped))
+        if count != 1:
+            problems.append(f"{'duplicate' if count > 1 else 'missing'} section {section}")
+    # Do not interpret the first of duplicated sections as the only factual body.
+    if any(" section " in problem for problem in problems):
+        raise ValueError("; ".join(problems))
     for line in stripped.splitlines():
         if re.match(r"^\d+\.\d+\.\s", line):
             caption = re.sub(r"^\d+\.\d+\.\s+", "", line)
