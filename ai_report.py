@@ -414,7 +414,7 @@ def _request_report(endpoint, api_key, prompt, budget=None, allow_rate_retry=Fal
     return request_text(endpoint, api_key, prompt, budget, allow_rate_retry)
 
 
-def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
+def generate_gemini_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY is not configured")
@@ -475,6 +475,26 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
         except ValueError as error:
             review_error = error
     raise RuntimeError(f"Gemini review failed validation: {review_error}")
+
+
+def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
+    provider = os.getenv("REPORT_PROVIDER", "auto").strip().lower() or "auto"
+    args = (posts, start_label, end_label, checked_label, end_date_label, failed_sources)
+    if provider not in {"auto", "gemini", "groq"}:
+        raise RuntimeError("Unknown REPORT_PROVIDER")
+    if provider == "groq":
+        from groq_report import generate_groq_report
+        return generate_groq_report(*args)
+    try:
+        result = generate_gemini_report(*args)
+        print("Author provider used: gemini")
+        return result
+    except (RuntimeError, ValueError, requests.RequestException) as error:
+        if provider == "gemini" or not os.getenv("GROQ_API_KEY", "").strip():
+            raise
+        print(f"Gemini author unavailable; trying independent Groq fallback: {error}")
+    from groq_report import generate_groq_report
+    return generate_groq_report(*args)
 
 
 def sanitize_fallback(report):

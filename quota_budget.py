@@ -60,7 +60,7 @@ class UsageLedger:
         state["events"].append({"id": request_id, "at": now.isoformat(), "model": self.model,
             "event": self.event, "run_id": run_id, "stage": stage, "outcome": "reserved"})
         self._write(state)
-        print(f"Gemini request reserved: stage={stage} event={self.event} rolling24h={len(rows)+1}/12 preview_stop=8")
+        print(f"AI request reserved: model={self.model} stage={stage} event={self.event} rolling24h={len(rows)+1}/12 preview_stop=8")
         return request_id
 
     def finish(self, request_id, outcome, diagnostic=None):
