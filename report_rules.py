@@ -84,7 +84,17 @@ def casualty_location_problems(section, posts):
     problems = []
     for index, (start, end, stem) in enumerate(markers):
         stop = markers[index+1][0] if index+1 < len(markers) else len(section)
-        counts = casualty_counts(section[end:stop])
+        segment = section[end:stop]
+        # An explicitly marked day/window total starts a new scope, rather
+        # than extending the preceding community's event. Global count and
+        # total-source checks below still apply to the entire section.
+        summary = re.search(
+            r"(?:^|(?<=[.!?])\s+)(?:загалом|усього|всього)\s+"
+            r"(?:протягом дня|упродовж дня|за день|за добу|за звітний період)\b",
+            segment, re.I)
+        if summary:
+            segment = segment[:summary.start()]
+        counts = casualty_counts(segment)
         if counts - records[stem]:
             problems.append("casualties assigned to unsupported community: " + stem)
     return problems

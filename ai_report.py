@@ -457,6 +457,40 @@ def _request_report(endpoint, api_key, prompt, budget=None, allow_rate_retry=Fal
     return request_text(endpoint, api_key, prompt, budget, allow_rate_retry)
 
 
+def build_repair_note(draft, error):
+    problems = str(error).split("; ")
+    instructions = []
+    for problem in problems:
+        if problem == "unsupported attack total":
+            instructions.append("Вилучи непідтверджений сумарний показник атак. "
+                "Відтвори денний та нічний показники окремо у 2.1, кожен зі своїм "
+                "періодом із джерела; не складай їх.")
+        elif problem == "attack counts belong in section 2.1 with their source periods":
+            instructions.append("У 1.1 повністю вилучи числову кількість атак; "
+                "залиши лише якісний огляд ризиків. Числа з джерел подай у 2.1.")
+        elif problem.startswith("missing attack community:"):
+            instructions.append("У 2.1 поверни громаду з її підтвердженими наслідками: "
+                                + problem.split(": ", 1)[1])
+        elif problem.startswith("casualties assigned to unsupported community:"):
+            instructions.append("Перевір місце поранення за джерелами. Не розміщуй "
+                "кількість поранених після опису іншої громади. В одному реченні "
+                "прямо назви підтверджене місце, період та кількість постраждалих.")
+        elif problem.startswith(("duplicate section", "missing section")):
+            instructions.append("Подай кожен пункт рівно один раз, зі змістом; "
+                "без попереднього порожнього переліку або змісту.")
+        else:
+            instructions.append("Виправ за джерелами порушення: " + problem)
+    actions = "\n".join("- " + item for item in dict.fromkeys(instructions))
+    return (
+        "\n\nВИПРАВЛЕННЯ ВІДХИЛЕНОЇ ЧЕРНЕТКИ. Нижче наведено помилкову відповідь, "
+        "а не нове джерело фактів. Відредагуй її за початковими джерелами, "
+        "збережи всі коректні громади, наслідки й інші пункти. "
+        "Поверни лише повний виправлений текст, без пояснень.\n"
+        + actions + "\n\nВІДХИЛЕНА ЧЕРНЕТКА:\n" + draft
+        + "\n\nПеред поверненням перевір виконання кожного виправлення вище."
+    )
+
+
 def generate_gemini_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
     if not api_key:
@@ -482,10 +516,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
     for attempt in range(2):
         retry_note = ""
         if last_error is not None:
-            retry_note = (
-                "\n\nПОПЕРЕДНЮ ВІДПОВІДЬ ВІДХИЛЕНО АВТОМАТИЧНО. "
-                f"Причина: {last_error}. Створи виправлену відповідь з нуля."
-            )
+            retry_note = build_repair_note(text, last_error)
         text = _request_report(endpoint, api_key, prompt + retry_note, budget, allow_rate_retry=True)
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
@@ -505,10 +536,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
     for attempt in range(2):
         retry_note = ""
         if review_error is not None:
-            retry_note = (
-                "\n\nПОПЕРЕДНЯ РЕДАКЦІЯ НЕ ПРОЙШЛА АВТОМАТИЧНИЙ КОНТРОЛЬ. "
-                f"Причина: {review_error}. Поверни повністю виправлену довідку."
-            )
+            retry_note = build_repair_note(reviewed, review_error)
         try:
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note, budget)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
