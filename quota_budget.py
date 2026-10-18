@@ -8,6 +8,12 @@ from pathlib import Path
 USAGE_FILE = Path(__file__).resolve().parent / "data" / "gemini_usage.json"
 
 
+def local_limits(model):
+    # Local ceilings, not a claim about Google's available server quota.
+    # Raising both ceilings by two retains four scheduled attempts.
+    return (10, 14) if model == "gemini-2.5-flash-lite" else (8, 12)
+
+
 class UsageLedger:
     def __init__(self, model, path=USAGE_FILE, event=None, now=None):
         self.model = model
@@ -52,7 +58,8 @@ class UsageLedger:
                 raise RuntimeError("Invalid Gemini cooldown; API disabled until repaired") from None
         cutoff = now - timedelta(hours=24)
         rows = [r for r in state["events"] if r.get("model") == self.model and datetime.fromisoformat(r["at"]) > cutoff]
-        limit = 12 if self.event == "schedule" else 8
+        manual_limit, total_limit = local_limits(self.model)
+        limit = total_limit if self.event == "schedule" else manual_limit
         if len(rows) >= limit:
             raise RuntimeError(f"Local Gemini budget blocked {self.event}: {len(rows)}/{limit} attempts in rolling 24h; no API request")
         run_id = os.getenv("GITHUB_RUN_ID", "local")
@@ -60,7 +67,8 @@ class UsageLedger:
         state["events"].append({"id": request_id, "at": now.isoformat(), "model": self.model,
             "event": self.event, "run_id": run_id, "stage": stage, "outcome": "reserved"})
         self._write(state)
-        print(f"AI request reserved: model={self.model} stage={stage} event={self.event} rolling24h={len(rows)+1}/12 preview_stop=8")
+        print(f"AI request reserved: model={self.model} stage={stage} event={self.event} "
+              f"rolling24h={len(rows)+1}/{total_limit} preview_stop={manual_limit}")
         return request_id
 
     def finish(self, request_id, outcome, diagnostic=None):
