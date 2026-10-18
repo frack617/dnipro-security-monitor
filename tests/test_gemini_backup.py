@@ -85,7 +85,7 @@ class BackupGeminiTests(unittest.TestCase):
         self.assertEqual(generate_gemini_report(*ARGS, backup=True), VALID_REPORT.strip())
         self.assertEqual(request.call_count, 2)
         self.assertTrue(all(call.args[1] == "backup-test" for call in request.call_args_list))
-        self.assertIn("gemini-2.5-flash-lite", request.call_args.args[0])
+        self.assertIn("gemini-3.5-flash-lite", request.call_args.args[0])
         self.assertNotIn("backup-test", self.log.getvalue())
 
     @patch("ai_report._request_report", return_value="invalid report")
@@ -113,7 +113,7 @@ class BackupGeminiTests(unittest.TestCase):
              patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
             generate_gemini_report(*ARGS, backup=True)
             budget = request.call_args.args[3]
-            self.assertEqual(budget.ledger.model, "gemini_backup:gemini-2.5-flash-lite")
+            self.assertEqual(budget.ledger.model, "gemini_backup:gemini-3.5-flash-lite")
             self.assertTrue((Path(folder) / "data" / "gemini_backup_debug.json").exists())
             self.assertFalse((Path(folder) / "data" / "gemini_debug.json").exists())
 

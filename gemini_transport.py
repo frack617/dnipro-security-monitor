@@ -90,6 +90,14 @@ def diagnose_response(response, api_key=""):
     if not isinstance(error, dict):
         error = {}
     diagnostic["status"] = _safe(error.get("status", "unknown"), api_key)
+    if response.status_code == 404 and re.search(
+        r"no longer available|not available to new users",
+        str(error.get("message", "")), re.I
+    ):
+        diagnostic["reason"] = "model_unavailable"
+        suggested = re.search(r"use\s+models/([A-Za-z0-9._-]+)", str(error.get("message", "")))
+        if suggested:
+            diagnostic["suggested_model"] = _safe(suggested.group(1).rstrip("."), api_key)
     details = error.get("details", [])
     if not isinstance(details, list):
         details = []
@@ -123,6 +131,8 @@ def diagnose_response(response, api_key=""):
     if retry_seconds is not None and math.isfinite(retry_seconds):
         diagnostic["retry_seconds"] = retry_seconds
     identifiers = " ".join(str(item) for item in diagnostic["violations"]).lower()
+    if diagnostic["reason"] == "model_unavailable":
+        return diagnostic
     if any(v.get("quotaValue") == "0" for v in diagnostic["violations"]):
         diagnostic["reason"] = "zero_quota"
     elif re.search(r"perday|per_day|daily", identifiers):

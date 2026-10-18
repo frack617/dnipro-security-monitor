@@ -12,6 +12,7 @@ from quota_budget import UsageLedger
 
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
+BACKUP_DEFAULT_MODEL = "gemini-3.5-flash-lite"
 REQUIRED_SECTIONS = ("1.1.", "1.2.", "1.3.", "1.4.", "2.1.", "2.2.", "2.3.", "2.4.")
 UA_MONTH_NAMES = (
     "січня", "лютого", "березня", "квітня", "травня", "червня",
@@ -514,7 +515,9 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
         raise RuntimeError(key_name + " is not configured")
     if backup and api_key == os.getenv("GEMINI_API_KEY", "").strip():
         raise RuntimeError("Backup Gemini key duplicates primary; no API request")
-    model = os.getenv("GEMINI_MODEL", DEFAULT_MODEL).strip() or DEFAULT_MODEL
+    model_env = "GEMINI_BACKUP_MODEL" if backup else "GEMINI_MODEL"
+    default_model = BACKUP_DEFAULT_MODEL if backup else DEFAULT_MODEL
+    model = os.getenv(model_env, default_model).strip() or default_model
     endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     prompt = build_prompt(posts, start_label, end_label, checked_label, failed_sources)
     linked_locations = linked_casualty_locations(posts)
