@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-18T06:23:30.759018+00:00",
+  "checked_at": "2026-10-18T06:37:18.965075+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-17T08:00:00+03:00",
@@ -10,7 +10,7 @@
     "adm_dp": {
       "ok": true,
       "posts_found": 13,
-      "oldest_collected_at": "2026-10-15T06:05:48+00:00",
+      "oldest_collected_at": "2026-10-15T06:55:14+00:00",
       "newest_collected_at": "2026-10-18T04:30:14+00:00"
     },
     "dsns_telegram": {
@@ -27,9 +27,9 @@
     },
     "DniproCityOfficial": {
       "ok": true,
-      "posts_found": 9,
-      "oldest_collected_at": "2026-10-15T05:59:01+00:00",
-      "newest_collected_at": "2026-10-18T05:59:01+00:00"
+      "posts_found": 10,
+      "oldest_collected_at": "2026-10-15T06:28:01+00:00",
+      "newest_collected_at": "2026-10-18T06:29:00+00:00"
     },
     "gunpvdp": {
       "ok": true,
@@ -52,7 +52,7 @@
     "dnipropetrovskaODA": {
       "ok": true,
       "posts_found": 18,
-      "oldest_collected_at": "2026-10-15T06:04:18+00:00",
+      "oldest_collected_at": "2026-10-15T08:53:18+00:00",
       "newest_collected_at": "2026-10-18T04:30:04+00:00"
     }
   }

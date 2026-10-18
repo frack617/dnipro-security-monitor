@@ -17,6 +17,24 @@
       "run_id": "39103858437",
       "stage": "groq_author",
       "outcome": "http_200"
+    },
+    {
+      "id": "39104678687:2026-10-18T06:37:21.010081+00:00:2",
+      "at": "2026-10-18T06:37:21.010081+00:00",
+      "model": "groq:openai/gpt-oss-120b",
+      "event": "workflow_dispatch",
+      "run_id": "39104678687",
+      "stage": "groq_author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39104678687:2026-10-18T06:38:25.113099+00:00:3",
+      "at": "2026-10-18T06:38:25.113099+00:00",
+      "model": "groq:openai/gpt-oss-120b",
+      "event": "workflow_dispatch",
+      "run_id": "39104678687",
+      "stage": "groq_author",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
