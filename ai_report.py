@@ -506,10 +506,14 @@ def build_repair_note(draft, error):
     )
 
 
-def generate_gemini_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
-    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+def generate_gemini_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources,
+                           *, backup=False):
+    key_name = "GEMINI_BACKUP_API_KEY" if backup else "GEMINI_API_KEY"
+    api_key = os.getenv(key_name, "").strip()
     if not api_key:
-        raise RuntimeError("GEMINI_API_KEY is not configured")
+        raise RuntimeError(key_name + " is not configured")
+    if backup and api_key == os.getenv("GEMINI_API_KEY", "").strip():
+        raise RuntimeError("Backup Gemini key duplicates primary; no API request")
     model = os.getenv("GEMINI_MODEL", DEFAULT_MODEL).strip() or DEFAULT_MODEL
     endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     prompt = build_prompt(posts, start_label, end_label, checked_label, failed_sources)
@@ -522,9 +526,11 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             "ланцюжка уточнень. Подай загиблого та попередню кількість поранених "
             "разом в одному реченні одного епізоду."
         )
-    budget = RequestBudget(limit=4, ledger=UsageLedger.from_environment(model))
+    usage_model = "gemini_backup:" + model if backup else model
+    budget = RequestBudget(limit=4, ledger=UsageLedger.from_environment(usage_model))
     if os.getenv("GITHUB_ACTIONS") == "true":
-        budget.debug_path = Path(__file__).resolve().parent / "data" / "gemini_debug.json"
+        filename = "gemini_backup_debug.json" if backup else "gemini_debug.json"
+        budget.debug_path = Path(__file__).resolve().parent / "data" / filename
         budget.save_debug()
     last_error = None
     draft = None
@@ -571,11 +577,19 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
     raise RuntimeError(f"Gemini review failed validation: {review_error}")
 
 
+def generate_backup_gemini_report(*args):
+    result = generate_gemini_report(*args, backup=True)
+    print("Author provider used: gemini_backup")
+    return result
+
+
 def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
     provider = os.getenv("REPORT_PROVIDER", "auto").strip().lower() or "auto"
     args = (posts, start_label, end_label, checked_label, end_date_label, failed_sources)
-    if provider not in {"auto", "gemini", "groq"}:
+    if provider not in {"auto", "gemini", "gemini_backup", "groq"}:
         raise RuntimeError("Unknown REPORT_PROVIDER")
+    if provider == "gemini_backup":
+        return generate_backup_gemini_report(*args)
     if provider == "groq":
         from groq_report import generate_groq_report
         return generate_groq_report(*args)
@@ -584,9 +598,20 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
         print("Author provider used: gemini")
         return result
     except (RuntimeError, ValueError, requests.RequestException) as error:
-        if provider == "gemini" or not os.getenv("GROQ_API_KEY", "").strip():
+        if provider == "gemini":
             raise
-        print(f"Gemini author unavailable; trying independent Groq fallback: {error}")
+        print(f"Primary Gemini unavailable: {error}")
+        if os.getenv("GEMINI_BACKUP_API_KEY", "").strip():
+            try:
+                print("Trying backup Gemini")
+                return generate_backup_gemini_report(*args)
+            except (RuntimeError, ValueError, requests.RequestException) as backup_error:
+                print(f"Backup Gemini unavailable: {backup_error}")
+                if not os.getenv("GROQ_API_KEY", "").strip():
+                    raise
+        elif not os.getenv("GROQ_API_KEY", "").strip():
+            raise
+    print("Trying independent Groq fallback")
     from groq_report import generate_groq_report
     return generate_groq_report(*args)
 
