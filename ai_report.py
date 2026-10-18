@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 
 from report_rules import EDITORIAL_RULES, source_problems
+from gemini_transport import RequestBudget, request_text
 
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
@@ -408,25 +409,8 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
     return stripped
 
 
-def _request_report(endpoint, api_key, prompt):
-    payload = {
-        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.1, "maxOutputTokens": 2200},
-    }
-    response = requests.post(
-        endpoint,
-        params={"key": api_key},
-        headers={"Content-Type": "application/json"},
-        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-        timeout=90,
-    )
-    if response.status_code != 200:
-        raise RuntimeError(f"Gemini HTTP {response.status_code}")
-    try:
-        data = response.json()
-        return data["candidates"][0]["content"]["parts"][0]["text"]
-    except (KeyError, IndexError, TypeError, ValueError) as error:
-        raise RuntimeError("Gemini returned no usable text") from error
+def _request_report(endpoint, api_key, prompt, budget=None, allow_rate_retry=False):
+    return request_text(endpoint, api_key, prompt, budget, allow_rate_retry)
 
 
 def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
@@ -445,6 +429,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             "ланцюжка уточнень. Подай загиблого та попередню кількість поранених "
             "разом в одному реченні одного епізоду."
         )
+    budget = RequestBudget(limit=4)
     last_error = None
     draft = None
     for attempt in range(2):
@@ -454,7 +439,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
                 "\n\nПОПЕРЕДНЮ ВІДПОВІДЬ ВІДХИЛЕНО АВТОМАТИЧНО. "
                 f"Причина: {last_error}. Створи виправлену відповідь з нуля."
             )
-        text = _request_report(endpoint, api_key, prompt + retry_note)
+        text = _request_report(endpoint, api_key, prompt + retry_note, budget, allow_rate_retry=True)
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
@@ -475,7 +460,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
                 f"Причина: {review_error}. Поверни повністю виправлену довідку."
             )
         try:
-            reviewed = _request_report(endpoint, api_key, review_prompt + retry_note)
+            reviewed = _request_report(endpoint, api_key, review_prompt + retry_note, budget)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
             return validate_report(reviewed, end_date_label, linked_locations, posts)
@@ -483,7 +468,7 @@ def generate_report(posts, start_label, end_label, checked_label, end_date_label
             # The draft has already passed deterministic validation. If the
             # optional editorial API call is rate-limited or unavailable, keep
             # that safe author version instead of dropping to the raw fallback.
-            print(f"Editorial API unavailable; using validated author draft: {type(error).__name__}")
+            print(f"Editorial API unavailable; using validated author draft: {error}")
             return draft
         except ValueError as error:
             review_error = error
