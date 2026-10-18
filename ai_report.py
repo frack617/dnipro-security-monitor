@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from pathlib import Path
 from datetime import datetime
 
 import requests
@@ -451,6 +452,9 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             "разом в одному реченні одного епізоду."
         )
     budget = RequestBudget(limit=4, ledger=UsageLedger.from_environment(model))
+    if os.getenv("GITHUB_ACTIONS") == "true":
+        budget.debug_path = Path(__file__).resolve().parent / "data" / "gemini_debug.json"
+        budget.save_debug()
     last_error = None
     draft = None
     for attempt in range(2):
@@ -465,8 +469,10 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
             draft = validate_report(text, end_date_label, linked_locations, posts)
+            budget.validation(text)
             break
         except ValueError as error:
+            budget.validation(text, error)
             last_error = error
     if draft is None:
         raise RuntimeError(f"Gemini report failed validation: {last_error}")
@@ -485,7 +491,9 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note, budget)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
-            return validate_report(reviewed, end_date_label, linked_locations, posts)
+            result = validate_report(reviewed, end_date_label, linked_locations, posts)
+            budget.validation(reviewed)
+            return result
         except (RuntimeError, requests.RequestException) as error:
             # The draft has already passed deterministic validation. If the
             # optional editorial API call is rate-limited or unavailable, keep
@@ -493,6 +501,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             print(f"Editorial API unavailable; using validated author draft: {error}")
             return draft
         except ValueError as error:
+            budget.validation(reviewed, error)
             review_error = error
     raise RuntimeError(f"Gemini review failed validation: {review_error}")
 
