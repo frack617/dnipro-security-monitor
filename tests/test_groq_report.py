@@ -1,17 +1,24 @@
 import io
+import json
 import os
 import unittest
 from contextlib import redirect_stdout
 from unittest.mock import Mock, patch
 
 import collector
-from ai_report import generate_report
-from groq_report import _request_groq, build_compact_prompt, clean_source_text, compact_evidence, generate_groq_report
+from ai_report import generate_report, validate_report
+from groq_report import _request_groq, build_compact_prompt, clean_source_text, compact_evidence, generate_groq_report, render_groq_sections
 from test_ai_report import VALID_REPORT
 from test_source_accuracy import report, source
+from report_rules import report_section
 
 
 ARGS = ([], "08:00 16.10.2026", "08:00 17.10.2026", "08:05 17.10.2026", "17.10.2026", [])
+
+
+def json_sections(text):
+    return json.dumps({f"{g}.{i}": report_section(text, f"{g}.{i}").strip().split("\n\n2. Події:")[0]
+                       for g in (1, 2) for i in range(1, 5)}, ensure_ascii=False)
 
 
 class GroqIntegrationTests(unittest.TestCase):
@@ -92,15 +99,42 @@ class GroqIntegrationTests(unittest.TestCase):
             _request_groq("prompt", "secret", "model", None)
 
     @patch.dict(os.environ, {"GROQ_API_KEY": "test"})
-    @patch("groq_report._request_groq", return_value=VALID_REPORT)
+    @patch("groq_report._request_groq", return_value=json_sections(VALID_REPORT))
     def test_groq_result_passes_existing_validation(self, request):
-        self.assertEqual(generate_groq_report(*ARGS), VALID_REPORT.strip())
+        result = generate_groq_report(*ARGS)
+        self.assertEqual(validate_report(result, "17.10.2026"), result)
+        for key in ("1.1", "1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4"):
+            self.assertIn(key + ". ", result)
+
+    def test_json_renderer_owns_frame_and_has_exactly_eight_sections(self):
+        result = render_groq_sections(json_sections(VALID_REPORT), *ARGS[1:4])
+        self.assertTrue(result.startswith("Доброго дня."))
+        self.assertIn("Фактичний час автоматичної перевірки: 08:05 17.10.2026", result)
+        self.assertEqual(result.count("1. Загальна ситуація в області:"), 1)
+        validate_report(result, "17.10.2026")
+
+    def test_json_renderer_rejects_extra_or_missing_keys(self):
+        data = json.loads(json_sections(VALID_REPORT))
+        data["3.1"] = "Неприпустимий пункт"
+        with self.assertRaisesRegex(ValueError, "exactly eight"):
+            render_groq_sections(json.dumps(data), *ARGS[1:4])
+        del data["3.1"]
+        del data["2.4"]
+        with self.assertRaisesRegex(ValueError, "exactly eight"):
+            render_groq_sections(json.dumps(data), *ARGS[1:4])
+
+    def test_json_renderer_rejects_nested_or_empty_values(self):
+        for value in ({"text": "nested"}, "", None):
+            data = json.loads(json_sections(VALID_REPORT))
+            data["1.1"] = value
+            with self.assertRaisesRegex(ValueError, "nonempty string"):
+                render_groq_sections(json.dumps(data), *ARGS[1:4])
 
     @patch.dict(os.environ, {"GROQ_API_KEY": "test"})
     @patch("groq_report.time.sleep")
     @patch("groq_report._request_groq")
     def test_incorrect_casualties_are_corrected_once_after_pause(self, request, sleep):
-        request.side_effect = [report("Четверо людей госпіталізовані."), report("Троє людей госпіталізовані.")]
+        request.side_effect = [json_sections(report("Четверо людей госпіталізовані.")), json_sections(report("Троє людей госпіталізовані."))]
         args = ([source("Троє людей дістали поранень.")],) + ARGS[1:]
         result = generate_groq_report(*args)
         self.assertIn("Троє людей", result)

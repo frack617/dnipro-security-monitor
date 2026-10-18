@@ -31,7 +31,7 @@ def casualty_counts(text):
     # Counts must be grammatically attached to people/casualties, not ages,
     # house numbers, attack totals or numbers in adjacent sentences.
     patterns = (
-        rf"\b({NUMBER})\s+(?:{PEOPLE}\s+)?(?:дістал\w*\s+поран\w*|зазнал\w*\s+поран\w*|{CASUALTY})",
+        rf"\b({NUMBER})\s+(?:{PEOPLE}\s+)?(?:(?:дістал\w*|зазнал\w*|отримал\w*)\s+поран\w*|{CASUALTY})",
         rf"\b{CASUALTY}\s+({NUMBER})\s+{PEOPLE}",
         rf"\b({NUMBER})\s+{PEOPLE}\s+(?:бул\w*\s+)?(?:до лікарні\s+)?{CASUALTY}",
     )
@@ -47,12 +47,58 @@ def report_section(report, section):
     return match.group(1) if match else ""
 
 
+COMMUNITY_NAME = r"\b([А-ЯІЇЄҐ][а-яіїєґ’'-]+(?:ськ|цьк)(?:ій|ої|у|а|ою))\b"
+
+
+def community_stems(text):
+    return {re.sub(r"(?:ій|ої|у|а|ою)$", "", name.lower())
+            for name in re.findall(COMMUNITY_NAME, text)}
+
+
+def casualty_location_problems(section, posts):
+    # Source bullet boundaries are essential: a summary's opening casualty
+    # total must not attach itself to every community in following bullets.
+    records = {}
+    for post in posts:
+        blocks = re.split(r"[▪●]\ufe0f?", post.get("text", ""))
+        header_counts = casualty_counts(blocks[0]) if len(blocks) > 1 else set()
+        positive_blocks = [block for block in blocks[1:]
+                           if re.search(CASUALTY, block, re.I)
+                           and not re.search(r"немає|без\s+(?:загиблих|поранених)", block, re.I)]
+        for block in blocks:
+            if "громад" not in block.lower():
+                continue
+            for stem in community_stems(block):
+                counts = casualty_counts(block)
+                # An explicit opening total can belong to the sole regional
+                # casualty paragraph, even if that paragraph lists patients
+                # individually instead of repeating the count.
+                if not counts and len(positive_blocks) == 1 and block == positive_blocks[0]:
+                    counts = header_counts
+                records.setdefault(stem, set()).update(counts)
+    markers = []
+    for stem in records:
+        for match in re.finditer(rf"\b{re.escape(stem)}\w*", section):
+            markers.append((match.start(), match.end(), stem))
+    markers.sort()
+    problems = []
+    for index, (start, end, stem) in enumerate(markers):
+        stop = markers[index+1][0] if index+1 < len(markers) else len(section)
+        counts = casualty_counts(section[end:stop])
+        if counts - records[stem]:
+            problems.append("casualties assigned to unsupported community: " + stem)
+    return problems
+
+
 def source_problems(report, posts):
     problems = []
     attacks = [p for p in posts if p.get("category_hint") == "2.1"]
     attack_text = normalize(" ".join(p.get("text", "") for p in attacks))
     section21 = normalize(report_section(report, "2.1"))
     section11 = normalize(report_section(report, "1.1"))
+    if attacks and "повідомлень за звітний період не виявлено" in section11:
+        problems.append("overview denies available attack reports")
+    problems.extend(casualty_location_problems(section21, attacks))
     allowed_counts = set().union(*(casualty_counts(p.get("text", "")) for p in attacks))
     unsupported = casualty_counts(section21) - allowed_counts
     if unsupported:

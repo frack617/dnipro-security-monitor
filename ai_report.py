@@ -322,6 +322,17 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
     for section in REQUIRED_SECTIONS:
         if len(re.findall(rf"(?m)^{re.escape(section)}\s", stripped)) != 1:
             problems.append(f"section {section}")
+    for line in stripped.splitlines():
+        if re.match(r"^\d+\.\d+\.\s", line):
+            caption = re.sub(r"^\d+\.\d+\.\s+", "", line)
+            first_ukrainian = re.search(r"[А-Яа-яІіЇїЄєҐґ]", caption)
+            prefix = caption[:first_ukrainian.start()] if first_ukrainian else caption
+            if len(re.findall(r"\b[a-z]{3,}\b", prefix)) >= 3:
+                problems.append("non-Ukrainian section caption")
+    for heading, first_point in (("1. Загальна ситуація в області:", "1.1."), ("2. Події:", "2.1.")):
+        gap = re.search(rf"(?ms)^{re.escape(heading)}\s*\n(.*?)(?=^{re.escape(first_point)}\s)", stripped)
+        if gap and gap.group(1).strip():
+            problems.append("extra text outside numbered sections")
     if re.search(r"https?://|t\.me/|@[A-Za-z0-9_]", stripped, re.IGNORECASE):
         problems.append("source reference")
     if end_date_label not in stripped:
@@ -394,6 +405,15 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
         morning_forecast = rf"(?:вночі|уночі|зранку|вранці)[^.]*{re.escape(end_date_words)}[^.]*\b(?:прогнозується|очікується|буде)\b"
         if re.search(morning_forecast, section_14.group(1), re.IGNORECASE):
             problems.append("completed morning forecast uses future tense")
+        from datetime import timedelta
+        previous = datetime.strptime(end_date_label, "%d.%m.%Y") - timedelta(days=1)
+        previous_words = f"{previous.day} {UA_MONTH_NAMES[previous.month-1]}"
+        for sentence in re.split(r"(?<=[.!?])\s+", section_14.group(1)):
+            normalized = re.sub(r"\s+", " ", sentence.lower())
+            if (previous_words in normalized and end_date_words not in normalized
+                and re.search(r"гпв|відключен\w*|електропостачан\w*", normalized)
+                and re.search(r"\b(?:діє|діють|застосовуються|застосовуватимуться|буде|будуть)\b", normalized)):
+                problems.append("expired power schedule presented as current")
     seen_sentences = set()
     for sentence in re.split(r"(?<=[.!?])\s+", stripped):
         normalized = re.sub(r"\W+", " ", sentence.lower()).strip()
