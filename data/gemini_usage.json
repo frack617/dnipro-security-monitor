@@ -190,6 +190,15 @@
       "run_id": "39145817461",
       "stage": "author",
       "outcome": "http_200"
+    },
+    {
+      "id": "39146301462:2026-10-18T16:43:39.840413+00:00:21",
+      "at": "2026-10-18T16:43:39.840413+00:00",
+      "model": "groq:openai/gpt-oss-120b",
+      "event": "workflow_dispatch",
+      "run_id": "39146301462",
+      "stage": "groq_author",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
