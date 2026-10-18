@@ -6,7 +6,7 @@ from datetime import datetime
 
 import requests
 
-from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, source_problems
+from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, required_attack_counts, source_problems
 from gemini_transport import RequestBudget, request_text
 from quota_budget import UsageLedger
 
@@ -107,6 +107,8 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
         for name in re.findall(COMMUNITY_NAME, post.get("text", ""))
     })
     community_checklist = ", ".join(communities) or "У вхідних даних не названі."
+    attack_checklist = ", ".join(map(str, sorted(required_attack_counts(
+        [p for p in posts if p.get("category_hint") == "2.1"])))) or "Не виявлені."
     limitations = (
         "Немає помилок отримання каналів."
         if not failed_sources
@@ -221,6 +223,9 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 Прив’язуй наслідки та постраждалих до їхніх епізодів і локацій.
 Денні й нічні показники кількості атак подай окремо у 2.1, без власного
 арифметичного підсумку та без цих чисел у 1.1.
+Контрольні числові показники з актуальних зведень: {attack_checklist}
+Це не власний підсумок: збережи кожен із його окремим періодом та словами
+«понад» або іншими уточненнями з джерела. Не вилучай їх замість виправлення суми.
 
 Заверши реченням:
 «Це огляд станом на {end_label}. Для негайних дій слід стежити за офіційними сповіщеннями про повітряну тривогу.»
@@ -468,6 +473,16 @@ def build_repair_note(draft, error):
         elif problem == "attack counts belong in section 2.1 with their source periods":
             instructions.append("У 1.1 повністю вилучи числову кількість атак; "
                 "залиши лише якісний огляд ризиків. Числа з джерел подай у 2.1.")
+        elif problem.startswith("missing source attack counts in section 2.1:"):
+            instructions.append("У 2.1 віднови пропущені показники кількості атак: "
+                + problem.split(": ", 1)[1] + ". Для кожного показника візьми "
+                "фактичний період із відповідного джерела, збережи «понад», якщо "
+                "так написано. Подай показники окремо; не складай і не видаляй їх.")
+        elif problem == "missing specific attack consequence: critical infrastructure":
+            instructions.append("У 2.1 поверни повідомлення про удар по об’єкту "
+                "критичної інфраструктури з підтвердженим місцем та наслідками. "
+                "Об’єднай з описом тієї самої атаки, якщо це уточнення; "
+                "не замінюй конкретний об’єкт загальним словом «інфраструктура».")
         elif problem.startswith("missing attack community:"):
             instructions.append("У 2.1 поверни громаду з її підтвердженими наслідками: "
                                 + problem.split(": ", 1)[1])

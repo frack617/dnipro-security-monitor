@@ -42,6 +42,28 @@ def attack_counts(text):
     return {int(n) for n in re.findall(r"\b(\d+)\s+(?:разів|рази|атак\w*|обстріл\w*)\b", normalize(text))}
 
 
+def required_attack_counts(posts):
+    """Keep latest comparable multi-district bulletin, without inventing a total."""
+    bulletins = {}
+    for post in sorted(posts, key=lambda p: p.get("published_at", "")):
+        text = normalize(re.split(r"[▪●]", post.get("text", ""))[0])
+        counts = attack_counts(text)
+        scope = re.search(r"\b(\d+|два|двох|три|трьох|чотири|чотирьох|п'ять|п’ять)"
+                          r"\s+район\w*", text)
+        if not counts or not scope:
+            continue
+        if re.search(r"вночі|уночі|за ніч|у ніч|цієї ночі", text):
+            period = "night"
+        elif re.search(r"вдень|удень|упродовж дня|протягом дня|за день", text):
+            period = "day"
+        else:
+            period = "unspecified"
+        date = post.get("published_local", "")[:10] or post.get("published_at", "")[:10]
+        key = (date, period, number_value(scope.group(1)))
+        bulletins[key] = counts
+    return set().union(*bulletins.values()) if bulletins else set()
+
+
 def report_section(report, section):
     match = re.search(rf"(?ms)^{re.escape(section)}\.\s+(.*?)(?=^\d+\.\d+\.\s|^Це огляд|\Z)", report)
     return match.group(1) if match else ""
@@ -121,6 +143,10 @@ def source_problems(report, posts):
         problems.append("unsupported attack total")
     if attack_counts(section11):
         problems.append("attack counts belong in section 2.1 with their source periods")
+    missing_counts = required_attack_counts(attacks) - attack_counts(section21)
+    if missing_counts:
+        problems.append("missing source attack counts in section 2.1: "
+                        + ", ".join(map(str, sorted(missing_counts))))
     # Never manufacture a day/window total from separate source summaries.
     total_pattern = rf"(?:загалом|усього|всього)\s+(?:за\s+(?:добу|звітний період)\s+)?({NUMBER})\s+(?:{PEOPLE}\s+)?{CASUALTY}"
     for match in re.finditer(total_pattern, section21):
@@ -146,6 +172,7 @@ def source_problems(report, posts):
         ("kindergarten", r"дитяч\w*\s+сад\w*"),
         ("gas pipeline", r"газог[іо]н\w*"),
         ("power line", r"ліні\w*\s+електропередач\w*|\bлеп\b"),
+        ("critical infrastructure", r"критичн\w*\s+інфраструктур\w*"),
     ):
         if re.search(pattern, attack_text) and not re.search(pattern, section21):
             problems.append("missing specific attack consequence: " + label)
