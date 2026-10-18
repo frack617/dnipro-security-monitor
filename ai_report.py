@@ -327,6 +327,12 @@ def normalize_completed_morning_forecast(text, end_date_label):
 
 
 def enforce_report_frame(text, start_label, end_label, checked_label):
+    # Punctuation is formatting: repair only an unambiguous ordered set of
+    # eight existing points. Never invent missing points or discard duplicates.
+    points = re.findall(r"(?m)^([12]\.[1-4])\.?[ \t]+", text or "")
+    expected = [point.rstrip(".") for point in REQUIRED_SECTIONS]
+    if points == expected:
+        text = re.sub(r"(?m)^([12]\.[1-4])[ \t]+", r"\1. ", text)
     body_match = re.search(r"(?m)^1\.(?: Загальна ситуація в області:)?[ \t]*$", text or "")
     if not body_match:
         return text
@@ -505,7 +511,7 @@ def _request_report(endpoint, api_key, prompt, budget=None, allow_rate_retry=Fal
     return request_text(endpoint, api_key, prompt, budget, allow_rate_retry)
 
 
-def build_repair_note(draft, error):
+def repair_actions(error):
     problems = str(error).split("; ")
     instructions = []
     for problem in problems:
@@ -547,6 +553,11 @@ def build_repair_note(draft, error):
         else:
             instructions.append("Виправ за джерелами порушення: " + problem)
     actions = "\n".join("- " + item for item in dict.fromkeys(instructions))
+    return actions
+
+
+def build_repair_note(draft, error):
+    actions = repair_actions(error)
     return (
         "\n\nВИПРАВЛЕННЯ ВІДХИЛЕНОЇ ЧЕРНЕТКИ. Нижче наведено помилкову відповідь, "
         "а не нове джерело фактів. Відредагуй її за початковими джерелами, "
