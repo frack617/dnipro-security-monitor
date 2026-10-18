@@ -42,6 +42,13 @@ def attack_counts(text):
     return {int(n) for n in re.findall(r"\b(\d+)\s+(?:разів|рази|атак\w*|обстріл\w*)\b", normalize(text))}
 
 
+def explicit_casualty_totals(text):
+    totals = set()
+    for match in re.finditer(r"\b(?:загалом|усього|всього)\b[^.!?;]{0,180}", normalize(text)):
+        totals.update(casualty_counts(match.group(0)))
+    return totals
+
+
 def required_attack_counts(posts):
     """Keep latest comparable multi-district bulletin, without inventing a total."""
     bulletins = {}
@@ -148,11 +155,8 @@ def source_problems(report, posts):
         problems.append("missing source attack counts in section 2.1: "
                         + ", ".join(map(str, sorted(missing_counts))))
     # Never manufacture a day/window total from separate source summaries.
-    total_pattern = rf"(?:загалом|усього|всього)\s+(?:за\s+(?:добу|звітний період)\s+)?({NUMBER})\s+(?:{PEOPLE}\s+)?{CASUALTY}"
-    for match in re.finditer(total_pattern, section21):
-        if not any(number_value(m.group(1)) == number_value(match.group(1))
-                   for m in re.finditer(total_pattern, attack_text)):
-            problems.append("casualty total not explicitly supported by source")
+    if explicit_casualty_totals(section21) - explicit_casualty_totals(attack_text):
+        problems.append("casualty total not explicitly supported by source")
     for label, pattern in (("children", r"\bдіт\w*|\bдитин\w*"),):
         if re.search(pattern, section21) and not re.search(pattern, attack_text):
             problems.append("unsupported casualty/event detail: " + label)
@@ -185,6 +189,27 @@ def source_problems(report, posts):
     ):
         if re.search(pattern, attack_text) and not re.search(pattern, section21):
             problems.append("missing specific attack consequence: " + label)
+    critical_posts = [p for p in attacks
+                      if re.search(r"критичн\w*\s+інфраструктур\w*", normalize(p.get("text", "")))]
+    if critical_posts:
+        critical_source = normalize(" ".join(p.get("text", "") for p in critical_posts))
+        # Do not let abbreviations such as "м." hide the chronological label.
+        for label, source_period in (
+            ("ніч", r"ніч|ночі|вночі|уночі"),
+            ("ранок", r"ранок|вранці|зранку"),
+            ("вечір", r"вечір|вечор|ввечері|увечері"),
+        ):
+            if (re.search(rf"\b\d{{1,2}}\s+[а-яіїєґ]+,\s*{label}\s*:"
+                          r".{0,160}?критичн\w*\s+інфраструктур\w*", section21)
+                and not re.search(source_period, critical_source)):
+                problems.append("unsupported incident period: critical infrastructure")
+    incident_clock_source = " ".join(
+        re.sub(r"(?m)^\s*\d{1,2}:\d{2}\s*$", "", p.get("text", "")) for p in attacks)
+    explicit_clocks = set(re.findall(r"\b\d{1,2}:\d{2}\b", incident_clock_source))
+    for match in re.finditer(r"\b(?:о|близько)\s+(\d{1,2}:\d{2})\b", section21):
+        after_clock = section21[match.end():match.end()+100]
+        if match.group(1) not in explicit_clocks and re.search(r"атак|удар|обстріл|ворог", after_clock):
+            problems.append("publication clock used as incident time: " + match.group(1))
     services = normalize(" ".join(p.get("text", "") for p in posts if p.get("category_hint") == "1.4"))
     section14 = normalize(report_section(report, "1.4"))
     for label, pattern in (

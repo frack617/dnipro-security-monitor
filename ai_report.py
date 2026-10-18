@@ -413,6 +413,12 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
         problems.append("unrelated crime in section 2.2")
     section_21 = re.search(r"(?ms)^2\.1\.\s+(.*?)(?=^2\.2\.)", stripped)
     if section_21:
+        from datetime import timedelta
+        end_date = datetime.strptime(end_date_label, "%d.%m.%Y")
+        allowed_days = {(d.day, d.month) for d in (end_date, end_date-timedelta(days=1))}
+        for match in re.finditer(r"\b(\d{1,2})\s+(" + "|".join(UA_MONTH_NAMES) + r")\b", section_21.group(1), re.I):
+            if (int(match.group(1)), UA_MONTH_NAMES.index(match.group(2).lower())+1) not in allowed_days:
+                problems.append("incident date outside report window: " + match.group(0))
         sentences = re.split(r"(?<=[.!?])\s+", section_21.group(1))
         for location in linked_locations:
             location_pattern = CASUALTY_LOCATION_PATTERNS.get(location, re.escape(location))
@@ -452,8 +458,14 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
         previous_words = f"{previous.day} {UA_MONTH_NAMES[previous.month-1]}"
         for sentence in re.split(r"(?<=[.!?])\s+", section_14.group(1)):
             normalized = re.sub(r"\s+", " ", sentence.lower())
-            if (previous_words in normalized and end_date_words not in normalized
-                and re.search(r"гпв|відключен\w*|електропостачан\w*", normalized)
+            previous_at = normalized.find(previous_words)
+            if previous_at >= 0:
+                normalized = normalized[previous_at:]
+                current_at = normalized.find(end_date_words, len(previous_words))
+                if current_at >= 0:
+                    normalized = normalized[:current_at]
+            if (previous_at >= 0
+                and re.search(r"гпв|відключен\w*|електропостачан\w*|черг\w*", normalized)
                 and re.search(r"\b(?:діє|діють|застосовуються|застосовуватимуться|буде|будуть)\b", normalized)):
                 problems.append("expired power schedule presented as current")
     seen_sentences = set()
@@ -550,6 +562,25 @@ def repair_actions(error):
             instructions.append("У 1.2 збережи чинний статус оголошених на сьогодні "
                 "обмежень: «рух призупинено», «автобуси працюють», «зупинку перенесено». "
                 "Не подавай їх як завершені без повідомлення про скасування.")
+        elif problem == "casualty total not explicitly supported by source":
+            instructions.append("Вилучи власний загальний підсумок постраждалих. "
+                "Збережи окремо кожну підтверджену групу з місцем та епізодом. "
+                "Не підміняй дві групи поранених одним із їхніх показників.")
+        elif problem == "expired power schedule presented as current":
+            instructions.append("Учорашні обмеження електропостачання у 1.4 опиши "
+                "у минулому часі, не як чинний графік. Навіть в одному реченні "
+                "відокремлюй завершений графік від прогнозу на поточну дату.")
+        elif problem == "unsupported incident period: critical infrastructure":
+            instructions.append("Не називай удар по критичній інфраструктурі нічним, "
+                "ранковим або вечірнім лише за часом публікації. "
+                "Якщо джерело не називає час атаки, залиш дату без такого уточнення.")
+        elif problem.startswith("incident date outside report window:"):
+            instructions.append("Виправ дату події за джерелом: " + problem.split(": ", 1)[1]
+                + " не належить звітному вікну. Не вигадуй майбутні дати.")
+        elif problem.startswith("publication clock used as incident time:"):
+            instructions.append("Вилучи непідтверджений час атаки "
+                + problem.split(": ", 1)[1] + ". Час у заголовку зведення є "
+                "часом публікації, а не часом усіх описаних ударів.")
         else:
             instructions.append("Виправ за джерелами порушення: " + problem)
     actions = "\n".join("- " + item for item in dict.fromkeys(instructions))

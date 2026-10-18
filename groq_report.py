@@ -79,10 +79,16 @@ Do NOT calculate attack/casualty totals or add children/rescuers absent from tha
 Do not confuse Dnipro city, Dniprovskyi district and suburbs. Do not infer attack time,
 weapon type or a specific community's damage from a joint list. Never invent details.
 Day/evening and night summaries keep separate source periods, with no new overall sum.
+Never conclude 'усього/загалом у зазначених епізодах' unless a source explicitly
+gives that overall total. Two separate groups must not become one group's count.
+An operational post and a later summary of its same culture-centre damage are
+one episode, not a separate day/evening event merely because publication times differ.
+Do not label an unspecified critical-infrastructure attack as night/evening.
 1.1 is a short regional overview without attack counts or detailed repeated consequences.
 Put secondary weather and electricity schedules ONLY in 1.4. Describe expired schedules
 in past tense. Warnings published before 08:00 but valid later today remain future risks.
 Keep latest power schedules, summarize restrictions rather than listing all queues.
+Don't invent queue ranges such as 1.1-2.2 from a list of separate queue numbers.
 Current transport restrictions stay current unless a source explicitly ends them.
 Daytime weather warnings valid after 08:00 must not move before the reporting cutoff.
 In 2.1 use short sentences and clear day/night dates. Don't repeat the overview.

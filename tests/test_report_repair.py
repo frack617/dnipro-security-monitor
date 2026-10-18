@@ -48,7 +48,8 @@ class ReportRepairTests(unittest.TestCase):
         text = report("На Нікопольщині, у Марганецькій громаді є пошкодження. "
                       "В Українській громаді пошкоджений будинок. "
                       "Загалом протягом дня троє людей дістали поранень.")
-        self.assertFalse(source_problems(text, self.posts()))
+        self.assertFalse(any("unsupported community" in e
+                             for e in source_problems(text, self.posts())))
 
     def test_direct_wrong_assignment_stays_rejected(self):
         text = report("У Марганецькій громаді є пошкодження. "
