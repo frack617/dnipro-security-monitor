@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-18T07:37:23.456575+00:00",
+  "checked_at": "2026-10-18T07:41:11.146936+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-17T08:00:00+03:00",
@@ -16,7 +16,7 @@
     "dsns_telegram": {
       "ok": true,
       "posts_found": 5,
-      "oldest_collected_at": "2026-10-15T07:32:28+00:00",
+      "oldest_collected_at": "2026-10-15T07:57:47+00:00",
       "newest_collected_at": "2026-10-18T07:18:24+00:00"
     },
     "SBUkr": {
@@ -34,7 +34,7 @@
     "gunpvdp": {
       "ok": true,
       "posts_found": 4,
-      "oldest_collected_at": "2026-10-15T07:35:31+00:00",
+      "oldest_collected_at": "2026-10-15T08:51:04+00:00",
       "newest_collected_at": "2026-10-17T16:00:15+00:00"
     },
     "cek_info": {
