@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-18T16:28:13.989100+00:00",
+  "checked_at": "2026-10-18T16:37:12.601495+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-17T08:00:00+03:00",
@@ -16,8 +16,8 @@
     "dsns_telegram": {
       "ok": true,
       "posts_found": 8,
-      "oldest_collected_at": "2026-10-15T16:28:00+00:00",
-      "newest_collected_at": "2026-10-18T15:44:01+00:00"
+      "oldest_collected_at": "2026-10-15T17:00:30+00:00",
+      "newest_collected_at": "2026-10-18T16:33:52+00:00"
     },
     "SBUkr": {
       "ok": true,
