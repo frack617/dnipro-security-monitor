@@ -217,6 +217,42 @@
       "run_id": "39146460295",
       "stage": "groq_author",
       "outcome": "http_200"
+    },
+    {
+      "id": "39203220800:2026-10-19T05:12:28.759125+00:00:24",
+      "at": "2026-10-19T05:12:28.759125+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "schedule",
+      "run_id": "39203220800",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39203220800:2026-10-19T05:12:31.352429+00:00:25",
+      "at": "2026-10-19T05:12:31.352429+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "schedule",
+      "run_id": "39203220800",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39203220800:2026-10-19T05:12:33.030486+00:00:26",
+      "at": "2026-10-19T05:12:33.030486+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "schedule",
+      "run_id": "39203220800",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39203220800:2026-10-19T05:12:36.194597+00:00:27",
+      "at": "2026-10-19T05:12:36.194597+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "schedule",
+      "run_id": "39203220800",
+      "stage": "editor",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
