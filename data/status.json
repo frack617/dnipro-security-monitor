@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-19T15:51:59.445092+00:00",
-  "previous_checked_at": "2026-10-19T15:26:17.581093+00:00",
-  "collection_gap_minutes": 25.7,
+  "checked_at": "2026-10-19T16:21:54.855568+00:00",
+  "previous_checked_at": "2026-10-19T15:51:59.445092+00:00",
+  "collection_gap_minutes": 29.9,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-18T08:00:00+03:00",
@@ -13,7 +13,7 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 7,
-      "oldest_collected_at": "2026-10-16T15:30:13+00:00",
+      "oldest_collected_at": "2026-10-16T16:17:35+00:00",
       "newest_collected_at": "2026-10-19T15:43:59+00:00"
     },
     "dsns_telegram": {
@@ -48,8 +48,8 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 20,
-      "oldest_collected_at": "2026-10-14T17:44:51+00:00",
-      "newest_collected_at": "2026-10-19T14:47:02+00:00"
+      "oldest_collected_at": "2026-10-15T12:33:36+00:00",
+      "newest_collected_at": "2026-10-19T16:12:54+00:00"
     },
     "borys_filatovv": {
       "ok": true,
@@ -62,7 +62,7 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 11,
-      "oldest_collected_at": "2026-10-16T15:30:01+00:00",
+      "oldest_collected_at": "2026-10-16T16:17:28+00:00",
       "newest_collected_at": "2026-10-19T15:30:19+00:00"
     }
   }
