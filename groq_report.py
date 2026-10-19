@@ -10,6 +10,7 @@ import requests
 
 from quota_budget import UsageLedger
 from report_rules import COMMUNITY_NAME, required_attack_counts
+from report_sections import recover_transport_section
 
 
 DEFAULT_MODEL = "openai/gpt-oss-120b"
@@ -275,6 +276,10 @@ def generate_groq_report(posts, start_label, end_label, checked_label, end_date_
         try:
             text = render_groq_sections(raw_text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
+            recovered = recover_transport_section(text, posts)
+            if recovered != text:
+                record["source_rebuilt_sections"] = ["1.2"]
+            text = recovered
             record["rendered_text"] = text
             result = validate_report(text, end_date_label, linked, posts)
             record["validation"] = "passed"

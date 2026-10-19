@@ -179,18 +179,39 @@ def place_casualty_problems(section, posts):
 def transport_link_problems(report, posts):
     body = report_section(report, "1.2")
     sources = [p.get("text", "") for p in posts if p.get("category_hint") == "1.2"]
+    mode_pattern = r"\b(?:трамва\w*|тролейбус\w*|автобус\w*)\s*№"
+
+    def routes(text):
+        markers = list(re.finditer(mode_pattern, text, re.I))
+        result = set()
+        for index, marker in enumerate(markers):
+            kind = "трамвай" if marker[0].lower().startswith("трамва") else "тролейбус" if marker[0].lower().startswith("тролейбус") else "автобус"
+            stop = markers[index+1].start() if index+1 < len(markers) else len(text)
+            fragment = text[marker.start():stop]
+            for match in re.finditer(r"№\s*(\d+(?:\s*[А-ЯІЇЄҐA-Z](?![а-яіїєґa-z]))?)", fragment):
+                result.add((kind, re.sub(r"\s+", "", match[1]).upper()))
+        return result
+
+    # Learn street/bridge names and route identifiers from the current sources.
+    # Ambiguous 'через Центральний міст' is a path, not a causal assertion.
+    anchors = {}
+    for source in sources:
+        names = re.findall(r"(?:вул\.|вулиц\w*)\s+([А-ЯІЇЄҐ][\w’'-]*(?:\s+[А-ЯІЇЄҐIVX][\w’'-]*){0,3})", source)
+        bridges = re.findall(r"\b([А-ЯІЇЄҐ][а-яіїєґ’'-]+)\s+(?:міст|мост)\w*", source)
+        patterns = [re.escape(name.lower()) for name in names]
+        for name in bridges:
+            stem = re.sub(r"(?:ому|ого|ий|ім|ої|ій|а|у|е|і)$", "", name.lower())
+            patterns.append(re.escape(stem) + r"\w*\s+(?:міст|мост)\w*")
+        source_routes = routes(source) if re.search(r"ремонт|перекрит|аварі|обмеженн|пошкоджен", source, re.I) else set()
+        for pattern in patterns:
+            anchors.setdefault(pattern, set()).update(source_routes)
     problems = []
     for sentence in re.split(r"(?<=[.!?])\s+(?=[А-ЯІЇЄҐ])", body):
-        if not re.search(r"через|у зв['’]язку|внаслідок", sentence, re.I):
+        if not re.search(r"(?:через|у зв['’]язку з|внаслідок)\s+(?:тимчасов\w*\s+)?(?:ремонт|перекрит|аварі|обмеженн|пошкоджен)", sentence, re.I):
             continue
-        for location in (r"королеви\s+єлизавети", r"старому\s+мосту"):
-            if not re.search(location, sentence, re.I):
-                continue
-            for route in (r"тролейбус\w*\s*№\s*6\b", r"автобус\w*\s*№\s*18\b"):
-                if re.search(route, sentence, re.I) and not any(
-                    re.search(location, source, re.I) and re.search(route, source, re.I)
-                    for source in sources):
-                    problems.append("unsupported causal link between separate transport notices")
+        for pattern, supported in anchors.items():
+            if re.search(pattern, sentence, re.I) and routes(sentence) - supported:
+                problems.append("unsupported causal link between separate transport notices")
     return problems
 
 

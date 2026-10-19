@@ -10,6 +10,7 @@ import requests
 from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, required_attack_counts, required_fact_checklist, source_problems
 from gemini_transport import RequestBudget, request_text
 from quota_budget import UsageLedger
+from report_sections import recover_transport_section
 
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
@@ -664,6 +665,10 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
+            recovered = recover_transport_section(text, posts)
+            if recovered != text and budget.records:
+                budget.records[-1]["source_rebuilt_sections"] = ["1.2"]
+            text = recovered
             draft = validate_report(text, end_date_label, linked_locations, posts)
             budget.validation(text)
             break
@@ -685,6 +690,10 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note, budget)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
             reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
+            recovered = recover_transport_section(reviewed, posts)
+            if recovered != reviewed and budget.records:
+                budget.records[-1]["source_rebuilt_sections"] = ["1.2"]
+            reviewed = recovered
             result = validate_report(reviewed, end_date_label, linked_locations, posts)
             budget.validation(reviewed)
             return result
