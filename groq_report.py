@@ -86,10 +86,9 @@ Do NOT calculate attack/casualty totals or add children/rescuers absent from tha
 Do not confuse Dnipro city, Dniprovskyi district and suburbs. Do not infer attack time,
 weapon type or a specific community's damage from a joint list. Never invent details.
 Day/evening and night summaries keep separate source periods, with no new overall sum.
-Never conclude 'усього/загалом у зазначених епізодах' unless a source explicitly
-gives that overall total. Two separate groups must not become one group's count.
-An operational post and a later summary of its same culture-centre damage are
-one episode, not a separate day/evening event merely because publication times differ.
+No cross-episode totals unless an explicit source total covers those episodes.
+An alert and its later culture-centre summary are one episode; publication clocks
+do not establish a separate attack.
 Do not label an unspecified critical-infrastructure attack as night/evening.
 1.1 is a short regional overview without attack counts or detailed repeated consequences.
 Put secondary weather and electricity schedules ONLY in 1.4. Describe expired schedules
@@ -98,7 +97,8 @@ Keep latest power schedules, summarize restrictions rather than listing all queu
 Don't invent queue ranges such as 1.1-2.2 from a list of separate queue numbers.
 Current transport restrictions stay current unless a source explicitly ends them.
 Daytime weather warnings valid after 08:00 must not move before the reporting cutoff.
-In 2.1 use short sentences and clear day/night dates. Don't repeat the overview.
+2.1: short geographic paragraphs. District/community/settlement headings ONLY if
+explicit; no inferred parent places or incident clocks. Don't repeat 1.1.
 Preserve these source communities (inflection may change): {", ".join(communities)}.
 Preserve these independent bulletin counts in 2.1 with source periods and qualifiers:
 {json.dumps(counts)}. Do not delete them instead of correcting a false sum.
@@ -107,8 +107,9 @@ One short practical note per relevant section at most; no speculation.
 300-450 Ukrainian words total. No links, channel names, hashtags, emoji, bullets or tables.
 Return ONLY a JSON object with EXACTLY eight keys:
 "1.1", "1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4".
-Every value is one Ukrainian paragraph of CONTENT, no captions, numbers or headings.
-The program supplies all headings, greeting, report dates and closing. Do not add them.
+Values: Ukrainian content, no section numbers/category captions; 2.1 may have
+source-backed place headings and paragraphs.
+The program supplies category captions, greeting, dates and closing. Do not add them.
 Category mapping (instructions, NOT output captions): overview=1.1; roads and transport=1.2;
 announced blasting ONLY=1.3; power/water, weather, non-attack accidents=1.4;
 attacks by location and episode=2.1; illegal weapons=2.2; bomb threats=2.3; discovered UXO=2.4.
@@ -135,7 +136,8 @@ def render_groq_sections(text, start_label, end_label, checked_label):
     for key, value in sections.items():
         if not isinstance(value, str) or not value.strip():
             raise ValueError("Groq JSON section must be a nonempty string: " + key)
-        paragraphs[key] = re.sub(r"\s+", " ", value).strip()
+        paragraphs[key] = '\n'.join(re.sub(r"[ \t]+", " ", line).strip()
+                                    for line in value.splitlines()).strip()
     body = "1. Загальна ситуація в області:\n" + "\n\n".join(
         f"1.{item}. {paragraphs[f'1.{item}']}" for item in range(1, 5))
     body += "\n\n2. Події:\n" + "\n\n".join(

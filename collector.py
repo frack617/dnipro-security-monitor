@@ -813,6 +813,10 @@ def process_morning_report(posts, statuses, checked_at):
         report = sanitize_fallback(fallback)
         report_kind = "fallback"
 
+    from report_layout import render_report
+    report = render_report(report, start_local.strftime('%H:%M %d.%m.%Y'),
+                           end_local.strftime('%H:%M %d.%m.%Y'),
+                           checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y'))
     MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
     print(f"Morning report prepared: {report_kind}")
     if not send_enabled:
