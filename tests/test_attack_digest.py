@@ -31,7 +31,7 @@ class AttackDigestTests(unittest.TestCase):
             self.assertIn(phrase,text)
         self.assertEqual(text.lower().count('понад 20 разів'),2)
         self.assertNotIn('чотири будинки зруйновані',text)
-        self.assertNotIn('Пошкоджені приватні будинки.',text)
+        self.assertIn('Пошкоджені приватні будинки. За попередньою інформацією, у них можуть бути заблоковані люди.',text)
         self.assertIn('Зведення: Понівечені інфраструктура, приватні будинки.',text)
         self.assertEqual(text.count('Працюють усі служби.'),0)
         self.assertEqual(text.count('На місці працюють усі служби.'),1)
@@ -44,6 +44,26 @@ class AttackDigestTests(unittest.TestCase):
         text=grouped_attack_text(posts)
         self.assertIn('Пошкоджені приватні будинки.',text)
         self.assertIn('знову атакував',text)
+
+    def test_dependent_housing_warning_keeps_its_antecedent(self):
+        for continuation in ('У них можуть бути заблоковані люди.',
+                             'Там можуть залишатися люди.',
+                             'Їх обстежують рятувальники.',
+                             'У цих будинках можуть бути люди.'):
+            with self.subTest(continuation=continuation):
+                items=[post('Росіяни завдали удару по Дніпру. Пошкоджені приватні будинки. '+continuation),
+                       post('19 жовтня 8:00 Понад 20 разів ворог атакував три райони. '
+                            '▪ У Дніпрі понівечені інфраструктура, приватні будинки.',
+                            '2026-10-19T05:00:17Z')]
+                text=grouped_attack_text(items)
+                self.assertIn('Пошкоджені приватні будинки. '+continuation,text)
+
+    def test_independent_generic_repeat_can_still_be_removed(self):
+        items=[post('Росіяни завдали удару по Дніпру. Пошкоджені приватні будинки.'),
+               post('19 жовтня 8:00 Понад 20 разів ворог атакував три райони. '
+                    '▪ У Дніпрі понівечені інфраструктура, приватні будинки.',
+                    '2026-10-19T05:00:17Z')]
+        self.assertNotIn('Пошкоджені приватні будинки.',grouped_attack_text(items))
 
     def test_explicit_clocks_and_night_are_not_merged_away(self):
         posts=[post('У Дніпрі о 02:00 пошкоджені будинки. Троє людей поранені.'),

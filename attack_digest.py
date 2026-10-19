@@ -65,14 +65,24 @@ def grouped_attack_text(posts):
                 if separate:
                     service_seen = False
                 kept = []
-                for sentence in sentences(text):
+                source_sentences = sentences(text)
+                for sentence_index, sentence in enumerate(source_sentences):
                     # A bare generic housing sentence adds no unique detail
                     # when the later same-place bulletin repeats that fact.
                     # Numbers, casualties, qualifiers and separate attacks
                     # are never removed by this rule.
                     if re.fullmatch(r'Пошкоджені приватні будинки[.!]?', sentence, re.I):
                         later = records[index+1:]
-                        if (not EPISODE_TIME.search(text)
+                        # A later sentence can depend on this noun phrase:
+                        # «у них можуть бути заблоковані люди». A repeated
+                        # fact in another bulletin cannot supply its local
+                        # antecedent. Retain source wording; do not guess a
+                        # replacement for the pronoun.
+                        dependent = re.search(
+                            r'\b(?:у|в)\s+них\b|\bтам\b|\bвони\b|\bїх\w*\b|'
+                            r'\b(?:цих|цих самих|зазначених)\s+(?:будинк\w*|осел\w*)',
+                            ' '.join(source_sentences[sentence_index+1:]), re.I)
+                        if (not dependent and not EPISODE_TIME.search(text)
                             and not any(NEW_EPISODE.search(t) or EPISODE_TIME.search(t) for t, _ in later)
                             and any(b and re.search(r'(?:понівечені|пошкоджені)\s+(?:інфраструктура,\s*)?приватні будинки', t, re.I)
                                     for t, b in later)):
