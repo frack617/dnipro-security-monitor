@@ -253,6 +253,24 @@
       "run_id": "39203220800",
       "stage": "editor",
       "outcome": "http_200"
+    },
+    {
+      "id": "39205345970:2026-10-19T05:35:39.824089+00:00:28",
+      "at": "2026-10-19T05:35:39.824089+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39205345970",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39205345970:2026-10-19T05:35:43.086083+00:00:29",
+      "at": "2026-10-19T05:35:43.086083+00:00",
+      "model": "groq:openai/gpt-oss-120b",
+      "event": "workflow_dispatch",
+      "run_id": "39205345970",
+      "stage": "groq_author",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
