@@ -255,8 +255,13 @@ def is_resonant(post):
     # Inflections such as «атакував» and «завдали удару» were absent from
     # ALERT_TERMS, silently dropping actual attacks even during regular polls.
     attack = classify_post(post) == "2.1" and bool(re.search(
-        r"ворог|росіян|російськ|окупант|загарбник|влучання|обстріл", text))
-    return attack or contains_any(text, ALERT_TERMS)
+        r"ворог|ворож\w*|росіян|російськ|\bрф\b|окупант|загарбник|влучання|обстріл", text))
+    # Unscheduled utility faults may be described without «аварійне
+    # відключення». Require an explicit causal statement, not merely a
+    # mention of equipment, scheduled outages or a hypothetical risk.
+    outage = bool(re.search(r"технологічн\w*\s+порушенн\w*", text) and re.search(
+        r"(?<!не )\bспричинил[оаи]\s+знеструмлен\w*", text))
+    return attack or outage or contains_any(text, ALERT_TERMS)
 
 
 def save_alert_state(state):
