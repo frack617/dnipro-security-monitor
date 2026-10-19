@@ -498,6 +498,14 @@ def is_historical_context(post, report_start_local):
     return bool(dates) and max(dates) < report_start_local.date()
 
 
+def is_power_queue_change(post):
+    text = post.get("text", "").lower()
+    power_context = post.get("channel", "").lower() == "cek_info" or re.search(
+        r"електро\w*|знеструм\w*|\bгпв\b|погодинн\w*\s+відключ\w*", text)
+    return bool(power_context and re.search(r"\bграфік\w*\s+(?:під)?черг\w*", text)
+                and re.search(r"\b(?:перевод\w*|переведен\w*|змін\w*)\b", text))
+
+
 def classify_post(post):
     text = post.get("text", "").lower()
     if is_background_notice(text):
@@ -516,7 +524,7 @@ def classify_post(post):
         return "1.3"
     if contains_any(text, ROAD_TERMS) or has_stopped_route(text):
         return "1.2"
-    if contains_any(text, SERVICE_TERMS):
+    if contains_any(text, SERVICE_TERMS) or is_power_queue_change(post):
         return "1.4"
     return None
 
