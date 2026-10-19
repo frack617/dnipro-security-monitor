@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-18T21:45:29.708580+00:00",
+  "checked_at": "2026-10-19T00:06:08.337020+00:00",
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-17T08:00:00+03:00",
@@ -10,7 +10,7 @@
     "adm_dp": {
       "ok": true,
       "posts_found": 9,
-      "oldest_collected_at": "2026-10-15T19:45:17+00:00",
+      "oldest_collected_at": "2026-10-16T04:30:12+00:00",
       "newest_collected_at": "2026-10-18T15:30:04+00:00"
     },
     "dsns_telegram": {
