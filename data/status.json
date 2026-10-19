@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-19T12:50:50.304663+00:00",
-  "previous_checked_at": "2026-10-19T12:21:46.048530+00:00",
-  "collection_gap_minutes": 29.1,
+  "checked_at": "2026-10-19T13:16:48.816272+00:00",
+  "previous_checked_at": "2026-10-19T12:50:50.304663+00:00",
+  "collection_gap_minutes": 26.0,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-18T08:00:00+03:00",
@@ -17,15 +17,15 @@
     },
     "dsns_telegram": {
       "ok": true,
-      "posts_found": 5,
-      "oldest_collected_at": "2026-10-16T12:30:54+00:00",
-      "newest_collected_at": "2026-10-19T12:30:34+00:00"
+      "posts_found": 6,
+      "oldest_collected_at": "2026-10-16T13:02:50+00:00",
+      "newest_collected_at": "2026-10-19T13:15:54+00:00"
     },
     "SBUkr": {
       "ok": true,
-      "posts_found": 6,
+      "posts_found": 7,
       "oldest_collected_at": "2026-10-16T09:00:06+00:00",
-      "newest_collected_at": "2026-10-19T09:30:02+00:00"
+      "newest_collected_at": "2026-10-19T13:00:04+00:00"
     },
     "DniproCityOfficial": {
       "ok": true,
@@ -36,14 +36,14 @@
     "gunpvdp": {
       "ok": true,
       "posts_found": 4,
-      "oldest_collected_at": "2026-10-16T12:50:12+00:00",
+      "oldest_collected_at": "2026-10-16T13:49:19+00:00",
       "newest_collected_at": "2026-10-19T12:32:17+00:00"
     },
     "cek_info": {
       "ok": true,
       "posts_found": 20,
-      "oldest_collected_at": "2026-10-14T14:22:38+00:00",
-      "newest_collected_at": "2026-10-19T07:15:51+00:00"
+      "oldest_collected_at": "2026-10-14T17:41:33+00:00",
+      "newest_collected_at": "2026-10-19T13:08:28+00:00"
     },
     "borys_filatovv": {
       "ok": true,
