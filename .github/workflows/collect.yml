@@ -23,6 +23,11 @@ on:
         required: false
         default: false
         type: boolean
+      send_alerts:
+        description: Send operational alerts during a manual run
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: "3,33 * * * *"
 
@@ -41,6 +46,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -68,6 +75,8 @@ jobs:
           REPORT_PROVIDER: ${{ inputs.report_provider || 'auto' }}
           FORCE_MORNING_REPORT: ${{ inputs.force_report || 'false' }}
           SEND_MORNING_REPORT: ${{ github.event_name == 'schedule' || inputs.send_report == true }}
+          SEND_OPERATIONAL_ALERTS: ${{ github.event_name == 'schedule' || inputs.send_alerts == true || (inputs.send_report == true && inputs.force_report != true) }}
+          PRODUCTION_MONITOR: ${{ github.event_name == 'schedule' || (inputs.send_report == true && inputs.force_report != true) }}
 
       - name: Save new data
         if: always()

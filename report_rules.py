@@ -84,6 +84,93 @@ def community_stems(text):
             for name in re.findall(COMMUNITY_NAME, text)}
 
 
+PLACE_PATTERNS = {
+    "Дніпро": r"\bдніпр(?:о|а|і|у|ом)\b",
+    "Дніпровський район": r"\bдніпровськ\w*\s+район\w*",
+    "Нікопольщина": r"\bнікопольщин\w*|\bнікопольськ\w*\s+район\w*",
+    "Криворіжжя": r"\bкриворіж\w*|\bкриворізьк\w*\s+район\w*",
+    "Синельниківський район": r"\bсинельниківськ\w*\s+район\w*",
+    "Кривий Ріг": r"\bкрив(?:ий|ому|ого)\s+р(?:іг|озі|огу)\b",
+    "Нікополь": r"\bнікопол(?:ь|і|я|ю|ем)\b",
+    "Павлоград": r"\bпавлоград(?:і|а|у|ом)?\b",
+}
+MONTHS = "січня лютого березня квітня травня червня липня серпня вересня жовтня листопада грудня".split()
+DATE_WORDS = r"\b(\d{1,2})\s+(" + "|".join(MONTHS) + r")\b"
+
+
+def asserted_counts(text):
+    # A named singular person is a casualty assertion even without a numeral.
+    result = set()
+    for sentence in re.split(r"[.!?;]", normalize(text)):
+        if re.search(r"немає|не було|без\s+(?:загиблих|поранених)|уточню|можлив", sentence):
+            continue
+        result.update(casualty_counts(sentence))
+        if re.search(r"\b(?:постраждала|поранена|госпіталізована|загинула)\s+(?:\d+-річна\s+)?жінка\b|"
+                     r"\b(?:постраждав|поранений|госпіталізований|загинув)\s+(?:\d+-річний\s+)?чоловік\b|"
+                     r"\b(?:жінка|чоловік|людина)\s+(?:дістала|дістав|отримала|отримав)\s+поран", sentence):
+            result.add(1)
+    return result
+
+
+def place_casualty_problems(section, posts):
+    records = {}
+    for post in posts:
+        text = post.get("text", "")
+        dates = list(re.finditer(DATE_WORDS, text[:180], re.I))
+        published = post.get("published_local", "")
+        date = (int(dates[0][1]), MONTHS.index(dates[0][2].lower())+1) if dates else None
+        if date is None:
+            match = re.match(r"(\d{2})\.(\d{2})", published)
+            if match:
+                date = tuple(map(int, match.groups()))
+        blocks = re.split(r"[▪●]\ufe0f?", text)
+        for block in (blocks[1:] if len(blocks) > 1 else blocks):
+            counts = asserted_counts(block)
+            for name, pattern in PLACE_PATTERNS.items():
+                if re.search(pattern, block, re.I):
+                    records.setdefault((name, date), set()).update(counts)
+    markers = sorted((m.start(), m.end(), name) for name, pattern in PLACE_PATTERNS.items()
+                     for m in re.finditer(pattern, section, re.I))
+    dates = list(re.finditer(DATE_WORDS, section, re.I))
+    problems = []
+    for index, (start, end, name) in enumerate(markers):
+        stop = markers[index+1][0] if index+1 < len(markers) else len(section)
+        segment = section[end:stop]
+        # Community names also end a city/district scope. Existing community
+        # checks handle their own counts; a list within its parent is kept.
+        counts = asserted_counts(segment)
+        if not counts:
+            continue
+        preceding = [m for m in dates if m.start() < start]
+        date = (int(preceding[-1][1]), MONTHS.index(preceding[-1][2].lower())+1) if preceding else None
+        known = [(key, values) for key, values in records.items() if key[0] == name]
+        if not known:
+            continue
+        eligible = [values for (place, day), values in known if date is None or day is None or day == date]
+        allowed = set().union(*eligible) if eligible else set()
+        if counts - allowed:
+            problems.append("casualties assigned to unsupported place/date: " + name)
+    return problems
+
+
+def transport_link_problems(report, posts):
+    body = report_section(report, "1.2")
+    sources = [p.get("text", "") for p in posts if p.get("category_hint") == "1.2"]
+    problems = []
+    for sentence in re.split(r"(?<=[.!?])\s+(?=[А-ЯІЇЄҐ])", body):
+        if not re.search(r"через|у зв['’]язку|внаслідок", sentence, re.I):
+            continue
+        for location in (r"королеви\s+єлизавети", r"старому\s+мосту"):
+            if not re.search(location, sentence, re.I):
+                continue
+            for route in (r"тролейбус\w*\s*№\s*6\b", r"автобус\w*\s*№\s*18\b"):
+                if re.search(route, sentence, re.I) and not any(
+                    re.search(location, source, re.I) and re.search(route, source, re.I)
+                    for source in sources):
+                    problems.append("unsupported causal link between separate transport notices")
+    return problems
+
+
 def casualty_location_problems(section, posts):
     # Source bullet boundaries are essential: a summary's opening casualty
     # total must not attach itself to every community in following bullets.
@@ -141,6 +228,8 @@ def source_problems(report, posts):
     if attacks and "повідомлень за звітний період не виявлено" in section11:
         problems.append("overview denies available attack reports")
     problems.extend(casualty_location_problems(section21, attacks))
+    problems.extend(place_casualty_problems(section21, attacks))
+    problems.extend(transport_link_problems(report, posts))
     allowed_counts = set().union(*(casualty_counts(p.get("text", "")) for p in attacks))
     unsupported = casualty_counts(section21) - allowed_counts
     if unsupported:
@@ -154,6 +243,24 @@ def source_problems(report, posts):
     if missing_counts:
         problems.append("missing source attack counts in section 2.1: "
                         + ", ".join(map(str, sorted(missing_counts))))
+    # Equal numbers from distinct district bulletins are not one fact.
+    scopes = {}
+    scope_pattern = rf"\b({NUMBER})\s+район\w*"
+    for post in attacks:
+        header = normalize(re.split(r"[▪●]", post.get("text", ""))[0])
+        district = re.search(scope_pattern, header)
+        if district:
+            for count in attack_counts(header):
+                scopes.setdefault(count, set()).add(number_value(district[1]))
+    for count, districts in scopes.items():
+        if len(districts) < 2:
+            continue
+        found = set()
+        for sentence in re.split(r"[.!?;]", section21):
+            if count in attack_counts(sentence):
+                found.update(number_value(m[1]) for m in re.finditer(scope_pattern, sentence))
+        if districts - found:
+            problems.append("distinct attack bulletins with equal counts were collapsed")
     # Never manufacture a day/window total from separate source summaries.
     if explicit_casualty_totals(section21) - explicit_casualty_totals(attack_text):
         problems.append("casualty total not explicitly supported by source")
@@ -223,6 +330,15 @@ def source_problems(report, posts):
 
 EDITORIAL_RULES = """
 Додатковий контроль точності:
+- відділяй денний епізод від нічного навіть у тому самому місті: число поранених
+  з наступної ночі не переноситься на попередній день. Число у вступі обласного
+  зведення не належить кожному місту; перевір відповідний регіональний абзац;
+- не вигадуй причинний зв'язок між окремими транспортними оголошеннями.
+  Якщо причина зміни маршруту не вказана, подай її окремим повідомленням;
+- позначене як cutoff_bulletin зведення з заголовком 08:00 є підсумком станом
+  на межу вікна, опублікованим трохи пізніше. Врахуй його уточнення без додавання
+  подій після 08:00. Слово «ще» у кількості зруйнованих будинків збережи:
+  не підміняй ним раніше підтверджену кількість і не складай цифри самостійно;
 - у 1.1 не наводь числову кількість атак; денні та нічні показники залишай у 2.1
   з окремим позначенням періодів. Не складай їх у власний добовий підсумок;
 - кількості загиблих, поранених і госпіталізованих відтворюй точно, разом із

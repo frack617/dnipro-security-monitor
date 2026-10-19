@@ -240,19 +240,36 @@ def send_bot_message(text):
         timeout=30,
     )
     response.raise_for_status()
+    if response.json().get("ok") is not True:
+        raise RuntimeError("Telegram did not confirm message delivery")
     return True
 
 
 def is_resonant(post):
     text = post.get("text", "").lower()
-    channel = post.get("channel", "").lower()
-    has_event = any(term in text for term in ALERT_TERMS)
-    if not has_event:
+    if not is_regional(post) or contains_any(text, NON_EVENT_CONTEXT_TERMS):
         return False
-    return channel in LOCAL_CHANNELS or any(term in text for term in REGION_TERMS)
+    if re.search(r"президент|головком|перемир|дипломат", text) and not re.search(
+        r"дніпропетров|\bдніпр(?:о|і|у)\b|нікопол|синельник|криворі", text):
+        return False
+    # Inflections such as «атакував» and «завдали удару» were absent from
+    # ALERT_TERMS, silently dropping actual attacks even during regular polls.
+    attack = classify_post(post) == "2.1" and bool(re.search(
+        r"ворог|росіян|російськ|окупант|загарбник|влучання|обстріл", text))
+    return attack or contains_any(text, ALERT_TERMS)
 
 
-def process_alerts(new_posts, checked_at):
+def save_alert_state(state):
+    ALERT_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    temporary = ALERT_STATE_FILE.with_suffix(".tmp")
+    temporary.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(ALERT_STATE_FILE)
+
+
+def process_alerts(new_posts, checked_at, previous_checked_at=None):
+    if os.getenv("SEND_OPERATIONAL_ALERTS", "true").lower() not in {"1", "true", "yes"}:
+        print("Operational alerts dry run: Telegram sending disabled; delivery state unchanged")
+        return
     state = read_alert_state()
     alerted = set(state.get("alerted_keys", []))
     configured = bool(os.getenv("TELEGRAM_BOT_TOKEN", "").strip()) and bool(
@@ -269,30 +286,63 @@ def process_alerts(new_posts, checked_at):
         )
         state["initialized"] = True
 
-    recent_after = checked_at - timedelta(hours=2)
+    cursor = parse_datetime(state.get("last_alert_scan_at")) or previous_checked_at
+    recent_after = max(checked_at - timedelta(hours=KEEP_HOURS),
+                       cursor - timedelta(hours=2) if cursor else checked_at - timedelta(hours=2))
+    # Called with the entire retained buffer, so a failed send remains pending
+    # even after its post has already been saved in posts.json.
+    fingerprints = {re.sub(r"\W+", " ", p.get("text", "").lower()).strip()
+                    for p in new_posts if p["key"] in alerted}
+    pending = set(state.get("pending_alert_keys", []))
+    failures = []
+    sent = 0
     for post in sorted(new_posts, key=lambda item: item["published_at"]):
-        if post["key"] in alerted or parse_datetime(post["published_at"]) < recent_after:
+        if post["key"] in alerted or (parse_datetime(post["published_at"]) < recent_after
+                                      and post["key"] not in pending):
             continue
         if not is_resonant(post):
             continue
+        if is_historical_context(post, recent_after.astimezone(KYIV)):
+            continue
+        fingerprint = re.sub(r"\W+", " ", post.get("text", "").lower()).strip()
+        if fingerprint in fingerprints:
+            alerted.add(post["key"])
+            continue
         local_time = parse_datetime(post["published_at"]).astimezone(KYIV)
         excerpt = post["text"][:2500]
-        send_bot_message(
-            "⚠️ Оперативне повідомлення щодо Дніпропетровщини\n\n"
-            f"Джерело: @{post['channel']}\n"
-            f"Час публікації: {local_time.strftime('%d.%m.%Y %H:%M')} за Києвом\n\n"
-            f"{excerpt}\n\n{post['url']}"
-        )
+        delayed = ("Надіслано після перерви в перевірках.\n"
+                   if checked_at - parse_datetime(post["published_at"]) > timedelta(hours=2) else "")
+        try:
+            delivered = send_bot_message(
+                "⚠️ Оперативне повідомлення щодо Дніпропетровщини\n\n"
+                + delayed +
+                f"Джерело: @{post['channel']}\n"
+                f"Час публікації: {local_time.strftime('%d.%m.%Y %H:%M')} за Києвом\n\n"
+                f"{excerpt}\n\n{post['url']}"
+            )
+            if not delivered:
+                raise RuntimeError("Telegram sending unavailable")
+        except (requests.RequestException, RuntimeError, ValueError) as error:
+            failures.append(post["key"])
+            print(f"Operational send failed: {post['key']} ({type(error).__name__})")
+            continue
         alerted.add(post["key"])
+        fingerprints.add(fingerprint)
+        sent += 1
+        state["alerted_keys"] = sorted(alerted)
+        save_alert_state(state)
 
     keep_keys = {
         post["key"] for post in new_posts
         if parse_datetime(post["published_at"]) >= checked_at - timedelta(hours=KEEP_HOURS)
     }
     state["alerted_keys"] = sorted(alerted & keep_keys)
-    ALERT_STATE_FILE.write_text(
-        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    if not failures:
+        state["last_alert_scan_at"] = checked_at.isoformat()
+    state["pending_alert_keys"] = failures
+    save_alert_state(state)
+    print(f"Operational scan: sent={sent} failed={len(failures)} since={recent_after.isoformat()}")
+    return failures
 
 
 def completed_report_window(checked_at):
@@ -311,7 +361,42 @@ def completed_report_window(checked_at):
 def is_regional(post):
     channel = post.get("channel", "").lower()
     text = post.get("text", "").lower()
-    return channel in LOCAL_CHANNELS or any(term in text for term in REGION_TERMS)
+    # «Дніпровський район» alone can be a district of Kyiv. Ambiguous names
+    # in national feeds cannot establish a connection to this oblast.
+    explicit = re.search(r"дніпропетров|\bдніпр(?:о|і|а|у|ом)\b|криворі|крив(?:ий|ому|ого)\s+р(?:іг|озі|огу)|нікопол|синельник|павлоград", text)
+    if explicit:
+        return True
+    if re.search(r"\bкиїв\w*|\bстолиц\w*|\bдеснянськ\w*|\bсолом['’]янськ\w*", text):
+        return False
+    if channel in LOCAL_CHANNELS:
+        return True
+    return bool(re.search(r"марганц|марганец|апостолов|зеленодоль|жовт[іих]+\s+вод", text))
+
+
+def report_window_posts(posts, checked_at):
+    start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
+    result = []
+    for post in posts:
+        published = parse_datetime(post.get("published_at"))
+        if published is None or published > checked_at or not is_regional(post):
+            continue
+        regular = start_utc <= published < end_utc
+        # A retrospective official bulletin explicitly headed today's 08:00
+        # can be published seconds late. This is NOT a grace period for new
+        # attacks or ordinary posts after the cutoff.
+        text = post.get("text", "")
+        header = text[:180]
+        dated = end_local.date() in explicit_event_dates(dict(post, text=header))
+        late_bulletin = (
+            end_utc <= published <= end_utc + timedelta(minutes=15)
+            and post.get("channel", "").lower() in {"adm_dp", "dnipropetrovskaoda"}
+            and dated and re.search(r"(?m)^\s*0?8:00\s*$", header)
+            and re.search(r"(?:атак\w*|бив)\b", text, re.I)
+            and not re.search(r"після\s+0?8:00|щойно|зараз\s+(?:атак|завда)", text, re.I)
+        )
+        if (regular or late_bulletin) and not is_historical_context(post, start_local):
+            result.append(post)
+    return dedupe_posts(result)
 
 
 def contains_any(text, terms):
@@ -488,12 +573,7 @@ def section_with_note(section, posts):
 
 def build_morning_report(posts, statuses, checked_at):
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
-    report_posts = dedupe_posts([
-        post for post in posts
-        if start_utc <= parse_datetime(post.get("published_at")) < end_utc
-        and is_regional(post)
-        and not is_historical_context(post, start_local)
-    ])
+    report_posts = report_window_posts(posts, checked_at)
     groups = {key: [] for key in ("1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")}
     for post in sorted(report_posts, key=lambda item: item["published_at"]):
         category = classify_post(post)
@@ -534,7 +614,7 @@ def build_morning_report(posts, statuses, checked_at):
     )
 
 
-def send_long_bot_message(text, limit=3900):
+def send_long_bot_message(text, limit=3900, start_part=0, part_callback=None):
     paragraphs = text.split("\n\n")
     parts = []
     current = ""
@@ -555,8 +635,30 @@ def send_long_bot_message(text, limit=3900):
     if current:
         parts.append(current)
     for index, part in enumerate(parts, start=1):
+        if index <= start_part:
+            continue
         prefix = f"Частина {index}/{len(parts)}\n\n" if len(parts) > 1 else ""
-        send_bot_message(prefix + part)
+        if not send_bot_message(prefix + part):
+            raise RuntimeError("Telegram sending unavailable; report not marked as delivered")
+        if part_callback:
+            part_callback(index)
+
+
+def deliver_morning_report(report, state, report_date):
+    pending = state.get("pending_daily_report", {})
+    if pending.get("date") != report_date or pending.get("text") != report:
+        pending = {"date": report_date, "text": report, "sent_parts": 0}
+    state["pending_daily_report"] = pending
+    save_alert_state(state)
+
+    def confirmed(index):
+        pending["sent_parts"] = index
+        save_alert_state(state)
+
+    send_long_bot_message(report, start_part=pending["sent_parts"], part_callback=confirmed)
+    state["last_daily_report"] = report_date
+    state.pop("pending_daily_report", None)
+    save_alert_state(state)
 
 
 def process_morning_report(posts, statuses, checked_at):
@@ -571,16 +673,15 @@ def process_morning_report(posts, statuses, checked_at):
     send_enabled = os.getenv("SEND_MORNING_REPORT", "true").lower() in {"1", "true", "yes"}
     if state.get("last_daily_report") == report_date and not force_report:
         return
+    pending = state.get("pending_daily_report", {})
+    if pending.get("date") == report_date and pending.get("text") and not force_report:
+        if send_enabled:
+            print("Resuming partially delivered morning report without AI calls")
+            deliver_morning_report(pending["text"], state, report_date)
+        return
 
     fallback = build_morning_report(posts, statuses, checked_at)
-    regional_posts = dedupe_posts(
-        [
-            post
-            for post in posts
-            if start_utc <= parse_datetime(post.get("published_at")) < end_utc
-            and is_regional(post)
-        ]
-    )
+    regional_posts = report_window_posts(posts, checked_at)
     ai_posts = []
     for post in regional_posts:
         category = classify_post(post)
@@ -591,6 +692,8 @@ def process_morning_report(posts, statuses, checked_at):
         item["published_local"] = parse_datetime(post["published_at"]).astimezone(KYIV).strftime(
             "%d.%m.%Y %H:%M за Києвом"
         )
+        if parse_datetime(post["published_at"]) >= end_utc:
+            item["cutoff_bulletin"] = True
         ai_posts.append(item)
     failed_sources = [
         f"@{channel}" for channel, status in statuses.items() if not status.get("ok")
@@ -621,11 +724,7 @@ def process_morning_report(posts, statuses, checked_at):
         print("Morning report dry run: Telegram sending disabled")
         return
 
-    send_long_bot_message(report)
-    state["last_daily_report"] = report_date
-    ALERT_STATE_FILE.write_text(
-        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    deliver_morning_report(report, state, report_date)
 
 
 def channel_range(posts, channel):
@@ -636,7 +735,7 @@ def channel_range(posts, channel):
     return min(dates).isoformat(), max(dates).isoformat()
 
 
-def write_outputs(posts, statuses, checked_at):
+def write_outputs(posts, statuses, checked_at, previous_checked_at=None):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     POSTS_FILE.write_text(
         json.dumps(posts, ensure_ascii=False, indent=2) + "\n",
@@ -666,11 +765,7 @@ def write_outputs(posts, statuses, checked_at):
     LATEST_FILE.write_text("\n".join(lines), encoding="utf-8")
 
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
-    report_posts = [
-        post
-        for post in posts
-        if start_utc <= parse_datetime(post["published_at"]) < end_utc
-    ]
+    report_posts = report_window_posts(posts, checked_at)
     report_lines = [
         "# Вхідні дані для ранкової довідки",
         "",
@@ -717,6 +812,9 @@ def write_outputs(posts, statuses, checked_at):
         json.dumps(
             {
                 "checked_at": checked_at.isoformat(),
+                "previous_checked_at": previous_checked_at.isoformat() if previous_checked_at else None,
+                "collection_gap_minutes": round((checked_at-previous_checked_at).total_seconds()/60, 1)
+                    if previous_checked_at else None,
                 "report_window": {
                     "timezone": "Europe/Kyiv",
                     "start": start_local.isoformat(),
@@ -741,7 +839,10 @@ def main():
     session = requests.Session()
 
     existing = {post["key"]: post for post in read_existing() if "key" in post}
-    existing_keys = set(existing)
+    try:
+        previous_checked_at = parse_datetime(json.loads(STATUS_FILE.read_text(encoding="utf-8")).get("checked_at"))
+    except (OSError, ValueError, TypeError):
+        previous_checked_at = None
     statuses = {}
 
     for channel in channels:
@@ -783,9 +884,11 @@ def main():
         and parse_datetime(post["published_at"]) >= keep_after
     ]
     posts.sort(key=lambda item: (item["published_at"], item["channel"], item["post_id"]))
-    write_outputs(posts, statuses, checked_at)
-    process_alerts([post for post in posts if post["key"] not in existing_keys], checked_at)
+    write_outputs(posts, statuses, checked_at, previous_checked_at)
+    alert_failures = process_alerts(posts, checked_at, previous_checked_at)
     process_morning_report(posts, statuses, checked_at)
+    if alert_failures:
+        raise RuntimeError("Operational messages remain pending; next run will retry")
 
 
 if __name__ == "__main__":

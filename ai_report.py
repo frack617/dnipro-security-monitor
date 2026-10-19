@@ -39,6 +39,8 @@ def _source_text(posts):
                     f"Публікація: {post['published_local']}",
                     f"Канал: @{post['channel']}",
                     f"Дозволений пункт довідки: {post['category_hint']}",
+                    ("cutoff_bulletin: офіційне зведення станом на 08:00, опубліковане після межі."
+                     if post.get("cutoff_bulletin") else ""),
                     f"Посилання для внутрішньої перевірки: {post['url']}",
                     "Текст:",
                     post.get("text", ""),
@@ -547,10 +549,18 @@ def repair_actions(error):
         elif problem.startswith("missing attack community:"):
             instructions.append("У 2.1 поверни громаду з її підтвердженими наслідками: "
                                 + problem.split(": ", 1)[1])
-        elif problem.startswith("casualties assigned to unsupported community:"):
+        elif problem.startswith(("casualties assigned to unsupported community:",
+                                 "casualties assigned to unsupported place/date:")):
             instructions.append("Перевір місце поранення за джерелами. Не розміщуй "
                 "кількість поранених після опису іншої громади. В одному реченні "
                 "прямо назви підтверджене місце, період та кількість постраждалих.")
+        elif problem == "unsupported causal link between separate transport notices":
+            instructions.append("Розділи незалежні транспортні оголошення. Не пов'язуй "
+                "зміну маршруту з ремонтом іншої вулиці без прямого підтвердження джерела.")
+        elif problem == "distinct attack bulletins with equal counts were collapsed":
+            instructions.append("Два зведення можуть мати однакову кількість атак. "
+                "Подай кожне окремо з його датою/періодом і кількістю районів; "
+                "не вилучай другий показник як дублікат першого.")
         elif problem.startswith(("duplicate section", "missing section")):
             instructions.append("Подай кожен пункт рівно один раз, зі змістом; "
                 "без попереднього порожнього переліку або змісту.")
