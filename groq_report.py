@@ -10,7 +10,7 @@ import requests
 
 from quota_budget import UsageLedger
 from report_rules import COMMUNITY_NAME, required_attack_counts
-from report_sections import recover_transport_section
+from report_sections import recover_transport_section, recover_attack_section
 
 
 DEFAULT_MODEL = "openai/gpt-oss-120b"
@@ -257,6 +257,7 @@ def generate_groq_report(posts, start_label, end_label, checked_label, end_date_
              "window": {"start": start_label, "end": end_label}, "attempts": []}
     save_debug(debug_path, debug, api_key)
     prompt = build_compact_prompt(posts, start_label, end_label, failed_sources)
+    text = None
     for attempt in range(2):
         if attempt:
             # A local size failure must not wait a minute or reserve quota.
@@ -273,6 +274,7 @@ def generate_groq_report(posts, start_label, end_label, checked_label, end_date_
             record["error"] = str(error)
             save_debug(debug_path, debug, api_key)
             raise
+        text = None
         try:
             text = render_groq_sections(raw_text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label, posts)
@@ -291,4 +293,12 @@ def generate_groq_report(posts, start_label, end_label, checked_label, end_date_
             save_debug(debug_path, debug, api_key)
             print(f"Groq validation rejected: {error}")
             prompt = correction_prompt(posts, start_label, end_label, failed_sources, raw_text, error)
+    recovered = recover_attack_section(text, posts, end_date_label, linked)
+    if recovered != text:
+        record['source_rebuilt_sections'] = sorted(set(record.get('source_rebuilt_sections', [])) | {'2.1'})
+        record['source_recovery_reason'] = record.get('validation_error')
+        record.update(rendered_text=recovered, validation='passed', validation_error=None)
+        save_debug(debug_path, debug, api_key)
+        print(f'Author provider used: groq; model={model}; source-rebuilt section 2.1')
+        return recovered
     raise RuntimeError("Groq report failed source validation after two attempts")

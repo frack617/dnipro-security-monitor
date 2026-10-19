@@ -58,3 +58,46 @@ def recover_transport_section(report, posts):
         return report
     print("Source-based transport recovery applied: section 1.2")
     return rebuilt
+
+
+def recover_attack_section(report, posts, end_date_label, linked_locations=()):
+    """Last local recovery after bounded model repairs have failed.
+
+    Replace the entire faulty section from the selected source buffer, never
+    patch an invented number or assign a casualty by proximity. All other
+    sections stay unchanged and the complete report must still validate.
+    """
+    from ai_report import validate_report
+    from fallback_report import build_sections
+    from report_rules import source_problems
+    from datetime import datetime
+
+    if not posts or not isinstance(report, str):
+        return report
+    problems = source_problems(report, posts)
+    eligible = (
+        'casualties assigned to unsupported', 'additional casualties need',
+        'unsupported casualty count', 'casualty total not explicitly supported',
+        'unsupported downed drone count', 'missing confirmed downed drone count',
+        'unsupported housing count', 'unsupported attack total',
+        'missing source attack counts', 'distinct attack bulletins',
+        'missing attack community', 'missing specific attack consequence',
+        'unsupported casualty/event detail', 'unsupported incident',
+    )
+    if not problems or any(not p.startswith(eligible) for p in problems):
+        return report
+    attacks = sorted((p for p in posts if p.get('category_hint') == '2.1'),
+                     key=lambda p: p.get('published_at', p.get('published_local', '')))
+    if not attacks:
+        return report
+    body = build_sections({'2.1': attacks}, datetime.strptime(end_date_label, '%d.%m.%Y').date())['2.1']
+    rebuilt, count = re.subn(r'(?ms)^2\.1\.\s+.*?(?=^2\.2\.)',
+                            lambda _: '2.1. ' + body + '\n', report)
+    if count != 1:
+        return report
+    try:
+        validate_report(rebuilt, end_date_label, linked_locations, posts)
+    except ValueError:
+        return report
+    print('Source-based attack recovery applied: section 2.1; full report validated; no API call')
+    return rebuilt

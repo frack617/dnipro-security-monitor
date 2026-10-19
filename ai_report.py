@@ -10,7 +10,7 @@ import requests
 from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, required_attack_counts, required_fact_checklist, source_problems
 from gemini_transport import RequestBudget, request_text
 from quota_budget import UsageLedger
-from report_sections import recover_transport_section
+from report_sections import recover_transport_section, recover_attack_section
 
 
 DEFAULT_MODEL = "gemini-2.5-flash-lite"
@@ -689,6 +689,14 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             print(f"Gemini author validation rejected: {error}")
             last_error = error
     if draft is None:
+        recovered = recover_attack_section(text, posts, end_date_label, linked_locations)
+        if recovered != text:
+            if budget.records:
+                record = budget.records[-1]
+                record['source_rebuilt_sections'] = sorted(set(record.get('source_rebuilt_sections', [])) | {'2.1'})
+                record['source_recovery_reason'] = str(last_error)
+            budget.validation(recovered)
+            return recovered
         raise RuntimeError(f"Gemini report failed validation: {last_error}")
 
     review_prompt = build_review_prompt(draft, posts, start_label, end_label)
@@ -719,6 +727,14 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             budget.validation(reviewed, error)
             print(f"Gemini editor validation rejected: {error}")
             review_error = error
+    recovered = recover_attack_section(reviewed, posts, end_date_label, linked_locations)
+    if recovered != reviewed:
+        if budget.records:
+            record = budget.records[-1]
+            record['source_rebuilt_sections'] = sorted(set(record.get('source_rebuilt_sections', [])) | {'2.1'})
+            record['source_recovery_reason'] = str(review_error)
+        budget.validation(recovered)
+        return recovered
     raise RuntimeError(f"Gemini review failed validation: {review_error}")
 
 
