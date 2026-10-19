@@ -63,7 +63,7 @@ def house_counts(text):
         patterns = (rf"\b({NUMBER})\s+{HOME}\s+(?:(?:був|було|були)\s+)?{verb}\b",
                     rf"\b{verb}\s+(?:ще\s+)?(?:щонайменше\s+|не менше\s+)?({NUMBER})\s+{HOME}\b",
                     rf"\b(?:ще\s+)?(?:щонайменше\s+)?({NUMBER})\s+{verb}\s+{HOME}\b",
-                    rf"\b{HOME}\s+[^.!?;]{{0,50}}?[,;]\s*(?:ще\s+)?(?:щонайменше\s+)?({NUMBER})\s+{verb}\b")
+                    rf"\b{HOME}\s+[^.!?;]{{0,50}}?(?:[,;]|\bі\b|\bта\b)\s*(?:ще\s+)?(?:щонайменше\s+)?({NUMBER})\s+{verb}\b")
         result[kind] = {number_value(m[1]) for pattern in patterns for m in re.finditer(pattern, text)}
     return result
 
@@ -111,9 +111,39 @@ def required_attack_counts(posts):
     return set().union(*bulletins.values()) if bulletins else set()
 
 
+def required_house_counts(posts):
+    """Latest explicit housing numbers per available source place/date scope.
+
+    A newer number is required, rather than merely allowed. Updates are not
+    added together and destroyed homes never substitute for damaged homes.
+    Unknown locations cannot establish that an older record was superseded.
+    """
+    latest = {}
+    for index, post in enumerate(sorted(posts, key=lambda p: p.get('published_at', ''))):
+        if post.get('category_hint') != '2.1':
+            continue
+        blocks = re.split(r'[▪●]\ufe0f?', post.get('text', ''))
+        for block in (blocks[1:] if len(blocks) > 1 else blocks):
+            places = tuple(n for n, pattern in PLACE_PATTERNS.items() if re.search(pattern, block, re.I))
+            communities = tuple(sorted(community_stems(block)))
+            scope = (places, communities) if places or communities else ('unknown', index)
+            day = post.get('published_local', '')[:10] or post.get('published_at', '')[:10]
+            period = tuple(re.findall(r'\b(?:вранці|зранку|ввечері|уночі|вночі)\b|\b\d{1,2}:\d{2}\b', block, re.I))
+            for kind, counts in house_counts(block).items():
+                if counts:
+                    latest[(scope, day, period, kind)] = counts
+    return {kind: set().union(*(v for k, v in latest.items() if k[-1] == kind))
+            for kind in ('destroyed', 'damaged')}
+
+
 def required_fact_checklist(posts):
     """Concise source inventory, given BEFORE generation as well as repair."""
     facts = []
+    for kind, counts in required_house_counts(posts).items():
+        if counts:
+            label = 'зруйнованих' if kind == 'destroyed' else 'пошкоджених'
+            facts.append('Оселі, '+label+': '+', '.join(map(str, sorted(counts)))+
+                         '. Не підсумовувати уточнення.')
     for post in posts:
         if post.get("category_hint") != "2.1":
             continue
@@ -267,6 +297,11 @@ def transport_link_problems(report, posts):
         for pattern, supported in anchors.items():
             if re.search(pattern, sentence, re.I) and routes(sentence) - supported:
                 problems.append("unsupported causal link between separate transport notices")
+    required_routes = set().union(*(routes(text) for text in sources))
+    if required_routes - routes(body):
+        problems.append('missing source transport routes')
+    if any(not re.search(pattern, body, re.I) for pattern in anchors):
+        problems.append('missing source transport location or closure segment')
     return problems
 
 
@@ -335,6 +370,8 @@ def source_problems(report, posts):
     for kind, counts in house_counts(section21).items():
         if counts - source_houses[kind]:
             problems.append("unsupported housing count: " + kind)
+        if required_house_counts(attacks)[kind] - counts:
+            problems.append('missing source housing count: ' + kind)
     if attacks and "повідомлень за звітний період не виявлено" in section11:
         problems.append("overview denies available attack reports")
     problems.extend(casualty_location_problems(section21, attacks))

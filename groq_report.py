@@ -237,8 +237,10 @@ def correction_prompt(posts, start_label, end_label, failed_sources, raw_text, e
             concise.append("Keep BOTH equal-count bulletins with distinct source periods and district counts.")
         elif issue == "missing specific attack consequence: critical infrastructure":
             concise.append("Restore the explicit critical-infrastructure strike and its source location.")
+        elif issue.startswith('casualties assigned to unsupported'):
+            concise.append('Keep casualty places and dates exactly as evidence.')
         else:
-            concise.append("Correct using evidence: " + issue)
+            concise.append(issue)
     return build_compact_prompt(posts, start_label, end_label, failed_sources,
                                 "Correct the rejected JSON. " + " ".join(concise))
 

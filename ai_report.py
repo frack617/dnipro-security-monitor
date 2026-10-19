@@ -580,7 +580,7 @@ def repair_actions(error):
             instructions.append("У 2.1 відтвори підтверджену кількість збитих БпЛА "
                 "з її періодом і територією. Не плутай запущені та збиті цілі, "
                 "не складай попереднє число з його уточненням.")
-        elif problem.startswith("unsupported housing count:"):
+        elif problem.startswith(("unsupported housing count:", "missing source housing count:")):
             instructions.append("Звір кількість будинків/осель за джерелами, "
                 "окремо зруйновані та пошкоджені. Не обчислюй суму з «ще», "
                 "якщо джерело не дає однозначного загального підсумку.")

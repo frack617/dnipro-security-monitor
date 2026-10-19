@@ -7,7 +7,7 @@ from unittest.mock import patch
 from ai_report import generate_gemini_report, validate_report
 from groq_report import generate_groq_report
 from report_rules import report_section
-from report_sections import recover_attack_section
+from report_sections import recover_attack_section, recover_transport_section
 from test_groq_report import json_sections
 
 F=json.loads((Path(__file__).parent/'fixtures/attack_recovery_20261019.json').read_text())
@@ -17,7 +17,7 @@ ARGS=(F['posts'],'08:00 18.10.2026','08:00 19.10.2026','13:57 19.10.2026','19.10
 class AttackRecoveryTests(unittest.TestCase):
     def test_both_real_drafts_recover_and_other_sections_stay_identical(self):
         for a in F['debug']['attempts']:
-            raw=a['validated_text']
+            raw=recover_transport_section(a['validated_text'],F['posts'])
             with self.subTest(attempt=a['attempt']):
                 with self.assertRaisesRegex(ValueError,'unsupported community'):
                     validate_report(raw,'19.10.2026',posts=F['posts'])
@@ -33,7 +33,7 @@ class AttackRecoveryTests(unittest.TestCase):
                 self.assertNotIn('сталася пожежа. Постраждала одна людина',body)
 
     def test_valid_report_is_not_rewritten(self):
-        out=recover_attack_section(F['debug']['attempts'][1]['validated_text'],F['posts'],'19.10.2026')
+        out=recover_attack_section(recover_transport_section(F['debug']['attempts'][1]['validated_text'],F['posts']),F['posts'],'19.10.2026')
         self.assertEqual(recover_attack_section(out,F['posts'],'19.10.2026'),out)
 
     def test_error_in_overview_cannot_be_hidden_by_rebuilding_events(self):
@@ -82,7 +82,7 @@ class AttackRecoveryTests(unittest.TestCase):
     @patch.dict(os.environ,{'GITHUB_ACTIONS':'false','GEMINI_API_KEY':'test-key'})
     @patch('ai_report._request_report')
     def test_editor_repairs_recover_locally_after_bounded_calls(self,request):
-        valid=recover_attack_section(F['debug']['attempts'][1]['validated_text'],F['posts'],'19.10.2026')
+        valid=recover_attack_section(recover_transport_section(F['debug']['attempts'][1]['validated_text'],F['posts']),F['posts'],'19.10.2026')
         request.side_effect=[valid,F['debug']['attempts'][0]['text'],F['debug']['attempts'][1]['text']]
         out=generate_gemini_report(*ARGS)
         validate_report(out,'19.10.2026',posts=F['posts'])

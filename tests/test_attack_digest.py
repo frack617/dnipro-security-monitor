@@ -7,7 +7,7 @@ from ai_report import validate_report
 from attack_digest import grouped_attack_text, explicit_place
 from fallback_report import build_sections
 from report_rules import before_bulletin_boundary, source_problems, place_casualty_problems, casualty_location_problems
-from report_sections import recover_attack_section
+from report_sections import recover_attack_section, recover_transport_section
 from test_source_accuracy import source, report
 
 F=json.loads((Path(__file__).parent/'fixtures/attack_recovery_20261019.json').read_text())
@@ -19,7 +19,7 @@ def post(text,at='2026-10-19T04:00:00Z'):
 
 class AttackDigestTests(unittest.TestCase):
     def test_real_updates_are_grouped_without_losing_numbers_or_uncertainty(self):
-        raw=F['debug']['attempts'][1]['validated_text']
+        raw=recover_transport_section(F['debug']['attempts'][1]['validated_text'],F['posts'])
         out=recover_attack_section(raw,F['posts'],'19.10.2026')
         validate_report(out,'19.10.2026',posts=F['posts'])
         text=grouped_attack_text([p for p in F['posts'] if p['category_hint']=='2.1'])

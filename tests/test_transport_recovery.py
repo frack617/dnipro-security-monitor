@@ -42,7 +42,7 @@ class TransportRecoveryTests(unittest.TestCase):
         self.assertNotIn('Через тимчасове перекриття',body)
 
     def test_valid_model_transport_is_left_unchanged(self):
-        text=report('Атак немає.')
+        text=recover_transport_section(report('Атак немає.'),FIXTURE['posts'])
         self.assertEqual(recover_transport_section(text,FIXTURE['posts']),text)
 
     def test_explicit_cause_in_a_source_is_preserved(self):
