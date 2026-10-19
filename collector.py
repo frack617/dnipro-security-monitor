@@ -408,10 +408,13 @@ def dedupe_posts(posts):
     seen = set()
     for post in sorted(posts, key=lambda item: item["published_at"]):
         fingerprint = re.sub(r"\W+", " ", post.get("text", "").lower()).strip()
-        if fingerprint and fingerprint in seen:
+        published = parse_datetime(post.get("published_at"))
+        context = published.astimezone(KYIV).date() if published else None
+        key = (context, fingerprint)
+        if fingerprint and key in seen:
             continue
         if fingerprint:
-            seen.add(fingerprint)
+            seen.add(key)
         result.append(post)
     return result
 
@@ -576,6 +579,7 @@ def section_with_note(section, posts):
 
 
 def build_morning_report(posts, statuses, checked_at):
+    from fallback_report import build_sections
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
     report_posts = report_window_posts(posts, checked_at)
     groups = {key: [] for key in ("1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")}
@@ -596,6 +600,7 @@ def build_morning_report(posts, statuses, checked_at):
         general = "У перевірених джерелах повідомлень про підтверджені зміни безпекової ситуації за звітний період не виявлено."
     if failed:
         general += f" Обмеження перевірки: не отримано актуальні дані з {len(failed)} джерел."
+    sections = build_sections(groups, end_local.date())
 
     return (
         "Доброго дня.\n\n"
@@ -605,14 +610,14 @@ def build_morning_report(posts, statuses, checked_at):
         f"Фактичний час автоматичної перевірки: {checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y')}.\n\n"
         "1. Загальна ситуація в області:\n"
         f"1.1. {general}\n{practical_note('1.1', report_posts)}\n\n"
-        f"1.2. {section_with_note('1.2', groups['1.2'])}\n\n"
-        f"1.3. {section_with_note('1.3', groups['1.3'])}\n\n"
-        f"1.4. {section_with_note('1.4', groups['1.4'])}\n\n"
+        f"1.2. {sections['1.2']}\n\n"
+        f"1.3. {sections['1.3']}\n\n"
+        f"1.4. {sections['1.4']}\n\n"
         "2. Події:\n"
-        f"2.1. {section_with_note('2.1', groups['2.1'])}\n\n"
-        f"2.2. {section_with_note('2.2', groups['2.2'])}\n\n"
-        f"2.3. {section_with_note('2.3', groups['2.3'])}\n\n"
-        f"2.4. {section_with_note('2.4', groups['2.4'])}\n\n"
+        f"2.1. {sections['2.1']}\n\n"
+        f"2.2. {sections['2.2']}\n\n"
+        f"2.3. {sections['2.3']}\n\n"
+        f"2.4. {sections['2.4']}\n\n"
         "Примітка: це автоматичний огляд офіційних Telegram-джерел станом на вказаний час. "
         "Для негайних дій слід стежити за офіційними сповіщеннями про повітряну тривогу."
     )

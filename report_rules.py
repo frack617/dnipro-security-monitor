@@ -42,6 +42,46 @@ def attack_counts(text):
     return {int(n) for n in re.findall(r"\b(\d+)\s+(?:разів|рази|атак\w*|обстріл\w*)\b", normalize(text))}
 
 
+DRONE = r"(?:бпла|безпілотник\w*|дрон\w*)"
+DOWNED = r"(?:збил\w*|збит\w*|знищил\w*|знищен\w*)"
+DRONE_ADJ = r"(?:(?:ворож\w*|ударн\w*|російськ\w*)\s+)*"
+HOME = r"(?:(?:приватн\w*|житлов\w*)\s+)*(?:будин\w*|осел\w*|домів\w*)"
+
+
+def downed_drone_counts(text):
+    text = normalize(text)
+    patterns = (rf"\b({NUMBER})\s+{DRONE_ADJ}{DRONE}\s+(?:було\s+)?{DOWNED}\b",
+                rf"\b{DOWNED}\s+(?:(?!запуст|випуст|атак|застос)[^.!?;\d]){{0,100}}?\b({NUMBER})\s+{DRONE_ADJ}{DRONE}\b")
+    return {number_value(m[1]) for pattern in patterns for m in re.finditer(pattern, text)}
+
+
+def house_counts(text):
+    text = normalize(text)
+    result = {"destroyed": set(), "damaged": set()}
+    for kind, verb in (("destroyed", r"(?:зруйнован\w*|знищен\w*)"),
+                       ("damaged", r"(?:пошкоджен\w*|понівечен\w*)")):
+        patterns = (rf"\b({NUMBER})\s+{HOME}\s+(?:(?:був|було|були)\s+)?{verb}\b",
+                    rf"\b{verb}\s+(?:ще\s+)?(?:щонайменше\s+|не менше\s+)?({NUMBER})\s+{HOME}\b",
+                    rf"\b(?:ще\s+)?(?:щонайменше\s+)?({NUMBER})\s+{verb}\s+{HOME}\b",
+                    rf"\b{HOME}\s+[^.!?;]{{0,50}}?[,;]\s*(?:ще\s+)?(?:щонайменше\s+)?({NUMBER})\s+{verb}\b")
+        result[kind] = {number_value(m[1]) for pattern in patterns for m in re.finditer(pattern, text)}
+    return result
+
+
+def required_downed_counts(posts):
+    latest = {}
+    for post in sorted(posts, key=lambda p: p.get("published_at", p.get("published_local", ""))):
+        text = normalize(post.get("text", ""))
+        counts = downed_drone_counts(text)
+        if not counts:
+            continue
+        date = post.get("published_local", "")[:10] or post.get("published_at", "")[:10]
+        period = "night" if re.search(r"вночі|уночі|упродовж ночі|упрожовж ночі|за ніч|у ніч", text) else "day" if re.search(r"вдень|удень|протягом дня|упродовж дня", text) else "unspecified"
+        places = tuple(name for name, pattern in PLACE_PATTERNS.items() if re.search(pattern, text, re.I))
+        latest[(date, period, places)] = counts
+    return set().union(*latest.values()) if latest else set()
+
+
 def explicit_casualty_totals(text):
     totals = set()
     for match in re.finditer(r"\b(?:загалом|усього|всього)\b[^.!?;]{0,180}", normalize(text)):
@@ -78,6 +118,11 @@ def required_fact_checklist(posts):
         if post.get("category_hint") != "2.1":
             continue
         text = re.sub(r"\s+", " ", post.get("text", "")).strip()
+        downed = downed_drone_counts(text)
+        if downed:
+            facts.append("У 2.1 зберегти підтверджені показники збитих БпЛА: "
+                         + ", ".join(map(str, sorted(downed)))
+                         + ". Взяти період та територію з відповідного джерела; не складати уточнення.")
         header = re.split(r"[▪●]", text)[0]
         scope = re.search(rf"\b({NUMBER})\s+район\w*", header, re.I)
         date = re.search(DATE_WORDS, header, re.I)
@@ -128,7 +173,7 @@ def asserted_counts(text):
         if re.search(r"немає|не було|без\s+(?:загиблих|поранених)|уточню|можлив", sentence):
             continue
         result.update(casualty_counts(sentence))
-        if re.search(r"\b(?:постраждала|поранена|госпіталізована|загинула)\s+(?:\d+-річна\s+)?жінка\b|"
+        if re.search(r"\b(?:постраждала|поранена|госпіталізована|загинула)\s+(?:\d+-річна\s+)?(?:жінка|людина)\b|"
                      r"\b(?:постраждав|поранений|госпіталізований|загинув)\s+(?:\d+-річний\s+)?чоловік\b|"
                      r"\b(?:жінка|чоловік|людина)\s+(?:дістала|дістав|отримала|отримав)\s+поран", sentence):
             result.add(1)
@@ -269,6 +314,17 @@ def source_problems(report, posts):
     attack_text = normalize(" ".join(p.get("text", "") for p in attacks))
     section21 = normalize(report_section(report, "2.1"))
     section11 = normalize(report_section(report, "1.1"))
+    source_downed = set().union(*(downed_drone_counts(p.get("text", "")) for p in attacks))
+    output_downed = downed_drone_counts(section21)
+    if output_downed - source_downed:
+        problems.append("unsupported downed drone count")
+    if required_downed_counts(attacks) - output_downed:
+        problems.append("missing confirmed downed drone count")
+    source_houses = {kind:set().union(*(house_counts(p.get("text", ""))[kind] for p in attacks))
+                     for kind in ("destroyed", "damaged")}
+    for kind, counts in house_counts(section21).items():
+        if counts - source_houses[kind]:
+            problems.append("unsupported housing count: " + kind)
     if attacks and "повідомлень за звітний період не виявлено" in section11:
         problems.append("overview denies available attack reports")
     problems.extend(casualty_location_problems(section21, attacks))
@@ -290,7 +346,7 @@ def source_problems(report, posts):
                         prior_positive = True
                 if prior_positive:
                     problems.append("additional casualties need a distinct dated source episode: " + name)
-    allowed_counts = set().union(*(casualty_counts(p.get("text", "")) for p in attacks))
+    allowed_counts = set().union(*(asserted_counts(p.get("text", "")) for p in attacks))
     unsupported = casualty_counts(section21) - allowed_counts
     if unsupported:
         problems.append("unsupported casualty count: " + ", ".join(map(str, sorted(unsupported))))

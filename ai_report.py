@@ -305,7 +305,10 @@ def _date_words(date_label):
     return f"{value.day} {UA_MONTH_NAMES[value.month - 1]}"
 
 
-def normalize_completed_morning_forecast(text, end_date_label):
+def normalize_completed_morning_forecast(text, end_date_label, posts=None):
+    if posts:
+        from fallback_report import source_weather_normalization
+        text = source_weather_normalization(text, posts, end_date_label)
     end_date_words = _date_words(end_date_label)
     if not end_date_words:
         return text
@@ -379,7 +382,8 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
     for heading, first_point in (("1. Загальна ситуація в області:", "1.1."), ("2. Події:", "2.1.")):
         if len(re.findall(rf"(?m)^{re.escape(heading)}[ \t]*$", stripped)) != 1:
             problems.append("missing or duplicate main heading: " + heading)
-        elif stripped.find(heading) > stripped.find(first_point):
+        elif (re.search(rf"(?m)^{re.escape(heading)}[ \t]*$", stripped).start()
+              > re.search(rf"(?m)^{re.escape(first_point)}\s", stripped).start()):
             problems.append("main heading out of order: " + heading)
         gap = re.search(rf"(?ms)^{re.escape(heading)}\s*\n(.*?)(?=^{re.escape(first_point)}\s)", stripped)
         if gap and gap.group(1).strip():
@@ -572,6 +576,14 @@ def repair_actions(error):
             instructions.append("Не подавай одну госпіталізовану людину повторно як "
                 "«також поранену людину». Зведи повтори в один епізод; "
                 "окрему додаткову групу залиш лише з її підтвердженою датою та місцем.")
+        elif problem in {"unsupported downed drone count", "missing confirmed downed drone count"}:
+            instructions.append("У 2.1 відтвори підтверджену кількість збитих БпЛА "
+                "з її періодом і територією. Не плутай запущені та збиті цілі, "
+                "не складай попереднє число з його уточненням.")
+        elif problem.startswith("unsupported housing count:"):
+            instructions.append("Звір кількість будинків/осель за джерелами, "
+                "окремо зруйновані та пошкоджені. Не обчислюй суму з «ще», "
+                "якщо джерело не дає однозначного загального підсумку.")
         elif problem.startswith(("duplicate section", "missing section")):
             instructions.append("Подай кожен пункт рівно один раз, зі змістом; "
                 "без попереднього порожнього переліку або змісту.")
@@ -664,7 +676,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             raise
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
-            text = normalize_completed_morning_forecast(text, end_date_label)
+            text = normalize_completed_morning_forecast(text, end_date_label, posts)
             recovered = recover_transport_section(text, posts)
             if recovered != text and budget.records:
                 budget.records[-1]["source_rebuilt_sections"] = ["1.2"]
@@ -689,7 +701,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
         try:
             reviewed = _request_report(endpoint, api_key, review_prompt + retry_note, budget)
             reviewed = enforce_report_frame(reviewed, start_label, end_label, checked_label)
-            reviewed = normalize_completed_morning_forecast(reviewed, end_date_label)
+            reviewed = normalize_completed_morning_forecast(reviewed, end_date_label, posts)
             recovered = recover_transport_section(reviewed, posts)
             if recovered != reviewed and budget.records:
                 budget.records[-1]["source_rebuilt_sections"] = ["1.2"]

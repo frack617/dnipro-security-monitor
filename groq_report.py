@@ -275,7 +275,7 @@ def generate_groq_report(posts, start_label, end_label, checked_label, end_date_
             raise
         try:
             text = render_groq_sections(raw_text, start_label, end_label, checked_label)
-            text = normalize_completed_morning_forecast(text, end_date_label)
+            text = normalize_completed_morning_forecast(text, end_date_label, posts)
             recovered = recover_transport_section(text, posts)
             if recovered != text:
                 record["source_rebuilt_sections"] = ["1.2"]
