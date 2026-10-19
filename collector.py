@@ -409,6 +409,23 @@ def is_regional(post):
     return bool(re.search(r"марганц|марганец|апостолов|зеленодоль|жовт[іих]+\s+вод", text))
 
 
+def is_cutoff_bulletin(post, boundary_local):
+    published = parse_datetime(post.get("published_at"))
+    if published is None:
+        return False
+    boundary_utc = boundary_local.astimezone(timezone.utc)
+    text = post.get("text", "")
+    header = text[:180]
+    return bool(
+        boundary_utc <= published <= boundary_utc + timedelta(minutes=15)
+        and post.get("channel", "").lower() in {"adm_dp", "dnipropetrovskaoda"}
+        and boundary_local.date() in explicit_event_dates(dict(post, text=header))
+        and re.search(r"(?m)^\s*0?8:00\s*$", header)
+        and re.search(r"(?:атак\w*|бив)\b", text, re.I)
+        and not re.search(r"після\s+0?8:00|щойно|зараз\s+(?:атак|завда)", text, re.I)
+    )
+
+
 def report_window_posts(posts, checked_at):
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
     result = []
@@ -416,20 +433,14 @@ def report_window_posts(posts, checked_at):
         published = parse_datetime(post.get("published_at"))
         if published is None or published > checked_at or not is_regional(post):
             continue
-        regular = start_utc <= published < end_utc
+        # The same retrospective 08:00 bulletin cannot belong to both
+        # adjacent windows merely because it was posted a few seconds late.
+        regular = (start_utc <= published < end_utc
+                   and not is_cutoff_bulletin(post, start_local))
         # A retrospective official bulletin explicitly headed today's 08:00
         # can be published seconds late. This is NOT a grace period for new
         # attacks or ordinary posts after the cutoff.
-        text = post.get("text", "")
-        header = text[:180]
-        dated = end_local.date() in explicit_event_dates(dict(post, text=header))
-        late_bulletin = (
-            end_utc <= published <= end_utc + timedelta(minutes=15)
-            and post.get("channel", "").lower() in {"adm_dp", "dnipropetrovskaoda"}
-            and dated and re.search(r"(?m)^\s*0?8:00\s*$", header)
-            and re.search(r"(?:атак\w*|бив)\b", text, re.I)
-            and not re.search(r"після\s+0?8:00|щойно|зараз\s+(?:атак|завда)", text, re.I)
-        )
+        late_bulletin = is_cutoff_bulletin(post, end_local)
         if (regular or late_bulletin) and not is_historical_context(post, start_local):
             result.append(post)
     return dedupe_posts(result)
