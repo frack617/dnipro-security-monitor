@@ -194,6 +194,9 @@ def build_sections(groups, end_date):
             texts = unique_texts(weather_text(p, end_date) if WEATHER.search(p.get("text", ""))
                                 and not SERVICE.search(p.get("text", "")) else clean_event(p) for p in posts)
             result[section] = " ".join(texts) if texts else EMPTY
+        elif section == "2.1":
+            from attack_digest import grouped_attack_text
+            result[section] = grouped_attack_text(posts) if posts else EMPTY
         else:
             seen = set()
             texts = []

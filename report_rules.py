@@ -180,6 +180,16 @@ def asserted_counts(text):
     return result
 
 
+def before_bulletin_boundary(segment):
+    # A dated new bulletin/header starts a new regional scope. It cannot
+    # transfer its introductory casualty count to the previous community.
+    boundary = re.search(
+        r'\b(?:повідомлення\s+від|за\s+(?:ранковим\s+)?зведенням'
+        r'(?:\s+станом\s+на\s+\d{1,2}:\d{2})?)\s+'+DATE_WORDS+r'\s*:',
+        segment, re.I)
+    return segment[:boundary.start()] if boundary else segment
+
+
 def place_casualty_problems(section, posts):
     records = {}
     for post in posts:
@@ -203,7 +213,7 @@ def place_casualty_problems(section, posts):
     problems = []
     for index, (start, end, name) in enumerate(markers):
         stop = markers[index+1][0] if index+1 < len(markers) else len(section)
-        segment = section[end:stop]
+        segment = before_bulletin_boundary(section[end:stop])
         # Community names also end a city/district scope. Existing community
         # checks handle their own counts; a list within its parent is kept.
         counts = asserted_counts(segment)
@@ -289,7 +299,7 @@ def casualty_location_problems(section, posts):
     problems = []
     for index, (start, end, stem) in enumerate(markers):
         stop = markers[index+1][0] if index+1 < len(markers) else len(section)
-        segment = section[end:stop]
+        segment = before_bulletin_boundary(section[end:stop])
         # An explicitly marked day/window total starts a new scope, rather
         # than extending the preceding community's event. Global count and
         # total-source checks below still apply to the entire section.
