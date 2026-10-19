@@ -271,6 +271,24 @@
       "run_id": "39205345970",
       "stage": "groq_author",
       "outcome": "http_200"
+    },
+    {
+      "id": "39206550248:2026-10-19T05:49:56.790435+00:00:30",
+      "at": "2026-10-19T05:49:56.790435+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "manual_reserve_check",
+      "run_id": "39206550248",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39206550248:2026-10-19T05:50:00.248539+00:00:31",
+      "at": "2026-10-19T05:50:00.248539+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "manual_reserve_check",
+      "run_id": "39206550248",
+      "stage": "author",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
