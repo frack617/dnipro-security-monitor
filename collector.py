@@ -52,7 +52,7 @@ ROAD_TERMS = (
     "перекрито рух", "перекриття руху", "обмежено рух", "обмеження руху",
     "зміни у русі", "тимчасово не курсуват", "змінено маршрут",
     "призупиняється рух", "кінцева зупинка", "перекриття проїзної частини",
-    "ремонт колії",
+    "ремонт колії", "змін у русі", "курсує за скороченим маршрутом",
 )
 BLAST_WORK_TERMS = (
     "планові вибух", "вибухові роботи", "контрольований вибух",
@@ -267,6 +267,15 @@ def is_background_notice(text):
     return not direct_event
 
 
+def has_stopped_route(text):
+    # An explicit completed suspension of a numbered public route is a
+    # practical disruption. Do not treat every route timetable as an alert.
+    return bool(re.search(
+        r"\b(?:автобус|тролейбус|трамвай)\w*\s*№\s*\d+[а-яіїєґa-z]*\s+"
+        r"(?:(?:тимчасово|повністю)\s+)?(?:призупини[вл]\w*|припини[вл]\w*)\s+"
+        r"(?:свою\s+)?роботу\b", text))
+
+
 def is_resonant(post):
     text = post.get("text", "").lower()
     if not is_regional(post) or is_background_notice(text):
@@ -283,7 +292,7 @@ def is_resonant(post):
     # mention of equipment, scheduled outages or a hypothetical risk.
     outage = bool(re.search(r"технологічн\w*\s+порушенн\w*", text) and re.search(
         r"(?<!не )\bспричинил[оаи]\s+знеструмлен\w*", text))
-    return attack or outage or contains_any(text, ALERT_TERMS)
+    return attack or outage or has_stopped_route(text) or contains_any(text, ALERT_TERMS)
 
 
 def save_alert_state(state):
@@ -505,7 +514,7 @@ def classify_post(post):
         return "2.1"
     if contains_any(text, BLAST_WORK_TERMS):
         return "1.3"
-    if contains_any(text, ROAD_TERMS):
+    if contains_any(text, ROAD_TERMS) or has_stopped_route(text):
         return "1.2"
     if contains_any(text, SERVICE_TERMS):
         return "1.4"
