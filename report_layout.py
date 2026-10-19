@@ -62,7 +62,10 @@ def geographic_paragraphs(body):
                     paragraphs.append(' '.join(current).replace('\n ', '\n').rstrip())
                 label = match[0].strip()
                 rest = rest.lstrip('.:').lstrip()
-                current = [label+':\n'+rest]
+                # Keep inflected place phrases as complete sentences. Only a
+                # standalone place label receives a colon and its own line.
+                current = ([label+':\n'+rest] if sentence[match.end():].lstrip().startswith(('.', ':'))
+                           else [sentence])
             else:
                 current.append(sentence)
         if current:
@@ -71,6 +74,30 @@ def geographic_paragraphs(body):
     if words(formatted) != words(body):
         raise ValueError('Report layout changed section content')
     return formatted
+
+
+# A bulletin's district count is not a whole-window total. Keep those numbers
+# in 2.1 with their source periods; remove only the count modifier in 1.1.
+DISTRICT_COUNT = re.compile(
+    r"\b(?:\d+|один|одного|одному|два|двох|двом|три|трьох|трьом|чотири|чотирьох|чотирьом|"
+    r"п[’']ять|п[’']яти|шість|шести|сім|семи|вісім|восьми|дев[’']ять|дев[’']яти|десять|десяти)"
+    r"\s+(?=район(?:и|ів|ах|ам|ом|у|і)?\b)", re.I)
+
+
+def polish_body(body, key):
+    # Exact editorial corrections, not free rewriting or inferred facts.
+    body = re.sub(r'\bупрожовж\b', 'упродовж', body, flags=re.I)
+    if key == '1.1':
+        body = DISTRICT_COUNT.sub('', body)
+    if key == '2.1':
+        for old, new in (
+            ('Попередньо:', 'Попередньо повідомлялося:'),
+            ('Пізніше:', 'Згодом повідомлено:'),
+            ('Зведення:', 'У зведенні зазначено:'),
+        ):
+            body = re.sub(r'(?<!\w)'+re.escape(old), lambda _: '\n\n'+new, body)
+        body = re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+', '\n\n', body).strip()
+    return body
 
 
 PUBLIC_TITLES = {
@@ -93,8 +120,9 @@ def render_report(text, start_label, end_label, checked_label):
         lines += ['', '⚠️ Резервна автоматична версія']
     formatted = {}
     for key, body in sections.items():
-        result = geographic_paragraphs(body) if key in ('1.1', '2.1') else body
-        if words(result) != words(body):
+        edited = polish_body(body, key)
+        result = geographic_paragraphs(edited) if key in ('1.1', '2.1') else edited
+        if words(result) != words(edited):
             raise ValueError('Report layout changed facts in '+key)
         formatted[key] = result
     general = [formatted['1.1']]

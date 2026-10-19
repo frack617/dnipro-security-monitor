@@ -9,7 +9,7 @@ from unittest.mock import patch
 import collector as c
 from ai_report import validate_report
 from groq_report import render_groq_sections
-from report_layout import PUBLIC_TITLES, EMPTY, TITLES, geographic_paragraphs, internal_sections, render_report, words
+from report_layout import PUBLIC_TITLES, EMPTY, TITLES, geographic_paragraphs, internal_sections, render_report, words, polish_body
 from report_sections import recover_attack_section, recover_transport_section
 from test_ai_report import VALID_REPORT
 
@@ -39,14 +39,14 @@ class ReportLayoutTests(unittest.TestCase):
     def test_city_and_district_separated_without_reassignment(self):
         body='У Дніпрі пошкоджені будинки. У Дніпровському районі троє людей поранені.'
         out=geographic_paragraphs(body)
-        self.assertIn('У Дніпрі:\nпошкоджені будинки.',out)
-        self.assertIn('У Дніпровському районі:\nтроє людей поранені.',out)
+        self.assertIn('У Дніпрі пошкоджені будинки.',out)
+        self.assertIn('У Дніпровському районі троє людей поранені.',out)
         self.assertEqual(words(out),words(body))
 
     def test_administrative_name_outside_small_known_city_list(self):
         body="У Кам'янському районі пошкоджений ангар."
         out=geographic_paragraphs(body)
-        self.assertIn("У Кам'янському районі:\n",out)
+        self.assertIn("У Кам'янському районі пошкоджений ангар.",out)
         self.assertEqual(words(out),words(body))
 
     def test_joint_place_list_is_not_given_a_single_place_heading(self):
@@ -56,7 +56,7 @@ class ReportLayoutTests(unittest.TestCase):
     def test_community_and_explicit_parent_district_stay_in_one_heading(self):
         body='У Зайцівській громаді Синельниківського району сталася пожежа.'
         out=geographic_paragraphs(body)
-        self.assertIn('У Зайцівській громаді Синельниківського району:\nсталася пожежа.',out)
+        self.assertIn('У Зайцівській громаді Синельниківського району сталася пожежа.',out)
         self.assertEqual(words(out),words(body))
 
     def test_standalone_city_heading_gets_its_own_line(self):
@@ -110,7 +110,7 @@ class ReportLayoutTests(unittest.TestCase):
                 for i,m in enumerate(points)}
         for key,body in before.items():
             if body==EMPTY and key in ('1.2','1.4','2.3'):continue
-            self.assertIn(' '.join(words(body)), ' '.join(words(public[mapping[key]])),key)
+            self.assertIn(' '.join(words(polish_body(body,key))), ' '.join(words(public[mapping[key]])),key)
 
     def test_supplemental_facts_are_preserved_under_correct_public_points(self):
         sections=internal_sections(VALID_REPORT)
@@ -127,6 +127,43 @@ class ReportLayoutTests(unittest.TestCase):
         self.assertIn('Повідомлення про мінування:\nПовідомили про мінування школи.',law)
         self.assertIn('Зброя та правоохоронні операції:\n'+EMPTY,law)
         self.assertIn('Виявлено небезпечний боєприпас.',out.split('2.3. ')[1])
+
+    def test_overview_district_count_does_not_become_daily_total(self):
+        for count in ('чотири','трьох','5','семи'):
+            with self.subTest(count=count):
+                body='Протягом звітного періоду ворог атакував '+count+' райони області.'
+                out=polish_body(body,'1.1')
+                self.assertEqual(out,'Протягом звітного періоду ворог атакував райони області.')
+                self.assertEqual(polish_body(body,'2.1'),body)
+
+    def test_other_numbers_and_named_districts_survive_overview_cleanup(self):
+        body='У Дніпровському районі пошкоджено 4 будинки. Постраждала 84-річна жінка.'
+        self.assertEqual(polish_body(body,'1.1'),body)
+
+    def test_typo_corrected_without_replacing_correct_words(self):
+        self.assertEqual(polish_body('21 БпЛА збили упрожовж ночі.','2.1'),
+                         '21 БпЛА збили упродовж ночі.')
+        self.assertEqual(polish_body('Упродовж дня працювали служби.','2.1'),
+                         'Упродовж дня працювали служби.')
+
+    def test_update_context_and_uncertain_housing_counts_survive_polish(self):
+        body='Попередньо: Можуть бути заблоковані люди. Пізніше: Один будинок зруйнований. Зведення: Ще три оселі зруйновані.'
+        out=polish_body(body,'2.1')
+        self.assertIn('Попередньо повідомлялося: Можуть бути заблоковані люди.',out)
+        self.assertIn('Згодом повідомлено: Один будинок зруйнований.',out)
+        self.assertIn('У зведенні зазначено: Ще три оселі зруйновані.',out)
+        self.assertNotIn('чотири',out)
+        self.assertNotIn('Попередньо:',out)
+        self.assertEqual(polish_body(out,'2.1'),out)
+
+    def test_full_publication_applies_cleanup_after_fact_validation(self):
+        sections=internal_sections(VALID_REPORT)
+        sections['1.1']='Протягом звітного періоду атаковано чотири райони області.'
+        sections['2.1']='У Дніпрі пошкоджені будинки. У Дніпровському районі постраждала людина.'
+        out=render_report('\n'.join(k+'. '+v for k,v in sections.items()),*ARGS)
+        self.assertIn('атаковано райони області.',out)
+        self.assertIn('У Дніпрі пошкоджені будинки.\n\nУ Дніпровському районі постраждала людина.',out)
+        self.assertNotIn('У Дніпрі:\n',out)
 
     def test_groq_preserves_source_supported_geographic_line_breaks(self):
         sections=internal_sections(VALID_REPORT)
