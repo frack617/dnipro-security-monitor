@@ -38,16 +38,33 @@ def clean_transport_notice(post):
     return text + "." if text else ""
 
 
+def source_transport_notices(posts):
+    from transport_state import restored_routes
+    ordered = sorted(posts, key=lambda p: p.get("published_at", p.get("published_local", "")))
+    positions = {p.get('key'): index for index, p in enumerate(ordered) if p.get('key')}
+    previous = set()
+    for index, p in enumerate(ordered):
+        target = p.get('reply_to')
+        if target in positions and positions[target] < index and restored_routes(p.get('text', '')):
+            previous.add(target)
+    notices = []
+    for post in ordered:
+        if post.get("category_hint", "1.2") != "1.2":
+            continue
+        text = clean_transport_notice(post)
+        if post.get('key') in previous:
+            text = 'За попереднім повідомленням: ' + text
+        elif post.get('reply_to') in previous and restored_routes(post.get('text', '')):
+            text = 'Пізніше повідомлено про відновлення: ' + text
+        if text and text not in notices:
+            notices.append(text)
+    return notices
+
+
 def recover_transport_section(report, posts):
     if not posts or not transport_link_problems(report, posts):
         return report
-    notices = []
-    for post in sorted(posts, key=lambda p: p.get("published_at", p.get("published_local", ""))):
-        if post.get("category_hint") != "1.2":
-            continue
-        text = clean_transport_notice(post)
-        if text and text not in notices:
-            notices.append(text)
+    notices = source_transport_notices(posts)
     if not notices:
         # Keep the invalid draft invalid rather than deleting its facts.
         return report

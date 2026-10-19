@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from report_rules import DATE_WORDS, MONTHS, NUMBER, PLACE_PATTERNS, asserted_counts, normalize
-from report_sections import clean_transport_notice
+from report_sections import clean_transport_notice, source_transport_notices
 
 
 EMPTY = "У перевірених джерелах повідомлень за звітний період не виявлено."
@@ -188,7 +188,7 @@ def build_sections(groups, end_date):
     result = {}
     for section, posts in groups.items():
         if section == "1.2":
-            texts = unique_texts(clean_transport_notice(p) for p in posts)
+            texts = unique_texts(source_transport_notices(posts))
             result[section] = " Окремо: ".join(texts) if texts else EMPTY
         elif section == "1.4":
             texts = unique_texts(weather_text(p, end_date) if WEATHER.search(p.get("text", ""))

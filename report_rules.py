@@ -262,20 +262,9 @@ def place_casualty_problems(section, posts):
 
 
 def transport_link_problems(report, posts):
+    from transport_state import transport_routes as routes, restoration_problems
     body = report_section(report, "1.2")
     sources = [p.get("text", "") for p in posts if p.get("category_hint") == "1.2"]
-    mode_pattern = r"\b(?:трамва\w*|тролейбус\w*|автобус\w*)\s*№"
-
-    def routes(text):
-        markers = list(re.finditer(mode_pattern, text, re.I))
-        result = set()
-        for index, marker in enumerate(markers):
-            kind = "трамвай" if marker[0].lower().startswith("трамва") else "тролейбус" if marker[0].lower().startswith("тролейбус") else "автобус"
-            stop = markers[index+1].start() if index+1 < len(markers) else len(text)
-            fragment = text[marker.start():stop]
-            for match in re.finditer(r"№\s*(\d+(?:\s*[А-ЯІЇЄҐA-Z](?![а-яіїєґa-z]))?)", fragment):
-                result.add((kind, re.sub(r"\s+", "", match[1]).upper()))
-        return result
 
     # Learn street/bridge names and route identifiers from the current sources.
     # Ambiguous 'через Центральний міст' is a path, not a causal assertion.
@@ -302,6 +291,7 @@ def transport_link_problems(report, posts):
         problems.append('missing source transport routes')
     if any(not re.search(pattern, body, re.I) for pattern in anchors):
         problems.append('missing source transport location or closure segment')
+    problems.extend(restoration_problems(body, posts))
     return problems
 
 

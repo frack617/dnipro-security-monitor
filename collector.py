@@ -23,6 +23,7 @@ CHANNELS_FILE = ROOT / "channels.txt"
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "72"))
 KEEP_HOURS = int(os.getenv("KEEP_HOURS", "72"))
 MAX_PAGES = int(os.getenv("MAX_PAGES", "12"))
+PARSER_VERSION = 2
 KYIV = ZoneInfo("Europe/Kyiv")
 
 LOCAL_CHANNELS = {
@@ -134,11 +135,30 @@ def fetch(url, session):
     return response.text
 
 
+def own_message_nodes(message, selector):
+    result = []
+    excluded = {"tgme_widget_message_reply", "tgme_widget_message_link_preview"}
+    for candidate in message.select(selector):
+        own = True
+        for ancestor in [candidate, *candidate.parents]:
+            if ancestor is message:
+                break
+            classes = set(ancestor.get("class", []))
+            if classes & excluded or "tgme_widget_message" in classes:
+                own = False
+                break
+        if own:
+            result.append(candidate)
+    return result
+
+
 def parse_page(channel, html):
     soup = BeautifulSoup(html, "html.parser")
     posts = []
 
     for node in soup.select(".tgme_widget_message[data-post]"):
+        if node.find_parent(class_="tgme_widget_message") is not None:
+            continue
         data_post = node.get("data-post", "")
         if "/" not in data_post:
             continue
@@ -147,19 +167,19 @@ def parse_page(channel, html):
         if not post_id_text.isdigit():
             continue
 
-        time_node = node.select_one("time[datetime]")
+        own_times = own_message_nodes(node, "time[datetime]")
+        time_node = own_times[0] if own_times else None
         published_at = time_node.get("datetime") if time_node else None
         published_dt = parse_datetime(published_at)
         if published_dt is None:
             continue
 
-        text_node = node.select_one(".tgme_widget_message_text")
-        text = text_node.get_text("\n", strip=True) if text_node else "[Медіа без тексту]"
+        text_nodes = own_message_nodes(node, ".tgme_widget_message_text")
+        text = "\n".join(n.get_text("\n", strip=True) for n in text_nodes) if text_nodes else "[Медіа без тексту]"
         text = re.sub(r"[ \t]+", " ", text).strip()
 
         post_id = int(post_id_text)
-        posts.append(
-            {
+        post = {
                 "key": f"{post_channel}/{post_id}",
                 "channel": post_channel or channel,
                 "post_id": post_id,
@@ -167,7 +187,14 @@ def parse_page(channel, html):
                 "url": f"https://t.me/{post_channel}/{post_id}",
                 "text": text,
             }
-        )
+        for reply in node.select("a.tgme_widget_message_reply[href]"):
+            if reply.find_parent(class_="tgme_widget_message") is not node:
+                continue
+            match = re.fullmatch(r"https?://t\.me/([A-Za-z0-9_]+/\d+)(?:[?#].*)?", reply["href"])
+            if match:
+                post["reply_to"] = match[1]
+                break
+        posts.append(post)
 
     return posts
 
@@ -292,7 +319,8 @@ def is_resonant(post):
     # mention of equipment, scheduled outages or a hypothetical risk.
     outage = bool(re.search(r"технологічн\w*\s+порушенн\w*", text) and re.search(
         r"(?<!не )\bспричинил[оаи]\s+знеструмлен\w*", text))
-    return attack or outage or has_stopped_route(text) or contains_any(text, ALERT_TERMS)
+    from transport_state import restored_routes
+    return attack or outage or has_stopped_route(text) or bool(restored_routes(text)) or contains_any(text, ALERT_TERMS)
 
 
 def save_alert_state(state):
@@ -302,7 +330,7 @@ def save_alert_state(state):
     temporary.replace(ALERT_STATE_FILE)
 
 
-def process_alerts(new_posts, checked_at, previous_checked_at=None):
+def process_alerts(new_posts, checked_at, previous_checked_at=None, recovered_keys=()):
     if os.getenv("SEND_OPERATIONAL_ALERTS", "true").lower() not in {"1", "true", "yes"}:
         print("Operational alerts dry run: Telegram sending disabled; delivery state unchanged")
         return
@@ -329,7 +357,8 @@ def process_alerts(new_posts, checked_at, previous_checked_at=None):
     # even after its post has already been saved in posts.json.
     fingerprints = {re.sub(r"\W+", " ", p.get("text", "").lower()).strip()
                     for p in new_posts if p["key"] in alerted}
-    pending = set(state.get("pending_alert_keys", []))
+    recovered_keys = set(recovered_keys)
+    pending = set(state.get("pending_alert_keys", [])) | recovered_keys
     failures = []
     sent = 0
     for post in sorted(new_posts, key=lambda item: item["published_at"]):
@@ -346,7 +375,8 @@ def process_alerts(new_posts, checked_at, previous_checked_at=None):
             continue
         local_time = parse_datetime(post["published_at"]).astimezone(KYIV)
         excerpt = post["text"][:2500]
-        delayed = ("Надіслано після перерви в перевірках.\n"
+        delayed = ("Уточнення після виправлення читання допису.\n" if post['key'] in recovered_keys else
+                   "Надіслано після перерви в перевірках.\n"
                    if checked_at - parse_datetime(post["published_at"]) > timedelta(hours=2) else "")
         try:
             delivered = send_bot_message(
@@ -533,7 +563,8 @@ def classify_post(post):
         return "2.1"
     if contains_any(text, BLAST_WORK_TERMS):
         return "1.3"
-    if contains_any(text, ROAD_TERMS) or has_stopped_route(text):
+    from transport_state import restored_routes
+    if contains_any(text, ROAD_TERMS) or has_stopped_route(text) or restored_routes(text):
         return "1.2"
     if contains_any(text, SERVICE_TERMS) or is_power_queue_change(post):
         return "1.4"
@@ -895,6 +926,23 @@ def write_outputs(posts, statuses, checked_at, previous_checked_at=None):
     )
 
 
+def recovered_restoration_keys(posts, changed_keys, state, checked_at):
+    from transport_state import restored_routes, latest_restored_routes
+    alerted = set(state.get('alerted_keys', []))
+    result = []
+    for post in posts:
+        published = parse_datetime(post.get('published_at'))
+        if (post['key'] not in changed_keys or post['key'] in alerted
+            or post.get('reply_to') not in alerted or published is None
+            or published > checked_at or published.astimezone(KYIV).date() != checked_at.astimezone(KYIV).date()):
+            continue
+        routes = restored_routes(post.get('text', ''))
+        related = [p for p in posts if p.get('channel', '').lower() == post.get('channel', '').lower()]
+        if routes and routes <= latest_restored_routes(related):
+            result.append(post['key'])
+    return result
+
+
 def main():
     checked_at = utc_now()
     cutoff = checked_at - timedelta(hours=LOOKBACK_HOURS)
@@ -904,10 +952,15 @@ def main():
 
     existing = {post["key"]: post for post in read_existing() if "key" in post}
     try:
-        previous_checked_at = parse_datetime(json.loads(STATUS_FILE.read_text(encoding="utf-8")).get("checked_at"))
+        previous_status = json.loads(STATUS_FILE.read_text(encoding="utf-8"))
+        if not isinstance(previous_status, dict):
+            raise ValueError("invalid status structure")
+        previous_checked_at = parse_datetime(previous_status.get("checked_at"))
     except (OSError, ValueError, TypeError):
+        previous_status = {}
         previous_checked_at = None
     statuses = {}
+    parser_changed_keys = set()
 
     for channel in channels:
         try:
@@ -920,15 +973,23 @@ def main():
             # Невелике перекриття підхоплює запізнілі зміни, не змушуючи
             # перечитувати весь 72-годинний буфер кожні 30 хвилин.
             channel_cutoff = cutoff
-            if known_channel_dates:
+            if known_channel_dates and previous_status.get("channels", {}).get(channel, {}).get("parser_version") == PARSER_VERSION:
                 channel_cutoff = max(cutoff, max(known_channel_dates) - timedelta(hours=2))
 
             found = collect_channel(channel, session, channel_cutoff)
             for post in found:
+                previous = existing.get(post['key'])
+                if previous and previous.get('parser_recovered'):
+                    post['parser_recovered'] = True
+                if (previous_status.get('channels', {}).get(channel, {}).get('parser_version') != PARSER_VERSION
+                    and previous and previous.get('text') != post.get('text')):
+                    parser_changed_keys.add(post['key'])
+                    post['parser_recovered'] = True
                 existing[post["key"]] = post
             oldest, newest = channel_range(list(existing.values()), channel)
             statuses[channel] = {
                 "ok": True,
+                "parser_version": PARSER_VERSION,
                 "posts_found": len(found),
                 "oldest_collected_at": oldest,
                 "newest_collected_at": newest,
@@ -949,7 +1010,9 @@ def main():
     ]
     posts.sort(key=lambda item: (item["published_at"], item["channel"], item["post_id"]))
     write_outputs(posts, statuses, checked_at, previous_checked_at)
-    alert_failures = process_alerts(posts, checked_at, previous_checked_at)
+    parser_changed_keys.update(p['key'] for p in posts if p.get('parser_recovered'))
+    recovered = recovered_restoration_keys(posts, parser_changed_keys, read_alert_state(), checked_at)
+    alert_failures = process_alerts(posts, checked_at, previous_checked_at, recovered_keys=recovered)
     process_morning_report(posts, statuses, checked_at)
     if alert_failures:
         raise RuntimeError("Operational messages remain pending; next run will retry")

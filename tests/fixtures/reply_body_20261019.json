@@ -1,0 +1,28 @@
+{
+  "old": {
+    "key": "DniproCityOfficial/14997",
+    "channel": "DniproCityOfficial",
+    "post_id": 14997,
+    "published_at": "2026-10-19T11:35:00+00:00",
+    "url": "https://t.me/DniproCityOfficial/14997",
+    "text": "Оновлена інформація щодо тимчасових змін у русі громадського транспорту:\n🚎\nтролейбус №6\nкурсує за схемою: пл. Соборна - Інститут фізкультури - вул. Січеславська Набережна (до Цирку) - Центральний міст - вул. Сонячна Набережна - Усть-Самарський міст – вул. Гаванська – вул. 20-ти річчя Перемоги – ж/м Придніпровський;\n🚌\nавтобус №18\nкурсує за скороченим маршрутом: вул. Бориса Кротова – пров. Добровольців;\n🚌\nавтобус №134\nпризупинив свою роботу.\n➕\nТакож збільшено кількість рухомого складу на\nавтобусному маршруті №35."
+  },
+  "new": {
+    "key": "DniproCityOfficial/15002",
+    "channel": "DniproCityOfficial",
+    "post_id": 15002,
+    "published_at": "2026-10-19T12:25:06+00:00",
+    "url": "https://t.me/DniproCityOfficial/15002",
+    "text": "‼️\nДо уваги пасажирів\n‼️\nВідновлюється рух\nтролейбуса №6 та автобусів №18, №134\nза звичними маршрутами.",
+    "reply_to": "DniproCityOfficial/14997"
+  },
+  "bad_cached": {
+    "key": "DniproCityOfficial/15002",
+    "channel": "DniproCityOfficial",
+    "post_id": 15002,
+    "published_at": "2026-10-19T12:25:06+00:00",
+    "url": "https://t.me/DniproCityOfficial/15002",
+    "text": "Оновлена інформація щодо тимчасових змін у русі громадського транспорту:\n🚎\nтролейбус №6 курсує за схемою: пл. Соборна - Інститут фізкультури - вул. Січеславська Набережна (до Цирку) - Центральний міст - вул. Сонячна Набережна - Усть-Самарський міст – вул.…"
+  },
+  "provenance": "Own body, reply preview classes and link confirmed by user Termux diagnostic on both public Telegram views. HTML below is a minimal structural reproduction, not a raw downloaded page."
+}
