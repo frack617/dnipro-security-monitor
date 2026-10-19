@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-19T17:42:52.007363+00:00",
-  "previous_checked_at": "2026-10-19T17:21:44.473537+00:00",
-  "collection_gap_minutes": 21.1,
+  "checked_at": "2026-10-19T18:11:48.451085+00:00",
+  "previous_checked_at": "2026-10-19T17:42:52.007363+00:00",
+  "collection_gap_minutes": 28.9,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-18T08:00:00+03:00",
@@ -13,13 +13,13 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 8,
-      "oldest_collected_at": "2026-10-16T17:30:07+00:00",
+      "oldest_collected_at": "2026-10-16T17:50:13+00:00",
       "newest_collected_at": "2026-10-19T16:47:33+00:00"
     },
     "dsns_telegram": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 9,
+      "posts_found": 4,
       "oldest_collected_at": "2026-10-17T04:25:59+00:00",
       "newest_collected_at": "2026-10-19T17:24:07+00:00"
     },
