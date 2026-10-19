@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-19T15:26:17.581093+00:00",
-  "previous_checked_at": "2026-10-19T15:16:53.318431+00:00",
-  "collection_gap_minutes": 9.4,
+  "checked_at": "2026-10-19T15:51:59.445092+00:00",
+  "previous_checked_at": "2026-10-19T15:26:17.581093+00:00",
+  "collection_gap_minutes": 25.7,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-18T08:00:00+03:00",
@@ -12,15 +12,15 @@
     "adm_dp": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 38,
-      "oldest_collected_at": "2026-10-16T10:16:33+00:00",
-      "newest_collected_at": "2026-10-19T14:16:04+00:00"
+      "posts_found": 7,
+      "oldest_collected_at": "2026-10-16T15:30:13+00:00",
+      "newest_collected_at": "2026-10-19T15:43:59+00:00"
     },
     "dsns_telegram": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 49,
-      "oldest_collected_at": "2026-10-16T13:02:50+00:00",
+      "posts_found": 10,
+      "oldest_collected_at": "2026-10-16T16:05:50+00:00",
       "newest_collected_at": "2026-10-19T15:13:22+00:00"
     },
     "SBUkr": {
@@ -33,16 +33,16 @@
     "DniproCityOfficial": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 54,
-      "oldest_collected_at": "2026-10-16T09:47:52+00:00",
+      "posts_found": 6,
+      "oldest_collected_at": "2026-10-16T16:06:18+00:00",
       "newest_collected_at": "2026-10-19T14:42:07+00:00"
     },
     "gunpvdp": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 18,
-      "oldest_collected_at": "2026-10-16T09:31:47+00:00",
-      "newest_collected_at": "2026-10-19T15:14:29+00:00"
+      "posts_found": 5,
+      "oldest_collected_at": "2026-10-17T08:09:58+00:00",
+      "newest_collected_at": "2026-10-19T15:28:22+00:00"
     },
     "cek_info": {
       "ok": true,
@@ -54,16 +54,16 @@
     "borys_filatovv": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 8,
-      "oldest_collected_at": "2026-10-12T16:55:55+00:00",
+      "posts_found": 3,
+      "oldest_collected_at": "2026-10-16T16:28:03+00:00",
       "newest_collected_at": "2026-10-19T06:18:45+00:00"
     },
     "dnipropetrovskaODA": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 37,
-      "oldest_collected_at": "2026-10-15T16:54:24+00:00",
-      "newest_collected_at": "2026-10-19T14:15:32+00:00"
+      "posts_found": 11,
+      "oldest_collected_at": "2026-10-16T15:30:01+00:00",
+      "newest_collected_at": "2026-10-19T15:30:19+00:00"
     }
   }
 }
