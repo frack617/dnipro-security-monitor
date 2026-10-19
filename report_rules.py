@@ -3,7 +3,7 @@ import re
 
 
 NUMBER_WORDS = {
-    "один": 1, "одна": 1, "одну": 1, "одного": 1,
+    "один": 1, "одна": 1, "одну": 1, "одного": 1, "однієї": 1, "одній": 1,
     "два": 2, "дві": 2, "двоє": 2, "двох": 2,
     "три": 3, "троє": 3, "трьох": 3,
     "чотири": 4, "четверо": 4, "чотирьох": 4,
@@ -69,6 +69,29 @@ def required_attack_counts(posts):
         key = (date, period, number_value(scope.group(1)))
         bulletins[key] = counts
     return set().union(*bulletins.values()) if bulletins else set()
+
+
+def required_fact_checklist(posts):
+    """Concise source inventory, given BEFORE generation as well as repair."""
+    facts = []
+    for post in posts:
+        if post.get("category_hint") != "2.1":
+            continue
+        text = re.sub(r"\s+", " ", post.get("text", "")).strip()
+        header = re.split(r"[▪●]", text)[0]
+        scope = re.search(rf"\b({NUMBER})\s+район\w*", header, re.I)
+        date = re.search(DATE_WORDS, header, re.I)
+        date_label = date.group(0) if date else post.get("published_local", "")[:10]
+        if scope:
+            for count in sorted(attack_counts(header)):
+                qualifier = "понад " if re.search(rf"понад\s+{count}\b", header, re.I) else ""
+                facts.append(f"Зведення {date_label}: {qualifier}{count} атак, {scope.group(0)}. "
+                             "Окремий показник зі своїм періодом, навіть якщо число повторюється.")
+        for sentence in re.split(r"(?<=[.!?])\s+", text):
+            if re.search(r"критичн\w*\s+інфраструктур\w*", sentence, re.I):
+                # Keep the actual object and location, not a generic keyword.
+                facts.append("Обов'язково зберегти конкретний об'єкт і місце: " + sentence)
+    return "\n".join("- " + fact for fact in dict.fromkeys(facts)) or "Окремих обов'язкових показників не виявлено."
 
 
 def report_section(report, section):
@@ -230,6 +253,22 @@ def source_problems(report, posts):
     problems.extend(casualty_location_problems(section21, attacks))
     problems.extend(place_casualty_problems(section21, attacks))
     problems.extend(transport_link_problems(report, posts))
+    for sentence in re.split(r"(?<=[.!?])\s+", section21):
+        if not re.search(r"\bтакож\b|\bще\b", sentence) or not asserted_counts(sentence):
+            continue
+        for name, pattern in PLACE_PATTERNS.items():
+            match = re.search(pattern, sentence, re.I)
+            if match and not re.search(DATE_WORDS, sentence, re.I):
+                prior = section21[:section21.find(sentence)]
+                prior_positive = False
+                for previous in re.finditer(pattern, prior, re.I):
+                    tail = prior[previous.end():]
+                    boundaries = [m.start() for other in PLACE_PATTERNS.values()
+                                  for m in re.finditer(other, tail, re.I)]
+                    if asserted_counts(tail[:min(boundaries)] if boundaries else tail):
+                        prior_positive = True
+                if prior_positive:
+                    problems.append("additional casualties need a distinct dated source episode: " + name)
     allowed_counts = set().union(*(casualty_counts(p.get("text", "")) for p in attacks))
     unsupported = casualty_counts(section21) - allowed_counts
     if unsupported:

@@ -28,6 +28,11 @@ on:
         required: false
         default: false
         type: boolean
+      use_morning_reserve:
+        description: One backup-only dry check, at most two reserved attempts per 24 hours
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: "3,33 * * * *"
 
@@ -77,6 +82,7 @@ jobs:
           SEND_MORNING_REPORT: ${{ github.event_name == 'schedule' || inputs.send_report == true }}
           SEND_OPERATIONAL_ALERTS: ${{ github.event_name == 'schedule' || inputs.send_alerts == true || (inputs.send_report == true && inputs.force_report != true) }}
           PRODUCTION_MONITOR: ${{ github.event_name == 'schedule' || (inputs.send_report == true && inputs.force_report != true) }}
+          USE_MORNING_RESERVE: ${{ inputs.use_morning_reserve || 'false' }}
 
       - name: Save new data
         if: always()

@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, required_attack_counts, source_problems
+from report_rules import COMMUNITY_NAME, EDITORIAL_RULES, required_attack_counts, required_fact_checklist, source_problems
 from gemini_transport import RequestBudget, request_text
 from quota_budget import UsageLedger
 
@@ -128,6 +128,10 @@ def build_prompt(posts, start_label, end_label, checked_label, failed_sources):
 
 Обов’язкові правила:
 {EDITORIAL_RULES}
+ОБОВ'ЯЗКОВІ ФАКТИ З ДЖЕРЕЛ ДЛЯ ЦІЄЇ ДОВІДКИ:
+{required_fact_checklist(posts)}
+Перед відповіддю звір кожен із цих фактів з пунктом 2.1. Загальне слово
+«інфраструктура» не замінює підтверджений об'єкт критичної інфраструктури.
 - збережи рівно вісім пунктів: 1.1–1.4 і 2.1–2.4;
 - не додавай нових пунктів;
 - не пиши назви каналів, URL, посилання, час публікації або цитати;
@@ -250,6 +254,8 @@ def build_review_prompt(report, posts, start_label, end_label):
 
 Контрольні правила:
 {EDITORIAL_RULES}
+Обов'язкові факти, які редакція теж повинна зберегти:
+{required_fact_checklist(posts)}
 - звітне вікно: {start_label} — {end_label}; старий контекст не включай;
 - зведи початкові та пізніші повідомлення про одну подію в один епізод і використай
   останнє підтверджене уточнення; не дублюй загиблих, поранених або пошкодження;
@@ -392,7 +398,7 @@ def validate_report(text, end_date_label, linked_locations=(), posts=None):
     if section_11 and len(re.findall(r"\b[\w’'-]+\b", section_11.group(1))) > 130:
         problems.append("section 1.1 too long")
     section_14 = re.search(r"(?ms)^1\.4\.\s+(.*?)(?=^2\.\s+Події:)", stripped)
-    weather_pattern = r"туман|ожелед|видиміст|сильн\w*\s+(?:дощ|сніг|вітер)"
+    weather_pattern = r"туман|ожелед|видиміст|гроз|погодн\w*\s+умов|погіршення\s+погод|сильн\w*\s+(?:дощ|сніг|вітер)"
     if (
         section_11
         and section_14
@@ -561,6 +567,10 @@ def repair_actions(error):
             instructions.append("Два зведення можуть мати однакову кількість атак. "
                 "Подай кожне окремо з його датою/періодом і кількістю районів; "
                 "не вилучай другий показник як дублікат першого.")
+        elif problem.startswith("additional casualties need a distinct dated source episode:"):
+            instructions.append("Не подавай одну госпіталізовану людину повторно як "
+                "«також поранену людину». Зведи повтори в один епізод; "
+                "окрему додаткову групу залиш лише з її підтвердженою датою та місцем.")
         elif problem.startswith(("duplicate section", "missing section")):
             instructions.append("Подай кожен пункт рівно один раз, зі змістом; "
                 "без попереднього порожнього переліку або змісту.")
@@ -632,7 +642,9 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             "разом в одному реченні одного епізоду."
         )
     usage_model = "gemini_backup:" + model if backup else model
-    budget = RequestBudget(limit=4, ledger=UsageLedger.from_environment(usage_model))
+    ledger = UsageLedger.from_environment(usage_model)
+    budget = RequestBudget(limit=2 if ledger and ledger.event == "manual_reserve_check" else 4,
+                           ledger=ledger)
     if os.getenv("GITHUB_ACTIONS") == "true":
         filename = "gemini_backup_debug.json" if backup else "gemini_debug.json"
         budget.debug_path = Path(__file__).resolve().parent / "data" / filename
@@ -643,7 +655,12 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
         retry_note = ""
         if last_error is not None:
             retry_note = build_repair_note(text, last_error)
-        text = _request_report(endpoint, api_key, prompt + retry_note, budget, allow_rate_retry=True)
+        try:
+            text = _request_report(endpoint, api_key, prompt + retry_note, budget, allow_rate_retry=True)
+        except RuntimeError as error:
+            if last_error is not None:
+                raise RuntimeError(f"Gemini draft rejected: {last_error}; repair unavailable: {error}") from None
+            raise
         try:
             text = enforce_report_frame(text, start_label, end_label, checked_label)
             text = normalize_completed_morning_forecast(text, end_date_label)
@@ -652,6 +669,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             break
         except ValueError as error:
             budget.validation(text, error)
+            print(f"Gemini author validation rejected: {error}")
             last_error = error
     if draft is None:
         raise RuntimeError(f"Gemini report failed validation: {last_error}")
@@ -678,6 +696,7 @@ def generate_gemini_report(posts, start_label, end_label, checked_label, end_dat
             return draft
         except ValueError as error:
             budget.validation(reviewed, error)
+            print(f"Gemini editor validation rejected: {error}")
             review_error = error
     raise RuntimeError(f"Gemini review failed validation: {review_error}")
 

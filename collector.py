@@ -491,13 +491,18 @@ def compact_text(value, limit=420):
 
 
 def fact_line(post):
-    return f"• {compact_text(post.get('text'))}"
+    from groq_report import clean_source_text
+    # The old 420-character cut could remove casualties or the final community.
+    # A fallback may be longer, but may not silently drop the end of a fact.
+    blocks = [clean_source_text(block) for block in re.split(r"[▪●]\ufe0f?", post.get("text", ""))]
+    return "• " + " ".join(block.rstrip() + ("." if block and block[-1] not in '.!?:;' else '')
+                            for block in blocks if block)
 
 
 def section_text(posts):
     if not posts:
         return "У перевірених джерелах повідомлень за звітний період не виявлено."
-    return "\n".join(fact_line(post) for post in posts[-6:])
+    return "\n".join(dict.fromkeys(fact_line(post) for post in posts))
 
 
 def practical_note(section, posts):
@@ -527,10 +532,9 @@ def practical_note(section, posts):
             practical.append("підготувати мінімальний запас води")
         if practical:
             return "Практично: " + "; ".join(practical[:2]) + "."
-        return (
-            "Практично: врахувати можливі локальні обмеження поблизу місця "
-            "ліквідації аварії або пожежі."
-        )
+        if contains_any(combined_text, ("гроза", "гроз", "шторм")):
+            return "Практично: за грози бути обережними на відкритій місцевості."
+        return ""
     if section == "2.1" and contains_any(
         combined_text, ("азс", "автозаправ", "заправн")
     ):

@@ -27,6 +27,13 @@ class UsageLedger:
             return None
         event = ("production_dispatch" if os.getenv("GITHUB_EVENT_NAME") == "workflow_dispatch"
                  and os.getenv("PRODUCTION_MONITOR") == "true" else None)
+        if (os.getenv("GITHUB_EVENT_NAME") == "workflow_dispatch"
+            and os.getenv("USE_MORNING_RESERVE") == "true"
+            and os.getenv("FORCE_MORNING_REPORT") == "true"
+            and os.getenv("SEND_MORNING_REPORT") == "false"
+            and os.getenv("REPORT_PROVIDER") == "gemini_backup"
+            and model.startswith("gemini_backup:")):
+            event = "manual_reserve_check"
         return cls(model, event=event)
 
     def _read(self):
@@ -63,7 +70,10 @@ class UsageLedger:
         cutoff = now - timedelta(hours=24)
         rows = [r for r in state["events"] if r.get("model") == self.model and datetime.fromisoformat(r["at"]) > cutoff]
         manual_limit, total_limit = local_limits(self.model)
-        limit = total_limit if self.event in {"schedule", "production_dispatch"} else manual_limit
+        if self.event == "manual_reserve_check" and sum(
+            r.get("event") == "manual_reserve_check" for r in rows) >= 2:
+            raise RuntimeError("Controlled reserve check exhausted: 2 attempts in rolling 24h; no API request")
+        limit = total_limit if self.event in {"schedule", "production_dispatch", "manual_reserve_check"} else manual_limit
         if len(rows) >= limit:
             raise RuntimeError(f"Local Gemini budget blocked {self.event}: {len(rows)}/{limit} attempts in rolling 24h; no API request")
         run_id = os.getenv("GITHUB_RUN_ID", "local")
