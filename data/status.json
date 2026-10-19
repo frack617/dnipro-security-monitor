@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-19T21:41:50.322636+00:00",
-  "previous_checked_at": "2026-10-19T21:11:44.795276+00:00",
-  "collection_gap_minutes": 30.1,
+  "checked_at": "2026-10-19T22:11:46.779974+00:00",
+  "previous_checked_at": "2026-10-19T21:41:50.322636+00:00",
+  "collection_gap_minutes": 29.9,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-18T08:00:00+03:00",
