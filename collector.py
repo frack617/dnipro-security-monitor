@@ -245,9 +245,31 @@ def send_bot_message(text):
     return True
 
 
+def is_background_notice(text):
+    if contains_any(text, NON_EVENT_CONTEXT_TERMS):
+        return True
+    # A cultural announcement can mention attacks/evacuation as the subject
+    # of an exhibition. Those nouns alone do not establish a new incident.
+    # Keep mixed notices if they explicitly report an attack or casualties.
+    opening = re.sub(r"\s+", " ", text[:350])
+    cultural = re.search(
+        r"\b(?:відкрили|відкрито|відкрилася|відкрилась|відкриється|відкривають)\b"
+        r"[^.!?]{0,100}\b(?:фотовистав\w*|вистав\w*|експозиці\w*)", opening)
+    if not cultural:
+        return False
+    direct_event = re.search(
+        r"\b(?:ворог|росіяни|окупанти|війська\s+рф)\s+"
+        r"(?:\w+\s+){0,3}(?:атак\w*|вдар\w*|завда\w*)|"
+        r"\b(?:внаслідок|унаслідок|через)\s+(?:\w+\s+){0,3}"
+        r"(?:атак\w*|обстріл\w*|удар\w*)[^.!?]{0,120}"
+        r"(?:пошкодж\w*|зруйн\w*|постражд\w*)|"
+        r"\b(?:поранен\w*|загину\w*|госпіталізован\w*)", text)
+    return not direct_event
+
+
 def is_resonant(post):
     text = post.get("text", "").lower()
-    if not is_regional(post) or contains_any(text, NON_EVENT_CONTEXT_TERMS):
+    if not is_regional(post) or is_background_notice(text):
         return False
     if re.search(r"президент|головком|перемир|дипломат", text) and not re.search(
         r"дніпропетров|\bдніпр(?:о|і|у)\b|нікопол|синельник|криворі", text):
@@ -469,7 +491,7 @@ def is_historical_context(post, report_start_local):
 
 def classify_post(post):
     text = post.get("text", "").lower()
-    if contains_any(text, NON_EVENT_CONTEXT_TERMS):
+    if is_background_notice(text):
         return None
     if contains_any(text, MINING_TERMS):
         return "2.3"
