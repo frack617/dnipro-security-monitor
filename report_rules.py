@@ -359,6 +359,8 @@ def source_problems(report, posts):
     attack_text = normalize(" ".join(p.get("text", "") for p in attacks))
     section21 = normalize(report_section(report, "2.1"))
     section11 = normalize(report_section(report, "1.1"))
+    from fact_scopes import numeric_scope_problems
+    problems.extend(numeric_scope_problems(report_section(report, '2.1'), attacks))
     source_downed = set().union(*(downed_drone_counts(p.get("text", "")) for p in attacks))
     output_downed = downed_drone_counts(section21)
     if output_downed - source_downed:

@@ -80,6 +80,7 @@ def recover_attack_section(report, posts, end_date_label, linked_locations=()):
         'unsupported casualty count', 'casualty total not explicitly supported',
         'unsupported downed drone count', 'missing confirmed downed drone count',
         'unsupported housing count', 'missing source housing count', 'unsupported attack total',
+        'unsupported numeric scope',
         'missing source attack counts', 'distinct attack bulletins',
         'missing attack community', 'missing specific attack consequence',
         'unsupported casualty/event detail', 'unsupported incident',
