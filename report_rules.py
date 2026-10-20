@@ -262,7 +262,7 @@ def place_casualty_problems(section, posts):
 
 
 def transport_link_problems(report, posts):
-    from transport_state import transport_routes as routes, restoration_problems, effective_transport_posts
+    from transport_state import transport_routes as routes, restoration_problems, effective_transport_posts, transport_clauses
     body = report_section(report, "1.2")
     sources = [p.get("text", "") for p in effective_transport_posts(
         [p for p in posts if p.get("category_hint") == "1.2"])]
@@ -281,7 +281,7 @@ def transport_link_problems(report, posts):
         for pattern in patterns:
             anchors.setdefault(pattern, set()).update(source_routes)
     problems = []
-    for sentence in re.split(r"(?<=[.!?])\s+(?=[А-ЯІЇЄҐ])", body):
+    for sentence in transport_clauses(body):
         if not re.search(r"(?:через|у зв['’]язку з|внаслідок)\s+(?:тимчасов\w*\s+)?(?:ремонт|перекрит|аварі|обмеженн|пошкоджен)", sentence, re.I):
             continue
         for pattern, supported in anchors.items():
