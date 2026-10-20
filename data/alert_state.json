@@ -37,10 +37,11 @@
     "dnipropetrovskaODA/32713",
     "dnipropetrovskaODA/32714",
     "dnipropetrovskaODA/32715",
+    "dnipropetrovskaODA/32717",
     "gunpvdp/37221",
     "gunpvdp/37246"
   ],
   "last_daily_report": "2026-10-20",
-  "last_alert_scan_at": "2026-10-20T10:11:45.561293+00:00",
+  "last_alert_scan_at": "2026-10-20T10:41:47.361805+00:00",
   "pending_alert_keys": []
 }
