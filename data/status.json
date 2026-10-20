@@ -1,27 +1,27 @@
 {
-  "checked_at": "2026-10-20T04:41:46.575749+00:00",
-  "previous_checked_at": "2026-10-20T04:11:48.625594+00:00",
-  "collection_gap_minutes": 30.0,
+  "checked_at": "2026-10-20T05:01:46.691025+00:00",
+  "previous_checked_at": "2026-10-20T04:41:46.575749+00:00",
+  "collection_gap_minutes": 20.0,
   "report_window": {
     "timezone": "Europe/Kyiv",
-    "start": "2026-10-18T08:00:00+03:00",
-    "end": "2026-10-19T08:00:00+03:00"
+    "start": "2026-10-19T08:00:00+03:00",
+    "end": "2026-10-20T08:00:00+03:00"
   },
   "retention_hours": 72,
   "channels": {
     "adm_dp": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 7,
-      "oldest_collected_at": "2026-10-17T04:30:13+00:00",
-      "newest_collected_at": "2026-10-20T04:30:18+00:00"
+      "posts_found": 6,
+      "oldest_collected_at": "2026-10-17T06:00:09+00:00",
+      "newest_collected_at": "2026-10-20T05:00:45+00:00"
     },
     "dsns_telegram": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 6,
-      "oldest_collected_at": "2026-10-17T04:25:59+00:00",
-      "newest_collected_at": "2026-10-20T04:19:05+00:00"
+      "posts_found": 3,
+      "oldest_collected_at": "2026-10-17T05:10:22+00:00",
+      "newest_collected_at": "2026-10-20T04:55:51+00:00"
     },
     "SBUkr": {
       "ok": true,
@@ -34,7 +34,7 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 7,
-      "oldest_collected_at": "2026-10-17T04:28:02+00:00",
+      "oldest_collected_at": "2026-10-17T05:27:01+00:00",
       "newest_collected_at": "2026-10-20T04:27:01+00:00"
     },
     "gunpvdp": {
@@ -61,9 +61,9 @@
     "dnipropetrovskaODA": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 9,
-      "oldest_collected_at": "2026-10-17T04:30:03+00:00",
-      "newest_collected_at": "2026-10-20T04:30:01+00:00"
+      "posts_found": 7,
+      "oldest_collected_at": "2026-10-17T08:22:07+00:00",
+      "newest_collected_at": "2026-10-20T05:00:38+00:00"
     }
   }
 }
