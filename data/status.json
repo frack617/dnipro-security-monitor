@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T06:45:32.418581+00:00",
-  "previous_checked_at": "2026-10-20T06:31:47.297587+00:00",
-  "collection_gap_minutes": 13.8,
+  "checked_at": "2026-10-20T07:11:43.478433+00:00",
+  "previous_checked_at": "2026-10-20T06:45:32.418581+00:00",
+  "collection_gap_minutes": 26.2,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-19T08:00:00+03:00",
@@ -14,28 +14,28 @@
       "parser_version": 2,
       "posts_found": 7,
       "oldest_collected_at": "2026-10-17T08:22:43+00:00",
-      "newest_collected_at": "2026-10-20T06:25:57+00:00"
+      "newest_collected_at": "2026-10-20T07:02:43+00:00"
     },
     "dsns_telegram": {
       "ok": true,
       "parser_version": 2,
       "posts_found": 5,
-      "oldest_collected_at": "2026-10-17T06:32:50+00:00",
+      "oldest_collected_at": "2026-10-17T07:24:47+00:00",
       "newest_collected_at": "2026-10-20T06:34:17+00:00"
     },
     "SBUkr": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 7,
+      "posts_found": 8,
       "oldest_collected_at": "2026-10-16T09:00:06+00:00",
-      "newest_collected_at": "2026-10-19T13:00:04+00:00"
+      "newest_collected_at": "2026-10-20T07:00:08+00:00"
     },
     "DniproCityOfficial": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 7,
+      "posts_found": 8,
       "oldest_collected_at": "2026-10-17T07:03:01+00:00",
-      "newest_collected_at": "2026-10-20T06:28:06+00:00"
+      "newest_collected_at": "2026-10-20T06:56:01+00:00"
     },
     "gunpvdp": {
       "ok": true,
@@ -63,7 +63,7 @@
       "parser_version": 2,
       "posts_found": 7,
       "oldest_collected_at": "2026-10-17T08:22:07+00:00",
-      "newest_collected_at": "2026-10-20T06:25:49+00:00"
+      "newest_collected_at": "2026-10-20T07:01:14+00:00"
     }
   }
 }
