@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T07:41:49.998690+00:00",
-  "previous_checked_at": "2026-10-20T07:11:43.478433+00:00",
-  "collection_gap_minutes": 30.1,
+  "checked_at": "2026-10-20T08:11:47.013150+00:00",
+  "previous_checked_at": "2026-10-20T07:41:49.998690+00:00",
+  "collection_gap_minutes": 30.0,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-19T08:00:00+03:00",
@@ -14,14 +14,14 @@
       "parser_version": 2,
       "posts_found": 7,
       "oldest_collected_at": "2026-10-17T08:22:43+00:00",
-      "newest_collected_at": "2026-10-20T07:02:43+00:00"
+      "newest_collected_at": "2026-10-20T08:00:44+00:00"
     },
     "dsns_telegram": {
       "ok": true,
       "parser_version": 2,
       "posts_found": 6,
-      "oldest_collected_at": "2026-10-17T07:24:47+00:00",
-      "newest_collected_at": "2026-10-20T07:12:21+00:00"
+      "oldest_collected_at": "2026-10-17T08:37:38+00:00",
+      "newest_collected_at": "2026-10-20T08:04:41+00:00"
     },
     "SBUkr": {
       "ok": true,
@@ -63,7 +63,7 @@
       "parser_version": 2,
       "posts_found": 7,
       "oldest_collected_at": "2026-10-17T08:22:07+00:00",
-      "newest_collected_at": "2026-10-20T07:01:14+00:00"
+      "newest_collected_at": "2026-10-20T08:00:13+00:00"
     }
   }
 }
