@@ -34,6 +34,13 @@ CASUALTY_LOCATION_PATTERNS = {
 def _source_text(posts):
     blocks = []
     for post in posts:
+        parts = re.split(r'[▪●]\ufe0f?', post.get('text', ''))
+        if post.get('category_hint') == '2.1' and len(parts) > 1:
+            source_body = ('Вступ допису (не приписуй його підсумок першій громаді без прямої вказівки):\n'
+                           + parts[0] + '\n\n'
+                           + '\n\n'.join('Окремий блок джерела:\n'+part for part in parts[1:]))
+        else:
+            source_body = post.get('text', '')
         blocks.append(
             "\n".join(
                 [
@@ -44,7 +51,7 @@ def _source_text(posts):
                      if post.get("cutoff_bulletin") else ""),
                     f"Посилання для внутрішньої перевірки: {post['url']}",
                     "Текст:",
-                    post.get("text", ""),
+                    source_body,
                 ]
             )
         )
