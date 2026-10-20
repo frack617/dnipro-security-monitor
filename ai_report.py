@@ -92,6 +92,15 @@ def linked_casualty_locations(posts, max_gap_hours=3):
             if abs((second_time - first_time).total_seconds()) > max_gap_hours * 3600:
                 continue
             second_text = second.get("text", "")
+            # A regional bulletin lists different attacks. Nearby city names
+            # do not establish an episode link or require a merged sentence.
+            if any(len([name for name, pattern in CASUALTY_LOCATION_PATTERNS.items()
+                        if re.search(pattern, body, re.I)]) != 1
+                   for body in (first_text, second_text)):
+                continue
+            if re.search(r'\bзнову\b|\bповторн\w*\s+(?:атак|удар)',
+                         first_text + ' ' + second_text, re.I):
+                continue
             for location, pattern in CASUALTY_LOCATION_PATTERNS.items():
                 first_death = _casualty_near_location(first_text, pattern, r"загин\w*")
                 first_injury = _casualty_near_location(
@@ -756,6 +765,8 @@ def generate_backup_gemini_report(*args):
 
 
 def generate_report(posts, start_label, end_label, checked_label, end_date_label, failed_sources):
+    from report_preparation import prepare_evidence
+    posts = prepare_evidence(posts)
     provider = os.getenv("REPORT_PROVIDER", "auto").strip().lower() or "auto"
     args = (posts, start_label, end_label, checked_label, end_date_label, failed_sources)
     if provider not in {"auto", "gemini", "gemini_backup", "groq"}:
@@ -796,4 +807,4 @@ def sanitize_fallback(report):
         report,
     )
     report = re.sub(r"\n{3,}", "\n\n", report).strip()
-    return "⚠️ Резервна автоматична версія\n\n" + report
+    return "⚠️ Резервна автоматична версія\nСтислий огляд за останніми офіційними зведеннями; повні джерела збережені окремо.\n\n" + report

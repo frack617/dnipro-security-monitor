@@ -25,7 +25,7 @@ PERSONAL = re.compile(
 
 def sentences(text):
     # A street/city abbreviation is not a sentence boundary.
-    protected = re.sub(r"\b(м|вул|пл|обл|ім|ст)\.", lambda m: m[1]+"\u2024", text, flags=re.I)
+    protected = re.sub(r"\b(м|вул|пл|обл|ім|ст|пров|просп)\.", lambda m: m[1]+"\u2024", text, flags=re.I)
     return [s.replace("\u2024", ".").strip() for s in
             re.split(r"(?<=[.!?])\s+(?=[А-ЯІЇЄҐ0-9])", protected) if s.strip()]
 
@@ -227,3 +227,146 @@ def source_weather_normalization(report, posts, end_date_label):
     if result != report:
         print("Source-based weather validity normalization applied: section 1.4")
     return result
+
+
+def brief_transport(posts):
+    """Keep restoration and current notices, removing explicitly ended routes.
+
+    A direct reply can supersede only the routes it actually restores. Other
+    clauses, streets and unrelated restrictions in the old post are retained.
+    """
+    from transport_state import restored_routes, transport_routes
+    ordered = sorted(posts, key=lambda p: p.get('published_at', ''))
+    by_key = {p.get('key'): p for p in ordered if p.get('key')}
+    ended = {}
+    for post in ordered:
+        target = by_key.get(post.get('reply_to'))
+        if (target and target.get('channel') == post.get('channel')
+                and target.get('published_at', '') < post.get('published_at', '')):
+            routes = restored_routes(post.get('text', ''))
+            if routes:
+                ended.setdefault(target['key'], set()).update(routes)
+    texts = []
+    for post in ordered:
+        text = clean_transport_notice(post)
+        day = publication_date(post)
+        if day:
+            # A reserve can cover two calendar dates; "today" must not shift
+            # yesterday's completed announcement to the report date.
+            label = str(day.day) + ' ' + MONTHS[day.month-1]
+            text = re.sub(r'\bСьогодні,?\s*' + re.escape(label) + r',?', label, text, flags=re.I)
+            text = re.sub(r'\bсьогодні\b', label, text, flags=re.I)
+            text = text.replace('закінчать свою роботу раніше', 'за анонсом мали закінчити роботу раніше')
+        if post.get('key') in ended:
+            clauses = [c for sentence in sentences(text)
+                       for c in re.split(r'(?<=;)\s+', sentence)]
+            text = ' '.join(c for c in clauses
+                            if not (transport_routes(c) and
+                                    transport_routes(c) <= ended[post['key']]))
+            text = re.sub(r'^Оновлена інформація[^:]*:\s*', '', text).strip()
+        if text:
+            texts.append(text)
+    return ' '.join(unique_texts(texts)) or EMPTY
+
+
+def brief_attacks(posts):
+    """Use latest dated official regional bulletins as the fallback backbone.
+
+    This deliberately labelled summary is not the full chronological feed.
+    Single alerts remain when no regional bulletin exists for that date.
+    The source's regional totals and locality paragraphs are never reassigned.
+    """
+    ordered = sorted(posts, key=lambda p: p.get('published_at', ''))
+    bulletins = {}
+    for post in ordered:
+        text = post.get('text', '')
+        if (post.get('channel', '').lower() in {'adm_dp', 'dnipropetrovskaoda'}
+                and re.search(r'Дніпропетровщина\s*\n\s*'+DATE_WORDS, text, re.I)
+                and len(re.split(r'[▪●]', text)) >= 3):
+            bulletins[publication_date(post)] = post
+    if not bulletins:
+        return build_sections({'2.1': posts}, datetime.now().date())['2.1']
+    selected = []
+    for post in ordered:
+        latest = bulletins.get(publication_date(post))
+        critical = re.search(r'критичн\w*\s+інфраструктур\w*', post.get('text', ''), re.I)
+        if (latest is None or post is latest or
+                (critical and not re.search(r'критичн\w*\s+інфраструктур\w*', latest['text'], re.I))):
+            selected.append(post)
+    # Preserve the original bulletin blocks and their geographic scopes.
+    result = []
+    for post in selected:
+        body = clean_event(post)
+        # Operational instructions in yesterday's alert are not a live alert.
+        body = ' '.join(s for s in sentences(body) if not re.match(
+            r'Залишайтеся\b|Загроза триває\b|До відбою\b', s, re.I))
+        body = re.sub(r'\bВорог атакує\b', 'Ворог атакував', body)
+        result.append(body)
+    return '\n\n'.join(unique_texts(result))
+
+
+def build_brief_sections(groups, end_date):
+    """Bound the reserve's editorial scope instead of publishing raw history."""
+    result = build_sections(groups, end_date)
+    if groups.get('1.2'):
+        result['1.2'] = brief_transport(groups['1.2'])
+    if groups.get('2.1'):
+        result['2.1'] = brief_attacks(groups['2.1'])
+    if groups.get('1.4'):
+        result['1.4'] = '\n\n'.join(unique_texts(brief_service(p, end_date) for p in groups['1.4']))
+    return result
+
+
+def brief_service(post, end_date):
+    """Summarize address lists as named streets; keep queues with their streets."""
+    text = post.get('text', '')
+    if re.search(r'плануємо відновити електропостачання', text, re.I):
+        plan = next((s for s in sentences(clean_lines(text))
+                     if re.search(r'плануємо відновити електропостачання', s, re.I)), None)
+        city = re.search(r'\bм\.\s*([А-ЯІЇЄҐ][А-Яа-яІіЇїЄєҐґ’\'-]+)', text)
+        if plan and city:
+            day = publication_date(post)
+            prefix = ('У повідомленні від ' + str(day.day) + ' ' + MONTHS[day.month-1] + ' ') if day else ''
+            return city[1] + ': ' + prefix + re.sub(r'^Плануємо', 'енергетики планували', plan)
+    if WEATHER.search(text) and not SERVICE.search(text):
+        return weather_text(post, end_date)
+    if not re.search(r'знеструмлен|переводяться до графіка|припинено подачу електроенергії', text, re.I):
+        return clean_event(post)
+    # The named streets are copied, not an invented district or a guessed
+    # outage duration. Full house lists remain in report_input and the archive.
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    location_matches = list(re.finditer(r'\b(?:м\.|с\.)\s*([А-ЯІЇЄҐ][А-Яа-яІіЇїЄєҐґ’\'-]+)', text))
+    locations = [m[1] for m in location_matches]
+    streets = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', text)
+    if not streets:
+        return clean_event(post)
+    label = ', '.join(unique_texts(locations))
+    if not label:
+        return clean_event(post)
+    if len(location_matches) > 1:
+        period = re.search(r'\b(\d{1,2}\s+(?:'+ '|'.join(MONTHS) + r'))\s+з\s+(\d{1,2}:\d{2})\s+до\s+(\d{1,2}:\d{2})', text, re.I)
+        prefix = ('Анонсовано відключення ' + period[1] + ' з ' + period[2] + ' до ' + period[3] + ': ') if period else ''
+        parts = []
+        for index, match in enumerate(location_matches):
+            stop = location_matches[index+1].start() if index+1 < len(location_matches) else len(text)
+            chunk = text[match.end():stop]
+            names = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
+            if not names:
+                return clean_event(post)
+            parts.append(match[1] + ': ' + ', '.join(unique_texts(names)))
+        return prefix + '; '.join(parts) + '.'
+    queues = re.findall(r'підчерги\s+(\d+\.\d+)', text)
+    if queues:
+        groups = []
+        start = 0
+        for match in re.finditer(r'підчерги\s+(\d+\.\d+)', text):
+            chunk = text[start:match.start()]
+            names = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
+            if not names:
+                return clean_event(post)
+            groups.append(', '.join(unique_texts(names)) + ' — підчерга ' + match[1])
+            start = match.end()
+        return label + ': змінено підчерги для окремих адрес: ' + '; '.join(groups) + '.'
+    action = ('Анонсовано припинення електропостачання' if 'припинено подачу' in text.lower()
+              else 'Повідомлено про знеструмлення')
+    return label + ': ' + action[:1].lower() + action[1:] + ' за адресами на ' + ', '.join(unique_texts(streets)) + '.'

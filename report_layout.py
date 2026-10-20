@@ -118,6 +118,8 @@ def render_report(text, start_label, end_label, checked_label):
     lines = ['Станом на '+end.strftime('%d.%m.%Y %H.%M')]
     if text.lstrip().startswith('⚠️ Резервна автоматична версія'):
         lines += ['', '⚠️ Резервна автоматична версія']
+        if 'Стислий огляд за останніми офіційними зведеннями' in text:
+            lines += ['Стислий огляд за останніми офіційними зведеннями; повні джерела збережені окремо.']
     formatted = {}
     for key, body in sections.items():
         edited = polish_body(body, key)

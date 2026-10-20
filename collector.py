@@ -65,6 +65,8 @@ SERVICE_TERMS = (
     "масштабна пожежа", "аварія на", "затримка руху", "не курсуватиме",
     "туман", "видимість", "погодинні відключення", "графік відключень",
     "відключення електроенергії",
+    "припинено подачу електроенергії",
+    "відновити електропостачання",
     "гпв", "графіки відключення", "відключення світла",
     "обмеження електропостачання", "відключення наступних черг",
     "гроза", "гроз", "рівень небезпечності", "штормове попередження",
@@ -549,6 +551,9 @@ def is_power_queue_change(post):
 
 def classify_post(post):
     text = post.get("text", "").lower()
+    from report_preparation import background_service_article
+    if background_service_article(text):
+        return None
     if is_background_notice(text):
         return None
     if contains_any(text, MINING_TERMS):
@@ -664,29 +669,27 @@ def section_with_note(section, posts):
     return text + ("\n" + note if note else "")
 
 
-def build_morning_report(posts, statuses, checked_at):
+def build_morning_report(posts, statuses, checked_at, *, brief=False):
     from fallback_report import build_sections
     start_local, end_local, start_utc, end_utc = completed_report_window(checked_at)
     report_posts = report_window_posts(posts, checked_at)
     groups = {key: [] for key in ("1.2", "1.3", "1.4", "2.1", "2.2", "2.3", "2.4")}
     for post in sorted(report_posts, key=lambda item: item["published_at"]):
         category = classify_post(post)
-        if category:
+        if category and not is_historical_context(post, start_local):
             groups[category].append(post)
 
     failed = [f"@{channel}" for channel, state in statuses.items() if not state.get("ok")]
     if groups["2.1"]:
-        general = (
-            "У перевірених офіційних Telegram-джерелах є підтверджені повідомлення "
-            "про атаки або їхні наслідки у Дніпропетровській області. Основний "
-            "зафіксований ризик за звітний період пов’язаний із повітряними ударами "
-            "та їхніми наслідками. Деталі наведено у пункті 2.1."
-        )
+        general = "В області зафіксовано атаки та пошкодження цивільних об’єктів. Наслідки наведено у пункті 2.1."
     else:
         general = "У перевірених джерелах повідомлень про підтверджені зміни безпекової ситуації за звітний період не виявлено."
     if failed:
         general += f" Обмеження перевірки: не отримано актуальні дані з {len(failed)} джерел."
-    sections = build_sections(groups, end_local.date())
+    from report_preparation import prepare_evidence
+    groups = {key: prepare_evidence(items) for key, items in groups.items()}
+    from fallback_report import build_brief_sections
+    sections = (build_brief_sections if brief else build_sections)(groups, end_local.date())
 
     return (
         "Доброго дня.\n\n"
@@ -695,7 +698,7 @@ def build_morning_report(posts, statuses, checked_at):
         f"{end_local.strftime('%d.%m.%Y')}, за Києвом.\n"
         f"Фактичний час автоматичної перевірки: {checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y')}.\n\n"
         "1. Загальна ситуація в області:\n"
-        f"1.1. {general}\n{practical_note('1.1', report_posts)}\n\n"
+        f"1.1. {general}\n{'' if brief else practical_note('1.1', report_posts)}\n\n"
         f"1.2. {sections['1.2']}\n\n"
         f"1.3. {sections['1.3']}\n\n"
         f"1.4. {sections['1.4']}\n\n"
@@ -775,7 +778,7 @@ def process_morning_report(posts, statuses, checked_at):
             deliver_morning_report(pending["text"], state, report_date)
         return
 
-    fallback = build_morning_report(posts, statuses, checked_at)
+    fallback = build_morning_report(posts, statuses, checked_at, brief=True)
     regional_posts = report_window_posts(posts, checked_at)
     ai_posts = []
     for post in regional_posts:
@@ -790,10 +793,13 @@ def process_morning_report(posts, statuses, checked_at):
         if parse_datetime(post["published_at"]) >= end_utc:
             item["cutoff_bulletin"] = True
         ai_posts.append(item)
+    from report_preparation import prepare_evidence
+    ai_posts = prepare_evidence(ai_posts)
     failed_sources = [
         f"@{channel}" for channel, status in statuses.items() if not status.get("ok")
     ]
 
+    failure_type = None
     try:
         from ai_report import generate_report
 
@@ -809,6 +815,7 @@ def process_morning_report(posts, statuses, checked_at):
     except Exception as error:
         from ai_report import sanitize_fallback
 
+        failure_type = type(error).__name__
         print(f"Author report unavailable: {type(error).__name__}: {error}")
         report = sanitize_fallback(fallback)
         report_kind = "fallback"
@@ -818,6 +825,17 @@ def process_morning_report(posts, statuses, checked_at):
                            end_local.strftime('%H:%M %d.%m.%Y'),
                            checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y'))
     MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
+    # No credentials, source bodies or provider exception strings in this
+    # public status file. Detailed existing provider debug files stay separate.
+    (DATA_DIR / "report_generation_status.json").write_text(json.dumps({
+        "checked_at": checked_at.isoformat(),
+        "report_date": report_date,
+        "report_kind": report_kind,
+        "author_failure_type": failure_type,
+        "prepared_posts": len(ai_posts),
+        "report_words": len(report.split()),
+        "sending_enabled": send_enabled,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Morning report prepared: {report_kind}")
     if not send_enabled:
         print("Morning report dry run: Telegram sending disabled")
