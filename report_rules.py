@@ -262,9 +262,10 @@ def place_casualty_problems(section, posts):
 
 
 def transport_link_problems(report, posts):
-    from transport_state import transport_routes as routes, restoration_problems
+    from transport_state import transport_routes as routes, restoration_problems, effective_transport_posts
     body = report_section(report, "1.2")
-    sources = [p.get("text", "") for p in posts if p.get("category_hint") == "1.2"]
+    sources = [p.get("text", "") for p in effective_transport_posts(
+        [p for p in posts if p.get("category_hint") == "1.2"])]
 
     # Learn street/bridge names and route identifiers from the current sources.
     # Ambiguous 'через Центральний міст' is a path, not a causal assertion.

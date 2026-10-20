@@ -70,7 +70,8 @@ class RestorationTests(unittest.TestCase):
         self.assertIn('missing source transport restoration',transport_link_problems(report,self.posts))
         out=recover_transport_section(report,self.posts)
         self.assertEqual(transport_link_problems(out,self.posts),[])
-        self.assertIn('За попереднім повідомленням:',out)
+        self.assertNotIn('За попереднім повідомленням:',out)
+        self.assertNotIn('Інститут фізкультури',out)
         self.assertIn('Відновлюється рух',out)
         self.assertNotIn('вул.…',out)
 

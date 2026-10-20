@@ -101,7 +101,8 @@ def clean_event(post):
             prefix = "За ранковим зведенням станом на 08:00 " if morning else "За зведенням "
             header = prefix + label + ": " + header
         cleaned_blocks[0] = header
-    result = " ".join(unique_texts(cleaned_blocks))
+    result = "\n\n".join(block if block[-1:] in '.!?;:' else block+'.'
+                           for block in unique_texts(cleaned_blocks))
     if removed_location and not any(re.search(PLACE_PATTERNS[name], result, re.I) for name in locations):
         result = locations[0] + ": " + result
     return result.strip()
@@ -237,6 +238,7 @@ def brief_transport(posts):
     """
     from transport_state import restored_routes, transport_routes
     ordered = sorted(posts, key=lambda p: p.get('published_at', ''))
+    latest_day = max((publication_date(p) for p in ordered if publication_date(p)), default=None)
     by_key = {p.get('key'): p for p in ordered if p.get('key')}
     ended = {}
     for post in ordered:
@@ -257,6 +259,12 @@ def brief_transport(posts):
             text = re.sub(r'\bСьогодні,?\s*' + re.escape(label) + r',?', label, text, flags=re.I)
             text = re.sub(r'\bсьогодні\b', label, text, flags=re.I)
             text = text.replace('закінчать свою роботу раніше', 'за анонсом мали закінчити роботу раніше')
+            if latest_day and day < latest_day and 'мали закінчити роботу раніше' in text:
+                text = ' '.join(s for s in sentences(text)
+                                if not re.search(r'Останні відправлення|відбудуться:', s, re.I))
+        text = re.sub(r'^До уваги пасажирів\s*', '', text, flags=re.I)
+        text = re.sub(r'^Зміни у русі трамваїв\s*№\s*\d+\s+(?=\d{1,2}\s+(?:'
+                      + '|'.join(MONTHS) + r'))', '', text, flags=re.I)
         if post.get('key') in ended:
             clauses = [c for sentence in sentences(text)
                        for c in re.split(r'(?<=;)\s+', sentence)]
@@ -266,7 +274,7 @@ def brief_transport(posts):
             text = re.sub(r'^Оновлена інформація[^:]*:\s*', '', text).strip()
         if text:
             texts.append(text)
-    return ' '.join(unique_texts(texts)) or EMPTY
+    return '\n\n'.join(unique_texts(texts)) or EMPTY
 
 
 def brief_attacks(posts):
@@ -298,8 +306,9 @@ def brief_attacks(posts):
     for post in selected:
         body = clean_event(post)
         # Operational instructions in yesterday's alert are not a live alert.
-        body = ' '.join(s for s in sentences(body) if not re.match(
+        body = '\n\n'.join(' '.join(s for s in sentences(paragraph) if not re.match(
             r'Залишайтеся\b|Загроза триває\b|До відбою\b', s, re.I))
+                           for paragraph in body.split('\n\n'))
         body = re.sub(r'\bВорог атакує\b', 'Ворог атакував', body)
         result.append(body)
     return '\n\n'.join(unique_texts(result))

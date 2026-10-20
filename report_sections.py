@@ -64,7 +64,14 @@ def source_transport_notices(posts):
 def recover_transport_section(report, posts):
     if not posts or not transport_link_problems(report, posts):
         return report
-    notices = source_transport_notices(posts)
+    from transport_state import effective_transport_posts
+    transport = [p for p in posts if p.get('category_hint', '1.2') == '1.2']
+    effective = effective_transport_posts(transport)
+    if effective != transport:
+        from fallback_report import brief_transport
+        notices = [brief_transport(effective)]
+    else:
+        notices = source_transport_notices(transport)
     if not notices:
         # Keep the invalid draft invalid rather than deleting its facts.
         return report

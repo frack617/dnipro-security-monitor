@@ -2,6 +2,42 @@
 import re
 
 
+def transport_clauses(text):
+    """Split notices without treating street abbreviations as sentence ends."""
+    protected = re.sub(r'\b(м|вул|пл|обл|ім|ст|пров|просп)\.',
+                       lambda m: m[1]+'\u2024', text, flags=re.I)
+    return [part.replace('\u2024', '.').strip() for part in re.split(
+        r'(?<=[.!?;])\s+(?=[А-ЯІЇЄҐ0-9])', protected) if part.strip()]
+
+
+def effective_transport_posts(posts):
+    """Remove only clauses ended by a later same-channel direct reply.
+
+    Keep the original notices untouched, restoration itself, unrelated clauses
+    and any restrictions announced again later. Route kind is part of identity.
+    """
+    from report_sections import clean_transport_notice
+    ordered = sorted(posts, key=lambda p: p.get('published_at', p.get('published_local', '')))
+    targets = {p['key']: p for p in ordered if p.get('key')}
+    ended = {}
+    for post in ordered:
+        target = targets.get(post.get('reply_to'))
+        if (target and target.get('channel') == post.get('channel')
+                and target.get('published_at', '') < post.get('published_at', '')):
+            ended.setdefault(target['key'], set()).update(restored_routes(post.get('text', '')))
+    result = []
+    for post in ordered:
+        item = dict(post)
+        if post.get('key') in ended and ended[post['key']]:
+            clauses = transport_clauses(clean_transport_notice(post))
+            item['text'] = ' '.join(c for c in clauses if not (
+                transport_routes(c) and transport_routes(c) <= ended[post['key']]))
+            item['text'] = re.sub(r'^Оновлена інформація[^:]*:\s*', '', item['text']).strip()
+        if item.get('text', '').strip():
+            result.append(item)
+    return result
+
+
 def transport_routes(text):
     markers = list(re.finditer(r"\b(?:трамва\w*|тролейбус\w*|автобус\w*)\s*№", text, re.I))
     result = set()
@@ -43,7 +79,10 @@ def restoration_problems(body, posts):
     if required - restored_routes(body):
         problems.append('missing source transport restoration')
     # Preserve historical restrictions only with an explicit time/context label.
-    if (re.search(r'призупин\w*|припини\w*\s+(?:свою\s+)?роботу', body, re.I)
-        and not re.search(r'раніше|попередн\w*\s+повідомлен|згодом|пізніше|було\s+призупин', body, re.I)):
-        problems.append('outdated transport restriction presented as current')
+    for clause in transport_clauses(body):
+        if (transport_routes(clause) & required
+            and re.search(r'призупин\w*|припини\w*\s+(?:свою\s+)?роботу', clause, re.I)
+            and not re.search(r'раніше|попередн\w*\s+повідомлен|згодом|пізніше|було\s+призупин', body, re.I)):
+            problems.append('outdated transport restriction presented as current')
+            break
     return problems
