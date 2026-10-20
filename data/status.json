@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T06:30:04.283914+00:00",
-  "previous_checked_at": "2026-10-20T06:03:03.582448+00:00",
-  "collection_gap_minutes": 27.0,
+  "checked_at": "2026-10-20T06:31:47.297587+00:00",
+  "previous_checked_at": "2026-10-20T06:30:04.283914+00:00",
+  "collection_gap_minutes": 1.7,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-19T08:00:00+03:00",
@@ -34,7 +34,7 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 7,
-      "oldest_collected_at": "2026-10-17T06:27:01+00:00",
+      "oldest_collected_at": "2026-10-17T07:03:01+00:00",
       "newest_collected_at": "2026-10-20T06:28:06+00:00"
     },
     "gunpvdp": {
