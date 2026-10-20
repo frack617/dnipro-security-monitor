@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T03:41:44.636508+00:00",
-  "previous_checked_at": "2026-10-20T03:11:46.094309+00:00",
-  "collection_gap_minutes": 30.0,
+  "checked_at": "2026-10-20T04:11:48.625594+00:00",
+  "previous_checked_at": "2026-10-20T03:41:44.636508+00:00",
+  "collection_gap_minutes": 30.1,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-18T08:00:00+03:00",
@@ -33,9 +33,9 @@
     "DniproCityOfficial": {
       "ok": true,
       "parser_version": 2,
-      "posts_found": 6,
+      "posts_found": 7,
       "oldest_collected_at": "2026-10-17T03:46:01+00:00",
-      "newest_collected_at": "2026-10-19T14:42:07+00:00"
+      "newest_collected_at": "2026-10-20T03:46:06+00:00"
     },
     "gunpvdp": {
       "ok": true,
