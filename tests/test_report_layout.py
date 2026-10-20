@@ -181,13 +181,13 @@ class PublicationLayoutTests(unittest.TestCase):
                  patch.object(c,'MORNING_REPORT_FILE',Path(d)/'report.md'), \
                  patch.object(c,'read_alert_state',return_value={'last_daily_report':'2026-10-16'}), \
                  patch.dict(os.environ,{'FORCE_MORNING_REPORT':'false','SEND_MORNING_REPORT':'true'}), \
-                 patch('ai_report.generate_report',side_effect=RuntimeError('offline test') if fallback else None,
-                       return_value=VALID_REPORT),patch.object(c,'deliver_morning_report') as deliver:
+                 patch('core_review.review_core', return_value={'state':'unavailable' if fallback else 'completed', 'requests':1, 'issues':[], 'provider':'gemini'}),patch.object(c,'deliver_morning_report') as deliver:
                 c.process_morning_report([],{},now)
                 sent=deliver.call_args.args[0]
                 self.assertTrue(sent.startswith('Станом на 17.10.2026 08.00'))
                 self.assertEqual(Path(d,'report.md').read_text().strip(),sent)
-                self.assertEqual('⚠️ Резервна автоматична версія' in sent,fallback)
+                self.assertNotIn('⚠️ Резервна автоматична версія',sent)
+                self.assertIn('1.2. Сповіщення',sent)
 
     def test_pending_old_layout_resumes_without_reformatting_or_ai(self):
         now=c.parse_datetime('2026-10-17T08:05:00+03:00')

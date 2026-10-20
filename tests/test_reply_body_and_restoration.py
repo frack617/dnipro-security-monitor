@@ -143,7 +143,8 @@ class ParserMigrationTests(unittest.TestCase):
             with self.subTest(version=version), tempfile.TemporaryDirectory() as d:
                 status=Path(d)/'status.json'
                 status.write_text(json.dumps({'checked_at':now.isoformat(),
-                    'channels':{'DniproCityOfficial':{'parser_version':version}}}))
+                    'channels':{'DniproCityOfficial':{'parser_version':version,
+                        'coverage_from':(now-timedelta(hours=72)).isoformat(), 'coverage_until':(now-timedelta(minutes=30)).isoformat()}}}))
                 with patch.object(c,'STATUS_FILE',status), patch.object(c,'utc_now',return_value=now), \
                      patch.object(c,'load_channels',return_value=['DniproCityOfficial']), \
                      patch.object(c,'read_existing',return_value=[F['bad_cached']]), \

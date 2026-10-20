@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import hashlib
 import os
 import re
 import time
@@ -201,37 +202,41 @@ def parse_page(channel, html):
     return posts
 
 
-def collect_channel(channel, session, cutoff):
-    collected = {}
-    before = None
-    visited = set()
+class CollectionBatch(list):
+    """List-compatible collection result with explicit traversal evidence."""
+    def __init__(self, posts, coverage):
+        super().__init__(posts)
+        self.coverage = coverage
 
+
+def collect_channel(channel, session, cutoff):
+    collected, visited = {}, set()
+    before = None
+    coverage = {"pages_read": 0, "boundary_reached": False,
+                "requested_cutoff": cutoff.isoformat(), "stop_reason": "page_limit"}
     for _ in range(MAX_PAGES):
         url = f"https://t.me/s/{channel}"
         if before is not None:
             url += f"?before={before}"
-
         page_posts = parse_page(channel, fetch(url, session))
+        coverage["pages_read"] += 1
         if not page_posts:
+            coverage["stop_reason"] = "empty_or_unparseable_page"
             break
-
         signature = tuple(sorted(post["post_id"] for post in page_posts))
         if signature in visited:
+            coverage["stop_reason"] = "repeated_page"
             break
         visited.add(signature)
-
         for post in page_posts:
             collected[post["key"]] = post
-
         oldest = min(parse_datetime(post["published_at"]) for post in page_posts)
-        smallest_id = min(post["post_id"] for post in page_posts)
         if oldest <= cutoff:
+            coverage.update(boundary_reached=True, stop_reason="time_boundary")
             break
-
-        before = smallest_id
+        before = min(post["post_id"] for post in page_posts)
         time.sleep(0.8)
-
-    return list(collected.values())
+    return CollectionBatch(list(collected.values()), coverage)
 
 
 def read_existing():
@@ -434,7 +439,7 @@ def is_regional(post):
     explicit = re.search(r"дніпропетров|\bдніпр(?:о|і|а|у|ом)\b|криворі|крив(?:ий|ому|ого)\s+р(?:іг|озі|огу)|нікопол|синельник|павлоград", text)
     if explicit:
         return True
-    if re.search(r"\bкиїв\w*|\bстолиц\w*|\bдеснянськ\w*|\bсолом['’]янськ\w*", text):
+    if re.search(r"\bки(?:їв|єв)\w*|\bстолиц\w*|\bдеснянськ\w*|\bсолом['’]янськ\w*", text):
         return False
     if channel in LOCAL_CHANNELS:
         return True
@@ -745,18 +750,37 @@ def send_long_bot_message(text, limit=3900, start_part=0, part_callback=None):
 def deliver_morning_report(report, state, report_date):
     pending = state.get("pending_daily_report", {})
     if pending.get("date") != report_date or pending.get("text") != report:
-        pending = {"date": report_date, "text": report, "sent_parts": 0}
+        pending = {"date": report_date, "text": report, "sent_parts": 0,
+                   "report_sha256": hashlib.sha256(report.encode("utf-8")).hexdigest(),
+                   "run_id": os.getenv("GITHUB_RUN_ID", "local")}
     state["pending_daily_report"] = pending
     save_alert_state(state)
+
+    def receipt(delivery_state):
+        path = ALERT_STATE_FILE.parent / "report_delivery_status.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"date": report_date,
+            "report_sha256": pending.get("report_sha256") or hashlib.sha256(report.encode("utf-8")).hexdigest(),
+            "run_id": pending.get("run_id", "legacy"), "confirmed_parts": pending["sent_parts"],
+            "delivery_state": delivery_state, "checked_at": utc_now().isoformat()},
+            ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+
+    receipt("pending")
 
     def confirmed(index):
         pending["sent_parts"] = index
         save_alert_state(state)
+        receipt("partial")
 
     send_long_bot_message(report, start_part=pending["sent_parts"], part_callback=confirmed)
     state["last_daily_report"] = report_date
+    state["last_daily_delivery"] = {"date": report_date,
+        "report_sha256": pending.get("report_sha256") or hashlib.sha256(report.encode("utf-8")).hexdigest(),
+        "run_id": pending.get("run_id", "legacy"), "confirmed_parts": pending["sent_parts"],
+        "confirmed_at": utc_now().isoformat()}
     state.pop("pending_daily_report", None)
     save_alert_state(state)
+    receipt("confirmed")
 
 
 def process_morning_report(posts, statuses, checked_at):
@@ -778,70 +802,48 @@ def process_morning_report(posts, statuses, checked_at):
             deliver_morning_report(pending["text"], state, report_date)
         return
 
-    fallback = build_morning_report(posts, statuses, checked_at, brief=True)
-    regional_posts = report_window_posts(posts, checked_at)
-    ai_posts = []
-    for post in regional_posts:
-        category = classify_post(post)
-        if category is None or is_historical_context(post, start_local):
-            continue
-        item = dict(post)
-        item["category_hint"] = category
-        item["published_local"] = parse_datetime(post["published_at"]).astimezone(KYIV).strftime(
-            "%d.%m.%Y %H:%M за Києвом"
-        )
-        if parse_datetime(post["published_at"]) >= end_utc:
-            item["cutoff_bulletin"] = True
-        ai_posts.append(item)
-    from report_preparation import prepare_evidence
-    ai_posts = prepare_evidence(ai_posts)
-    failed_sources = [
-        f"@{channel}" for channel, status in statuses.items() if not status.get("ok")
-    ]
-
-    failure_type = None
-    try:
-        from ai_report import generate_report
-
-        report = generate_report(
-            ai_posts,
-            start_local.strftime("%H:%M %d.%m.%Y"),
-            end_local.strftime("%H:%M %d.%m.%Y"),
-            checked_at.astimezone(KYIV).strftime("%H:%M %d.%m.%Y"),
-            end_local.strftime("%d.%m.%Y"),
-            failed_sources,
-        )
-        report_kind = "author"
-    except Exception as error:
-        from ai_report import sanitize_fallback
-
-        failure_type = type(error).__name__
-        print(f"Author report unavailable: {type(error).__name__}: {error}")
-        report = sanitize_fallback(fallback)
-        report_kind = "fallback"
-
-    from report_layout import render_report
-    report = render_report(report, start_local.strftime('%H:%M %d.%m.%Y'),
-                           end_local.strftime('%H:%M %d.%m.%Y'),
-                           checked_at.astimezone(KYIV).strftime('%H:%M %d.%m.%Y'))
+    from fact_registry import compile_registry, render_registry, validate_core_text
+    from core_review import review_core
+    registry = compile_registry(posts, statuses, checked_at)
+    report = render_registry(registry)
+    review = review_core(registry, report)
+    # A review can flag concerns, never supply replacement prose or facts.
+    blocked = registry["review_required"] or bool(review["issues"])
+    validate_core_text(report, registry)
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
     MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
-    # No credentials, source bodies or provider exception strings in this
-    # public status file. Detailed existing provider debug files stay separate.
-    (DATA_DIR / "report_generation_status.json").write_text(json.dumps({
-        "checked_at": checked_at.isoformat(),
-        "report_date": report_date,
-        "report_kind": report_kind,
-        "author_failure_type": failure_type,
-        "prepared_posts": len(ai_posts),
-        "report_words": len(report.split()),
-        "sending_enabled": send_enabled,
-    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Morning report prepared: {report_kind}")
+    run_id = os.getenv("GITHUB_RUN_ID", "local")
+    report_hash = hashlib.sha256(report.encode("utf-8")).hexdigest()
+    registry.update(run_id=run_id, report_sha256=report_hash, review=review)
+    (DATA_DIR / "report_fact_registry.json").write_text(
+        json.dumps(registry, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    status = {
+        "checked_at": checked_at.isoformat(), "report_date": report_date,
+        "run_id": run_id, "report_sha256": report_hash,
+        "report_kind": "source_core", "author_failure_type": None,
+        "prepared_posts": len({r["source_key"] for r in registry["records"]}),
+        "report_words": len(report.split()), "sending_enabled": send_enabled,
+        "review": review, "review_required": blocked,
+        "coverage_complete": not registry["coverage_unproven"],
+        "delivery_state": "blocked_review" if blocked else "prepared",
+    }
+    generation_file = DATA_DIR / "report_generation_status.json"
+    generation_file.write_text(json.dumps(status, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    print("Morning report prepared: source_core; review="+review["state"])
     if not send_enabled:
         print("Morning report dry run: Telegram sending disabled")
         return
-
-    deliver_morning_report(report, state, report_date)
+    if blocked:
+        print("Morning report not sent: source or reviewer concerns require review")
+        raise RuntimeError("Protected morning report requires manual review; preview saved")
+    try:
+        deliver_morning_report(report, state, report_date)
+    except Exception:
+        status["delivery_state"] = "pending_retry"
+        generation_file.write_text(json.dumps(status, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+        raise
+    status["delivery_state"] = "confirmed"
+    generation_file.write_text(json.dumps(status, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
 
 
 def channel_range(posts, channel):
@@ -995,7 +997,9 @@ def main():
             # Невелике перекриття підхоплює запізнілі зміни, не змушуючи
             # перечитувати весь 72-годинний буфер кожні 30 хвилин.
             channel_cutoff = cutoff
-            if known_channel_dates and previous_status.get("channels", {}).get(channel, {}).get("parser_version") == PARSER_VERSION:
+            prior = previous_status.get("channels", {}).get(channel, {})
+            if (known_channel_dates and prior.get("parser_version") == PARSER_VERSION
+                and prior.get("coverage_from") and prior.get("coverage_until")):
                 channel_cutoff = max(cutoff, max(known_channel_dates) - timedelta(hours=2))
 
             found = collect_channel(channel, session, channel_cutoff)
@@ -1008,9 +1012,21 @@ def main():
                     parser_changed_keys.add(post['key'])
                     post['parser_recovered'] = True
                 existing[post["key"]] = post
+            coverage = getattr(found, "coverage", {})
+            coverage_from = channel_cutoff if coverage.get("boundary_reached") else None
+            prior_from = parse_datetime(prior.get("coverage_from"))
+            prior_until = parse_datetime(prior.get("coverage_until"))
+            if (coverage_from and prior_from and prior_until and prior_until >= channel_cutoff
+                and prior_from <= channel_cutoff):
+                coverage_from = min(prior_from, coverage_from)
+            window_start = completed_report_window(checked_at)[2]
             oldest, newest = channel_range(list(existing.values()), channel)
             statuses[channel] = {
-                "ok": True,
+                "ok": bool(found),
+                "coverage": coverage,
+                "coverage_from": coverage_from.isoformat() if coverage_from else None,
+                "coverage_until": checked_at.isoformat() if coverage_from else None,
+                "coverage_complete": bool(coverage_from and coverage_from <= window_start),
                 "parser_version": PARSER_VERSION,
                 "posts_found": len(found),
                 "oldest_collected_at": oldest,
@@ -1031,6 +1047,9 @@ def main():
         and parse_datetime(post["published_at"]) >= keep_after
     ]
     posts.sort(key=lambda item: (item["published_at"], item["channel"], item["post_id"]))
+    for channel, status in statuses.items():
+        oldest, newest = channel_range(posts, channel)
+        status.update(oldest_collected_at=oldest, newest_collected_at=newest)
     write_outputs(posts, statuses, checked_at, previous_checked_at)
     parser_changed_keys.update(p['key'] for p in posts if p.get('parser_recovered'))
     recovered = recovered_restoration_keys(posts, parser_changed_keys, read_alert_state(), checked_at)
