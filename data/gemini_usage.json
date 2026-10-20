@@ -370,6 +370,34 @@
       "run_id": "39372667672",
       "stage": "author",
       "outcome": "http_200"
+    },
+    {
+      "id": "39377241778:2026-10-20T05:52:57.948032+00:00:41",
+      "at": "2026-10-20T05:52:57.948032+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39377241778",
+      "stage": "author",
+      "outcome": "http_503",
+      "reason": "service_unavailable"
+    },
+    {
+      "id": "39377241778:2026-10-20T05:53:01.435462+00:00:42",
+      "at": "2026-10-20T05:53:01.435462+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39377241778",
+      "stage": "author",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39377241778:2026-10-20T05:53:05.270698+00:00:43",
+      "at": "2026-10-20T05:53:05.270698+00:00",
+      "model": "gemini_backup:gemini-3.5-flash-lite",
+      "event": "workflow_dispatch",
+      "run_id": "39377241778",
+      "stage": "author",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}

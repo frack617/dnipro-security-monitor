@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-10-20T05:52:54.181904+00:00",
+  "report_date": "2026-10-20",
+  "report_kind": "fallback",
+  "author_failure_type": "RuntimeError",
+  "prepared_posts": 21,
+  "report_words": 507,
+  "sending_enabled": false
+}

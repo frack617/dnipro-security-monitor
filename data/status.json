@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-20T05:31:48.909082+00:00",
-  "previous_checked_at": "2026-10-20T05:01:46.691025+00:00",
-  "collection_gap_minutes": 30.0,
+  "checked_at": "2026-10-20T05:52:54.181904+00:00",
+  "previous_checked_at": "2026-10-20T05:31:48.909082+00:00",
+  "collection_gap_minutes": 21.1,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-19T08:00:00+03:00",
@@ -20,7 +20,7 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 7,
-      "oldest_collected_at": "2026-10-17T05:10:22+00:00",
+      "oldest_collected_at": "2026-10-17T05:53:34+00:00",
       "newest_collected_at": "2026-10-20T05:31:15+00:00"
     },
     "SBUkr": {
@@ -34,7 +34,7 @@
       "ok": true,
       "parser_version": 2,
       "posts_found": 7,
-      "oldest_collected_at": "2026-10-17T05:27:01+00:00",
+      "oldest_collected_at": "2026-10-17T05:59:01+00:00",
       "newest_collected_at": "2026-10-20T05:27:06+00:00"
     },
     "gunpvdp": {
@@ -63,7 +63,7 @@
       "parser_version": 2,
       "posts_found": 7,
       "oldest_collected_at": "2026-10-17T08:22:07+00:00",
-      "newest_collected_at": "2026-10-20T05:00:38+00:00"
+      "newest_collected_at": "2026-10-20T05:51:34+00:00"
     }
   }
 }

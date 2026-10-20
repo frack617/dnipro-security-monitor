@@ -1,5 +1,5 @@
 {
-  "run_id": "39372667672",
+  "run_id": "39377241778",
   "model": "openai/gpt-oss-120b",
   "window": {
     "start": "08:00 19.10.2026",
@@ -9,7 +9,7 @@
     {
       "attempt": 1,
       "status": "preparing_request",
-      "error": "Groq input exceeds conservative free-tier token budget (24341); facts were not truncated"
+      "error": "Groq input exceeds conservative free-tier token budget (14678); facts were not truncated"
     }
   ]
 }
