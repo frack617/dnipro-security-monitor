@@ -10,7 +10,8 @@ from unittest.mock import patch
 import collector as c
 from core_review import review_core, validate_review
 from fact_registry import compile_registry, render_registry
-from operational_facts import current_attack_piece, background_reason, warehouse_supplement
+from operational_facts import (current_attack_piece, background_reason,
+                               warehouse_supplement, consolidate_warehouse_details)
 
 F = json.loads((Path(__file__).parent/'fixtures/source_core_20261021.json').read_text())
 NOW = datetime.fromisoformat(F['status']['checked_at'])
@@ -55,16 +56,59 @@ class FrozenMorningTests(unittest.TestCase):
         self.assertNotIn('Кривий Ріг', self.text)
 
     def test_mixed_police_post_keeps_current_fire_but_not_old_city_casualty(self):
-        self.assertIn('виникла пожежа', self.text)
-        self.assertIn('загасили пожежу', self.text)
+        self.assertRegex(self.text.lower(), r'виникла(?: масштабна)? пожежа')
+        self.assertIn('ліквідували вогнеборці', self.text)
         self.assertNotIn('55-річ', self.text)
-        self.assertTrue(any(r['source_key']=='gunpvdp/37246' and r.get('display')
+        self.assertTrue(any('gunpvdp/37246' in r.get('detail_source_refs', [])
                             for r in self.core['records']))
+
+    def test_fire_details_appear_only_inside_the_bulletin_warehouse_block(self):
+        section=self.text.split('2.1. ')[1].split('2.2. ')[0]
+        self.assertTrue(section.splitlines()[1].startswith('Обласне зведення'))
+        block=section.split('У Дніпрі понівечені склади')[1].split('На Синельниківщині')[0]
+        self.assertEqual(block.count('пожеж'),1)
+        self.assertIn('масштабна пожежа, яку ліквідували вогнеборці',block)
+        self.assertIn('Рятувальники виявили тіла.',block)
+        self.assertEqual(block.count('Четверо людей дістали поранень'),1)
+        self.assertNotIn('Повідомлення від',block)
 
     def test_published_time_does_not_become_attack_time_and_five_points(self):
         self.assertNotIn('Повідомлення від 11:00', self.text)
         self.assertEqual(re.findall(r'(?m)^([12]\.[1-4])\.', self.text),
                          ['1.1','1.2','2.1','2.2','2.3'])
+
+
+class DetailMergeTests(unittest.TestCase):
+    def records(self, detail):
+        target={'id':'target','source_text':'У Дніпрі понівечені склади.',
+                'display':'У Дніпрі понівечені склади.'}
+        rec={'id':'detail','source_key':'source/1','warehouse_target':'target',
+             'source_text':detail, 'detail_label':'У передмісті Дніпра, на складах',
+             'detail_sentences':[detail], 'display':detail,'state':'included'}
+        return [target,rec]
+
+    def test_unfamiliar_material_and_number_are_preserved(self):
+        records=self.records('Виникла пожежа, знищено три автомобілі.')
+        records.append(dict(records[1],id='detail2',source_key='source/2',
+            detail_sentences=['Виникла масштабна пожежа, яку ліквідували вогнеборці.']))
+        consolidate_warehouse_details(records)
+        self.assertIn('знищено три автомобілі',records[0]['display'])
+        self.assertIn('ліквідували',records[0]['display'])
+        self.assertEqual(records[1]['source_text'],'Виникла пожежа, знищено три автомобілі.')
+
+    def test_merge_is_idempotent(self):
+        records=self.records('Виникла масштабна пожежа, яку ліквідували вогнеборці.')
+        consolidate_warehouse_details(records)
+        once=records[0]['display']
+        consolidate_warehouse_details(records)
+        self.assertEqual(records[0]['display'],once)
+
+    def test_unmatched_target_is_not_removed(self):
+        records=self.records('Рятувальники загасили пожежу та виявили тіла.')
+        records[1]['warehouse_target']='another event'
+        consolidate_warehouse_details(records)
+        self.assertEqual(records[1]['state'],'included')
+
 
 
 class SelectionBoundaryTests(unittest.TestCase):

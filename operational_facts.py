@@ -101,4 +101,53 @@ def warehouse_supplement(text, selected, published, linked_update=False):
         return {'conflict': False, 'display': None}
     location = re.search(r'у передмісті Дніпра', body, re.I)
     label = 'У передмісті Дніпра, на складах' if location else 'У Дніпрі, на складах'
-    return {'conflict': False, 'display': label+': '+' '.join(additions)}
+    return {'conflict': False, 'display': label+': '+' '.join(additions),
+            'target_id': targets[0]['id'], 'detail_label': label, 'detail_sentences': additions}
+
+
+def consolidate_warehouse_details(selected):
+    """Collapse only enumerated generic fire statements, never unfamiliar facts.
+
+    Casualty numbers stay verbatim in the dated bulletin. Every contributing
+    record retains its original text and source key in the audit registry.
+    """
+    groups = {}
+    by_id = {r['id']: r for r in selected}
+    for rec in selected:
+        target = rec.get('warehouse_target')
+        if target in by_id and rec.get('display'):
+            groups.setdefault(target, []).append(rec)
+    for target_id, records in groups.items():
+        generic = re.compile(
+            r'(?:Після обстрілу )?(?:Виникла|Сталася|Спалахнула) (?:масштабна )?пожежа'
+            r'(?:, (?:яку ліквідували вогнеборці|пошкоджені склади))?[.!]?|'
+            r'Рятувальники (?:загасили|ліквідували) пожежу(?: та виявили тіла)?[.!]?', re.I)
+        recognized, unknown = [], []
+        for rec in records:
+            for sentence in rec['detail_sentences']:
+                (recognized if generic.fullmatch(sentence.strip()) else unknown).append((rec, sentence))
+        if not recognized:
+            continue
+        target = by_id[target_id]
+        # A warehouse damage phrase may be omitted only if the dated block
+        # already states this damage. Otherwise retain that source sentence.
+        if not re.search(r'(?:пошкоджен|понівечен)\w*\s+склад', target['source_text'], re.I):
+            unknown += [(r,s) for r,s in recognized if 'пошкоджені склади' in s]
+        def score(item):
+            text = item[1].lower()
+            return (bool(re.search(r'ліквід|загас', text)), 'масштабна' in text,
+                    bool(re.search(r'виникла|сталася|спалахнула', text)))
+        winner, sentence = max(recognized, key=score)
+        sentence = re.sub(r' та виявили тіла(?=[.!]?$)', '', sentence)
+        details = [winner['detail_label']+': '+sentence]
+        if any('виявили тіла' in s for _,s in recognized):
+            details.append('Рятувальники виявили тіла.')
+        for rec, body in unknown:
+            detail = rec['detail_label']+': '+body
+            if detail not in details:
+                details.append(detail)
+        target['display'] += ' '+' '.join(details)
+        target['detail_source_refs'] = sorted({r['source_key'] for r in records})
+        for rec in records:
+            rec['state'], rec['reason'], rec['display'] = 'supplement', 'fire_details_in_bulletin_block', None
+    return selected

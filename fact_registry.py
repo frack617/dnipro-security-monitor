@@ -250,7 +250,8 @@ def compile_registry(posts, statuses, checked_at):
     candidates = prepare_evidence(c.report_window_posts(posts, checked_at))
     bulletins, ordinary = [], []
     # Retain a source audit entry for every candidate, including all exclusions.
-    from operational_facts import background_reason, current_attack_piece, warehouse_supplement
+    from operational_facts import (background_reason, current_attack_piece,
+                                   warehouse_supplement, consolidate_warehouse_details)
     expanded = []
     for post in candidates:
         # Explicit geographic blocks of non-OVA summaries remain independent.
@@ -325,6 +326,9 @@ def compile_registry(posts, statuses, checked_at):
                     diagnostics.append({'reason':'source_conflict', 'sources':[rec['source_key']]})
                 elif warehouse['display']:
                     rec['display'] = warehouse['display']
+                    rec['warehouse_target'] = warehouse['target_id']
+                    rec['detail_label'] = warehouse['detail_label']
+                    rec['detail_sentences'] = warehouse['detail_sentences']
                     selected.append(rec)
                 else:
                     rec['state'], rec['reason'] = 'supplement', 'warehouse_facts_in_dated_bulletin'
@@ -361,6 +365,7 @@ def compile_registry(posts, statuses, checked_at):
             rec['display'] = 'Повідомлення від '+datetime.fromisoformat(post['published_at']).astimezone(KYIV).strftime('%d.%m %H:%M')+': '+attribution+clean_event(post)
             selected.append(rec)
         records.append(rec)
+    selected = consolidate_warehouse_details(selected)
     transport_text, expired = transport_display(transport, end)
     for rec in records:
         if rec['source_key'] in {p['key'] for p in expired}:
