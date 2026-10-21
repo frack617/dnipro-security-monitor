@@ -198,5 +198,105 @@ class ReviewerSafetyTests(unittest.TestCase):
             self.assertFalse(Path(folder,'report_delivery_status.json').exists())
 
 
+class FutureWindowAndPlaceTests(unittest.TestCase):
+    def setUp(self):
+        from zoneinfo import ZoneInfo
+        zone=ZoneInfo('Europe/Kyiv')
+        self.start=datetime(2026,10,20,8,tzinfo=zone)
+        self.end=datetime(2026,10,21,8,tzinfo=zone)
+        self.published=datetime(2026,10,20,12,tzinfo=zone)
+
+    def test_explicit_pre_cutoff_clock_is_not_publication_time(self):
+        for city in ('Дніпро','Нікополь','Павлоград'):
+            body='20 жовтня о 07:10 ворог атакував '+city+'. Поранений чоловік.'
+            out,reason=current_attack_piece(body,self.published,self.start,self.end)
+            self.assertIsNone(out)
+            self.assertEqual(reason,'explicit_incident_outside_window')
+
+    def test_exact_start_is_included_and_end_is_excluded(self):
+        for text,inside in (('20 жовтня о 08:00 ворог атакував Дніпро.',True),
+                            ('21 жовтня о 08:00 ворог атакував Дніпро.',False)):
+            out,_=current_attack_piece(text,self.published,self.start,self.end)
+            self.assertEqual(out is not None,inside)
+
+    def test_current_date_without_clock_remains_undated_not_inferred_from_publication(self):
+        body='20 жовтня ворог атакував Нікополь. Пошкоджено будинок.'
+        out,_=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,body)
+        self.assertNotIn('12:00',out)
+
+    def test_new_incident_survives_relative_old_intro(self):
+        body='Після вчорашньої атаки на Кривий Ріг залишаються поранені. У Дніпрі 20 жовтня ворог атакував підприємство.'
+        out,_=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,'У Дніпрі 20 жовтня ворог атакував підприємство.')
+
+    def test_two_explicit_dates_keep_new_locality_and_consequence(self):
+        body='19 жовтня ворог атакував Кривий Ріг. У Павлограді 20 жовтня ворог атакував підприємство.'
+        out,_=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,'У Павлограді 20 жовтня ворог атакував підприємство.')
+
+    def test_same_day_earlier_and_later_clocks_split_only_at_sentence_boundary(self):
+        body='20 жовтня о 07:10 ворог атакував Дніпро. У Нікополі 20 жовтня о 09:00 ворог атакував будинок.'
+        out,_=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,'У Нікополі 20 жовтня о 09:00 ворог атакував будинок.')
+
+    def test_inseparable_mixed_times_require_review_instead_of_losing_facts(self):
+        body='20 жовтня о 07:10 ворог атакував Дніпро, а 20 жовтня о 09:00 ворог атакував Нікополь.'
+        out,reason=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,body)
+        self.assertEqual(reason,'mixed_incident_times_requires_review')
+
+    def test_approximate_clock_at_boundary_requires_review(self):
+        body='20 жовтня близько 08:00 ворог атакував Дніпро.'
+        out,reason=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,body)
+        self.assertTrue(reason.endswith('requires_review'))
+
+    def test_source_publication_label_not_used_as_incident_clock(self):
+        body='Повідомлення від 20 жовтня о 07:10: ворог атакував Дніпро.'
+        out,_=current_attack_piece(body,self.published,self.start,self.end)
+        self.assertEqual(out,body)
+
+    def test_nikopol_consequences_are_never_attached_to_dnipro(self):
+        target={'id':'target','reporting_period':'2026-10-20T18:30:00+03:00',
+                'source_text':'У Дніпрі пошкоджені склади. Четверо поранені.'}
+        body='У Дніпрі працюють служби. У Нікополі пошкоджені склади. Четверо поранені. Виникла пожежа.'
+        result=warehouse_supplement(body,[target],self.published)
+        self.assertTrue(result['conflict'])
+        self.assertIsNone(result['display'])
+
+    def test_explicit_separate_attack_or_clock_is_not_collapsed(self):
+        target={'id':'target','reporting_period':'2026-10-20T18:30:00+03:00',
+                'source_text':'У Дніпрі пошкоджені склади. Четверо поранені.'}
+        for lead in ('Окрема атака: ', 'Після повторної атаки ', 'О 09.15 '):
+            body=lead+'у Дніпрі пошкоджені склади. Четверо поранені. Виникла пожежа.'
+            with self.subTest(lead=lead):
+                result=warehouse_supplement(body,[target],self.published)
+                self.assertTrue(result['conflict'])
+
+    def test_uncertain_time_prevents_delivery_in_registry(self):
+        body='20 жовтня близько 08:00 ворог атакував Дніпро. Поранений чоловік.'
+        post={'key':'adm_dp/9998','channel':'adm_dp','published_at':self.published.isoformat(),'text':body}
+        core=compile_registry([post],{},NOW)
+        self.assertTrue(core['review_required'])
+        self.assertTrue(any(r['state']=='review' and r['source_text']==body for r in core['records']))
+
+    def test_new_community_prevents_silent_geographic_merge(self):
+        target={'id':'target','reporting_period':'2026-10-20T18:30:00+03:00',
+                'source_text':'У Дніпрі пошкоджені склади. Четверо поранені.'}
+        body='У Дніпрі працюють служби. У Покровській громаді пошкоджені склади. Четверо поранені.'
+        self.assertTrue(warehouse_supplement(body,[target],self.published)['conflict'])
+
+    def test_local_conflict_does_not_consume_a_review_request(self):
+        body='20 жовтня близько 08:00 ворог атакував Дніпро. Поранений чоловік.'
+        post={'key':'adm_dp/9998','channel':'adm_dp','published_at':self.published.isoformat(),'text':body}
+        core=compile_registry([post],{},NOW)
+        with patch('core_review.request_text') as request:
+            result=review_core(core,render_registry(core))
+        request.assert_not_called()
+        self.assertEqual(result['state'],'local_conflict')
+        self.assertEqual(result['requests'],0)
+
+
 if __name__=='__main__':
     unittest.main()

@@ -44,6 +44,8 @@ def validate_review(text, registry):
 def review_core(registry, rendered):
     if len(rendered.split()) > 500:
         return {'state':'blocked_length', 'requests':0, 'provider':None, 'issues':[]}
+    if registry.get('review_required'):
+        return {'state':'local_conflict', 'requests':0, 'provider':None, 'issues':[]}
     from ai_report import DEFAULT_MODEL, BACKUP_DEFAULT_MODEL
     provider = os.getenv('REPORT_PROVIDER', 'auto').strip().lower() or 'auto'
     if provider not in {'auto', 'gemini', 'gemini_backup', 'groq'}:

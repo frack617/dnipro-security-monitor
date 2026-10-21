@@ -24,40 +24,61 @@ def background_reason(text):
 
 
 def current_attack_piece(text, published, start, end):
-    """Only explicit incident anchors permit removing an older episode prefix.
+    """Separate explicit incident dates/clocks from the publication timestamp.
 
-    Uncertain morning clock stays with the existing audit rule. The routine
-    never converts a publication clock into an incident clock.
+    Single clearly out-of-window incidents are excluded. A newer explicitly
+    dated incident survives an older prefix. Unseparable mixed intervals are
+    flagged for review instead of silently dropping current consequences.
     """
+    from fallback_report import sentences
     body = clean_lines(text)
-    if re.search(r'вчорашн\w*.{0,35}(?:атак|удар|обстріл)', body, re.I):
-        day = published.date()-timedelta(days=1)
-        if day < start.date():
-            return None, 'explicit_previous_day_incident'
+    relative_old = bool(re.search(r'вчорашн\w*.{0,35}(?:атак|удар|обстріл)', body, re.I)
+                        and published.date()-timedelta(days=1) < start.date())
     anchors = []
     for match in DATE.finditer(body):
         after = body[match.end():match.end()+100]
         if not ATTACK.search(after):
             continue
+        # A dated publication label is not an incident anchor.
+        if re.search(r'(?:повідомлення від|опубліковано)\s*$', body[:match.start()], re.I):
+            continue
         try:
             day = datetime(published.year, MONTHS.index(match[2].lower())+1, int(match[1])).date()
             if (day-published.date()).days > 180:
                 day = day.replace(year=day.year-1)
+            clock = re.match(r'\s*(?:(?:вранці|увечері|вночі)\s+)?'
+                             r'(?:(о|близько|приблизно)\s+)(\d{1,2})[:.](\d{2})', after, re.I)
+            at = (datetime(day.year,day.month,day.day,int(clock[2]),int(clock[3]),tzinfo=start.tzinfo)
+                  if clock else None)
         except ValueError:
             continue
-        anchors.append((match, day))
-    if anchors and all(day < start.date() for _, day in anchors):
-        return None, 'explicit_old_incident_date'
-    if anchors and anchors[0][1] < start.date():
-        for match, day in anchors:
-            if start.date() <= day <= end.date():
-                return body[match.start():], 'explicit_new_episode_after_history'
-    # Mixed summaries sometimes have an undated old lead followed by an
-    # explicit new attack. Only a repeated-attack marker permits this split.
-    for match, day in anchors:
-        if (start.date() <= day <= end.date() and match.start() > 0
-            and re.match(r'\s*(?:ворог|росіяни).{0,20}знову\s+атак', body[match.end():], re.I)):
-            return body[match.start():], 'explicit_new_episode_after_history'
+        if clock and clock[1].lower() != 'о' and (at <= start or at >= end):
+            return text, 'approximate_boundary_time_requires_review'
+        inside = (start <= at < end) if at else (start.date() <= day <= end.date())
+        anchors.append((match, day, inside, at))
+    if anchors and not any(inside for _,_,inside,_ in anchors):
+        return None, 'explicit_incident_outside_window'
+    current = [(m,d,i,t) for m,d,i,t in anchors if i]
+    if current and (relative_old or not anchors[0][2]):
+        match = current[0][0]
+        # Include the new sentence's own place phrase. Never carry an old
+        # geographic heading into a later episode or discard a new one.
+        offset, cut = 0, match.start()
+        for sentence in sentences(body):
+            pos = body.find(sentence, offset)
+            if pos <= match.start() < pos+len(sentence):
+                if any(pos <= old.start() < match.start() for old,_,inside,_ in anchors if not inside):
+                    return text, 'mixed_incident_times_requires_review'
+                cut = pos
+                break
+            offset = pos+len(sentence)
+        if any(not inside and m.start() >= cut for m,_,inside,_ in anchors):
+            return text, 'mixed_incident_times_requires_review'
+        return body[cut:], 'explicit_new_episode_after_history'
+    if relative_old:
+        return None, 'explicit_previous_day_incident'
+    if anchors and any(not inside for _,_,inside,_ in anchors):
+        return text, 'mixed_incident_times_requires_review'
     return text, None
 
 
@@ -79,6 +100,15 @@ def warehouse_supplement(text, selected, published, linked_update=False):
                and re.search(r'\bДніпр(?:о|і|а)\b', r['source_text'])]
     if len(targets) != 1:
         return None
+    from report_rules import PLACE_PATTERNS, community_stems
+    def places(value):
+        return {name for name,pattern in PLACE_PATTERNS.items() if re.search(pattern,value,re.I)}
+    source_places = places(body)
+    target_places = places(targets[0]['source_text'])
+    if source_places - target_places - {'Дніпропетровська область'}:
+        return {'conflict': True, 'display': None}
+    if set(community_stems(body)) - set(community_stems(targets[0]['source_text'])):
+        return {'conflict': True, 'display': None}
     # Unknown quantities and differences must not disappear behind the summary.
     def roles(value):
         result = set()
@@ -92,7 +122,7 @@ def warehouse_supplement(text, selected, published, linked_update=False):
                                          for role, count in asserted))
     if asserted and not asserted.issubset(allowed) and not superseded:
         return {'conflict': True, 'display': None}
-    if re.search(r'\bо\s+\d{1,2}:\d{2}|окрем\w* атак|повторн\w* удар', body, re.I):
+    if re.search(r'\b(?:о|близько)\s+\d{1,2}[:.]\d{2}|(?:окрем\w*|повторн\w*)\s+(?:атак|удар)', body, re.I):
         return {'conflict': True, 'display': None}
     fire_clauses = re.split(r'(?=\b(?:Виникла|Сталася|Спалахнула|Рятувальники)\b)', body)
     additions = [s for part in fire_clauses for s in sentences(part) if re.search(r'пожеж', s, re.I)

@@ -274,6 +274,10 @@ def compile_registry(posts, statuses, checked_at):
         if section == '2.1' and not bulletin_header(post):
             published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
             filtered, reason = current_attack_piece(text, published, start, end)
+            if reason and reason.endswith('requires_review'):
+                records.append(make_record(post, section, text, state='review', reason=reason))
+                diagnostics.append({'reason':'source_conflict', 'sources':[post.get('key')]})
+                continue
             if reason:
                 records.append(make_record(post, section, text, state='excluded' if filtered is None else 'review', reason=reason))
             if filtered is None:
