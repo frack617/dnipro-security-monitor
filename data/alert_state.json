@@ -27,6 +27,7 @@
     "adm_dp/45068",
     "adm_dp/45070",
     "adm_dp/45075",
+    "adm_dp/45076",
     "borys_filatovv/3717",
     "borys_filatovv/3724",
     "borys_filatovv/3733",
@@ -50,12 +51,13 @@
     "dnipropetrovskaODA/32725",
     "dnipropetrovskaODA/32726",
     "dnipropetrovskaODA/32729",
+    "dnipropetrovskaODA/32730",
     "dsns_telegram/78247",
     "gunpvdp/37221",
     "gunpvdp/37246"
   ],
   "last_daily_report": "2026-10-21",
-  "last_alert_scan_at": "2026-10-21T11:21:48.870110+00:00",
+  "last_alert_scan_at": "2026-10-21T11:51:44.917554+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-21",
