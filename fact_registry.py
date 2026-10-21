@@ -185,12 +185,13 @@ def transport_display(posts, end):
                  r'(?:\s*(?:та|і|й|,)\s*№?\s*\d+[А-Яа-яA-Za-z]*)*',
                  lambda m: re.sub(r'\s*№.*', '', m[0]), raw, flags=re.I)
     raw = re.sub(r'Кінцева зупинка автобусів перенесена', 'Кінцеву зупинку частини автобусного сполучення перенесено', raw, flags=re.I)
+    raw = re.sub(r'Кінцев(?:а|у) зупинк[^.!?]*(?:пл\.|площу)\s*Успенськ\w*\.', '', raw, flags=re.I)
     raw = re.sub(r'Усі інші маршрути[^.!?]*[.!?]?', '', raw, flags=re.I)
     raw = re.sub(r'Схеми перекриття[^.!?]*[.!?]?', '', raw, flags=re.I)
     raw = re.sub(r'\.\s*Деталі\s*[—–-]?\s*\.', '.', raw)
     raw = re.sub(r'\s+', ' ', raw).strip()
     if re.search(r'обмеж|перекрит|призупин|ремонт', raw, re.I):
-        raw += ' Для виїздів варто передбачити додатковий час у дорозі.'
+        pass
     return raw, excluded
 
 
@@ -215,7 +216,7 @@ def supplementary_covered(text, selected):
         return False
     # If a unique material consequence is named, it must remain available in
     # the public synopsis rather than being overwritten by a general bulletin.
-    consequence_objects = re.findall(r'підприємств\w*|будин\w*|магазин\w*|лікарн\w*|школ\w*|мост\w*|церкв\w*|азс\b', body, re.I)
+    consequence_objects = re.findall(r'підприємств\w*|склад\w*|пожеж\w*|будин\w*|магазин\w*|лікарн\w*|школ\w*|мост\w*|церкв\w*|азс\b', body, re.I)
     corpus = ' '.join(r['source_text'] for r in relevant).casefold()
     return all(obj.casefold() in corpus for obj in consequence_objects)
 
@@ -249,11 +250,36 @@ def compile_registry(posts, statuses, checked_at):
     candidates = prepare_evidence(c.report_window_posts(posts, checked_at))
     bulletins, ordinary = [], []
     # Retain a source audit entry for every candidate, including all exclusions.
-    for post in regional_segments(candidates, records):
+    from operational_facts import background_reason, current_attack_piece, warehouse_supplement
+    expanded = []
+    for post in candidates:
+        # Explicit geographic blocks of non-OVA summaries remain independent.
+        pieces = re.split(r'[▪●]\ufe0f?', post['text'])
+        if len(pieces) > 1 and post.get('channel','').lower() not in (BULLETIN_CHANNELS | {'sbukr', 'dsns_telegram'}):
+            for i, piece in enumerate(pieces[1:]):
+                if piece.strip():
+                    expanded.append(dict(post, text=piece.strip(), source_block=i+1))
+        else:
+            expanded.append(post)
+    for post in regional_segments(expanded, records):
+        reason = background_reason(post['text'])
+        if reason:
+            records.append(make_record(post, '1.4', post['text'], state='excluded', reason=reason))
+            continue
         section = c.classify_post(post)
         if not section:
             continue
         text = post['text']
+        if section == '2.1' and not bulletin_header(post):
+            published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
+            filtered, reason = current_attack_piece(text, published, start, end)
+            if reason:
+                records.append(make_record(post, section, text, state='excluded' if filtered is None else 'review', reason=reason))
+            if filtered is None:
+                continue
+            if filtered != text:
+                post = dict(post, text=filtered)
+                text = filtered
         if NONLOCAL.search(text) and not REGIONAL.search(text):
             records.append(make_record(post, section, text, state='excluded', reason='outside_region'))
             continue
@@ -292,6 +318,16 @@ def compile_registry(posts, statuses, checked_at):
                 rec['state'], rec['reason'] = 'review', 'incident_time_or_mixed_episode_uncertain'
                 rec['possible_prior_sources'] = [p['key'] for p in cutoff_context]
                 diagnostics.append({'reason': rec['reason'], 'sources': [rec['source_key']]})
+            elif (warehouse := warehouse_supplement(text, selected, published,
+                    linked_update=any(p.get('reply_to') == post.get('key') for p in candidates))) is not None:
+                if warehouse['conflict']:
+                    rec['state'], rec['reason'] = 'review', 'warehouse_numeric_or_episode_conflict'
+                    diagnostics.append({'reason':'source_conflict', 'sources':[rec['source_key']]})
+                elif warehouse['display']:
+                    rec['display'] = warehouse['display']
+                    selected.append(rec)
+                else:
+                    rec['state'], rec['reason'] = 'supplement', 'warehouse_facts_in_dated_bulletin'
             elif selected and supplementary_covered(text, selected):
                 # Periodic bulletins form the synopsis. The supplementary post
                 # remains auditable and is not silently declared the same event.
@@ -339,7 +375,7 @@ def compile_registry(posts, statuses, checked_at):
     sections['1.2'] = [] if transport_text == EMPTY else [transport_text]
     utility = ' '.join(sections['1.4'])
     if re.search(r'знеструмлен|відключен|електроенергі', utility, re.I):
-        sections['1.4'].append('Доцільно мати заряджені телефони й павербанки.')
+        pass  # General preparedness advice is outside this evidence synopsis.
     if re.search(r'туман|видиміст', utility, re.I) and not sections['1.2']:
         sections['1.4'].append('Під час виїздів врахувати можливе збільшення часу в дорозі через погіршення видимості.')
     missing = [name for name, value in statuses.items() if not value.get('ok')]

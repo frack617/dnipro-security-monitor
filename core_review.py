@@ -5,6 +5,7 @@ source core. A returned factual concern stops automatic delivery for review.
 """
 import json
 import os
+import re
 from pathlib import Path
 
 from gemini_transport import RequestBudget, request_text
@@ -14,7 +15,20 @@ CODES = {'time', 'geography', 'number_scope', 'unsupported', 'missing_consequenc
 
 
 def validate_review(text, registry):
-    result = json.loads(text)
+    if not isinstance(text, str):
+        raise ValueError('review schema: response must be text')
+    text = text.strip()
+    fenced = re.fullmatch(r'```(?:json)?\s*\n?(.*?)\n?```', text, re.S | re.I)
+    if fenced:
+        text = fenced[1].strip()
+    def strict_object(pairs):
+        obj = {}
+        for key, value in pairs:
+            if key in obj:
+                raise ValueError('review schema: duplicate key')
+            obj[key] = value
+        return obj
+    result = json.loads(text, object_pairs_hook=strict_object)
     if not isinstance(result, dict) or set(result) != {'issues'} or not isinstance(result['issues'], list):
         raise ValueError('review schema: issues array required')
     keys = {r['source_key'] for r in registry['records']}
@@ -28,6 +42,8 @@ def validate_review(text, registry):
 
 
 def review_core(registry, rendered):
+    if len(rendered.split()) > 500:
+        return {'state':'blocked_length', 'requests':0, 'provider':None, 'issues':[]}
     from ai_report import DEFAULT_MODEL, BACKUP_DEFAULT_MODEL
     provider = os.getenv('REPORT_PROVIDER', 'auto').strip().lower() or 'auto'
     if provider not in {'auto', 'gemini', 'gemini_backup', 'groq'}:
@@ -89,10 +105,16 @@ def review_core(registry, rendered):
                 if ledger:
                     ledger.finish(request_id, 'failed')
                 raise
-        issues = validate_review(response, registry)
-        outcome.update(state='concerns' if issues else 'completed', issues=issues)
+        try:
+            issues = validate_review(response, registry)
+        except (ValueError, TypeError, KeyError) as error:
+            outcome.update(state='invalid_response', error_type=type(error).__name__)
+        else:
+            outcome.update(state='concerns' if issues else 'completed', issues=issues)
     except Exception as error:
         if 'budget' in locals():
             outcome['requests'] = budget.used
+        if isinstance(error, (ValueError, TypeError, KeyError)):
+            outcome['state'] = 'invalid_response'
         outcome['error_type'] = type(error).__name__
     return outcome

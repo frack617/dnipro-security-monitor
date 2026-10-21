@@ -65,7 +65,7 @@ class FrozenDayTests(unittest.TestCase):
     def test_planned_power_not_reported_as_completed(self):
         self.assertIn('Анонсовано відключення 20 ЖОВТНЯ з 08:00 до 18:00', self.text)
         self.assertIn('ВІЛЬНОГІРСЬК', self.text)
-        self.assertIn('павербанки', self.text)
+        self.assertNotIn('павербанки', self.text)
         self.assertNotIn('планували відновити', self.text)
 
     def test_old_false_accepted_counterexample_now_rejected(self):

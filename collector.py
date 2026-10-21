@@ -808,7 +808,9 @@ def process_morning_report(posts, statuses, checked_at):
     report = render_registry(registry)
     review = review_core(registry, report)
     # A review can flag concerns, never supply replacement prose or facts.
-    blocked = registry["review_required"] or bool(review["issues"])
+    blocked = (registry["review_required"] or bool(review["issues"])
+               or review["state"] in {"invalid_response", "blocked_length"}
+               or len(report.split()) > 500)
     validate_core_text(report, registry)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
