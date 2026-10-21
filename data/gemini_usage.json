@@ -452,6 +452,15 @@
       "run_id": "39382230135",
       "stage": "author",
       "outcome": "http_200"
+    },
+    {
+      "id": "39547232871:2026-10-21T05:01:47.910613+00:00:50",
+      "at": "2026-10-21T05:01:47.910613+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "production_dispatch",
+      "run_id": "39547232871",
+      "stage": "core_review",
+      "outcome": "http_200"
     }
   ],
   "blocked_until": {}
