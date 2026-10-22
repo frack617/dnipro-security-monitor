@@ -64,8 +64,8 @@ class FrozenMorningTests(unittest.TestCase):
 
     def test_fire_details_appear_only_inside_the_bulletin_warehouse_block(self):
         section=self.text.split('2.1. ')[1].split('2.2. ')[0]
-        self.assertTrue(section.splitlines()[1].startswith('Обласне зведення'))
-        block=section.split('У Дніпрі понівечені склади')[1].split('На Синельниківщині')[0]
+        self.assertTrue(section.splitlines()[1].startswith('Обласні дані ОВА:'))
+        block=section.split('У Дніпрі понівечені склади')[1].split('\n\n')[0]
         self.assertEqual(block.count('пожеж'),1)
         self.assertIn('масштабна пожежа, яку ліквідували вогнеборці',block)
         self.assertIn('Рятувальники виявили тіла.',block)

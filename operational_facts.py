@@ -24,6 +24,53 @@ PREPAREDNESS = re.compile(
 DATE = re.compile(r'\b(\d{1,2})\s+('+'|'.join(MONTHS)+r')\b', re.I)
 
 
+def temporary_power_schedule(post):
+    """Recognize a provider's complete address/schedule notice, not an attack.
+
+    Only enumerated house lists may be reduced to 'some houses' on the exact
+    source street names. Unfamiliar payloads remain untouched for the normal
+    evidence path; no outage is extended to the whole street or municipality.
+    """
+    if post.get('channel', '').casefold() != 'cek_info':
+        return None
+    body = clean_lines(post.get('text', ''))
+    # Only these non-factual courtesy/maintenance tails may be omitted. Any
+    # new consequence or restoration statement prevents this compact form.
+    tails = [
+        'Перепрошуємо за тимчасові незручності та просимо поставитися до ситуації з розумінням!',
+        'Обладнання нашої компанії працює в штатному режимі та готове до розподілу електричної енергії.',
+        'Фахівці підприємства працюють над усуненням технологічного порушення 24/7.',
+    ]
+    for tail in tails:
+        if body.endswith(tail):
+            body = body[:-len(tail)].rstrip()
+    match = re.fullmatch(
+        r'Шановні споживачі м\.\s*([^.!?:]+?)\s+Повідомляємо, що '
+        r'через технологічне порушення.{0,260}будинки споживачів за адресами:\s*'
+        r'(.+?)\s*відключатимуться за тимчасовим графіком:\s*'
+        r'(\d+ години? зі світлом,\s*\d+ години? без світла)[.!]?', body, re.I)
+    if not match:
+        return None
+    # A separate material incident must never disappear behind service prose.
+    if CURRENT_IMPACT.search(body) or re.search(r'поран|загиб|загин|пошкоджен|зруйн|пожеж', body, re.I):
+        return None
+    house = r'\d+[А-ЯІЇЄҐA-Zа-яіїєґa-z]?(?:\s*[-–]\s*\d+[А-ЯІЇЄҐA-Zа-яіїєґa-z]?)?(?:\s*\((?:непарні|парні)\))?'
+    house_list = re.compile(house+r'(?:\s*,\s*'+house+r')*\s*[,.;]?', re.I)
+    names = []
+    for entry in match[2].strip().split(';'):
+        address = re.fullmatch(r'\s*((?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:;]+):\s*(.+?)\s*', entry)
+        if not address or not house_list.fullmatch(address[2]):
+            return None
+        if address[1] not in names:
+            names.append(address[1])
+    if not names:
+        return None
+    cause = ('через спричинене ворожими атаками технологічне порушення ' if
+             re.search(r'спричинен\w*[^,]*ворожими атаками', body, re.I) else '')
+    return (match[1].strip().capitalize()+': '+cause+'для окремих будинків ('+', '.join(names)+
+            ') оголошено тимчасовий графік електропостачання: '+match[3]+'.')
+
+
 def background_reason(text):
     body = clean_lines(text)
     if (PREPAREDNESS.search(body[:650]) or

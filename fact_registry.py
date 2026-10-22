@@ -145,6 +145,10 @@ def merge_mirrors(records, diagnostics):
 
 def service_display(post, end):
     raw = post.get('text', '')
+    from operational_facts import temporary_power_schedule
+    schedule = temporary_power_schedule(post)
+    if schedule:
+        return schedule
     # A restoration estimate without its own named affected area adds no useful
     # location-specific information. Do not infer that it updates another post.
     if (re.search(r'плануємо відновити електропостачання', raw, re.I)
@@ -187,7 +191,7 @@ def transport_display(posts, end):
             excluded.append(post)
         else:
             current.append(post)
-    raw = brief_transport(current) if current else EMPTY
+    raw = brief_transport(current, as_of=end.date()) if current else EMPTY
     if raw == EMPTY:
         return raw, excluded
     # Approved public simplifications are applied after exact route recovery.
@@ -264,7 +268,8 @@ def compile_registry(posts, statuses, checked_at):
     bulletins, ordinary = [], []
     # Retain a source audit entry for every candidate, including all exclusions.
     from operational_facts import (background_reason, current_attack_piece,
-                                   warehouse_supplement, consolidate_warehouse_details)
+                                   warehouse_supplement, consolidate_warehouse_details,
+                                   temporary_power_schedule)
     expanded = []
     for post in candidates:
         # Explicit geographic blocks of non-OVA summaries remain independent.
@@ -281,6 +286,8 @@ def compile_registry(posts, statuses, checked_at):
             records.append(make_record(post, '1.4', post['text'], state='excluded', reason=reason))
             continue
         section = c.classify_post(post)
+        if section == '2.1' and temporary_power_schedule(post):
+            section = '1.4'
         if not section:
             continue
         text = post['text']
@@ -314,6 +321,8 @@ def compile_registry(posts, statuses, checked_at):
                 raw = clean_lines(block)
                 rec = make_record(post, section, raw, scope=public_place(raw), period=period)
                 rec['display'] = shorter_attack(raw)
+                if re.fullmatch(r'Всюди минулося без постраждалих[.!]?', raw, re.I):
+                    rec['display'] = f'За цим зведенням (станом на {at:%H:%M %d.%m.%Y}), постраждалих немає.'
                 rec['incident_time_status'] = 'regional_bulletin_period'
                 bulletins.append(rec)
         else:
@@ -415,7 +424,7 @@ def render_registry(registry):
     lines = ['Станом на '+end.strftime('%d.%m.%Y %H.%M')]
     sections = registry['sections']
     general = list(sections['1.1']) + list(sections['1.2']) + list(sections['1.4'])
-    public = {'1.1': general, '1.2': sections['1.3'], '2.1': sections['2.1'],
+    public = {'1.1': general, '1.2': sections['1.3'], '2.1': public_attack_paragraphs(registry),
               '2.2': sections['2.2']+sections['2.3'], '2.3': sections['2.4']}
     for group, heading in ((1, 'ЗАГАЛЬНА СИТУАЦІЯ В ОБЛАСТІ (РАЙОНІ)'), (2, 'ПОДІЇ У СФЕРІ БЕЗПЕКИ')):
         lines += ['', f'{group}. {heading}']
@@ -423,7 +432,7 @@ def render_registry(registry):
             if key.startswith(str(group)+'.'):
                 lines += ['', (key+'. '+title).rstrip(), '\n\n'.join(public[key]) or EMPTY]
     start = datetime.fromisoformat(registry['window']['start'])
-    lines += ['', f'Огляд за період {start:%d.%m.%Y %H:%M} — {end:%d.%m.%Y %H:%M}. Для негайних дій слід стежити за офіційними сповіщеннями про тривогу.']
+    lines += ['', f'Огляд за період {start:%d.%m.%Y %H:%M} — {end:%d.%m.%Y %H:%M}.']
     if registry['failed_sources']:
         lines.append('Обмеження перевірки: не отримано актуальні дані з '+', '.join('@'+n for n in registry['failed_sources'])+'.')
     elif registry['coverage_unproven']:
@@ -431,6 +440,41 @@ def render_registry(registry):
     if registry['review_required']:
         lines.append('Є розбіжності між джерелами; довідка потребує перевірки перед надсиланням.')
     return '\n'.join(lines).strip()
+
+
+def public_attack_paragraphs(registry):
+    """One geographic brief; grouping is never incident merging or addition."""
+    from report_rules import PLACE_PATTERNS
+    patterns = dict(PLACE_PATTERNS, **{
+        'Кам’янський район': r'кам[’\x27]янськ\w*\s+район\w*',
+    })
+    headers, groups, unscoped = [], {}, []
+    records = [r for r in registry.get('records', [])
+               if r['section'] == '2.1' and r.get('display') and r['state'] != 'mirror']
+    records.sort(key=lambda r: datetime.fromisoformat(r['reporting_period'] or r['published_at']).astimezone(KYIV))
+    for r in records:
+        at = datetime.fromisoformat(r['reporting_period']) if r['reporting_period'] else None
+        if at and r['scope'] == 'Дніпропетровська область':
+            headers.append(f'{at:%d.%m %H:%M} — '+r['source_text'].rstrip('.')+'.')
+            continue
+        if re.fullmatch(r'Всюди минулося без постраждалих[.!]?', r['source_text'], re.I):
+            headers.append(r['display'])
+            continue
+        matches = [name for name, pattern in patterns.items() if re.search(pattern, r['source_text'], re.I)]
+        if (not at and r.get('scope') is None) or re.search(r'\bрайонах\b', r['source_text'], re.I):
+            matches = []
+        if matches == ['Дніпро'] and re.search(r'передміст', r['source_text'], re.I):
+            matches = ['Передмістя Дніпра']
+        text = (f'За зведенням на {at:%H:%M %d.%m}: ' if at else '')+r['display']
+        if len(matches) == 1:
+            groups.setdefault(matches[0], []).append(text)
+        else:
+            unscoped.append(text)
+    paragraphs = ['Обласні дані ОВА: '+' '.join(headers)] if headers else []
+    if unscoped:
+        paragraphs.append('Наслідки в області:\n'+' '.join(unscoped))
+    paragraphs += [name+':\n'+' '.join(values) for name, values in groups.items()]
+    return paragraphs or registry['sections']['2.1']
 
 
 def validate_core_text(text, registry):

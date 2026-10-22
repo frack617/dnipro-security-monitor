@@ -804,11 +804,31 @@ def process_morning_report(posts, statuses, checked_at):
 
     from fact_registry import compile_registry, render_registry, validate_core_text
     from core_review import review_core
+    from report_contract import publication_issues, review_input_digest, reusable_review
     registry = compile_registry(posts, statuses, checked_at)
     report = render_registry(registry)
-    review = review_core(registry, report)
+    production = os.getenv('PRODUCTION_MONITOR', '').lower() in {'1','true','yes'}
+    contract_issues = publication_issues(registry, report, statuses,
+                                       load_channels() if production else ())
+    registry['publication_issues'] = contract_issues
+    input_digest = review_input_digest(registry, report)
+    generation_file = DATA_DIR / 'report_generation_status.json'
+    try:
+        previous = json.loads(generation_file.read_text(encoding='utf-8'))
+        if not isinstance(previous, dict):
+            previous = {}
+    except (OSError, ValueError):
+        previous = {}
+    if contract_issues:
+        review = {'state':'local_contract', 'requests':0, 'provider':None, 'issues':[]}
+    elif registry['review_required']:
+        review = {'state':'local_conflict', 'requests':0, 'provider':None, 'issues':[]}
+    else:
+        review = reusable_review(previous, input_digest, report_date)
+        if review is None:
+            review = review_core(registry, report)
     # A review can flag concerns, never supply replacement prose or facts.
-    blocked = (registry["review_required"] or bool(review["issues"])
+    blocked = (bool(contract_issues) or registry["review_required"] or bool(review["issues"])
                or review["state"] in {"invalid_response", "blocked_length"}
                or len(report.split()) > 500)
     validate_core_text(report, registry)
@@ -826,7 +846,10 @@ def process_morning_report(posts, statuses, checked_at):
         "prepared_posts": len({r["source_key"] for r in registry["records"]}),
         "report_words": len(report.split()), "sending_enabled": send_enabled,
         "review": review, "review_required": blocked,
-        "coverage_complete": not registry["coverage_unproven"],
+        "review_input_sha256": input_digest,
+        "publication_issues": contract_issues,
+        "coverage_complete": (not registry["coverage_unproven"] and not any(
+            code.startswith('source_coverage:') for code in contract_issues)),
         "delivery_state": "blocked_review" if blocked else "prepared",
     }
     generation_file = DATA_DIR / "report_generation_status.json"
@@ -837,6 +860,19 @@ def process_morning_report(posts, statuses, checked_at):
         return
     if blocked:
         print("Morning report not sent: source or reviewer concerns require review")
+        if production and state.get('daily_report_block_notice') != report_date:
+            reason = ('не підтверджено повне читання джерел' if any(
+                code.startswith('source_coverage:') for code in contract_issues) else
+                'текст перевищує ліміт обсягу' if 'length' in contract_issues else
+                'виявлено зауваження до тексту або результату перевірки')
+            try:
+                notified = send_bot_message('Ранкову довідку за '+report_date+
+                    ' затримано. Причина: '+reason+'. Текст не надіслано; його збережено для перевірки.')
+                if notified:
+                    state['daily_report_block_notice'] = report_date
+                    save_alert_state(state)
+            except Exception as error:
+                print('Report delay notification failed: '+type(error).__name__)
         raise RuntimeError("Protected morning report requires manual review; preview saved")
     try:
         deliver_morning_report(report, state, report_date)

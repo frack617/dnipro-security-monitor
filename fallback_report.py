@@ -230,7 +230,7 @@ def source_weather_normalization(report, posts, end_date_label):
     return result
 
 
-def brief_transport(posts):
+def brief_transport(posts, as_of=None):
     """Keep restoration and current notices, removing explicitly ended routes.
 
     A direct reply can supersede only the routes it actually restores. Other
@@ -258,7 +258,9 @@ def brief_transport(posts):
             label = str(day.day) + ' ' + MONTHS[day.month-1]
             text = re.sub(r'\bСьогодні,?\s*' + re.escape(label) + r',?', label, text, flags=re.I)
             text = re.sub(r'\bсьогодні\b', label, text, flags=re.I)
-            text = text.replace('закінчать свою роботу раніше', 'за анонсом мали закінчити роботу раніше')
+            announced = ('за анонсом закінчать роботу раніше' if as_of is not None and day >= as_of
+                         else 'за анонсом мали закінчити роботу раніше')
+            text = text.replace('закінчать свою роботу раніше', announced)
             if latest_day and day < latest_day and 'мали закінчити роботу раніше' in text:
                 text = ' '.join(s for s in sentences(text)
                                 if not re.search(r'Останні відправлення|відбудуться:', s, re.I))
@@ -354,7 +356,7 @@ def brief_service(post, end_date):
         return clean_event(post)
     if len(location_matches) > 1:
         period = re.search(r'\b(\d{1,2}\s+(?:'+ '|'.join(MONTHS) + r'))\s+з\s+(\d{1,2}:\d{2})\s+до\s+(\d{1,2}:\d{2})', text, re.I)
-        prefix = ('Анонсовано відключення ' + period[1] + ' з ' + period[2] + ' до ' + period[3] + ': ') if period else ''
+        prefix = ('Анонсовано відключення електропостачання ' + period[1] + ': ') if period else ''
         parts = []
         for index, match in enumerate(location_matches):
             stop = location_matches[index+1].start() if index+1 < len(location_matches) else len(text)
@@ -362,7 +364,14 @@ def brief_service(post, end_date):
             names = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
             if not names:
                 return clean_event(post)
-            parts.append(match[1] + ': ' + ', '.join(unique_texts(names)))
+            # District headings can introduce a separate interval for the
+            # following villages. Never spread the first city's clock to all.
+            own_line = text[match.end():].split('\n', 1)[0]
+            interval = re.search(r'\bз\s+(\d{1,2}:\d{2})\s+до\s+(\d{1,2}:\d{2})', own_line, re.I)
+            prior = list(re.finditer(r'\bз\s+(\d{1,2}:\d{2})\s+до\s+(\d{1,2}:\d{2})', text[:match.start()], re.I))
+            interval = interval or (prior[-1] if prior else None)
+            clock = (' (з '+interval[1]+' до '+interval[2]+')') if interval else ''
+            parts.append(match[1] + clock + ': окремі будинки на ' + ', '.join(unique_texts(names)))
         return prefix + '; '.join(parts) + '.'
     queues = re.findall(r'підчерги\s+(\d+\.\d+)', text)
     if queues:

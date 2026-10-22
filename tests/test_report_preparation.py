@@ -56,8 +56,8 @@ class ReportPreparationTests(unittest.TestCase):
     def test_power_places_are_not_combined_with_each_others_streets(self):
         post = next(p for p in FIXTURE['posts'] if str(p['post_id'])=='4259')
         body = brief_service(post, date(2026,10,20))
-        self.assertIn('ОБУХІВКА: вул. Рибальська', body)
-        self.assertIn('НОВОПІЛЛЯ: вул. Шкільна', body)
+        self.assertIn('ОБУХІВКА (з 08:00 до 18:00): окремі будинки на вул. Рибальська', body)
+        self.assertIn('НОВОПІЛЛЯ (з 08:00 до 18:00): окремі будинки на вул. Шкільна', body)
         self.assertIn('08:00 до 18:00', body)
 
     def test_real_false_city_casualty_link_is_not_forced(self):

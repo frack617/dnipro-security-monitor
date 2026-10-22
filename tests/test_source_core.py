@@ -34,7 +34,8 @@ class FrozenDayTests(unittest.TestCase):
         self.assertGreater(len(self.text.split()), 250)
 
     def test_original_community_survives_shortened_mirror_once_per_period(self):
-        part = self.text.split('Обласне зведення на 07:30 20.10.2026:')[1]
+        part = ' '.join(r['display'] for r in self.core['records'] if r.get('display')
+                        and r['state'] == 'included' and (r['reporting_period'] or '').startswith('2026-10-20'))
         self.assertIn('Червоногригорівська', part)
         self.assertEqual(part.count('На Нікопольщині'), 1)
         shared = [r for r in self.core['records'] if r['state'] == 'included' and
@@ -54,16 +55,19 @@ class FrozenDayTests(unittest.TestCase):
             self.assertTrue(record['possible_prior_sources'])
 
     def test_new_morning_under_its_bulletin_and_region_count_not_city(self):
-        day, night = self.text.split('Обласне зведення на 07:30 20.10.2026:')
-        self.assertIn('Десятеро дістали поранень', day)
-        kr = day.split('У Кривому Розі')[1].split('На Нікопольщині')[0]
+        header = self.text.split('Обласні дані ОВА:')[1].split('\n\n')[0]
+        self.assertIn('Десятеро дістали поранень', header)
+        kr = next(r['display'] for r in self.core['records'] if r.get('display')
+                  and r['state'] == 'included' and r['source_text'].startswith('У Кривому Розі'))
+        self.assertIn(kr, self.text)
         self.assertNotIn('Десятеро', kr)
         self.assertIn('Є поранені, зокрема дитина.', kr)
-        self.assertIn('пошкоджені приватні будинки', night)
-        self.assertIn('Повідомлення від 06:06 20.10: На світанку', day)
+        self.assertIn('За зведенням на 07:30 20.10: У Дніпрі пошкоджені приватні будинки', self.text)
+        self.assertIn('Повідомлення від 06:06 20.10: На світанку', self.text)
 
     def test_planned_power_not_reported_as_completed(self):
-        self.assertIn('Анонсовано відключення 20 ЖОВТНЯ з 08:00 до 18:00', self.text)
+        self.assertIn('Анонсовано відключення електропостачання 20 ЖОВТНЯ', self.text)
+        self.assertIn('з 08:00 до 18:00', self.text)
         self.assertIn('ВІЛЬНОГІРСЬК', self.text)
         self.assertNotIn('павербанки', self.text)
         self.assertNotIn('планували відновити', self.text)
@@ -76,7 +80,7 @@ class FrozenDayTests(unittest.TestCase):
         mutations = [self.text.replace('Червоногригорівська і ', ''),
             self.text.replace('Є поранені, зокрема дитина.', 'Десятеро поранених.'),
             self.text.replace('Анонсовано відключення', 'Проведено відключення'),
-            self.text.replace('07:30 20.10.2026', '07:30 19.10.2026'),
+            self.text.replace('07:30 20.10', '07:30 19.10'),
             self.text+'\nГарантовано безпечно.']
         for text in mutations:
             with self.subTest(text=text[-100:]), self.assertRaises(ValueError):

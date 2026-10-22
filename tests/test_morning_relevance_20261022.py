@@ -40,11 +40,11 @@ class MorningRelevanceTests(unittest.TestCase):
     def test_every_selected_bulletin_fact_and_original_period_survives(self):
         for r in self.registry['records']:
             if r['reporting_period'] and r['state'] == 'included':
-                self.assertIn(r['display'], self.text)
+                self.assertIn(r['source_text'] if r['scope'] == 'Дніпропетровська область' else r['display'], self.text)
         self.assertEqual(self.text.count('Понад 50'), 1)
         self.assertEqual(self.text.count('Понад 20'), 1)
-        self.assertIn('18:30 21.10.2026', self.text)
-        self.assertIn('07:30 22.10.2026', self.text)
+        self.assertIn('21.10 18:30', self.text)
+        self.assertIn('22.10 07:30', self.text)
         self.assertIn('Мирівській', self.text)
         self.assertIn('П’ятихатській', self.text)
         self.assertIn('Зеленодольській', self.text)
@@ -53,7 +53,7 @@ class MorningRelevanceTests(unittest.TestCase):
     def test_outage_geography_count_and_temporary_schedule_survive(self):
         for phrase in ('понад 30 тисяч', 'Павлоградському', 'Синельниківському',
                        'місті Самар', '4 години зі світлом, 4 години без світла',
-                       '22 ЖОВТНЯ з 08:00 до 18:00', 'ВІЛЬНОГІРСЬК', 'САДКИ', 'ШИРОКЕ'):
+                       'ВІЛЬНОГІРСЬК (з 08:00 до 18:00)', 'САДКИ (з 07:30 до 18:00)', 'ШИРОКЕ (з 07:30 до 18:00)'):
             self.assertIn(phrase, self.text)
 
     def test_travel_impact_kept_without_timetables(self):
