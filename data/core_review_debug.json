@@ -1,5 +1,5 @@
 {
-  "run_id": "39547232871",
+  "run_id": "39727618441",
   "attempts": [
     {
       "attempt": 1,
@@ -9,11 +9,11 @@
       "block_reason": null,
       "part_count": 1,
       "text_part_count": 1,
-      "text": "```json\n{\"issues\": [\n  {\n    \"source_key\": \"SBUkr/18882\",\n    \"code\": \"excluded\"\n  },\n  {\n    \"source_key\": \"dnipropetrovskaODA/32701\",\n    \"code\": \"review\"\n  },\n  {\n    \"source_key\": \"dnipropetrovskaODA/32713\",\n    \"code\": \"supplement\"\n  },\n  {\n    \"source_key\": \"dnipropetrovskaODA/32714\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"borys_filatovv/3724\",\n    \"code\": \"review\"\n  },\n  {\n    \"source_key\": \"dnipropetrovskaODA/32715\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"adm_dp/45036\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"DniproCityOfficial/15034\",\n    \"code\": \"review\"\n  },\n  {\n    \"source_key\": \"gunpvdp/37246\",\n    \"code\": \"review\"\n  },\n  {\n    \"source_key\": \"dnipropetrovskaODA/32717\",\n    \"code\": \"supplement\"\n  },\n  {\n    \"source_key\": \"dsns_telegram/78247\",\n    \"code\": \"supplement\"\n  },\n  {\n    \"source_key\": \"dnipropetrovskaODA/32718\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"DniproCityOfficial/15056\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"cek_info/4261\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"adm_dp/45066\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"adm_dp/45067\",\n    \"code\": \"unsupported\"\n  },\n  {\n    \"source_key\": \"DniproCityOfficial/15077\",\n    \"code\": \"service_input\"\n  }\n]}\n```",
+      "text": "```json\n{\"issues\": []}\n```",
       "usage": {
-        "promptTokenCount": 15030,
-        "candidatesTokenCount": 588,
-        "totalTokenCount": 15618
+        "promptTokenCount": 11926,
+        "candidatesTokenCount": 10,
+        "totalTokenCount": 11936
       }
     }
   ]

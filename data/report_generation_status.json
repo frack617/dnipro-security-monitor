@@ -1,20 +1,20 @@
 {
-  "checked_at": "2026-10-22T05:16:44.741553+00:00",
+  "checked_at": "2026-10-22T05:22:17.925594+00:00",
   "report_date": "2026-10-22",
-  "run_id": "39727084858",
-  "report_sha256": "40ee39837dcaa684eb60cc671350b99718893e31fa411cbfe8ca2e529df68dab",
+  "run_id": "39727618441",
+  "report_sha256": "197ee2e361178c7b01ddad33cbb4293ab9dccc9cb8c497e00bd4ad9d61bd351f",
   "report_kind": "source_core",
   "author_failure_type": null,
   "prepared_posts": 15,
-  "report_words": 1200,
+  "report_words": 399,
   "sending_enabled": true,
   "review": {
-    "state": "blocked_length",
-    "requests": 0,
-    "provider": null,
+    "state": "completed",
+    "requests": 1,
+    "provider": "gemini",
     "issues": []
   },
-  "review_required": true,
+  "review_required": false,
   "coverage_complete": true,
-  "delivery_state": "blocked_review"
+  "delivery_state": "confirmed"
 }
