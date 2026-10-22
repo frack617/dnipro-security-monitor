@@ -241,6 +241,11 @@ def supplementary_covered(text, selected):
 def regional_segments(posts, audit):
     """Do not copy a nationwide multi-region bulletin as one local event."""
     for post in posts:
+        from operational_facts import regional_security_operation
+        operation = regional_security_operation(post)
+        if operation:
+            yield dict(post, security_operation_text=operation)
+            continue
         if post.get('channel', '').lower() not in {'sbukr', 'dsns_telegram'}:
             yield post
             continue
@@ -286,6 +291,8 @@ def compile_registry(posts, statuses, checked_at):
             records.append(make_record(post, '1.4', post['text'], state='excluded', reason=reason))
             continue
         section = c.classify_post(post)
+        if post.get('security_operation_text'):
+            section = '2.2'
         if section == '2.1' and temporary_power_schedule(post):
             section = '1.4'
         if not section:
@@ -388,7 +395,12 @@ def compile_registry(posts, statuses, checked_at):
             from fallback_report import clean_event
             attribution = ('За даними СБУ, ' if post.get('channel','').casefold() == 'sbukr' else
                            'За даними поліції, ' if post.get('channel','').casefold() == 'gunpvdp' else '')
-            rec['display'] = 'Повідомлення від '+datetime.fromisoformat(post['published_at']).astimezone(KYIV).strftime('%d.%m %H:%M')+': '+attribution+clean_event(post)
+            event_text = post.get('security_operation_text') or clean_event(post)
+            if post.get('security_operation_text'):
+                event_text = event_text[:1].lower()+event_text[1:]
+            rec['display'] = 'Повідомлення від '+datetime.fromisoformat(post['published_at']).astimezone(KYIV).strftime('%d.%m %H:%M')+': '+attribution+event_text
+            if post.get('security_operation_text'):
+                rec['reason'] = 'regional_reconnaissance_link_separate_from_detention_place'
             selected.append(rec)
         records.append(rec)
     selected = consolidate_warehouse_details(selected)

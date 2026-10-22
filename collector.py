@@ -538,7 +538,9 @@ def is_historical_context(post, report_start_local):
         text,
     ):
         return True
-    if re.search(r"\b(?:напередодні|вчора|учора|минулої доби|за минулу добу)\b", text):
+    # "Напередодні того, як він мав передати звіт" means before a planned
+    # action, not the calendar day before publication.
+    if re.search(r"\b(?:напередодні(?!\s+того\s*,?\s*як)|вчора|учора|минулої доби|за минулу добу)\b", text):
         published = parse_datetime(post.get("published_at"))
         if published and published.astimezone(KYIV).date() - timedelta(days=1) < report_start_local.date():
             return True

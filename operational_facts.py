@@ -85,6 +85,34 @@ def background_reason(text):
     return None
 
 
+def regional_security_operation(post):
+    """Retain a source-linked SBU operation outside the oblast when the
+    suspect's reconnaissance explicitly targeted this region. Place of
+    detention and place of hostile activity remain separate source sentences.
+    Generic birthplace/agency-address mentions do not establish that link.
+    """
+    if post.get('channel','').casefold() != 'sbukr':
+        return None
+    lines = post.get('text','').splitlines()
+    if not lines or not re.search(r'^СБУ затримала\b',lines[0].strip()):
+        return None
+    from fallback_report import sentences
+    body = sentences(clean_lines('\n'.join(lines[1:])))
+    place = re.compile(r'\bДніпр(?:о|і|а|у)\b|Дніпропетровщин\w*|Дніпропетровськ\w*\s+област\w*',re.I)
+    links = [s for s in body if place.search(s)
+             and re.search(r'розвідав|розвідував|коригував|наводив|відстежував',s,re.I)
+             and not re.search(r'Головного управління|процесуальн\w* керівництв',s,re.I)]
+    # Prefer the independently worded reconnaissance sentence over a national
+    # overview that names several cities. Never transplant Odessa target types.
+    links.sort(key=lambda s:(bool(re.search(r'Одес|Києв|Київ',s,re.I)),len(s)))
+    action = next((s for s in body if re.search(r'^Контррозвідка.{0,65}затримала\b',s,re.I)),None)
+    identity = next((s for s in body if s.startswith('Фігурантом виявився')),None)
+    custody = next((s for s in body if re.search(r'^Зловмисник перебуває під вартою',s,re.I)),None)
+    if not action or not links:
+        return None
+    return ' '.join(dict.fromkeys(s for s in [action,identity,links[0],custody] if s))
+
+
 def current_attack_piece(text, published, start, end):
     """Separate explicit incident dates/clocks from the publication timestamp.
 
