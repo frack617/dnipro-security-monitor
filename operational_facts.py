@@ -11,10 +11,25 @@ BACKGROUND = re.compile(
     r'готові не бити|переговор|зустрівся.{0,50}(?:команд|представник)|'
     r'просимо відключити всі прилади', re.I)
 ATTACK = re.compile(r'атак|обстріл|удар|влучан', re.I)
+CURRENT_IMPACT = re.compile(
+    r'(?:ворог|росіяни|противник)\s+(?:знову\s+)?(?:атакував|атакували|вдарив|вдарили|обстріляв|обстріляли)|'
+    r'(?:через|внаслідок|унаслідок).{0,65}(?:атаку|обстріл|влучання).{0,90}'
+    r'(?:залишил|пошкоджен|зруйнован|загин|поран|знеструм)|'
+    r'(?:сталася|виникла|спалахнула)\s+пожежа|'
+    r'(?:загинули|загинув|поранено|постраждали)\b', re.I)
+PREPAREDNESS = re.compile(
+    r'підготов\w*.{0,50}(?:зим|опалювальн)|'
+    r'(?:мають|має|встановили|встановлено).{0,45}(?:генератор|резервного живлення)|'
+    r'рівні резервного живлення|готовність\s+\d+\s*%', re.I)
 DATE = re.compile(r'\b(\d{1,2})\s+('+'|'.join(MONTHS)+r')\b', re.I)
 
 
 def background_reason(text):
+    body = clean_lines(text)
+    if (PREPAREDNESS.search(body[:650]) or
+        re.search(r'радий вітати.{0,100}(?:посла|посол)|наша зустріч|предметом розмови', body, re.I)):
+        if not CURRENT_IMPACT.search(body):
+            return 'preparedness_or_meeting_without_current_impact'
     if BACKGROUND.search(clean_lines(text)[:650]):
         return 'background_without_current_incident'
     if re.search(r'(?:після вибухів|після обстрілів).{0,30}(?:у травні|у червні|минулого року)',

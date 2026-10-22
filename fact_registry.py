@@ -152,6 +152,16 @@ def service_display(post, end):
         return None
     if WEATHER.search(raw) and not SERVICE.search(raw):
         return weather_text(post, end.date())
+    # A service article is not evidence of a current outage. Require an
+    # asserted change, restriction or dated operational notice before using
+    # the established service formatter; hypothetical blackouts are excluded.
+    if not re.search(r'знеструмлен[іо]|знеструмлення.{0,35}(?:будин|вул)|'
+                     r'без (?:світла|води) залиш|відключатимуть|'
+                     r'(?:відключення|відключено|відновлено|відновили|відновлення)\s+(?:електро|водо|тепло)|'
+                     r'(?:припинен|призупинен|обмежен)\w*\s+(?:подач|водопостач|електропостач|теплопостач)|'
+                     r'(?:немає|відсутн\w*)\s+(?:світл|вод|електро)|'
+                     r'підчерг|\d{1,2}\s+\w+\s+з\s+\d{1,2}:\d{2}\s+до\s+\d{1,2}:\d{2}', raw, re.I):
+        return None
     text = brief_service(post, end.date())
     if text == EMPTY:
         return None
@@ -188,6 +198,9 @@ def transport_display(posts, end):
     raw = re.sub(r'Кінцев(?:а|у) зупинк[^.!?]*(?:пл\.|площу)\s*Успенськ\w*\.', '', raw, flags=re.I)
     raw = re.sub(r'Усі інші маршрути[^.!?]*[.!?]?', '', raw, flags=re.I)
     raw = re.sub(r'Схеми перекриття[^.!?]*[.!?]?', '', raw, flags=re.I)
+    # Timetables are not public security impacts; retain the earlier end of
+    # service and the repair location, but omit terminal names and departures.
+    raw = re.sub(r'Останні відправлення.*?(?=Зміни пов[’\x27]язані|У зв[’\x27]язку|$)', '', raw, flags=re.I)
     raw = re.sub(r'\.\s*Деталі\s*[—–-]?\s*\.', '.', raw)
     raw = re.sub(r'\s+', ' ', raw).strip()
     if re.search(r'обмеж|перекрит|призупин|ремонт', raw, re.I):
