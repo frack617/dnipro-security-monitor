@@ -1,7 +1,6 @@
 {
   "initialized": true,
   "alerted_keys": [
-    "DniproCityOfficial/14983",
     "DniproCityOfficial/14997",
     "DniproCityOfficial/15002",
     "DniproCityOfficial/15026",
@@ -59,7 +58,7 @@
     "gunpvdp/37315"
   ],
   "last_daily_report": "2026-10-22",
-  "last_alert_scan_at": "2026-10-22T10:26:54.531404+00:00",
+  "last_alert_scan_at": "2026-10-22T10:56:49.405875+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-22",
