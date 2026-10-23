@@ -1,123 +1,6 @@
 {
   "events": [
     {
-      "id": "39205345970:2026-10-19T05:35:39.824089+00:00:28",
-      "at": "2026-10-19T05:35:39.824089+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39205345970",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39205345970:2026-10-19T05:35:43.086083+00:00:29",
-      "at": "2026-10-19T05:35:43.086083+00:00",
-      "model": "groq:openai/gpt-oss-120b",
-      "event": "workflow_dispatch",
-      "run_id": "39205345970",
-      "stage": "groq_author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39206550248:2026-10-19T05:49:56.790435+00:00:30",
-      "at": "2026-10-19T05:49:56.790435+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "manual_reserve_check",
-      "run_id": "39206550248",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39206550248:2026-10-19T05:50:00.248539+00:00:31",
-      "at": "2026-10-19T05:50:00.248539+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "manual_reserve_check",
-      "run_id": "39206550248",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39241171997:2026-10-19T10:57:55.901478+00:00:32",
-      "at": "2026-10-19T10:57:55.901478+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39241171997",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39241171997:2026-10-19T10:57:58.839308+00:00:33",
-      "at": "2026-10-19T10:57:58.839308+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39241171997",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39244502425:2026-10-19T11:25:28.468715+00:00:34",
-      "at": "2026-10-19T11:25:28.468715+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39244502425",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39244502425:2026-10-19T11:25:30.821396+00:00:35",
-      "at": "2026-10-19T11:25:30.821396+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39244502425",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39244502425:2026-10-19T11:25:32.734039+00:00:36",
-      "at": "2026-10-19T11:25:32.734039+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39244502425",
-      "stage": "editor",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39372667672:2026-10-20T05:01:50.150657+00:00:37",
-      "at": "2026-10-20T05:01:50.150657+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "production_dispatch",
-      "run_id": "39372667672",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39372667672:2026-10-20T05:01:54.265559+00:00:38",
-      "at": "2026-10-20T05:01:54.265559+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "production_dispatch",
-      "run_id": "39372667672",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39372667672:2026-10-20T05:01:58.612435+00:00:39",
-      "at": "2026-10-20T05:01:58.612435+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "production_dispatch",
-      "run_id": "39372667672",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39372667672:2026-10-20T05:02:02.690566+00:00:40",
-      "at": "2026-10-20T05:02:02.690566+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "production_dispatch",
-      "run_id": "39372667672",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
       "id": "39377241778:2026-10-20T05:52:57.948032+00:00:41",
       "at": "2026-10-20T05:52:57.948032+00:00",
       "model": "gemini-2.5-flash-lite",
@@ -214,6 +97,15 @@
       "model": "gemini-2.5-flash-lite",
       "event": "production_dispatch",
       "run_id": "39727618441",
+      "stage": "core_review",
+      "outcome": "http_200"
+    },
+    {
+      "id": "39905697446:2026-10-23T05:26:01.343818+00:00:24",
+      "at": "2026-10-23T05:26:01.343818+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "production_dispatch",
+      "run_id": "39905697446",
       "stage": "core_review",
       "outcome": "http_200"
     }
