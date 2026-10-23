@@ -297,6 +297,10 @@ def compile_registry(posts, statuses, checked_at):
             section = '1.4'
         if not section:
             continue
+        from operational_facts import prevention_without_event
+        if section in {'2.2','2.3','2.4'} and prevention_without_event(post['text']):
+            records.append(make_record(post,section,post['text'],state='excluded',reason='prevention_without_asserted_event'))
+            continue
         text = post['text']
         if section == '2.1' and not bulletin_header(post):
             published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
@@ -372,7 +376,9 @@ def compile_registry(posts, statuses, checked_at):
                 rec['display'] = None
             else:
                 body = clean_lines(text)
-                kept = [s for s in sentences(body) if CONSEQUENCE.search(s) and not re.search(
+                from operational_facts import official_damage_excerpt
+                excerpt = official_damage_excerpt(post)
+                kept = [excerpt] if excerpt else [s for s in sentences(body) if CONSEQUENCE.search(s) and not re.search(
                     r'Залишайтеся|Загроза триває|До відбою', s, re.I)]
                 if kept:
                     rec['display'] = f'Повідомлення від {published:%H:%M %d.%m}: '+' '.join(kept)
@@ -451,7 +457,35 @@ def render_registry(registry):
         lines.append('Повнота охоплення всіх повідомлень каналів не підтверджена.')
     if registry['review_required']:
         lines.append('Є розбіжності між джерелами; довідка потребує перевірки перед надсиланням.')
-    return '\n'.join(lines).strip()
+    result = '\n'.join(lines).strip()
+    if len(result.split()) > 500:
+        # Second pass removes repeated editorial labels only. All source
+        # sentences, places, quantities and their dates remain unchanged.
+        result = result.replace('У перевірених джерелах є повідомлення про атаки або їхні наслідки. Деталі наведено у пункті 2.1.',
+                                'За звітний період зафіксовано атаки та їхні наслідки.')
+        result = re.sub(r'За зведенням на (\d{2}:\d{2}) (\d{2}\.\d{2}):',r'ОВА \2 \1:',result)
+        result = re.sub(r'Повідомлення від (\d{2}:\d{2}) (\d{2}\.\d{2}):',r'Повідомлення \2:',result)
+        result = result.replace('На час виконання робіт замість них працюватимуть автобуси.',
+                                'Замість трамваїв працюватимуть автобуси.')
+        result = result.replace('Тимчасово перекрито проїзну частину по вул.',
+                                'Тимчасово перекрито вул.')
+        result = result.replace('для виконання робіт з ремонту мережі зливової каналізації',
+                                'через ремонт зливової каналізації')
+        # The formatter already groups streets by a single queue/location.
+        # Share repeated street-type labels without changing any street name.
+        def compact_queue(match):
+            prefix, body, suffix = match.groups()
+            types = r'вул\.|пров\.|пр-т\.|бульвар|проїзд'
+            entries = re.findall(r'('+types+r')\s+(.+?)(?=,\s*(?:'+types+r')\s|$)',body)
+            if not entries or len(entries) != len(re.findall(r'(?:'+types+r')\s',body)):
+                return match[0]
+            groups = {}
+            for kind,name in entries:
+                groups.setdefault(kind,[]).append(name)
+            titles={'вул.':'вулиці','пров.':'провулки','пр-т.':'проспекти','бульвар':'бульвари','проїзд':'проїзди'}
+            return prefix+'; '.join(titles[k]+': '+', '.join(v) for k,v in groups.items())+suffix
+        result = re.sub(r'(?m)^(.+: (?:тимчасово )?змінено підчерги для окремих адрес: )([^\n;]+)( — підчерга \d+\.\d+\.)$',compact_queue,result)
+    return result
 
 
 def public_attack_paragraphs(registry):

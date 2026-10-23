@@ -12,8 +12,11 @@ from report_sections import clean_transport_notice, source_transport_notices
 
 
 EMPTY = "У перевірених джерелах повідомлень за звітний період не виявлено."
-WEATHER = re.compile(r"гроз|туман|ожелед|погод|шторм|видиміст", re.I)
+WEATHER = re.compile(r"\b(?:гроз[аиу]|грозою|грозов\w*|туман\w*|ожелед\w*|погод[аиу]|погодн\w*|шторм\w*|видиміст\w*)\b", re.I)
 SERVICE = re.compile(r"гпв|відключен|електропостач|водопостач|теплопостач", re.I)
+SETTLEMENT_NAME = (r"(?:[А-ЯІЇЄҐ]{2,}(?:[ \t]+[А-ЯІЇЄҐ]{2,})*|"
+                   r"[А-ЯІЇЄҐ][а-яіїєґ’'-]+(?:[ \t]+[А-ЯІЇЄҐ][а-яіїєґ’'-]+)*(?=[ \t]*[,\n:]|$)|"
+                   r"[А-ЯІЇЄҐ][а-яіїєґ’'-]+)")
 SIGNOFF = re.compile(
     r"^(?:деталі\s*[—:.-]?\s*$|будьте уважні|будьте обережні|"
     r"інформує департамент|розклад руху\s*$|електротранспорту на сайті\s*$)", re.I)
@@ -346,9 +349,9 @@ def brief_service(post, end_date):
     # The named streets are copied, not an invented district or a guessed
     # outage duration. Full house lists remain in report_input and the archive.
     lines = [line.strip() for line in text.splitlines() if line.strip()]
-    location_matches = list(re.finditer(r'\b(?:м\.|с\.)\s*([А-ЯІЇЄҐ][А-Яа-яІіЇїЄєҐґ’\'-]+)', text))
+    location_matches = list(re.finditer(r'\b(?:м\.|с\.)\s*('+SETTLEMENT_NAME+r')\b', text))
     locations = [m[1] for m in location_matches]
-    streets = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', text)
+    streets = re.findall(r'(?:вул\.|пр-т\.|пров\.|бульвар|проїзд)\s+[^:\n]+(?=:)', text)
     if not streets:
         return clean_event(post)
     label = ', '.join(unique_texts(locations))
@@ -361,7 +364,7 @@ def brief_service(post, end_date):
         for index, match in enumerate(location_matches):
             stop = location_matches[index+1].start() if index+1 < len(location_matches) else len(text)
             chunk = text[match.end():stop]
-            names = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
+            names = re.findall(r'(?:вул\.|пр-т\.|пров\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
             if not names:
                 return clean_event(post)
             # District headings can introduce a separate interval for the
@@ -379,12 +382,13 @@ def brief_service(post, end_date):
         start = 0
         for match in re.finditer(r'підчерги\s+(\d+\.\d+)', text):
             chunk = text[start:match.start()]
-            names = re.findall(r'(?:вул\.|пр-т\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
+            names = re.findall(r'(?:вул\.|пр-т\.|пров\.|бульвар|проїзд)\s+[^:\n]+(?=:)', chunk)
             if not names:
                 return clean_event(post)
             groups.append(', '.join(unique_texts(names)) + ' — підчерга ' + match[1])
             start = match.end()
-        return label + ': змінено підчерги для окремих адрес: ' + '; '.join(groups) + '.'
+        temporary = 'тимчасово ' if re.search(r'тимчасово',text,re.I) else ''
+        return label + ': '+temporary+'змінено підчерги для окремих адрес: ' + '; '.join(groups) + '.'
     action = ('Анонсовано припинення електропостачання' if 'припинено подачу' in text.lower()
               else 'Повідомлено про знеструмлення')
     return label + ': ' + action[:1].lower() + action[1:] + ' за адресами на ' + ', '.join(unique_texts(streets)) + '.'

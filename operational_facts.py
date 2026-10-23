@@ -113,6 +113,48 @@ def regional_security_operation(post):
     return ' '.join(dict.fromkeys(s for s in [action,identity,links[0],custody] if s))
 
 
+def prevention_without_event(text):
+    """Instructions and lessons are not assertions of a discovered item or
+    an enforcement operation. Require a finite affirmative event statement.
+    """
+    body = clean_lines(text)
+    educational = re.search(r'нагадує|закликає|правила.{0,20}безпеки|як діяти|заняття|школяр|не торкайтеся',body,re.I)
+    asserted = re.search(r'\b(?:затримал[аи]|затримано|виявил[аи]|виявлено|вилучил[аи]|вилучено|'
+                         r'знешкодил[аи]|знешкоджено|викрил[аи]|викрито|ліквідувал[аи]|'
+                         r'повідомили.{0,35}підозр|засудил[аи]|засуджено)\b',body,re.I)
+    return bool(educational and not asserted)
+
+
+def official_damage_excerpt(post):
+    """An attributed city official's damage statement, not the whole article.
+
+    The exact source sentences remain auditable. Use only one unambiguous
+    official quote and an explicit district/date sentence from the article;
+    otherwise decline this route instead of guessing a location or quantity.
+    """
+    if post.get('channel','').casefold() != 'dniprocityofficial':
+        return None
+    from fallback_report import sentences
+    raw=post.get('text','')
+    quotes=[]
+    for match in re.finditer(r'«([^«»]+)»\s*,?\s*[—–-]\s*([^\n]+)',raw,re.S):
+        attribution=match[2]
+        if re.search(r'заступниц|голов|начальник|речник',attribution,re.I) and re.search(r'адміністрац|міськ|ДСНС|ОВА',attribution,re.I):
+            quotes.append(match[1])
+    if len(quotes)!=1:
+        return None
+    locality=next((s for line in raw.splitlines() for s in sentences(clean_lines(line))
+                   if re.search(r'\b\d{1,2}\s+(?:'+ '|'.join(MONTHS)+r')\b',s,re.I)
+                   and re.search(r'район\w* Дніпра.{0,35}під ударом',s,re.I)),None)
+    if not locality:
+        return None
+    facts=[s for s in sentences(clean_lines(quotes[0])) if re.search(
+        r'пошкоджено|зруйновано|Горів|Горіла|Горіли|загин|поран|без постраждалих|пожеж.{0,30}ліквід',s,re.I)]
+    if not facts or not any(re.search(r'пошкоджено\s+\d+\s+приватних будинків',s,re.I) for s in facts):
+        return None
+    return ' '.join(dict.fromkeys([locality]+facts))
+
+
 def current_attack_piece(text, published, start, end):
     """Separate explicit incident dates/clocks from the publication timestamp.
 
