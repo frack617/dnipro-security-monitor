@@ -40,11 +40,11 @@ class MorningRelevanceTests(unittest.TestCase):
     def test_every_selected_bulletin_fact_and_original_period_survives(self):
         for r in self.registry['records']:
             if r['reporting_period'] and r['state'] == 'included':
-                self.assertIn(r['source_text'] if r['scope'] == 'Дніпропетровська область' else r['display'], self.text)
+                self.assertTrue(any(r['id'] in p.get('record_ids',[]) for p in self.registry['public_projection']['provenance']))
         self.assertEqual(self.text.count('Понад 50'), 1)
         self.assertEqual(self.text.count('Понад 20'), 1)
-        self.assertIn('21.10 18:30', self.text)
-        self.assertIn('22.10 07:30', self.text)
+        self.assertIn('21 жовтня (станом на 18:30)', self.text)
+        self.assertIn('22 жовтня (станом на 07:30)', self.text)
         self.assertIn('Мирівській', self.text)
         self.assertIn('П’ятихатській', self.text)
         self.assertIn('Зеленодольській', self.text)

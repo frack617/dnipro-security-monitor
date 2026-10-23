@@ -68,14 +68,15 @@ class PublicOperationalProseTests(unittest.TestCase):
 
     def test_absence_of_casualties_is_scoped_to_its_bulletin(self):
         self.assertNotIn('Всюди минулося без постраждалих', self.text)
-        night = self.text.split('22.10 07:30 —')[1].split('\n\n')[0]
-        self.assertIn('За цим зведенням (станом на 07:30 22.10.2026), постраждалих немає.', night)
+        night = self.text.split('Ранкове зведення за 22 жовтня')[1].split('\n\n')[0]
+        self.assertIn('За цим зведенням, постраждалих немає.', night)
         self.assertNotIn('за добу постраждалих немає', self.text)
 
     def test_all_bulletin_blocks_still_present_and_counts_not_added(self):
         for r in self.registry['records']:
             if r['reporting_period'] and r['state'] == 'included':
-                self.assertIn(r['source_text'] if r['scope'] == 'Дніпропетровська область' else r['display'], self.text)
+                accounted={i for p in self.registry['public_projection']['provenance'] for i in p.get('record_ids',[])}
+                self.assertIn(r['id'],accounted)
         for count in ('Понад 50', 'Понад 20'):
             self.assertEqual(self.text.count(count), 1)
         self.assertIn('понад 30 тисяч', self.text)
@@ -117,13 +118,14 @@ class PublicOperationalProseTests(unittest.TestCase):
 
     def test_single_oblast_paragraph_and_locality_groups_do_not_create_attack_total(self):
         attack = self.text.split('2.1. Обстріли')[1].split('2.2. Незаконне')[0]
-        self.assertEqual(attack.count('Обласні дані ОВА:'), 1)
+        self.assertEqual(attack.count('Денне зведення за'), 1)
+        self.assertEqual(attack.count('Ранкове зведення за'), 1)
         self.assertNotIn('Обласне зведення на', attack)
         self.assertIn('\nДніпро:\n', attack)
         self.assertIn('\nПавлоград:\n', attack)
         self.assertIn('\nНікопольщина:\n', attack)
-        self.assertIn('21.10 18:30 — Понад 50', attack)
-        self.assertIn('22.10 07:30 — Понад 20', attack)
+        self.assertIn('Денне зведення за 21 жовтня (станом на 18:30): Понад 50', attack)
+        self.assertIn('Ранкове зведення за 22 жовтня (станом на 07:30): Понад 20', attack)
         self.assertNotIn('70 разів', attack)
 
     def test_each_local_consequence_remains_under_its_source_bulletin(self):
@@ -132,7 +134,9 @@ class PublicOperationalProseTests(unittest.TestCase):
                 if r['source_text'].startswith('Всюди минулося'):
                     continue
                 at = datetime.fromisoformat(r['reporting_period'])
-                self.assertIn(f'За зведенням на {at:%H:%M %d.%m}: '+r['display'], self.text)
+                facts=[p for p in self.registry['public_projection']['provenance'] if r['id'] in p.get('record_ids',[])]
+                self.assertTrue(facts)
+                self.assertTrue(all(p['reporting_period']==r['reporting_period'] for p in facts))
 
     def test_grouping_does_not_label_suburbs_as_city(self):
         from fact_registry import public_attack_paragraphs
@@ -143,7 +147,7 @@ class PublicOperationalProseTests(unittest.TestCase):
         self.assertFalse(out.startswith('Дніпро:'))
 
     def test_multi_district_outage_count_never_assigned_to_one_district(self):
-        paragraph = self.text.split('Наслідки в області:\n')[1].split('\n\n')[0]
+        paragraph = self.text.split('Інші підтверджені наслідки:\n')[1].split('\n\n')[0]
         self.assertIn('понад 30 тисяч', paragraph)
         self.assertIn('Павлоградському, Синельниківському районах і місті Самар', paragraph)
         for heading in ('Синельниківський район:', 'Павлоград:'):

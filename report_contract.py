@@ -17,6 +17,16 @@ def publication_issues(registry, report, statuses, expected_channels=()):
         issues.append('raw_address_to_readers')
     if re.search(r'Анонсовано відключення\s+\d', report, re.I):
         issues.append('unnamed_service')
+    projection=registry.get('public_projection')
+    if projection is not None:
+        accounted={ident for item in projection['provenance'] for ident in item.get('record_ids',[])}
+        accounted.update(item['covered_record_id'] for item in projection['provenance'] if 'covered_record_id' in item)
+        if any(r['section']=='2.1' and r.get('display') and r['state'] not in {'mirror','excluded','review'}
+               and r['id'] not in accounted for r in registry['records']):
+            issues.append('unaccounted_attack_fact')
+        attack=report.split('2.1. Обстріли',1)[-1].split('2.2. Незаконне',1)[0]
+        if re.search(r'Повідомлення від|За зведенням на|сьогоднішньої атаки|області області',attack,re.I):
+            issues.append('source_feed_prose')
     if expected_channels:
         channels = {k.casefold():v for k,v in statuses.items()}
         start = datetime.fromisoformat(registry['window']['start'])
@@ -43,7 +53,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

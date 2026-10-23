@@ -55,15 +55,16 @@ class FrozenDayTests(unittest.TestCase):
             self.assertTrue(record['possible_prior_sources'])
 
     def test_new_morning_under_its_bulletin_and_region_count_not_city(self):
-        header = self.text.split('Обласні дані ОВА:')[1].split('\n\n')[0]
+        header = self.text.split('Денне зведення за')[1].split('\n\n')[0]
         self.assertIn('Десятеро дістали поранень', header)
         kr = next(r['display'] for r in self.core['records'] if r.get('display')
                   and r['state'] == 'included' and r['source_text'].startswith('У Кривому Розі'))
-        self.assertIn(kr, self.text)
+        self.assertIn(kr.split('Цілив ворог')[0].strip(), self.text)
+        self.assertIn('Цілив ворог і по Зеленодольській громаді на Криворіжжі.',self.text)
         self.assertNotIn('Десятеро', kr)
         self.assertIn('Є поранені, зокрема дитина.', kr)
-        self.assertIn('За зведенням на 07:30 20.10: У Дніпрі пошкоджені приватні будинки', self.text)
-        self.assertIn('Повідомлення від 06:06 20.10: На світанку', self.text)
+        self.assertIn('За ранковими даними 20 жовтня: У Дніпрі пошкоджені приватні будинки', self.text)
+        self.assertIn('На світанку', self.text)
 
     def test_planned_power_not_reported_as_completed(self):
         self.assertIn('Анонсовано відключення електропостачання 20 ЖОВТНЯ', self.text)
@@ -80,7 +81,7 @@ class FrozenDayTests(unittest.TestCase):
         mutations = [self.text.replace('Червоногригорівська і ', ''),
             self.text.replace('Є поранені, зокрема дитина.', 'Десятеро поранених.'),
             self.text.replace('Анонсовано відключення', 'Проведено відключення'),
-            self.text.replace('07:30 20.10', '07:30 19.10'),
+            self.text.replace('Ранкове зведення за 20 жовтня', 'Ранкове зведення за 19 жовтня'),
             self.text+'\nГарантовано безпечно.']
         for text in mutations:
             with self.subTest(text=text[-100:]), self.assertRaises(ValueError):

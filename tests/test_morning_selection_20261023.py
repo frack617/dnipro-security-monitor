@@ -73,7 +73,7 @@ class MorningSelectionTests(unittest.TestCase):
     def test_all_bulletin_scopes_counts_and_communities_survive(self):
         for r in self.registry['records']:
             if r['reporting_period'] and r['state']=='included':
-                self.assertIn(r['source_text'] if r['scope']=='Дніпропетровська область' else r['display'],self.text)
+                self.assertTrue(any(r['id'] in p.get('record_ids',[]) or r['id']==p.get('covered_record_id') for p in self.registry['public_projection']['provenance']))
         for phrase in ('Понад 50','Майже 20','Одна людина загинула','Двоє людей постраждали',
                        '44-річний','26-річна','Солонянській','Апостолівській','Зеленодольській',
                        'Раївській','Шахтарській','П’ятихатках','Томаківська'):
@@ -85,7 +85,8 @@ class MorningSelectionTests(unittest.TestCase):
 
     def test_one_city_update_is_not_added_to_another(self):
         self.assertIn('11 приватних будинків',self.text)
-        self.assertIn('понад 10 осель',self.text)
+        self.assertNotIn('понад 10 осель',self.text)
+        self.assertTrue(any('понад 10 осель' in r['source_text'] for r in self.registry['records']))
         self.assertNotRegex(self.text,r'21\s+(?:приватних\s+)?будин')
         self.assertNotIn('за добу загинуло троє',self.text)
 

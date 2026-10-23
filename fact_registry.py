@@ -22,7 +22,7 @@ DATE = re.compile(r'\b(\d{1,2})\s+('+'|'.join(MONTHS)+r')\b', re.I)
 TIME = re.compile(r'(?<!\d)(\d{1,2}):(\d{2})(?!\d)')
 PLACE = re.compile(r'^(?:(?:У|В|На)\s+)?([^.!?:]{1,100}?)(?=\s+(?:пошкоджен|понівечен|росіяни|ворог|противник|потерпал|загин|постраж|цілив|завдан)|[.:])', re.I)
 CASUALTY = re.compile(r'поран|постраждал|загин|загиб|госпітал|до лікарні|лікуватим', re.I)
-CONSEQUENCE = re.compile(r'пошкодж|понівеч|зруйн|пожеж|загин|загиб|поран|атак|обстріл|вдар|цілив', re.I)
+CONSEQUENCE = re.compile(r'пошкодж|понівеч|зруйн|пожеж|вигор|потрощ|загас|без постраждалих|всі живі|загин|загиб|поран|атак|обстріл|вдар|цілив', re.I)
 
 
 def digest(value):
@@ -84,6 +84,9 @@ def shorter_attack(text):
     """
     kept, patients, child, patient_slot = [], False, False, None
     for sentence in sentences(clean_lines(text)):
+        if re.fullmatch(r'У важкому стані до лікарні доправили \d+-річного чоловіка\.', sentence):
+            kept.append(sentence)
+            continue
         if re.search(r'\b(?:У важкому стані|У стані середньої тяжкості госпіталізовані|Чоловіки\s+\d)', sentence):
             patients = True
             if patient_slot is None:
@@ -429,10 +432,13 @@ def compile_registry(posts, statuses, checked_at):
         sections['1.4'].append('Під час виїздів врахувати можливе збільшення часу в дорозі через погіршення видимості.')
     missing = [name for name, value in statuses.items() if not value.get('ok')]
     coverage_unproven = not statuses or any(not s.get('coverage_complete') for s in statuses.values())
-    return {'version': 1, 'window': {'start': start.isoformat(), 'end': end.isoformat()},
+    registry = {'version': 1, 'window': {'start': start.isoformat(), 'end': end.isoformat()},
             'checked_at': checked_at.isoformat(), 'records': records, 'diagnostics': diagnostics,
             'sections': sections, 'failed_sources': missing, 'coverage_unproven': coverage_unproven,
             'review_required': any(d['reason'] == 'source_conflict' for d in diagnostics)}
+    from event_brief import project_attacks
+    registry['public_projection'] = project_attacks(registry)
+    return registry
 
 
 def render_registry(registry):
@@ -441,9 +447,11 @@ def render_registry(registry):
     end = datetime.fromisoformat(registry['window']['end'])
     lines = ['Станом на '+end.strftime('%d.%m.%Y %H.%M')]
     sections = registry['sections']
+    from event_brief import tidy
     general = list(sections['1.1']) + list(sections['1.2']) + list(sections['1.4'])
+    general = [t.replace('змінено підчерги для окремих адрес', 'змінено підчерги електропостачання для окремих адрес') for t in general]
     public = {'1.1': general, '1.2': sections['1.3'], '2.1': public_attack_paragraphs(registry),
-              '2.2': sections['2.2']+sections['2.3'], '2.3': sections['2.4']}
+              '2.2': [tidy(t) for t in sections['2.2']+sections['2.3']], '2.3': [tidy(t) for t in sections['2.4']]}
     for group, heading in ((1, 'ЗАГАЛЬНА СИТУАЦІЯ В ОБЛАСТІ (РАЙОНІ)'), (2, 'ПОДІЇ У СФЕРІ БЕЗПЕКИ')):
         lines += ['', f'{group}. {heading}']
         for key, title in PUBLIC_TITLES.items():
@@ -458,7 +466,7 @@ def render_registry(registry):
     if registry['review_required']:
         lines.append('Є розбіжності між джерелами; довідка потребує перевірки перед надсиланням.')
     result = '\n'.join(lines).strip()
-    if len(result.split()) > 500:
+    if result:
         # Second pass removes repeated editorial labels only. All source
         # sentences, places, quantities and their dates remain unchanged.
         result = result.replace('У перевірених джерелах є повідомлення про атаки або їхні наслідки. Деталі наведено у пункті 2.1.',
@@ -484,43 +492,13 @@ def render_registry(registry):
                 groups.setdefault(kind,[]).append(name)
             titles={'вул.':'вулиці','пров.':'провулки','пр-т.':'проспекти','бульвар':'бульвари','проїзд':'проїзди'}
             return prefix+'; '.join(titles[k]+': '+', '.join(v) for k,v in groups.items())+suffix
-        result = re.sub(r'(?m)^(.+: (?:тимчасово )?змінено підчерги для окремих адрес: )([^\n;]+)( — підчерга \d+\.\d+\.)$',compact_queue,result)
+        result = re.sub(r'(?m)^(.+: (?:тимчасово )?змінено підчерги(?: електропостачання)? для окремих адрес: )([^\n;]+)( — підчерга \d+\.\d+\.)$',compact_queue,result)
     return result
 
 
 def public_attack_paragraphs(registry):
-    """One geographic brief; grouping is never incident merging or addition."""
-    from report_rules import PLACE_PATTERNS
-    patterns = dict(PLACE_PATTERNS, **{
-        'Кам’янський район': r'кам[’\x27]янськ\w*\s+район\w*',
-    })
-    headers, groups, unscoped = [], {}, []
-    records = [r for r in registry.get('records', [])
-               if r['section'] == '2.1' and r.get('display') and r['state'] != 'mirror']
-    records.sort(key=lambda r: datetime.fromisoformat(r['reporting_period'] or r['published_at']).astimezone(KYIV))
-    for r in records:
-        at = datetime.fromisoformat(r['reporting_period']) if r['reporting_period'] else None
-        if at and r['scope'] == 'Дніпропетровська область':
-            headers.append(f'{at:%d.%m %H:%M} — '+r['source_text'].rstrip('.')+'.')
-            continue
-        if re.fullmatch(r'Всюди минулося без постраждалих[.!]?', r['source_text'], re.I):
-            headers.append(r['display'])
-            continue
-        matches = [name for name, pattern in patterns.items() if re.search(pattern, r['source_text'], re.I)]
-        if (not at and r.get('scope') is None) or re.search(r'\bрайонах\b', r['source_text'], re.I):
-            matches = []
-        if matches == ['Дніпро'] and re.search(r'передміст', r['source_text'], re.I):
-            matches = ['Передмістя Дніпра']
-        text = (f'За зведенням на {at:%H:%M %d.%m}: ' if at else '')+r['display']
-        if len(matches) == 1:
-            groups.setdefault(matches[0], []).append(text)
-        else:
-            unscoped.append(text)
-    paragraphs = ['Обласні дані ОВА: '+' '.join(headers)] if headers else []
-    if unscoped:
-        paragraphs.append('Наслідки в області:\n'+' '.join(unscoped))
-    paragraphs += [name+':\n'+' '.join(values) for name, values in groups.items()]
-    return paragraphs or registry['sections']['2.1']
+    from event_brief import project_attacks
+    return (registry['public_projection'] if 'public_projection' in registry else project_attacks(registry))['paragraphs']
 
 
 def validate_core_text(text, registry):
