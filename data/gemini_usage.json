@@ -1,97 +1,6 @@
 {
   "events": [
     {
-      "id": "39377241778:2026-10-20T05:52:57.948032+00:00:41",
-      "at": "2026-10-20T05:52:57.948032+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39377241778",
-      "stage": "author",
-      "outcome": "http_503",
-      "reason": "service_unavailable"
-    },
-    {
-      "id": "39377241778:2026-10-20T05:53:01.435462+00:00:42",
-      "at": "2026-10-20T05:53:01.435462+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39377241778",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39377241778:2026-10-20T05:53:05.270698+00:00:43",
-      "at": "2026-10-20T05:53:05.270698+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39377241778",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39378163034:2026-10-20T06:03:06.958989+00:00:44",
-      "at": "2026-10-20T06:03:06.958989+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39378163034",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39378163034:2026-10-20T06:03:10.671547+00:00:45",
-      "at": "2026-10-20T06:03:10.671547+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39378163034",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39378163034:2026-10-20T06:03:13.852539+00:00:46",
-      "at": "2026-10-20T06:03:13.852539+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39378163034",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39378163034:2026-10-20T06:03:17.822519+00:00:47",
-      "at": "2026-10-20T06:03:17.822519+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39378163034",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39382230135:2026-10-20T06:45:36.776066+00:00:48",
-      "at": "2026-10-20T06:45:36.776066+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39382230135",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39382230135:2026-10-20T06:45:40.478832+00:00:49",
-      "at": "2026-10-20T06:45:40.478832+00:00",
-      "model": "gemini_backup:gemini-3.5-flash-lite",
-      "event": "workflow_dispatch",
-      "run_id": "39382230135",
-      "stage": "author",
-      "outcome": "http_200"
-    },
-    {
-      "id": "39547232871:2026-10-21T05:01:47.910613+00:00:50",
-      "at": "2026-10-21T05:01:47.910613+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "production_dispatch",
-      "run_id": "39547232871",
-      "stage": "core_review",
-      "outcome": "http_200"
-    },
-    {
       "id": "39727618441:2026-10-22T05:22:22.098672+00:00:51",
       "at": "2026-10-22T05:22:22.098672+00:00",
       "model": "gemini-2.5-flash-lite",
@@ -106,6 +15,15 @@
       "model": "gemini-2.5-flash-lite",
       "event": "production_dispatch",
       "run_id": "39905697446",
+      "stage": "core_review",
+      "outcome": "http_200"
+    },
+    {
+      "id": "40066286756:2026-10-24T05:27:15.618250+00:00:12",
+      "at": "2026-10-24T05:27:15.618250+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "production_dispatch",
+      "run_id": "40066286756",
       "stage": "core_review",
       "outcome": "http_200"
     }
