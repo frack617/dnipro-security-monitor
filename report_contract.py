@@ -18,6 +18,10 @@ def publication_issues(registry, report, statuses, expected_channels=()):
     if re.search(r'Анонсовано відключення\s+\d', report, re.I):
         issues.append('unnamed_service')
     projection=registry.get('public_projection')
+    if any(r.get('claims') for r in registry.get('records',[])):
+        from source_claims import claim_plan
+        if any(c['disposition']=='unresolved' for c in claim_plan(registry,report)):
+            issues.append('lost_source_claim')
     if projection is not None:
         accounted={ident for item in projection['provenance'] for ident in item.get('record_ids',[])}
         accounted.update(item['covered_record_id'] for item in projection['provenance'] if 'covered_record_id' in item)
@@ -61,7 +65,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','reference/communities_dp.json'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','reference/communities_dp.json'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

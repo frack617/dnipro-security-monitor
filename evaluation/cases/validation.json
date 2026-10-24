@@ -1,0 +1,372 @@
+[
+  {
+    "id": "damage_plus_destroyed_equipment",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-damage_plus_destroyed_equipment-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/damage_plus_destroyed_equipment-0",
+        "text": "18 вересня ворог атакував Дніпро. Пошкоджено підприємство. Знищено 3 трансформатори."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Знищено 3 трансформатори"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "chemical_consequence",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-chemical_consequence-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/chemical_consequence-0",
+        "text": "18 вересня ворог атакував Нікополь. Пошкоджено підприємство. Стався витік аміаку. Мешканців двох вулиць евакуювали."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "Стався витік аміаку"
+      },
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "Мешканців двох вулиць евакуювали"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "hospital_child_status",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-hospital_child_status-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/hospital_child_status-0",
+        "text": "18 вересня ворог атакував Павлоград. Пошкоджено будинок. Трьох постраждалих госпіталізовано. Стан однієї дитини тяжкий."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Трьох постраждалих госпіталізовано"
+      },
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Стан однієї дитини тяжкий"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "independent_second_attack",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-independent_second_attack-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/independent_second_attack-0",
+        "text": "18 вересня о 12:10 ворог атакував Дніпро. Пошкоджено школу."
+      },
+      {
+        "key": "adm_dp/synthetic-independent_second_attack-1",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T11:00:00+00:00",
+        "url": "https://example.invalid/independent_second_attack-1",
+        "text": "18 вересня о 14:20 ворог знову атакував Дніпро. Пошкоджено лікарню."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "12:10"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "14:20"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "школу"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "лікарню"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "different_places_keep_own_clinical_status",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-different_places_keep_own_clinical_status-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/different_places_keep_own_clinical_status-0",
+        "text": "18 вересня ворог атакував Нікополь. Поранено двох людей. Один чоловік у тяжкому стані."
+      },
+      {
+        "key": "adm_dp/synthetic-different_places_keep_own_clinical_status-1",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T11:00:00+00:00",
+        "url": "https://example.invalid/different_places_keep_own_clinical_status-1",
+        "text": "18 вересня ворог атакував Павлоград. Поранено одну людину. Вона лікуватиметься амбулаторно."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "Один чоловік у тяжкому стані"
+      },
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Вона лікуватиметься амбулаторно"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "past_incident_not_relabelled_today",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-past_incident_not_relabelled_today-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/past_incident_not_relabelled_today-0",
+        "text": "17 вересня ворог атакував Дніпро. Пошкоджено склад. Поранено 9 людей."
+      }
+    ],
+    "required": [],
+    "forbidden": [
+      {
+        "section": "2.1",
+        "fragment": "Поранено 9 людей"
+      },
+      {
+        "section": "2.1",
+        "fragment": "Пошкоджено склад"
+      }
+    ],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "prior_night_recap_not_new_attack",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-prior_night_recap_not_new_attack-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/prior_night_recap_not_new_attack-0",
+        "text": "Протягом ночі ворог атакував Дніпро. Пошкоджено лікарню. Постраждали 4 людей."
+      }
+    ],
+    "required": [],
+    "forbidden": [
+      {
+        "section": "2.1",
+        "fragment": "Постраждали 4 людей"
+      },
+      {
+        "section": "2.1",
+        "fragment": "Пошкоджено лікарню"
+      }
+    ],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "an_actual_attack_inside_a_meeting_report",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-an_actual_attack_inside_a_meeting_report-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/an_actual_attack_inside_a_meeting_report-0",
+        "text": "Під час наради 18 вересня ворог атакував Дніпро. Пошкоджено підприємство. Евакуйовано 8 працівників."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Пошкоджено підприємство"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Евакуйовано 8 працівників"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "same_fact_on_separate_day_not_summed",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-same_fact_on_separate_day_not_summed-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/same_fact_on_separate_day_not_summed-0",
+        "text": "18 вересня ворог атакував Нікополь. Поранено 2 людей."
+      },
+      {
+        "key": "adm_dp/synthetic-same_fact_on_separate_day_not_summed-1",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T11:00:00+00:00",
+        "url": "https://example.invalid/same_fact_on_separate_day_not_summed-1",
+        "text": "18 вересня ворог знову атакував Павлоград. Поранено 2 людей."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "Поранено 2 людей"
+      },
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Поранено 2 людей"
+      }
+    ],
+    "forbidden": [
+      {
+        "section": "2.1",
+        "fragment": "Поранено 4 людей"
+      }
+    ],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "unknown_consequence_survives_recap",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-unknown_consequence_survives_recap-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/unknown_consequence_survives_recap-0",
+        "text": "18 вересня ворог атакував Дніпро. Пошкоджено будинок. Тимчасово відселено 12 мешканців."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Тимчасово відселено 12 мешканців"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "rescue_operation_outcome",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-rescue_operation_outcome-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/rescue_operation_outcome-0",
+        "text": "18 вересня ворог атакував Дніпро. Сталася пожежа. З небезпечної зони вивели 6 людей. Одну людину шукають під завалами."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "З небезпечної зони вивели 6 людей"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Одну людину шукають під завалами"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "electricity_scope_not_all_region",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-electricity_scope_not_all_region-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/electricity_scope_not_all_region-0",
+        "text": "18 вересня ворог атакував Павлоград. Пошкоджено підстанцію. Без світла залишилися 120 будинків."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Без світла залишилися 120 будинків"
+      }
+    ],
+    "forbidden": [
+      {
+        "section": "2.1",
+        "fragment": "Вся область без світла"
+      }
+    ],
+    "max_occurrences": [],
+    "expect_publishable": true
+  }
+]

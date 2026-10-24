@@ -62,7 +62,8 @@ class FrozenDayTests(unittest.TestCase):
         self.assertIn(kr.split('Цілив ворог')[0].strip().casefold(), self.text.casefold())
         self.assertIn('цілив ворог і по Зеленодольській громаді на Криворіжжі.'.casefold(),self.text.casefold())
         self.assertNotIn('Десятеро', kr)
-        self.assertIn('Є поранені, зокрема дитина.', kr)
+        self.assertIn('У важкому стані в лікарні перебувають', kr)
+        self.assertIn('хлопець 15 років', kr)
         self.assertIn('За ранковими даними 20 жовтня, у Дніпрі пошкоджені приватні будинки', self.text)
         self.assertIn('На світанку', self.text)
 
@@ -79,7 +80,7 @@ class FrozenDayTests(unittest.TestCase):
 
     def test_any_model_prose_change_rejected_including_omissions(self):
         mutations = [self.text.replace('Червоногригорівська і ', ''),
-            self.text.replace('Є поранені, зокрема дитина.', 'Десятеро поранених.'),
+            self.text.replace('У важкому стані в лікарні перебувають', 'Десятеро поранених.'),
             self.text.replace('Анонсовано відключення', 'Проведено відключення'),
             self.text.replace('Ранкове зведення за 20 жовтня', 'Ранкове зведення за 19 жовтня'),
             self.text+'\nГарантовано безпечно.']

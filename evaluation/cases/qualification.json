@@ -1,0 +1,335 @@
+[
+  {
+    "id": "qualification_operating_theatre_closed",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Роботу операційної тимчасово призупинено.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Роботу операційної тимчасово призупинено"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_children_with_parent",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Виведено 6 дітей разом з батьками.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Виведено 6 дітей разом з батьками"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_negative_chemical_finding",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Витоку аміаку не виявлено.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Витоку аміаку не виявлено"
+      }
+    ],
+    "forbidden": [
+      {
+        "section": "2.1",
+        "fragment": "Стався витік аміаку"
+      }
+    ],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_boilerplate_with_real_consequence",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Медики надають їм допомогу, одну дитину евакуювали.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "одну дитину евакуювали"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_shelter_unavailable",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Найближче укриття тимчасово недоступне.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Найближче укриття тимчасово недоступне"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_water_effect",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Без води залишилися 14 будинків.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Без води залишилися 14 будинків"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_unknown_installation_destroyed",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Знищено кисневу станцію та 2 резервні генератори.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Знищено кисневу станцію та 2 резервні генератори"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_explicit_second_episode",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня о 12:10 ворог атакував Нікополь. Пошкоджено підприємство.",
+        "url": "https://example.invalid/qualification-0"
+      },
+      {
+        "key": "adm_dp/qualification-1",
+        "channel": "adm_dp",
+        "post_id": 99001,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня о 14:20 ворог знову атакував Нікополь. Пошкоджено лікарню.",
+        "url": "https://example.invalid/qualification-1"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "12:10"
+      },
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "14:20"
+      },
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "лікарню"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_specific_street",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. На вул. Центральній пошкоджено міст. Рух закрито до 16 серпня.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Центральній"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Рух закрито до 16 серпня"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_reunited_child",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено лікарню. Дитину передали матері.",
+        "url": "https://example.invalid/qualification-0"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Дитину передали матері"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_recap_retains_unique_rescue",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "14 серпня ворог атакував Дніпро. Пошкоджено приватний будинок. Врятовано 11 мешканців.",
+        "url": "https://example.invalid/qualification-0"
+      },
+      {
+        "key": "adm_dp/qualification-1",
+        "channel": "adm_dp",
+        "post_id": 99001,
+        "published_at": "2026-08-14T15:35:00+00:00",
+        "text": "Дніпропетровщина\n14 серпня\n18:30\nПонад 12 разів ворог атакував два райони області безпілотниками.\n▪️ У Дніпрі пошкоджено приватний будинок. Поранено 2 людей.\n▪️ На Нікопольщині пошкоджено підприємство.",
+        "url": "https://example.invalid/qualification-1"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Врятовано 11 мешканців"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "qualification_additional_community",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-08-15T05:30:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/qualification-0",
+        "channel": "adm_dp",
+        "post_id": 99000,
+        "published_at": "2026-08-14T12:00:00+00:00",
+        "text": "На Криворіжжі у Лозуватській та Новопільській громадах внаслідок обстрілу пошкоджено приватні будинки.",
+        "url": "https://example.invalid/qualification-0"
+      },
+      {
+        "key": "adm_dp/qualification-1",
+        "channel": "adm_dp",
+        "post_id": 99001,
+        "published_at": "2026-08-14T15:35:00+00:00",
+        "text": "Дніпропетровщина\n14 серпня\n18:30\nПонад 10 разів ворог атакував два райони області.\n▪️ На Криворіжжі у Новопільській громаді пошкоджено приватні будинки.\n▪️ На Нікопольщині пошкоджено підприємство.",
+        "url": "https://example.invalid/qualification-1"
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Криворіжжя",
+        "fragment": "Лозуватській"
+      }
+    ],
+    "forbidden": [],
+    "expect_publishable": true,
+    "annotation_note": "Oracle input clarified: original unqualified damage did not establish an attack cause. Production classification was not changed to infer attacks from damage alone."
+  }
+]

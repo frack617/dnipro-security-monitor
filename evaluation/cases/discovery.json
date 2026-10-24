@@ -1,0 +1,108 @@
+[
+  {
+    "id": "evacuated_and_rescued",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-evacuated_and_rescued-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/evacuated_and_rescued-0",
+        "text": "18 вересня ворог атакував Дніпро. Пошкоджено лікарню. Евакуйовано 17 пацієнтів. Врятовано двох дітей."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Евакуйовано 17 пацієнтів"
+      },
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Врятовано двох дітей"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "bridge_closure",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-bridge_closure-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/bridge_closure-0",
+        "text": "18 вересня ворог атакував Нікополь. Пошкоджено міст. Рух мостом закрито до 20 вересня."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Нікополь",
+        "fragment": "Рух мостом закрито до 20 вересня"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "injury_count_and_child",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-injury_count_and_child-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/injury_count_and_child-0",
+        "text": "18 вересня ворог атакував Павлоград. Постраждали троє людей, серед них дитина. Усі троє у важкому стані."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Постраждали троє людей, серед них дитина"
+      },
+      {
+        "section": "2.1",
+        "scope": "Павлоград",
+        "fragment": "Усі троє у важкому стані"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  },
+  {
+    "id": "displaced_people",
+    "provenance": "synthetic_not_a_real_event",
+    "checked_at": "2026-09-19T05:20:00+00:00",
+    "posts": [
+      {
+        "key": "adm_dp/synthetic-displaced_people-0",
+        "channel": "adm_dp",
+        "published_at": "2026-09-18T10:00:00+00:00",
+        "url": "https://example.invalid/displaced_people-0",
+        "text": "18 вересня у Дніпрі внаслідок атаки зруйновано будинок. Без житла залишилися 19 людей."
+      }
+    ],
+    "required": [
+      {
+        "section": "2.1",
+        "scope": "Дніпро",
+        "fragment": "Без житла залишилися 19 людей"
+      }
+    ],
+    "forbidden": [],
+    "max_occurrences": [],
+    "expect_publishable": true
+  }
+]

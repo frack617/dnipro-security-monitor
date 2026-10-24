@@ -294,6 +294,13 @@ def warehouse_supplement(text, selected, published, linked_update=False):
             'target_id': targets[0]['id'], 'detail_label': label, 'detail_sentences': additions}
 
 
+def warehouse_generic_statement(sentence):
+    return bool(re.fullmatch(
+        r'(?:Після обстрілу )?(?:Виникла|Сталася|Спалахнула) (?:масштабна )?пожежа'
+        r'(?:, (?:яку ліквідували вогнеборці|пошкоджені склади))?[.!]?|'
+        r'Рятувальники (?:загасили|ліквідували) пожежу(?: та виявили тіла)?[.!]?',sentence.strip(),re.I))
+
+
 def consolidate_warehouse_details(selected):
     """Collapse only enumerated generic fire statements, never unfamiliar facts.
 
@@ -307,14 +314,10 @@ def consolidate_warehouse_details(selected):
         if target in by_id and rec.get('display'):
             groups.setdefault(target, []).append(rec)
     for target_id, records in groups.items():
-        generic = re.compile(
-            r'(?:Після обстрілу )?(?:Виникла|Сталася|Спалахнула) (?:масштабна )?пожежа'
-            r'(?:, (?:яку ліквідували вогнеборці|пошкоджені склади))?[.!]?|'
-            r'Рятувальники (?:загасили|ліквідували) пожежу(?: та виявили тіла)?[.!]?', re.I)
         recognized, unknown = [], []
         for rec in records:
             for sentence in rec['detail_sentences']:
-                (recognized if generic.fullmatch(sentence.strip()) else unknown).append((rec, sentence))
+                (recognized if warehouse_generic_statement(sentence) else unknown).append((rec, sentence))
         if not recognized:
             continue
         target = by_id[target_id]

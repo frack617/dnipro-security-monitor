@@ -77,28 +77,9 @@ def make_record(post, section, text, *, scope=None, period=None, state='included
 
 
 def shorter_attack(text):
-    """Remove clinical age/status lists, never calculate a city total.
-
-    Other consequence sentences and every community name remain verbatim.
-    The original full block remains in the record for review.
-    """
-    kept, patients, child, patient_slot = [], False, False, None
-    for sentence in sentences(clean_lines(text)):
-        if re.fullmatch(r'У важкому стані до лікарні доправили \d+-річного чоловіка\.', sentence):
-            kept.append(sentence)
-            continue
-        if re.search(r'\b(?:У важкому стані|У стані середньої тяжкості госпіталізовані|Чоловіки\s+\d)', sentence):
-            patients = True
-            if patient_slot is None:
-                patient_slot = len(kept)
-            child |= bool(re.search(r'(?:хлопець|дівчин\w*)\s+1[0-7]\b|дитин', sentence, re.I))
-            continue
-        if re.search(r'^Вона лікуватиметься амбулаторно', sentence):
-            continue
-        kept.append(sentence)
-    if patients:
-        kept.insert(patient_slot, 'Є поранені, зокрема дитина.' if child else 'Є поранені.')
-    result = ' '.join(kept)
+    """Keep factual medical status; shortening is a presentation decision."""
+    from source_claims import selected_text
+    result = selected_text(text)
     return result if result.endswith(('.', '!', '?')) else result+'.'
 
 
@@ -220,29 +201,9 @@ def transport_display(posts, end):
 
 
 def supplementary_covered(text, selected):
-    """A preliminary casualty-only update is not a new independent total.
-
-    Keep distinct new consequences, repeated-attack signals and unfamiliar
-    places. No source is declared to describe the same incident here.
-    """
-    if re.search(r'знову|повторн|нов(?:ий|а|у)\s+(?:атак|удар)|критичн\w*\s+інфраструктур', text, re.I):
-        return False
-    region_blocks = [r for r in selected if r['scope'] != 'Дніпропетровська область']
-    body = clean_lines(text)
-    # Never suppress a place which is absent from the selected backbone.
-    locality = re.search(r'крив(?:ий|ому|ого)\s+р(?:іг|озі|огу)|нікопол\w*|дніпр(?:о|і|а)\b', body, re.I)
-    if not locality:
-        return False
-    stem = ('крив' if locality[0].casefold().startswith('крив') else
-            'нікопол' if locality[0].casefold().startswith('нікопол') else 'дніпр')
-    relevant = [r for r in region_blocks if stem in r['source_text'].casefold()]
-    if not relevant:
-        return False
-    # If a unique material consequence is named, it must remain available in
-    # the public synopsis rather than being overwritten by a general bulletin.
-    consequence_objects = re.findall(r'підприємств\w*|склад\w*|пожеж\w*|будин\w*|магазин\w*|лікарн\w*|школ\w*|мост\w*|церкв\w*|азс\b', body, re.I)
-    corpus = ' '.join(r['source_text'] for r in relevant).casefold()
-    return all(obj.casefold() in corpus for obj in consequence_objects)
+    # Resolution happens after records have a date, scope and sentence ledger.
+    # A bag of matching object names cannot certify complete source coverage.
+    return False
 
 
 def regional_segments(posts, audit):
@@ -393,8 +354,10 @@ def compile_registry(posts, statuses, checked_at):
                 body = clean_lines(text)
                 from operational_facts import official_damage_excerpt
                 excerpt = official_damage_excerpt(post)
-                kept = [excerpt] if excerpt else [s for s in sentences(body) if CONSEQUENCE.search(s) and not re.search(
-                    r'Залишайтеся|Загроза триває|До відбою', s, re.I)]
+                from source_claims import selected_text
+                kept = [excerpt] if excerpt else [selected_text(text)]
+                rec['selection_input'] = excerpt or selected_text(text)
+                rec['selection_method'] = 'attributed_official_quote' if excerpt else 'conservative_operational_clauses'
                 if kept:
                     rec['display'] = f'Повідомлення від {published:%H:%M %d.%m}: '+' '.join(kept)
                     rec['display'] = re.sub(r'\bатакує\b', 'атакував', rec['display'])
@@ -424,6 +387,9 @@ def compile_registry(posts, statuses, checked_at):
                 rec['reason'] = 'regional_reconnaissance_link_separate_from_detention_place'
             selected.append(rec)
         records.append(rec)
+    from source_claims import prepare_claims, resolve_updates
+    prepare_claims(selected)
+    resolve_updates(selected)
     selected = consolidate_warehouse_details(selected)
     transport_text, expired = transport_display(transport, end)
     for rec in records:
@@ -511,6 +477,10 @@ def render_registry(registry):
             titles={'вул.':'вулиці','пров.':'провулки','пр-т.':'проспекти','бульвар':'бульвари','проїзд':'проїзди'}
             return prefix+'; '.join(titles[k]+': '+', '.join(v) for k,v in groups.items())+suffix
         result = re.sub(r'(?m)^(.+: (?:тимчасово )?змінено підчерги(?: електропостачання)? для окремих адрес: )([^\n;]+)( — підчерга \d+\.\d+\.)$',compact_queue,result)
+    from brief_budget import fit_layout
+    result,registry['budget_plan']=fit_layout(result)
+    from source_claims import claim_plan
+    registry['claim_plan']=claim_plan(registry,result)
     return result
 
 

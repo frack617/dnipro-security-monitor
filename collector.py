@@ -847,6 +847,7 @@ def process_morning_report(posts, statuses, checked_at):
         "report_kind": "source_core", "author_failure_type": None,
         "prepared_posts": len({r["source_key"] for r in registry["records"]}),
         "report_words": len(report.split()), "sending_enabled": send_enabled,
+        "budget_plan": registry.get("budget_plan"),
         "review": review, "review_required": blocked,
         "review_input_sha256": input_digest,
         "publication_issues": contract_issues,

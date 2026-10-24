@@ -176,7 +176,7 @@ def project_attacks(registry):
                 continue
             day=datetime.fromisoformat(r['published_at']).astimezone(KYIV).date()
             raw=tidy(r['display'],r['published_at'])
-            coarse=re.fullmatch(r'Наслідки атаки росіян на Дніпро\. Рятувальники вже загасили пожежу у приватному будинку\. Пошкоджені понад (\d+) осель\.',raw)
+            coarse=re.fullmatch(r'Наслідки атаки росіян на Дніпро\. Рятувальники вже загасили пожежу у приватному будинку\. Пошкоджені понад (\d+) осель\.(?: На щастя, люди не постраждали\.)?',raw)
             if day==city['day'] and coarse and int(coarse[1])<int(city['count']):
                 city['extra'].append('Пожежу у приватному будинку ліквідовано.')
                 city['refs'].append(r['id'])
@@ -225,6 +225,9 @@ def project_attacks(registry):
             if r['id']==city['anchor']:
                 # Concrete event date is already in the source sentence.
                 add('Дніпро',None,city['text']+' '+ ' '.join(city['extra']),city['refs'])
+            else:
+                mapping.append({'covered_record_id':r['id'],'covered_by':[city['anchor']],
+                                'reason':'bounded_district_house_count_and_compatible_update'})
             continue
         shared=shared_rescue_effect(r,records)
         if shared:
@@ -238,7 +241,10 @@ def project_attacks(registry):
             mapping.append({'covered_record_id':r['id'],'covered_by':rescue['covered_by'],
                             'reason':'bounded_regional_recap_claims_covered_unique_fire_facts_retained'})
             continue
-        for place,body in split_places(raw):
+        chunks=split_places(raw)
+        if chunks and chunks[0][0] is None and r.get('resolved_chunks'):
+            chunks[0][0]=r['resolved_chunks'][0][0]
+        for place,body in chunks:
             if not place and source_place=='Дніпро' and re.search(r'\bпередміст(?:і|я)\b',body):
                 place='Передмістя Дніпра'
             place=place or source_place
