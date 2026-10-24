@@ -40,7 +40,7 @@ class FrozenMorningTests(unittest.TestCase):
         self.assertNotIn('Майже 100', self.text)
 
     def test_deaths_and_injuries_stay_local_not_regional_sum(self):
-        block=self.text.split('У Дніпрі понівечені склади')[1].split('На Синельниківщині')[0]
+        block=self.text.split('\nДніпро:\n')[1].split('\n\n')[0]
         self.assertIn('Двоє чоловіків', block)
         self.assertIn('Четверо людей дістали поранень', block)
         self.assertNotIn('семеро', block)

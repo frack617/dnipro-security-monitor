@@ -35,7 +35,7 @@ class EventBriefTests(unittest.TestCase):
     def test_specific_date_and_new_morning_remain_separate(self):
         block=self.text.split('\nДніпро:\n')[1].split('\n\n')[0]
         self.assertIn('Удень 22 жовтня Новокодацький район Дніпра',block)
-        self.assertIn('За ранковими даними 23 жовтня: У Дніпрі понівечена інфраструктура',block)
+        self.assertIn('За ранковими даними 23 жовтня, у Дніпрі понівечена інфраструктура',block)
         self.assertNotIn('сьогоднішньої',self.text)
         self.assertNotIn('області області',self.text)
 

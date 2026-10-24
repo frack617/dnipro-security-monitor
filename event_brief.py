@@ -294,6 +294,12 @@ def casualty_roles(text):
             result[name]=next(iter(values))
         elif len(values)>1:
             return None
+    injuries=re.findall(r'\b('+NUMBER+r')\s+(?:(?:люд\w*|осіб)\s+)?(?:дістал\w*|отримал\w*|зазнал\w*)\s+поран\w*',text,re.I)
+    values={number_value(v.casefold()) for v in injuries}
+    if values:
+        if len(values)>1 or ('injured' in result and result['injured'] not in values):
+            return None
+        result['injured']=next(iter(values))
     if 'dead' not in result and re.search(r'загинула людина',text,re.I):
         result['dead']=1
     return result

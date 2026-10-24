@@ -27,6 +27,14 @@ def publication_issues(registry, report, statuses, expected_channels=()):
         attack=report.split('2.1. Обстріли',1)[-1].split('2.2. Незаконне',1)[0]
         if re.search(r'Повідомлення від|За зведенням на|сьогоднішньої атаки|області області',attack,re.I):
             issues.append('source_feed_prose')
+    if projection is not None:
+        from brief_editor import unsupported_incident_clocks,ALIASES
+        if unsupported_incident_clocks(registry,report):
+            issues.append('unsupported_incident_clock')
+        if any(old in report for old in ALIASES):
+            issues.append('unverified_community_spelling')
+        if 'За звітний період зафіксовано атаки та їхні наслідки.' in report:
+            issues.append('empty_security_overview')
     if expected_channels:
         channels = {k.casefold():v for k,v in statuses.items()}
         start = datetime.fromisoformat(registry['window']['start'])
@@ -53,7 +61,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','reference/communities_dp.json'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

@@ -59,11 +59,11 @@ class FrozenDayTests(unittest.TestCase):
         self.assertIn('Десятеро дістали поранень', header)
         kr = next(r['display'] for r in self.core['records'] if r.get('display')
                   and r['state'] == 'included' and r['source_text'].startswith('У Кривому Розі'))
-        self.assertIn(kr.split('Цілив ворог')[0].strip(), self.text)
-        self.assertIn('Цілив ворог і по Зеленодольській громаді на Криворіжжі.',self.text)
+        self.assertIn(kr.split('Цілив ворог')[0].strip().casefold(), self.text.casefold())
+        self.assertIn('цілив ворог і по Зеленодольській громаді на Криворіжжі.'.casefold(),self.text.casefold())
         self.assertNotIn('Десятеро', kr)
         self.assertIn('Є поранені, зокрема дитина.', kr)
-        self.assertIn('За ранковими даними 20 жовтня: У Дніпрі пошкоджені приватні будинки', self.text)
+        self.assertIn('За ранковими даними 20 жовтня, у Дніпрі пошкоджені приватні будинки', self.text)
         self.assertIn('На світанку', self.text)
 
     def test_planned_power_not_reported_as_completed(self):

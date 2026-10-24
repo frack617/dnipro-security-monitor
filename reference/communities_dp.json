@@ -1,0 +1,609 @@
+{
+  "checked_on": "2026-10-24",
+  "region": "Дніпропетровська область",
+  "source": "https://decentralization.gov.ua/areas/0562",
+  "communities": [
+    {
+      "name": "Апостолівська",
+      "district": "Криворізький район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3617",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Богданівська",
+      "district": "Павлоградський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3618",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Богинівська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3620",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Божедарівська",
+      "district": "Кам’янський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3619",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Вакулівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3621",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Васильківська",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3622",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Великомихайлівська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3623",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Вербківська",
+      "district": "Павлоградський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3624",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Верхньодніпровська",
+      "district": "Кам’янський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3626",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Верхівцівська",
+      "district": "Кам’янський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3625",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=1"
+    },
+    {
+      "name": "Вишнівська",
+      "district": "Кам’янський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3627",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Вільногірська",
+      "district": "Кам’янський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3628",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Глеюватська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3629",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Гречаноподівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3630",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Грушівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3631",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Губиниська",
+      "district": "Самарівський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3632",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Девладівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3633",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Дніпровська",
+      "district": "Дніпровський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3634",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Дубовиківська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3635",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Жовтоводська",
+      "district": "Кам’янський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3636",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=2"
+    },
+    {
+      "name": "Зайцівська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3637",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Затишнянська",
+      "district": "Кам’янський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3638",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Зеленодольська",
+      "district": "Криворізький район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3639",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Кам'янська",
+      "district": "Кам’янський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3641",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Карпівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3642",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Китайгородська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3643",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Криворізька",
+      "district": "Криворізький район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3644",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Криничанська",
+      "district": "Кам’янський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3645",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Лихівська",
+      "district": "Кам’янський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3646",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Личківська",
+      "district": "Самарівський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3647",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=3"
+    },
+    {
+      "name": "Лозуватська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3648",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Любимівська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3649",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Ляшківська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3650",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Магдалинівська",
+      "district": "Самарівський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3651",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Маломихайлівська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3652",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Марганецька",
+      "district": "Нікопольський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3653",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Межиріцька",
+      "district": "Павлоградський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3654",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Межівська",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3655",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Миколаївська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3656",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Миколаївська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3657",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=4"
+    },
+    {
+      "name": "Мирівська",
+      "district": "Нікопольський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3658",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Могилівська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3659",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Мозолевська",
+      "district": "Нікопольський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3672",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Нивотрудівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3660",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Новолатівська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3662",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Новоолександрівська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3664",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Новопавлівська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3665",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Новопокровська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3667",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Новопільська",
+      "district": "Криворізький район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3666",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Нікопольська",
+      "district": "Нікопольський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3661",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=5"
+    },
+    {
+      "name": "Обухівська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3668",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "П'ятихатська",
+      "district": "Кам’янський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3680",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Павлоградська",
+      "district": "Павлоградський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3669",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Перещепинська",
+      "district": "Самарівський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3670",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Петриківська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3673",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Петропавлівська",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3674",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Покровська",
+      "district": "Нікопольський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3678",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Покровська",
+      "district": "Нікопольський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3679",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Покровська",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3677",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Підгородненська",
+      "district": "Дніпровський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3675",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=6"
+    },
+    {
+      "name": "Піщанська",
+      "district": "Самарівський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3676",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Раївська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3681",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Роздорська",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3682",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Саксаганська",
+      "district": "Кам’янський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3683",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Самарівська",
+      "district": "Самарівський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3663",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Святовасилівська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3684",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Синельниківська",
+      "district": "Синельниківський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3685",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Славгородська",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3686",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Слобожанська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3687",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Слов'янська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3688",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=7"
+    },
+    {
+      "name": "Солонянська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3689",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Софіївська",
+      "district": "Криворізький район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3690",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Сурсько-Литовська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3691",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Тернівська",
+      "district": "Павлоградський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3692",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Томаківська",
+      "district": "Нікопольський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3693",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Троїцька",
+      "district": "Павлоградський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3694",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Українська",
+      "district": "Синельниківський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3695",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Царичанська",
+      "district": "Дніпровський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3696",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Червоногригорівська",
+      "district": "Нікопольський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3697",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Черкаська",
+      "district": "Самарівський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3698",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=8"
+    },
+    {
+      "name": "Чернеччинська",
+      "district": "Самарівський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3699",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=9"
+    },
+    {
+      "name": "Чумаківська",
+      "district": "Дніпровський район",
+      "type": "сільська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3700",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=9"
+    },
+    {
+      "name": "Шахтарська",
+      "district": "Синельниківський район",
+      "type": "міська",
+      "source_url": "https://decentralization.gov.ua/newgromada/3671",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=9"
+    },
+    {
+      "name": "Широківська",
+      "district": "Криворізький район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3701",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=9"
+    },
+    {
+      "name": "Юріївська",
+      "district": "Павлоградський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3702",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=9"
+    },
+    {
+      "name": "Яворницька",
+      "district": "Синельниківський район",
+      "type": "селищна",
+      "source_url": "https://decentralization.gov.ua/newgromada/3640",
+      "list_url": "https://decentralization.gov.ua/areas/0562?page=9"
+    }
+  ]
+}

@@ -92,8 +92,8 @@ class Morning24Tests(unittest.TestCase):
         self.assertEqual(self.text.count('КСК «Шинник»'),1)
 
     def test_all_communities_and_both_reporting_scopes_survive(self):
-        for phrase in ('Майже 70','Майже 10','4 райони','три райони','11 поранені',
-                       'Підгороднянській','Марганецькій','Червоногригорівській','Покровській',
+        for phrase in ('Майже 70','Майже 10','4 райони','три райони','11 людей поранено',
+                       'Підгородненській','Марганецькій','Червоногригорівській','Покровській',
                        'Мозолевській','Карпівській','Грушівській','Васильківській'):
             self.assertIn(phrase,self.text)
         self.assertEqual(self.text.count('Майже 70'),1)
@@ -104,7 +104,7 @@ class Morning24Tests(unittest.TestCase):
 
     def test_clinical_and_house_details_not_lost_by_cutting_prose(self):
         for phrase in ('26-річний чоловік у вкрай тяжкому стані','щонайменше 5 приватних осель',
-                       'Зруйнований приватний будинок','критичну інфраструктуру',
+                       'Зруйновано приватний будинок','критичної інфраструктури',
                        '66 і 46 років','55-річна жінка'):
             self.assertIn(phrase,self.text)
 
@@ -116,7 +116,7 @@ class Morning24Tests(unittest.TestCase):
         self.assertNotIn('5 поранених',suburb)
         self.assertTrue(any(p.get('archived_intermediate_count')==5 for p in self.registry['public_projection']['provenance']))
         self.assertNotIn('26-річний',city)
-        self.assertIn('Восьмеро людей поранено',city)
+        self.assertIn('восьмеро поранених',city)
         self.assertNotIn('13 поранених',self.text)
         self.assertNotIn('16 поранених',self.text)
 
@@ -143,8 +143,9 @@ class Morning24Tests(unittest.TestCase):
 
     def test_shared_rescue_effect_keeps_joint_scope_without_repeating_communities(self):
         self.assertEqual(self.text.count('Карпівськ'),1)
-        self.assertIn('Криворіжжя та Синельниківський район:',self.text)
-        self.assertIn('пошкодження об’єктів інфраструктури та ліквідацію пожеж',self.text)
+        self.assertIn('Криворізького та Синельниківського районів',self.text)
+        self.assertIn('пошкоджено об’єкти інфраструктури',self.text)
+        self.assertIn('пожежі ліквідовано',self.text)
         posts=copy.deepcopy(F['posts'])
         for p in posts:
             if p['key']=='dsns_telegram/78672':

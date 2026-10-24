@@ -172,10 +172,25 @@ def current_attack_piece(text, published, start, end):
     # start date, is not a newly timed incident after 08:00. An explicit later
     # attack clock/date still follows the incident-anchor path below.
     prior_night=(published.date()==start.date() and
-                 re.search(r'Протягом ночі|Упродовж ночі|Цієї ночі',body,re.I) and
-                 not re.search(r'після\s+(?:0?8|09|1\d|2[0-3])[:.]\d{2}|\bо\s+(?:0?8|09|1\d|2[0-3])[:.]\d{2}',body,re.I))
-    if prior_night and not DATE.search(body):
-        return None, 'completed_prior_night_recap'
+                 re.search(r'Протягом ночі|Упродовж ночі|Цієї ночі',body,re.I))
+    if prior_night:
+        later_clock=re.search(r'(?:після|о)\s+(0?8|09|1\d|2[0-3])[:.](\d{2})',body,re.I)
+        if later_clock:
+            at=published.replace(hour=int(later_clock[1]),minute=int(later_clock[2]),second=0,microsecond=0)
+            if at>published or not start<=at<end:
+                return text,'mixed_incident_times_requires_review'
+            offset=0
+            for sentence in sentences(body):
+                pos=body.find(sentence,offset)
+                if pos<=later_clock.start()<pos+len(sentence):
+                    if has_operational_attack_assertion(sentence):
+                        return body[pos:],'explicit_new_episode_after_prior_night'
+                    break
+                offset=pos+len(sentence)
+            return text,'mixed_incident_times_requires_review'
+        dates=list(DATE.finditer(body))
+        if not dates or all((MONTHS.index(m[2].lower())+1,int(m[1])) <= (start.month,start.day) for m in dates):
+            return None,'completed_prior_night_recap'
     relative_old = bool(re.search(r'вчорашн\w*.{0,35}(?:атак|удар|обстріл)', body, re.I)
                         and published.date()-timedelta(days=1) < start.date())
     anchors = []

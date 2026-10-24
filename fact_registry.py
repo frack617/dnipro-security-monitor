@@ -450,6 +450,8 @@ def compile_registry(posts, statuses, checked_at):
             'review_required': any(d['reason'] == 'source_conflict' for d in diagnostics)}
     from event_brief import project_attacks
     registry['public_projection'] = project_attacks(registry)
+    from brief_editor import present_projection
+    registry['public_projection']['conflicts'].extend(present_projection(registry))
     if registry['public_projection']['conflicts']:
         diagnostics.extend(registry['public_projection']['conflicts'])
         registry['review_required']=True
@@ -463,7 +465,8 @@ def render_registry(registry):
     lines = ['Станом на '+end.strftime('%d.%m.%Y %H.%M')]
     sections = registry['sections']
     from event_brief import tidy
-    general = list(sections['1.1']) + list(sections['1.2']) + list(sections['1.4'])
+    from brief_editor import transport_prose
+    general = [registry['public_projection']['overview']] + [transport_prose(t) for t in sections['1.2']] + list(sections['1.4'])
     general = [t.replace('змінено підчерги для окремих адрес', 'змінено підчерги електропостачання для окремих адрес') for t in general]
     public = {'1.1': general, '1.2': sections['1.3'], '2.1': public_attack_paragraphs(registry),
               '2.2': [tidy(t) for t in sections['2.2']+sections['2.3']], '2.3': [tidy(t) for t in sections['2.4']]}
