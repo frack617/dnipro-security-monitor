@@ -22,7 +22,7 @@ DATE = re.compile(r'\b(\d{1,2})\s+('+'|'.join(MONTHS)+r')\b', re.I)
 TIME = re.compile(r'(?<!\d)(\d{1,2}):(\d{2})(?!\d)')
 PLACE = re.compile(r'^(?:(?:У|В|На)\s+)?([^.!?:]{1,100}?)(?=\s+(?:пошкоджен|понівечен|росіяни|ворог|противник|потерпал|загин|постраж|цілив|завдан)|[.:])', re.I)
 CASUALTY = re.compile(r'поран|постраждал|загин|загиб|госпітал|до лікарні|лікуватим', re.I)
-CONSEQUENCE = re.compile(r'пошкодж|понівеч|зруйн|пожеж|вигор|потрощ|загас|без постраждалих|всі живі|загин|загиб|поран|атак|обстріл|вдар|цілив', re.I)
+CONSEQUENCE = re.compile(r'пошкодж|понівеч|зруйн|пожеж|вигор|потрощ|загас|без постраждалих|всі живі|загин|загиб|поран|атак|обстріл|вдар|цілив|удар|травмован|стані|госпіталіз|лікарні', re.I)
 
 
 def digest(value):
@@ -148,8 +148,8 @@ def merge_mirrors(records, diagnostics):
 
 def service_display(post, end):
     raw = post.get('text', '')
-    from operational_facts import temporary_power_schedule
-    schedule = temporary_power_schedule(post)
+    from operational_facts import temporary_power_schedule, dated_power_interruption
+    schedule = dated_power_interruption(post) or temporary_power_schedule(post)
     if schedule:
         return schedule
     # A restoration estimate without its own named affected area adds no useful
@@ -209,6 +209,10 @@ def transport_display(posts, end):
     # service and the repair location, but omit terminal names and departures.
     raw = re.sub(r'Останні відправлення.*?(?=Зміни пов[’\x27]язані|У зв[’\x27]язку|$)', '', raw, flags=re.I)
     raw = re.sub(r'\.\s*Деталі\s*[—–-]?\s*\.', '.', raw)
+    raw = re.sub(r'Зміни у русі трамваїв\s+\d{1,2}\s+\w+\s+\d{4} року діятимуть зміни у русі трамваїв\.', '', raw, flags=re.I)
+    raw = re.sub(r'У зв[’\x27]язку з цим трамваї прямуватимуть.*?до кінцевої зупинки трамвая\.', '', raw, flags=re.I)
+    raw = re.sub(r'Обмеження пов[’\x27]язане з ремонтними роботами на трамвайній колії в районі (вул\. [^.]+)\.',r'Причина — ремонт колії біля \1.',raw)
+    raw = re.sub(r'Крім того, трамваї за анонсом закінчать роботу раніше\. Зміни пов[’\x27]язані з ремонтом трамвайної колії по (вул\. [^.]+)\.',r'Через ремонт колії по \1 трамваї завершать роботу раніше.',raw)
     raw = re.sub(r'\s+', ' ', raw).strip()
     if re.search(r'обмеж|перекрит|призупин|ремонт', raw, re.I):
         pass
@@ -261,9 +265,13 @@ def regional_segments(posts, audit):
             else:
                 yield post
             continue
+        region_header=bool(REGIONAL.search(pieces[0]) and not NONLOCAL.search(post['text']))
+        attack_context=region_header and bool(re.search(r'атак|обстріл|удар',post['text'],re.I))
         for index, piece in enumerate(pieces):
-            if REGIONAL.search(piece) and not NONLOCAL.search(piece):
-                yield dict(post, text=piece.strip(), source_block=index)
+            if (region_header or REGIONAL.search(piece)) and not NONLOCAL.search(piece):
+                yield dict(post, text=piece.strip(), source_block=index,
+                           source_region='Дніпропетровська область' if region_header else None,
+                           source_section='2.1' if attack_context else None)
             elif piece.strip():
                 audit.append(make_record(post, '1.4', piece.strip(), state='excluded', reason='outside_or_uncertain_region_block'))
 
@@ -293,7 +301,7 @@ def compile_registry(posts, statuses, checked_at):
         if reason:
             records.append(make_record(post, '1.4', post['text'], state='excluded', reason=reason))
             continue
-        section = c.classify_post(post)
+        section = post.get('source_section') or c.classify_post(post)
         if post.get('security_operation_text'):
             section = '2.2'
         if section == '2.1' and temporary_power_schedule(post):
@@ -306,6 +314,10 @@ def compile_registry(posts, statuses, checked_at):
             continue
         text = post['text']
         if section == '2.1' and not bulletin_header(post):
+            from operational_facts import has_operational_attack_assertion
+            if not has_operational_attack_assertion(text):
+                records.append(make_record(post,section,text,state='excluded',reason='no_asserted_operational_attack_fact'))
+                continue
             published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
             filtered, reason = current_attack_piece(text, published, start, end)
             if reason and reason.endswith('requires_review'):
@@ -438,6 +450,9 @@ def compile_registry(posts, statuses, checked_at):
             'review_required': any(d['reason'] == 'source_conflict' for d in diagnostics)}
     from event_brief import project_attacks
     registry['public_projection'] = project_attacks(registry)
+    if registry['public_projection']['conflicts']:
+        diagnostics.extend(registry['public_projection']['conflicts'])
+        registry['review_required']=True
     return registry
 
 

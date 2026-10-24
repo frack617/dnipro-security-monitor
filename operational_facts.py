@@ -77,6 +77,10 @@ def background_reason(text):
         re.search(r'радий вітати.{0,100}(?:посла|посол)|наша зустріч|предметом розмови', body, re.I)):
         if not CURRENT_IMPACT.search(body):
             return 'preparedness_or_meeting_without_current_impact'
+    ceremony=re.search(r'побратим|підписал\w*.{0,60}угод|церемон|ратуш',body[:650],re.I)
+    specific=re.search(r'(?:загинув|загинула|загинули|поранено|постраждали|пошкоджено|зруйновано)\b',body,re.I)
+    if ceremony and not specific:
+        return 'ceremony_without_asserted_operational_consequence'
     if BACKGROUND.search(clean_lines(text)[:650]):
         return 'background_without_current_incident'
     if re.search(r'(?:після вибухів|після обстрілів).{0,30}(?:у травні|у червні|минулого року)',
@@ -164,6 +168,14 @@ def current_attack_piece(text, published, start, end):
     """
     from fallback_report import sentences
     body = clean_lines(text)
+    # A recap of the completed preceding night, published on the window's
+    # start date, is not a newly timed incident after 08:00. An explicit later
+    # attack clock/date still follows the incident-anchor path below.
+    prior_night=(published.date()==start.date() and
+                 re.search(r'Протягом ночі|Упродовж ночі|Цієї ночі',body,re.I) and
+                 not re.search(r'після\s+(?:0?8|09|1\d|2[0-3])[:.]\d{2}|\bо\s+(?:0?8|09|1\d|2[0-3])[:.]\d{2}',body,re.I))
+    if prior_night and not DATE.search(body):
+        return None, 'completed_prior_night_recap'
     relative_old = bool(re.search(r'вчорашн\w*.{0,35}(?:атак|удар|обстріл)', body, re.I)
                         and published.date()-timedelta(days=1) < start.date())
     anchors = []
@@ -313,3 +325,61 @@ def consolidate_warehouse_details(selected):
         for rec in records:
             rec['state'], rec['reason'], rec['display'] = 'supplement', 'fire_details_in_bulletin_block', None
     return selected
+
+
+def dated_power_interruption(post):
+    """Keep a provider's explicit start AND end date, not an inferred duration."""
+    if post.get('channel','').casefold()!='cek_info':
+        return None
+    body=clean_lines(post.get('text',''))
+    match=re.search(r'з (\d{1,2}:\d{2}) (\d{2}\.\d{2}\.\d{4}) до (\d{1,2}:\d{2}) (\d{2}\.\d{2}\.\d{4}) буде припинено подачу електроенергії за адресами:',body,re.I)
+    city=re.search(r'Шановні споживачі м\.\s*([А-ЯІЇЄҐ][А-ЯІЇЄҐа-яіїєґ’\x27-]+)',body)
+    if not match or not city:
+        return None
+    from fallback_report import unique_texts
+    if len(re.findall(r'\b(?:м\.|с\.)\s*',post['text']))!=1:
+        return None
+    try:
+        begin=datetime.strptime(match[2]+' '+match[1],'%d.%m.%Y %H:%M')
+        finish=datetime.strptime(match[4]+' '+match[3],'%d.%m.%Y %H:%M')
+        if finish<=begin:
+            return None
+    except ValueError:
+        return None
+    addresses=body[match.end():].strip()
+    footer='Дякуємо за розуміння та перепрошуємо за тимчасові незручності'
+    if addresses.endswith(footer):
+        addresses=addresses[:-len(footer)].strip()
+    house=r'\d+(?:/\d+)?[А-ЯІЇЄҐA-Zа-яіїєґa-z]?(?:\s*[-–]\s*\d+[А-ЯІЇЄҐA-Zа-яіїєґa-z]?)?(?:\s*\((?:непарні|парні)\))?'
+    names=[]
+    for item in addresses.rstrip('.').split(';'):
+        address=re.fullmatch(r'\s*((?:вул\.|пров\.|пр-т\.|бульвар|проїзд)\s+[^:;]+):\s*('+house+r'(?:\s*,\s*'+house+r')*)\s*',item)
+        if not address:
+            return None
+        names.append(address[1])
+    streets=unique_texts(names)
+    if not streets or re.search(r'загин|поран|пожеж|пошкоджен|відновлено',body,re.I):
+        return None
+    cause=('через термінові аварійно-відновлювальні роботи ' if 'терміновими аварійно-відновлювальними роботами' in body else '')
+    return (city[1].capitalize()+': '+cause+'анонсовано припинення електропостачання з '+
+            match[1]+' '+match[2]+' до '+match[3]+' '+match[4]+
+            ' для окремих будинків на '+', '.join(streets)+'.')
+
+
+def has_operational_attack_assertion(text):
+    """Positive event admission: an attack keyword alone is insufficient.
+
+    Require an asserted action, physical consequence or casualty statement.
+    Generic references to a city living under threat are not incident facts.
+    """
+    body=clean_lines(text)
+    from report_rules import asserted_counts
+    if asserted_counts(body):
+        return True
+    if re.search(r'без (?:світла|води) залиш(?:илися|ився|илася)|знеструмлен[оі]|припинено подачу електроенергії',body,re.I):
+        return True
+    if re.search(r'(?:ворог|росіяни|противник|окупанти|російські війська)\s+(?:знову\s+)?(?:атакува[вл]\w*|вдар[ивл]\w*|завда[вл]\w*\s+удар|обстріля[вл]\w*)',body,re.I):
+        return True
+    if re.search(r'\b(?:пошкоджено|пошкоджені|пошкоджена|пошкоджений|понівечено|понівечені|понівечена|зруйновано|зруйнований|зруйновані|вигоріла|горів|горіла|травмовано)\b',body,re.I):
+        return True
+    return bool(re.search(r'(?:виникла|сталася|зайнялася|спалахнула) пожежа|ліквідувал\w*.{0,25}(?:пожеж|загорян)|тіло загибл|під ударом|потерпали',body,re.I))
