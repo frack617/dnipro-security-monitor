@@ -56,7 +56,7 @@
     "gunpvdp/37426"
   ],
   "last_daily_report": "2026-10-24",
-  "last_alert_scan_at": "2026-10-25T05:36:50.684462+00:00",
+  "last_alert_scan_at": "2026-10-25T06:01:50.894174+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-24",
@@ -65,5 +65,5 @@
     "confirmed_parts": 1,
     "confirmed_at": "2026-10-24T05:27:16.913127+00:00"
   },
-  "daily_report_block_notice": "2026-10-24"
+  "daily_report_block_notice": "2026-10-25"
 }

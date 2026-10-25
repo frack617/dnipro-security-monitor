@@ -1,22 +1,34 @@
 {
-  "checked_at": "2026-10-24T05:27:12.821201+00:00",
-  "report_date": "2026-10-24",
-  "run_id": "40066286756",
-  "report_sha256": "85b982ab4f92e783f8ac647492628857124730ac5662707e9137d36949eb3b8e",
+  "checked_at": "2026-10-25T06:01:50.894174+00:00",
+  "report_date": "2026-10-25",
+  "run_id": "40167623343",
+  "report_sha256": "2bb5a8bffc6c9085ed1e9074daf063401c72ffa90fd62251b99b0b7ccd84f897",
   "report_kind": "source_core",
   "author_failure_type": null,
-  "prepared_posts": 21,
-  "report_words": 449,
+  "prepared_posts": 13,
+  "report_words": 671,
   "sending_enabled": true,
+  "budget_plan": {
+    "limit": 500,
+    "initial_words": 681,
+    "final_words": 671,
+    "operations": [
+      "short_editorial_overview",
+      "short_bulletin_labels"
+    ],
+    "status": "overflow"
+  },
   "review": {
-    "state": "completed",
-    "requests": 1,
-    "provider": "gemini",
+    "state": "local_contract",
+    "requests": 0,
+    "provider": null,
     "issues": []
   },
-  "review_required": false,
-  "review_input_sha256": "2470b64154baaad4a77b0d09382a715781eb701762885540c9ab9b9574736c68",
-  "publication_issues": [],
+  "review_required": true,
+  "review_input_sha256": "a378e339e31407f6141153fbf55906473dded2d39435fdb595faf41006314656",
+  "publication_issues": [
+    "length"
+  ],
   "coverage_complete": true,
-  "delivery_state": "confirmed"
+  "delivery_state": "blocked_review"
 }
