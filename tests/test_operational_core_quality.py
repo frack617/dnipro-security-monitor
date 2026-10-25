@@ -161,12 +161,12 @@ class ReviewerSafetyTests(unittest.TestCase):
         self.assertEqual(result['state'],'invalid_response')
         self.assertEqual(request.call_count,1)
 
-    def test_oversize_is_blocked_before_any_model_call(self):
-        with patch('core_review.request_text') as request:
+    @patch.dict(os.environ,{'REPORT_PROVIDER':'gemini','GEMINI_API_KEY':'test','REPORT_CORE_REVIEW':'true'})
+    def test_oversize_still_receives_factual_review(self):
+        with patch('core_review.request_text',return_value='{"issues":[]}') as request:
             result=review_core(self.core,'word '*501)
-        request.assert_not_called()
-        self.assertEqual(result['state'],'blocked_length')
-        self.assertEqual(result['requests'],0)
+        request.assert_called_once()
+        self.assertEqual(result['state'],'completed')
 
     @patch.dict(os.environ,{'REPORT_PROVIDER':'gemini','GEMINI_API_KEY':'test','REPORT_CORE_REVIEW':'true'})
     def test_bad_api_envelope_json_blocks_too(self):

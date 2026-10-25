@@ -42,8 +42,6 @@ def validate_review(text, registry):
 
 
 def review_core(registry, rendered):
-    if len(rendered.split()) > 500:
-        return {'state':'blocked_length', 'requests':0, 'provider':None, 'issues':[]}
     if registry.get('review_required'):
         return {'state':'local_conflict', 'requests':0, 'provider':None, 'issues':[]}
     from ai_report import DEFAULT_MODEL, BACKUP_DEFAULT_MODEL
@@ -63,6 +61,8 @@ def review_core(registry, rendered):
               'Час публікації не дорівнює часу події. Згадка людини у двох дописах не доводить двох людей. '
               'Не дозволяй втрату дітей, тяжкого стану, евакуації, порятунку, обмежень або нового наслідку. '
               'Номери маршрутів можуть бути скорочені; це не дозвіл скорочувати клінічні наслідки. '
+              'casualty_summary_links пов’язує районний підсумок із єдиним докладним випадком: перевір день, громаду, число й вік; це не новий постраждалий. '
+              'Обласні й районні числа у відповідних періодах не додаються до чисел окремих подій. '
               'claims і claim_decisions описують джерельні твердження та підстави їх покриття; '
               'перевір ці підстави, а не лише наявність посилання на допис. '
               'excluded/review/supplement/mirror — матеріал аудиту, не підтверджені нові події. '
@@ -77,6 +77,7 @@ def review_core(registry, rendered):
               'Не додавай пояснень чи нових фактів.\n'
               + json.dumps({'window':registry['window'], 'records':registry['records'],
                             'claim_plan':registry.get('claim_plan'),
+                            'casualty_summary_links':registry.get('casualty_summary_links',[]),
                             'public_projection':registry.get('public_projection'), 'report':rendered}, ensure_ascii=False))
     outcome = {'state': 'unavailable', 'requests': 0, 'provider': provider, 'issues': []}
     try:

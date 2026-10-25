@@ -831,8 +831,7 @@ def process_morning_report(posts, statuses, checked_at):
             review = review_core(registry, report)
     # A review can flag concerns, never supply replacement prose or facts.
     blocked = (bool(contract_issues) or registry["review_required"] or bool(review["issues"])
-               or review["state"] in {"invalid_response", "blocked_length"}
-               or len(report.split()) > 500)
+               or review["state"] == "invalid_response")
     validate_core_text(report, registry)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
@@ -847,6 +846,8 @@ def process_morning_report(posts, statuses, checked_at):
         "report_kind": "source_core", "author_failure_type": None,
         "prepared_posts": len({r["source_key"] for r in registry["records"]}),
         "report_words": len(report.split()), "sending_enabled": send_enabled,
+        "length_policy": "advisory",
+        "editorial_warnings": ["over_target_length"] if len(report.split()) > 500 else [],
         "budget_plan": registry.get("budget_plan"),
         "review": review, "review_required": blocked,
         "review_input_sha256": input_digest,
@@ -866,7 +867,6 @@ def process_morning_report(posts, statuses, checked_at):
         if production and state.get('daily_report_block_notice') != report_date:
             reason = ('не підтверджено повне читання джерел' if any(
                 code.startswith('source_coverage:') for code in contract_issues) else
-                'текст перевищує ліміт обсягу' if 'length' in contract_issues else
                 'виявлено зауваження до тексту або результату перевірки')
             try:
                 notified = send_bot_message('Ранкову довідку за '+report_date+

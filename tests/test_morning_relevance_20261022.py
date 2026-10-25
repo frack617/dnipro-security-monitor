@@ -92,9 +92,9 @@ class MorningRelevanceTests(unittest.TestCase):
                 self.assertEqual(status['delivery_state'], 'confirmed')
                 self.assertLessEqual(status['report_words'], 500)
 
-    def test_overlong_unknown_report_still_blocks_before_api(self):
-        with patch('core_review.request_text') as request:
-            self.assertEqual(review_core({}, 'факт '*501)['state'], 'blocked_length')
+    def test_overlong_report_can_skip_optional_review_when_disabled(self):
+        with patch.dict(os.environ,{'REPORT_CORE_REVIEW':'false'}), patch('core_review.request_text') as request:
+            self.assertEqual(review_core({}, 'факт '*501)['state'], 'disabled')
             request.assert_not_called()
 
 

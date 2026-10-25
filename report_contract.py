@@ -9,8 +9,8 @@ from pathlib import Path
 
 def publication_issues(registry, report, statuses, expected_channels=()):
     issues = []
-    if len(report.split()) > 500:
-        issues.append('length')
+    from casualty_links import duplicate_summary_issues
+    issues.extend(duplicate_summary_issues(registry,report))
     if re.findall(r'(?m)^([12]\.[1-4])\.', report) != ['1.1','1.2','2.1','2.2','2.3']:
         issues.append('public_format')
     if re.search(r'Шановні\s+(?:споживачі|мешканці)|Перепрошуємо за тимчасові', report, re.I):
@@ -65,7 +65,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','reference/communities_dp.json'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

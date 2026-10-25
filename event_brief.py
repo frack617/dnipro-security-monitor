@@ -201,6 +201,8 @@ def project_attacks(registry):
             index=records.index(police)+1
             records[index:index]=following
     registry['clause_projection_proofs']=[dict(record_id=r['id'],source_text=s,targets=targets,place='Нікопольщина',reason='unique_community_weapon_patient_count_child_age') for r,s,targets in overlap]
+    from casualty_links import summary_links
+    registry['casualty_summary_links']=summary_links(records,overlap)
     recaps={r['id']:rescue_supplement(r,bulletins,city) for r in records if not r.get('reporting_period')}
     groups={};headers=[];mapping=[]
     def add(place,period,text,refs):
@@ -221,6 +223,9 @@ def project_attacks(registry):
                             'За поліцією: Усі вони перебувають у стані середньої тяжкості.')
         for record,sentence,targets in overlap:
             if record['id']==r['id']:raw=raw.replace(tidy(sentence,r['published_at']), '').strip()
+        for link in registry['casualty_summary_links']:
+            if link['record_id']==r['id']:
+                raw=raw.replace(tidy(link['source_text'],r['published_at']), link['summary_text'])
         source_place=None if re.search(r'\bрайонах\b',raw,re.I) else locality(raw)
         if r['id'] in covered:
             mapping.append({'covered_record_id':r['id'],'covered_by':covered[r['id']],
@@ -303,6 +308,9 @@ def project_attacks(registry):
                 refs+=daily_details[r['id']]['source_ids']
             add(place,at,body,refs)
     result=list(headers)
+    if registry['casualty_summary_links']:
+        from casualty_links import TOTALS_NOTE
+        result.append(TOTALS_NOTE)
     for place,periods in groups.items():
         pieces=[]
         for period,values in periods.items():

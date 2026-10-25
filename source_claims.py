@@ -136,6 +136,13 @@ def claim_plan(registry, report):
                       source_text=u['source_text'],place=u.get('place'),predicates=u['predicates'])
             if u['disposition']=='excluded':
                 result.append(dict(item,disposition='excluded',reason=u['reason']));continue
+            from casualty_links import link_is_visible
+            summary_link=next((link for link in registry.get('casualty_summary_links',[]) if link['record_id']==r['id'] and canonical(link['source_text'])==canonical(u['source_text'])),None)
+            if summary_link:
+                valid=link_is_visible(summary_link,report)
+                result.append(dict(item,disposition='covered' if valid else 'unresolved',
+                                   reason=summary_link['reason'] if valid else 'summary_reference_not_supported_in_public_text'))
+                continue
             decisions=r.get('claim_decisions',[])+r.get('assessment_history',[])
             own=next((d for d in decisions if canonical(d['source_text'])==canonical(u['source_text'])
                       and d['disposition'] in {'covered','superseded'}),None)
@@ -172,7 +179,7 @@ def claim_plan(registry, report):
                 body=m[1] if m else ''
             text=tidy(u['source_text'],r['published_at'])
             from operational_prose import concise
-            visible=surface_key(concise(text if text.endswith(('.', '!', '?')) else text+'.')) in surface_key(body)
+            visible=any(surface_key(form) in surface_key(body) for form in (text,concise(text if text.endswith(('.', '!', '?')) else text+'.')))
             reason='verbatim_or_morphological_rendering' if visible else None
             if not visible:
                 reason=clause_coverage(text,body)

@@ -1,8 +1,8 @@
-"""Lossless layout compaction before the 500-word publication gate.
+"""Lossless layout compaction toward an advisory 500-word target.
 
 Only editorial prefixes and repeated street-type labels are shortened. No
 source assertion is removed, no casualty/address/date/clock is truncated.
-If irreducible facts exceed the agreed budget, the final gate still blocks.
+If irreducible facts exceed the target, preserve them and allow delivery.
 """
 import re
 

@@ -64,8 +64,8 @@ class PublicationContractTests(unittest.TestCase):
                            ('Анонсовано відключення 22 ЖОВТНЯ','unnamed_service')]:
             self.assertIn(code,publication_issues(self.registry,self.text+'\n'+added,{},()))
 
-    def test_overlength_and_extra_public_category_are_blocked(self):
-        self.assertIn('length',publication_issues(self.registry,self.text+' факт'*501,{},()))
+    def test_length_is_advisory_but_extra_public_category_is_blocked(self):
+        self.assertNotIn('length',publication_issues(self.registry,self.text+' факт'*501,{},()))
         self.assertIn('public_format',publication_issues(self.registry,self.text+'\n2.4. Додаткове',{},()))
 
     def test_invalid_response_cannot_be_bypassed_by_later_api_unavailability(self):
