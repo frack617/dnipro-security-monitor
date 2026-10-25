@@ -1,5 +1,5 @@
 {
-  "run_id": "40066286756",
+  "run_id": "40171229187",
   "attempts": [
     {
       "attempt": 1,
@@ -11,9 +11,9 @@
       "text_part_count": 1,
       "text": "```json\n{\"issues\": []}\n```",
       "usage": {
-        "promptTokenCount": 19142,
+        "promptTokenCount": 37381,
         "candidatesTokenCount": 10,
-        "totalTokenCount": 19152
+        "totalTokenCount": 37391
       }
     }
   ]

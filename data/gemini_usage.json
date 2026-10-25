@@ -1,15 +1,6 @@
 {
   "events": [
     {
-      "id": "39727618441:2026-10-22T05:22:22.098672+00:00:51",
-      "at": "2026-10-22T05:22:22.098672+00:00",
-      "model": "gemini-2.5-flash-lite",
-      "event": "production_dispatch",
-      "run_id": "39727618441",
-      "stage": "core_review",
-      "outcome": "http_200"
-    },
-    {
       "id": "39905697446:2026-10-23T05:26:01.343818+00:00:24",
       "at": "2026-10-23T05:26:01.343818+00:00",
       "model": "gemini-2.5-flash-lite",
@@ -24,6 +15,15 @@
       "model": "gemini-2.5-flash-lite",
       "event": "production_dispatch",
       "run_id": "40066286756",
+      "stage": "core_review",
+      "outcome": "http_200"
+    },
+    {
+      "id": "40171229187:2026-10-25T07:02:01.611257+00:00:3",
+      "at": "2026-10-25T07:02:01.611257+00:00",
+      "model": "gemini-2.5-flash-lite",
+      "event": "production_dispatch",
+      "run_id": "40171229187",
       "stage": "core_review",
       "outcome": "http_200"
     }
