@@ -65,7 +65,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','reference/communities_dp.json'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','reference/communities_dp.json'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

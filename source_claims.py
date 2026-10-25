@@ -30,6 +30,14 @@ def canonical(text):
 def boilerplate(text):
     """Never match a prefix: an additional consequence makes the clause stay."""
     patterns = [
+        r'Наслідки уточнюємо[.!]?',
+        r'Загроза для міста зберігається[.!]?',
+        r'Залишайтеся у безпечних місцях до відбою повітряної тривоги[.!]?',
+        r'Медики надають усю необхідну допомогу[.!]?',
+        r'Потерпілим надають необхідну медичну допомогу[.!]?',
+        r'На місці працюють усі екстрені служби[.!]?',
+        r'Остаточні наслідки атаки встановлюють слідчо-оперативні групи поліції[.!]?',
+        r'Правоохоронці документують наслідки обстрілу в межах кримінального провадження, відкритого за ч\. 1 ст\. 438 Кримінального кодексу України[.!]?',
         r'Медики надають (?:їм|постраждалим) (?:усю необхідну )?допомогу[.!]?',
         r'Інформацію (?:про|щодо) постраждалих уточнюємо[.!]?',
         r'Загроза(?: для міста)? триває[.!]?',
@@ -56,10 +64,13 @@ def select_units(text, source_key='', published_at=None, reporting_period=None, 
     lines=[line for line in text.splitlines() if not boilerplate(clean_lines(line))]
     for i in range(len(lines)-1):
         if (len(lines[i].strip())>15 and not re.search(r'[.!?:;]$',lines[i].strip()) and
-            re.match(r'\d{1,2}\s+[а-яіїєґ]+\s+(?:ворог|росіяни)\b',lines[i+1].strip(),re.I)):
+            (re.match(r'\d{1,2}\s+[а-яіїєґ]+\s+(?:ворог|росіяни)\b',lines[i+1].strip(),re.I) or
+             re.match(r'(?:Внаслідок|Унаслідок|Сьогодні)\b',lines[i+1].strip()))):
             lines[i]+='.'
     body=' '.join(lines)
     body=clean_lines(body)
+    # Protect the legal abbreviation sentence from the generic tokenizer.
+    body=re.sub(r'Правоохоронці документують наслідки обстрілу в межах кримінального провадження, відкритого за ч\. 1 ст\. 438 Кримінального кодексу України\.(?=\s|$)', '', body).strip()
     for index,sentence in enumerate(sentences(body)):
         start=body.find(sentence,offset)
         end=start+len(sentence) if start>=0 else None
@@ -149,11 +160,19 @@ def claim_plan(registry, report):
                 at=datetime.fromisoformat(r['reporting_period'])
                 marker='за '+date_label(at)+f' (станом на {at:%H:%M}):'
                 body=next((p for p in report.split('\n\n') if marker.casefold() in p.casefold()),'')
+            overlap=next((p for p in registry.get('clause_projection_proofs',[]) if p['record_id']==r['id'] and canonical(p['source_text'])==canonical(u['source_text'])),None)
+            if overlap:
+                m=re.search(r'(?m)^'+re.escape(overlap['place'])+r':\n([^\n]+)',report)
+                paragraph=m[1] if m else ''
+                from operational_prose import concise
+                if all(surface_key(concise(tidy(target,r['published_at']))) in surface_key(paragraph) for target in overlap['targets']):
+                    result.append(dict(item,disposition='covered',reason=overlap['reason']));continue
             if u.get('place'):
                 m=re.search(r'(?m)^'+re.escape(u['place'])+r':\n([^\n]+)',report)
                 body=m[1] if m else ''
             text=tidy(u['source_text'],r['published_at'])
-            visible=surface_key(text) in surface_key(body)
+            from operational_prose import concise
+            visible=surface_key(concise(text if text.endswith(('.', '!', '?')) else text+'.')) in surface_key(body)
             reason='verbatim_or_morphological_rendering' if visible else None
             if not visible:
                 reason=clause_coverage(text,body)

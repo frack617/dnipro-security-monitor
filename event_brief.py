@@ -14,10 +14,15 @@ KYIV = ZoneInfo('Europe/Kyiv')
 PATTERNS = dict(PLACE_PATTERNS, **{
     'Кам’янський район': r'кам[’\x27]янськ\w*\s+район\w*',
     'Синельниківський район': r'синельниківськ\w*\s+район\w*|синельниківщин\w*',
+    'Синельникове': r'\bсинельников(?:е|ому|а)\b',
+    'Самарівський район': r'\bсамарівськ\w*\s+район\w*',
 })
 
 
 def locality(text):
+    # A hospital destination is not the location of the attack. Keep the
+    # preceding event context through such a sentence.
+    text = re.sub(r'(?:до|у|в)\s+(?:обласної\s+)?лікарн\w*\s+(?:у|в)\s+Дніпрі\b', '', text, flags=re.I)
     names = [name for name,p in PATTERNS.items() if re.search(p,text,re.I)]
     if set(names)=={'Нікопольщина','Нікополь'}:
         return 'Нікопольщина'
@@ -182,6 +187,20 @@ def project_attacks(registry):
                 city['refs'].append(r['id'])
         city['extra']=list(dict.fromkeys(city['extra']))
     bulletins=[r for r in records if r.get('reporting_period')]
+    from operational_prose import clinical_overlap
+    overlap=clinical_overlap(records)
+    if overlap:
+        # Lead with the identified attack before its clinical continuation;
+        # otherwise deleting its repeated introductory count leaves an
+        # orphaned 'all hospitalized' at the start of the paragraph.
+        police=next((r for r,_,_ in overlap if r['source_key'].split('/')[0].casefold()=='gunpvdp'),None)
+        if police:
+            continuations={r['id'] for r,_,_ in overlap if r['source_key'].split('/')[0].casefold()=='dnipropetrovskaoda'}
+            following=[r for r in records if r['id'] in continuations]
+            records=[r for r in records if r['id'] not in continuations]
+            index=records.index(police)+1
+            records[index:index]=following
+    registry['clause_projection_proofs']=[dict(record_id=r['id'],source_text=s,targets=targets,place='Нікопольщина',reason='unique_community_weapon_patient_count_child_age') for r,s,targets in overlap]
     recaps={r['id']:rescue_supplement(r,bulletins,city) for r in records if not r.get('reporting_period')}
     groups={};headers=[];mapping=[]
     def add(place,period,text,refs):
@@ -193,6 +212,15 @@ def project_attacks(registry):
     for r in records:
         at=r.get('reporting_period')
         raw=tidy(r['display'],r['published_at'])
+        # Agency attribution matters when clinical assessments differ. It
+        # is not permission to collapse patients or choose one assessment.
+        if r['source_key'].split('/')[0].casefold()=='dnipropetrovskaoda':
+            raw=re.sub(r'(У тяжкому стані й \d+-річний чоловік\.)', r'За ОВА: \1',raw)
+        if r['source_key'].split('/')[0].casefold()=='gunpvdp':
+            raw=raw.replace('Усі вони перебувають у стані середньої тяжкості.',
+                            'За поліцією: Усі вони перебувають у стані середньої тяжкості.')
+        for record,sentence,targets in overlap:
+            if record['id']==r['id']:raw=raw.replace(tidy(sentence,r['published_at']), '').strip()
         source_place=None if re.search(r'\bрайонах\b',raw,re.I) else locality(raw)
         if r['id'] in covered:
             mapping.append({'covered_record_id':r['id'],'covered_by':covered[r['id']],

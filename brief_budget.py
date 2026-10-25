@@ -21,12 +21,27 @@ def group_streets(match):
                             for kind,names in groups.items())
 
 
+def compact_overview(text):
+    # This is the formatter's editorial overview, not a source assertion.
+    pattern=r'(?m)^Зафіксовано атаки у (.+?), а також у громадах (.+?) районів\.'
+    def replace(m):
+        cities=m[1].replace('Дніпрі','Дніпро').replace('Павлограді','Павлоград')
+        districts=re.sub(r'ського(?=,|$)', 'ський', m[2])
+        districts=re.sub(r'зького(?=,|$)', 'зький', districts)
+        return 'Атаки: '+cities+'; '+districts+' райони.'
+    return re.sub(pattern,replace,text)
+
+
 def fit_layout(report,limit=500):
     initial=len(report.split());operations=[]
+    from operational_prose import concise
     transforms=[
         ('short_editorial_overview',lambda t:t.replace(
             'Офіційні джерела повідомили про атаки та їхні наслідки','Зафіксовано атаки')),
         ('short_bulletin_labels',lambda t:re.sub(r'(?m)^(?:Денне|Ранкове) зведення за ', 'За ',t)),
+        ('short_dated_local_labels',lambda t:re.sub(r'За ранковими даними (\d{1,2} \w+)', r'Вранці \1',t)),
+        ('compact_editorial_geography',compact_overview),
+        ('bounded_operational_prose',concise),
         ('group_street_type_labels',lambda t:re.sub(
             r'(?m)(для окремих будинків на )((?:вул\.|пров\.)[^\n]+)(?=\.$)',group_streets,t)),
     ]
