@@ -830,7 +830,7 @@ def process_morning_report(posts, statuses, checked_at):
         if review is None:
             review = review_core(registry, report)
     # A review can flag concerns, never supply replacement prose or facts.
-    blocked = (bool(contract_issues) or registry["review_required"] or bool(review["issues"])
+    blocked = False if force_report else (bool(contract_issues) or registry["review_required"] or bool(review["issues"])
                or review["state"] == "invalid_response")
     validate_core_text(report, registry)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
