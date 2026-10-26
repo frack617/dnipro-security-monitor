@@ -78,10 +78,10 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: openai/gpt-oss-120b
           REPORT_PROVIDER: ${{ inputs.report_provider || 'auto' }}
-          FORCE_MORNING_REPORT: ${{ github.event_name == 'schedule' || inputs.force_report == true }}
-          SEND_MORNING_REPORT: ${{ github.event_name == 'schedule' || inputs.send_report == true }}
-          SEND_OPERATIONAL_ALERTS: ${{ github.event_name == 'schedule' || inputs.send_alerts == true || (inputs.send_report == true && inputs.force_report != true) }}
-          PRODUCTION_MONITOR: ${{ github.event_name == 'schedule' || (inputs.send_report == true && inputs.force_report != true) }}
+          FORCE_MORNING_REPORT: ${{ github.event_name == 'schedule' || inputs.force_report == true || inputs.force_report == 'true' }}
+          SEND_MORNING_REPORT: ${{ github.event_name == 'schedule' || inputs.send_report == true || inputs.send_report == 'true' }}
+          SEND_OPERATIONAL_ALERTS: ${{ github.event_name == 'schedule' || inputs.send_alerts == true || inputs.send_alerts == 'true' || ((inputs.send_report == true || inputs.send_report == 'true') && inputs.force_report != true && inputs.force_report != 'true') }}
+          PRODUCTION_MONITOR: ${{ github.event_name == 'schedule' || ((inputs.send_report == true || inputs.send_report == 'true') && inputs.force_report != true && inputs.force_report != 'true') }}
           USE_MORNING_RESERVE: ${{ inputs.use_morning_reserve || 'false' }}
 
       - name: Save new data
