@@ -4,7 +4,7 @@
     "start": "2026-10-25T08:00:00+02:00",
     "end": "2026-10-26T08:00:00+02:00"
   },
-  "checked_at": "2026-10-26T06:02:03.386770+00:00",
+  "checked_at": "2026-10-26T06:16:55.705795+00:00",
   "records": [
     {
       "id": "41009e6fc30f26e997d2",
@@ -2013,7 +2013,7 @@
     "raw_address_to_readers",
     "lost_source_claim"
   ],
-  "run_id": "40277447487",
+  "run_id": "40278864657",
   "report_sha256": "61631c9cfd4ad8592859482184880466f96fa71c02f0a6578dab31cbf94badd9",
   "review": {
     "state": "local_contract",
