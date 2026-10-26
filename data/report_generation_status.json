@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-26T09:23:47.152105+00:00",
+  "checked_at": "2026-10-26T09:37:01.349495+00:00",
   "report_date": "2026-10-26",
-  "run_id": "40299147194",
+  "run_id": "40300869261",
   "report_sha256": "8fc06dd9dd2f34cc8775af6a57269433367022e7cb895d8251a3eb96c963dda5",
   "report_kind": "source_core",
   "author_failure_type": null,
@@ -24,7 +24,7 @@
     "issues": []
   },
   "review_required": true,
-  "review_input_sha256": "d9bd0939ad16cf3bfafe5c0ec8d9fd6b75619e481c01cd38bbc90423825624a6",
+  "review_input_sha256": "3798c3d05668fadd2b58ff8f63c31cd0408e9cdd07f49a646f261fe445a3500c",
   "publication_issues": [],
   "coverage_complete": true,
   "delivery_state": "blocked_review"
