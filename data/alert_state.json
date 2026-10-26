@@ -47,9 +47,9 @@
   "last_daily_delivery": {
     "date": "2026-10-26",
     "report_sha256": "8fc06dd9dd2f34cc8775af6a57269433367022e7cb895d8251a3eb96c963dda5",
-    "run_id": "40302789290",
+    "run_id": "40302920545",
     "confirmed_parts": 1,
-    "confirmed_at": "2026-10-26T09:51:56.231769+00:00"
+    "confirmed_at": "2026-10-26T09:52:58.751997+00:00"
   },
   "daily_report_block_notice": "2026-10-26"
 }
