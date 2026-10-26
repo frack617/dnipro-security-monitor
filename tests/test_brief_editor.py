@@ -206,7 +206,7 @@ class BriefEditorTests(unittest.TestCase):
             self.assertEqual(publication_issues(r,text,{}),[],day)
             self.assertTrue(r['public_projection']['overview'])
 
-    def test_geography_conflict_blocks_before_model_or_delivery(self):
+    def test_geography_conflict_skips_model_but_delivers_flagged_draft(self):
         posts=copy.deepcopy(F['posts'])
         for p in posts:p['text']=p['text'].replace('Мозолевській','Неправдивській')
         with tempfile.TemporaryDirectory() as folder:
@@ -216,9 +216,10 @@ class BriefEditorTests(unittest.TestCase):
                  patch.dict(os.environ,{'SEND_MORNING_REPORT':'true','PRODUCTION_MONITOR':'true','FORCE_MORNING_REPORT':'false'}), \
                  patch('core_review.review_core') as reviewer,patch.object(c,'deliver_morning_report') as send, \
                  patch.object(c,'send_bot_message'):
-                with self.assertRaises(RuntimeError):c.process_morning_report(posts,F['status']['channels'],NOW)
+                c.process_morning_report(posts,F['status']['channels'],NOW)
                 reviewer.assert_not_called()
-                send.assert_not_called()
+                send.assert_called_once()
+                self.assertIn("для подальшої вичитки",send.call_args.args[0])
 
 
 if __name__=='__main__':unittest.main()

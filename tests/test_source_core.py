@@ -236,14 +236,13 @@ class IntegrationTests(unittest.TestCase):
             c.process_morning_report(f['posts'],f['status']['channels'],now)
             send.assert_not_called()
 
-    def test_review_concern_blocks_automatic_send_but_saves_preview(self):
+    def test_review_concern_is_saved_and_delivered_for_human_editing(self):
         f=json.loads(FIXTURE.read_text());now=datetime.fromisoformat(f['status']['checked_at'])
         with tempfile.TemporaryDirectory() as d,patch.object(c,'DATA_DIR',Path(d)),patch.object(c,'MORNING_REPORT_FILE',Path(d)/'morning_report.md'),patch.object(c,'read_alert_state',return_value={}),patch.dict(os.environ,{'SEND_MORNING_REPORT':'true'}),patch('core_review.review_core',return_value={'state':'concerns','requests':1,'provider':'gemini','issues':[{'source_key':'dnipropetrovskaODA/32693','code':'number_scope'}]}),patch.object(c,'deliver_morning_report') as send:
-            with self.assertRaisesRegex(RuntimeError,'requires manual review'):
-                c.process_morning_report(f['posts'],f['status']['channels'],now)
-            send.assert_not_called()
+            c.process_morning_report(f['posts'],f['status']['channels'],now)
+            send.assert_called_once()
             self.assertTrue(Path(d,'morning_report.md').exists())
-            self.assertEqual(json.loads(Path(d,'report_generation_status.json').read_text())['delivery_state'],'blocked_review')
+            self.assertEqual(json.loads(Path(d,'report_generation_status.json').read_text())['delivery_state'],'confirmed')
 
 
 

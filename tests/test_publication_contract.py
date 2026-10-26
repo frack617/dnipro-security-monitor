@@ -68,25 +68,24 @@ class PublicationContractTests(unittest.TestCase):
         self.assertNotIn('length',publication_issues(self.registry,self.text+' факт'*501,{},()))
         self.assertIn('public_format',publication_issues(self.registry,self.text+'\n2.4. Додаткове',{},()))
 
-    def test_invalid_response_cannot_be_bypassed_by_later_api_unavailability(self):
+    def test_invalid_response_remains_in_audit_without_blocking_delivery(self):
         results = [{'state':'invalid_response','requests':1,'provider':'gemini','issues':[]},
                    {'state':'unavailable','requests':0,'provider':'gemini','issues':[]}]
         with pipeline(results) as (root,review,send,notice):
             for minutes in (0,30):
-                with self.assertRaisesRegex(RuntimeError,'requires manual review'):
-                    c.process_morning_report(F['posts'],F['status']['channels'],NOW+timedelta(minutes=minutes))
+                c.process_morning_report(F['posts'],F['status']['channels'],NOW+timedelta(minutes=minutes))
             self.assertEqual(review.call_count,1)
-            send.assert_not_called()
-            self.assertEqual(notice.call_count,1)
+            self.assertEqual(send.call_count,2)
+            notice.assert_not_called()
             status = json.loads((root/'report_generation_status.json').read_text())
             self.assertEqual(status['review']['state'],'invalid_response')
             self.assertTrue(status['review']['reused'])
             self.assertEqual(status['review']['requests'],0)
-            self.assertEqual(status['delivery_state'],'blocked_review')
+            self.assertEqual(status['delivery_state'],'confirmed')
             state = json.loads((root/'alert_state.json').read_text())
             self.assertEqual(state['last_daily_report'],'2026-10-21')
             self.assertEqual(state['alerted_keys'],['keep'])
-            self.assertEqual(state['daily_report_block_notice'],'2026-10-22')
+            self.assertNotIn('daily_report_block_notice',state)
 
     def test_valid_review_reused_for_identical_dry_run_without_second_request(self):
         with pipeline([{'state':'completed','requests':1,'provider':'gemini','issues':[]}],False) as (root,review,send,notice):
@@ -100,49 +99,46 @@ class PublicationContractTests(unittest.TestCase):
         issue = {'source_key':'dnipropetrovskaODA/32729','code':'number_scope'}
         with pipeline([{'state':'concerns','requests':1,'provider':'gemini','issues':[issue]}]) as (root,review,send,notice):
             for minutes in (0,30):
-                with self.assertRaises(RuntimeError):
-                    c.process_morning_report(F['posts'],F['status']['channels'],NOW+timedelta(minutes=minutes))
+                c.process_morning_report(F['posts'],F['status']['channels'],NOW+timedelta(minutes=minutes))
             self.assertEqual(review.call_count,1)
             self.assertEqual(json.loads((root/'report_generation_status.json').read_text())['review']['issues'],[issue])
-            send.assert_not_called()
+            self.assertEqual(send.call_count,2)
 
     def test_changed_source_gets_new_bounded_review(self):
         posts = copy.deepcopy(F['posts'])
         next(p for p in posts if p['key']=='dnipropetrovskaODA/32729')['text'] += '\nПошкоджено дах.'
         with pipeline([{'state':'invalid_response','requests':1,'provider':'gemini','issues':[]},
                        {'state':'completed','requests':1,'provider':'gemini','issues':[]}]) as (root,review,send,notice):
-            with self.assertRaises(RuntimeError):
-                c.process_morning_report(F['posts'],F['status']['channels'],NOW)
+            c.process_morning_report(F['posts'],F['status']['channels'],NOW)
             c.process_morning_report(posts,F['status']['channels'],NOW+timedelta(minutes=30))
             self.assertEqual(review.call_count,2)
-            self.assertEqual(send.call_count,1)
+            self.assertEqual(send.call_count,2)
             self.assertIn('Пошкоджено дах.',send.call_args.args[0])
 
-    def test_incomplete_source_blocks_before_spending_review_request(self):
+    def test_incomplete_source_delivers_flagged_draft_without_review_request(self):
         statuses = copy.deepcopy(F['status']['channels'])
         statuses.pop('SBUkr')
         with pipeline([]) as (root,review,send,notice):
-            with self.assertRaises(RuntimeError):
-                c.process_morning_report(F['posts'],statuses,NOW)
+            c.process_morning_report(F['posts'],statuses,NOW)
             review.assert_not_called()
-            send.assert_not_called()
-            self.assertEqual(notice.call_count,1)
+            send.assert_called_once()
+            notice.assert_not_called()
             status = json.loads((root/'report_generation_status.json').read_text())
             self.assertIn('source_coverage:SBUkr',status['publication_issues'])
             self.assertEqual(status['review']['requests'],0)
             self.assertFalse(status['coverage_complete'])
 
-    def test_failed_delay_notification_does_not_mark_report_delivered(self):
+    def test_incomplete_source_needs_no_separate_delay_notification(self):
         statuses = copy.deepcopy(F['status']['channels'])
         statuses['adm_dp']['ok'] = False
         with pipeline([]) as (root,review,send,notice):
             notice.side_effect = RuntimeError('offline')
-            with self.assertRaisesRegex(RuntimeError,'requires manual review'):
-                c.process_morning_report(F['posts'],statuses,NOW)
+            c.process_morning_report(F['posts'],statuses,NOW)
             state = json.loads((root/'alert_state.json').read_text())
             self.assertNotIn('daily_report_block_notice',state)
             self.assertEqual(state['last_daily_report'],'2026-10-21')
-            send.assert_not_called()
+            send.assert_called_once()
+            notice.assert_not_called()
 
     def test_real_fixture_delivers_exact_saved_text_with_complete_sources(self):
         with pipeline([{'state':'completed','requests':1,'provider':'gemini','issues':[]}]) as (root,review,send,notice):

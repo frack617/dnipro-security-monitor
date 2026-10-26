@@ -127,8 +127,8 @@ class SourceClaimTests(unittest.TestCase):
                  patch('fact_registry.render_registry',side_effect=lambda r:real_render(r).replace('Евакуйовано 17 пацієнтів.','')), \
                  patch('core_review.review_core') as reviewer,patch.object(c,'deliver_morning_report') as delivery, \
                  patch.object(c,'send_bot_message'):
-                with self.assertRaises(RuntimeError):c.process_morning_report(posts,F['status']['channels'],NOW)
-                reviewer.assert_not_called();delivery.assert_not_called()
+                c.process_morning_report(posts,F['status']['channels'],NOW)
+                reviewer.assert_not_called();delivery.assert_called_once()
                 status=json.loads((root/'report_generation_status.json').read_text())
                 self.assertIn('lost_source_claim',status['publication_issues'])
 

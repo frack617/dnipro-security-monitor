@@ -90,7 +90,7 @@ class CasualtySummaryTests(unittest.TestCase):
             self.assertIn(fact,t)
         self.assertIn('unmarked_casualty_totals',publication_issues(r,t.replace(TOTALS_NOTE,''),{}))
 
-    def test_duplicate_blocks_production_before_reviewer_and_delivery(self):
+    def test_duplicate_is_flagged_for_human_review_without_suppressing_delivery(self):
         import collector as c
         real_render=render_registry
         def inject(registry):
@@ -103,8 +103,8 @@ class CasualtySummaryTests(unittest.TestCase):
                  patch.dict(os.environ,{'PRODUCTION_MONITOR':'true','SEND_MORNING_REPORT':'true','FORCE_MORNING_REPORT':'false'}), \
                  patch('fact_registry.render_registry',side_effect=inject),patch('core_review.review_core') as reviewer, \
                  patch.object(c,'deliver_morning_report') as send,patch.object(c,'send_bot_message'):
-                with self.assertRaises(RuntimeError):c.process_morning_report(F['posts'],F['status']['channels'],NOW)
-                reviewer.assert_not_called();send.assert_not_called()
+                c.process_morning_report(F['posts'],F['status']['channels'],NOW)
+                reviewer.assert_not_called();send.assert_called_once()
                 self.assertIn('duplicate_casualty_detail',json.loads((root/'report_generation_status.json').read_text())['publication_issues'])
 
 

@@ -182,7 +182,7 @@ class ReviewerSafetyTests(unittest.TestCase):
                 result=review_core(self.core,self.text)
             self.assertEqual(result['state'],'invalid_response')
 
-    def test_invalid_review_blocks_delivery_and_does_not_touch_delivery_state(self):
+    def test_invalid_review_is_advisory_and_does_not_fake_a_receipt(self):
         with tempfile.TemporaryDirectory() as folder, \
              patch.object(c,'DATA_DIR',Path(folder)), \
              patch.object(c,'MORNING_REPORT_FILE',Path(folder)/'morning.md'), \
@@ -190,11 +190,10 @@ class ReviewerSafetyTests(unittest.TestCase):
              patch.dict(os.environ,{'SEND_MORNING_REPORT':'true','FORCE_MORNING_REPORT':'false'}), \
              patch('core_review.review_core',return_value={'state':'invalid_response','requests':1,'issues':[]}), \
              patch.object(c,'deliver_morning_report') as send:
-            with self.assertRaisesRegex(RuntimeError,'manual review'):
-                c.process_morning_report(F['posts'],F['status']['channels'],NOW)
-            send.assert_not_called()
+            c.process_morning_report(F['posts'],F['status']['channels'],NOW)
+            send.assert_called_once()
             status=json.loads(Path(folder,'report_generation_status.json').read_text())
-            self.assertEqual(status['delivery_state'],'blocked_review')
+            self.assertEqual(status['delivery_state'],'confirmed')
             self.assertFalse(Path(folder,'report_delivery_status.json').exists())
 
 

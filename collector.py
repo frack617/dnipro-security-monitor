@@ -802,18 +802,22 @@ def process_morning_report(posts, statuses, checked_at):
         if send_enabled:
             print("Resuming partially delivered morning report without AI calls")
             deliver_morning_report(pending["text"], state, report_date)
+            generation_file = DATA_DIR / 'report_generation_status.json'
+            try:
+                status = json.loads(generation_file.read_text(encoding='utf-8'))
+                if (status.get('report_date') == report_date and status.get('report_sha256') ==
+                        hashlib.sha256(pending['text'].encode('utf-8')).hexdigest()):
+                    status['delivery_state'] = 'confirmed'
+                    generation_file.write_text(json.dumps(status, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+            except (OSError, ValueError):
+                pass
         return
 
     from fact_registry import compile_registry, render_registry, validate_core_text
     from core_review import review_core
     from report_contract import publication_issues, review_input_digest, reusable_review
-    registry = compile_registry(posts, statuses, checked_at)
-    report = render_registry(registry)
+    from daily_draft import reserve_report, draft_notice
     production = os.getenv('PRODUCTION_MONITOR', '').lower() in {'1','true','yes'}
-    contract_issues = publication_issues(registry, report, statuses,
-                                       load_channels() if production else ())
-    registry['publication_issues'] = contract_issues
-    input_digest = review_input_digest(registry, report)
     generation_file = DATA_DIR / 'report_generation_status.json'
     try:
         previous = json.loads(generation_file.read_text(encoding='utf-8'))
@@ -821,18 +825,43 @@ def process_morning_report(posts, statuses, checked_at):
             previous = {}
     except (OSError, ValueError):
         previous = {}
-    if contract_issues:
-        review = {'state':'local_contract', 'requests':0, 'provider':None, 'issues':[]}
-    elif registry['review_required']:
-        review = {'state':'local_conflict', 'requests':0, 'provider':None, 'issues':[]}
-    else:
-        review = reusable_review(previous, input_digest, report_date)
-        if review is None:
-            review = review_core(registry, report)
-    # A review can flag concerns, never supply replacement prose or facts.
-    blocked = False if force_report else (bool(contract_issues) or registry["review_required"] or bool(review["issues"])
-               or review["state"] == "invalid_response")
-    validate_core_text(report, registry)
+    generation_error = None
+    try:
+        registry = compile_registry(posts, statuses, checked_at)
+        report = render_registry(registry)
+        contract_issues = publication_issues(registry, report, statuses,
+                                           load_channels() if production else ())
+        registry['publication_issues'] = contract_issues
+        input_digest = review_input_digest(registry, report)
+        if contract_issues:
+            review = {'state':'local_contract', 'requests':0, 'provider':None, 'issues':[]}
+        elif registry['review_required']:
+            review = {'state':'local_conflict', 'requests':0, 'provider':None, 'issues':[]}
+        else:
+            review = reusable_review(previous, input_digest, report_date)
+            if review is None:
+                try:
+                    review = review_core(registry, report)
+                except Exception as error:
+                    review = {'state':'unavailable', 'requests':0, 'provider':None,
+                              'issues':[], 'error_type':type(error).__name__}
+        validate_core_text(report, registry)
+    except Exception as error:
+        # Rendering/validation failures must not suppress the day's source brief.
+        # Never reuse yesterday's report or certify incomplete data as complete.
+        generation_error = type(error).__name__
+        report = reserve_report(posts, checked_at)
+        registry = {'window':{'start':start_local.isoformat(), 'end':end_local.isoformat()},
+                    'records':[], 'coverage_unproven':True, 'review_required':True,
+                    'generation_error':generation_error}
+        contract_issues = ['generation_error:'+generation_error]
+        input_digest = None
+        review = {'state':'generation_failed', 'requests':0, 'provider':None, 'issues':[]}
+    needs_review = (bool(contract_issues) or registry['review_required'] or bool(review['issues'])
+                    or review['state'] in {'invalid_response','unavailable','generation_failed'})
+    # Checks remain audit evidence. Human editing follows automatic delivery.
+    if needs_review:
+        report = draft_notice(report, contract_issues, review, bool(registry['review_required']))
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     MORNING_REPORT_FILE.write_text(report + "\n", encoding="utf-8")
     run_id = os.getenv("GITHUB_RUN_ID", "local")
@@ -849,12 +878,14 @@ def process_morning_report(posts, statuses, checked_at):
         "length_policy": "advisory",
         "editorial_warnings": ["over_target_length"] if len(report.split()) > 500 else [],
         "budget_plan": registry.get("budget_plan"),
-        "review": review, "review_required": blocked,
+        "review": review, "review_required": needs_review,
+        "delivery_policy": "draft_then_human_review",
+        "report_kind_detail": "source_reserve" if generation_error else "source_core",
         "review_input_sha256": input_digest,
         "publication_issues": contract_issues,
         "coverage_complete": (not registry["coverage_unproven"] and not any(
             code.startswith('source_coverage:') for code in contract_issues)),
-        "delivery_state": "blocked_review" if blocked else "prepared",
+        "delivery_state": "prepared",
     }
     generation_file = DATA_DIR / "report_generation_status.json"
     generation_file.write_text(json.dumps(status, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
@@ -862,21 +893,6 @@ def process_morning_report(posts, statuses, checked_at):
     if not send_enabled:
         print("Morning report dry run: Telegram sending disabled")
         return
-    if blocked:
-        print("Morning report not sent: source or reviewer concerns require review")
-        if production and state.get('daily_report_block_notice') != report_date:
-            reason = ('не підтверджено повне читання джерел' if any(
-                code.startswith('source_coverage:') for code in contract_issues) else
-                'виявлено зауваження до тексту або результату перевірки')
-            try:
-                notified = send_bot_message('Ранкову довідку за '+report_date+
-                    ' затримано. Причина: '+reason+'. Текст не надіслано; його збережено для перевірки.')
-                if notified:
-                    state['daily_report_block_notice'] = report_date
-                    save_alert_state(state)
-            except Exception as error:
-                print('Report delay notification failed: '+type(error).__name__)
-        raise RuntimeError("Protected morning report requires manual review; preview saved")
     try:
         deliver_morning_report(report, state, report_date)
     except Exception:
@@ -1094,8 +1110,8 @@ def main():
     write_outputs(posts, statuses, checked_at, previous_checked_at)
     parser_changed_keys.update(p['key'] for p in posts if p.get('parser_recovered'))
     recovered = recovered_restoration_keys(posts, parser_changed_keys, read_alert_state(), checked_at)
-    alert_failures = process_alerts(posts, checked_at, previous_checked_at, recovered_keys=recovered)
     process_morning_report(posts, statuses, checked_at)
+    alert_failures = process_alerts(posts, checked_at, previous_checked_at, recovered_keys=recovered)
     if alert_failures:
         raise RuntimeError("Operational messages remain pending; next run will retry")
 

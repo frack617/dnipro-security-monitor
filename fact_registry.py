@@ -84,6 +84,9 @@ def shorter_attack(text):
 
 
 def mirror_tokens(text):
+    from brief_editor import REGION_ALIASES
+    for original, canonical in REGION_ALIASES.items():
+        text = re.sub(r'\b'+re.escape(original)+r'\b', canonical, text)
     tokens = re.sub(r'\bгромад[аи]\b', 'громада', normalized(text)).split()
     return [t for t in tokens if t not in {'і', 'й', 'та', 'у', 'в', 'на', 'області'}]
 
@@ -481,7 +484,7 @@ def render_registry(registry):
     elif registry['coverage_unproven']:
         lines.append('Повнота охоплення всіх повідомлень каналів не підтверджена.')
     if registry['review_required']:
-        lines.append('Є розбіжності між джерелами; довідка потребує перевірки перед надсиланням.')
+        lines.append('Є розбіжності між джерелами; автоматична довідка потребує подальшої вичитки.')
     result = '\n'.join(lines).strip()
     if result:
         # Second pass removes repeated editorial labels only. All source

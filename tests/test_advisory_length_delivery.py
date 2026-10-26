@@ -31,7 +31,7 @@ class AdvisoryLengthTests(unittest.TestCase):
         self.assertIn('номером 30.',t)
         self.check_pipeline(posts,concern=False)
 
-    def test_long_report_still_blocks_factual_concerns(self):
+    def test_long_report_delivers_factual_concerns_for_human_review(self):
         self.check_pipeline(long_posts(),concern=True)
 
     def test_lost_fact_in_long_report_still_blocks_locally(self):
@@ -49,8 +49,9 @@ class AdvisoryLengthTests(unittest.TestCase):
                  patch('core_review.review_core',return_value=review) as reviewer, \
                  patch.object(c,'deliver_morning_report') as send,patch.object(c,'send_bot_message'):
                 if concern:
-                    with self.assertRaises(RuntimeError):c.process_morning_report(posts,F['status']['channels'],NOW)
-                    send.assert_not_called()
+                    c.process_morning_report(posts,F['status']['channels'],NOW)
+                    send.assert_called_once()
+                    self.assertIn("для подальшої вичитки",send.call_args.args[0])
                 else:
                     c.process_morning_report(posts,F['status']['channels'],NOW)
                     send.assert_called_once()
