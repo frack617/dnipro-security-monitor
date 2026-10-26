@@ -25,7 +25,9 @@ def compact_overview(text):
     # This is the formatter's editorial overview, not a source assertion.
     pattern=r'(?m)^Зафіксовано атаки у (.+?), а також у громадах (.+?) районів\.'
     def replace(m):
-        cities=m[1].replace('Дніпрі','Дніпро').replace('Павлограді','Павлоград')
+        cities=m[1]
+        for old,new in [('Дніпрі','Дніпро'),('Павлограді','Павлоград'),('Нікополі','Нікополь'),('Кривому Розі','Кривий Ріг'),('Самарі','Самар'),('передмісті Дніпра','передмістя Дніпра')]:
+            cities=cities.replace(old,new)
         districts=re.sub(r'ського(?=,|$)', 'ський', m[2])
         districts=re.sub(r'зького(?=,|$)', 'зький', districts)
         return 'Атаки: '+cities+'; '+districts+' райони.'

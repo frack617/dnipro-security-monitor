@@ -129,10 +129,18 @@ def merge_mirrors(records, diagnostics):
 
 def service_display(post, end):
     raw = post.get('text', '')
-    from operational_facts import temporary_power_schedule, dated_power_interruption
-    schedule = dated_power_interruption(post) or temporary_power_schedule(post)
+    from operational_facts import temporary_power_schedule, dated_power_interruption, queue_power_schedule
+    schedule = queue_power_schedule(post) or dated_power_interruption(post) or temporary_power_schedule(post)
     if schedule:
         return schedule
+    if (post.get('channel','').casefold()=='cek_info' and re.search(r'НЕК ["«]Укренерго',raw) and
+        re.search(r'Черга \d+\.\d+',raw)):
+        # Unknown queue payloads retain every source clause; remove only
+        # the courtesy opening and explicitly name the electrical service.
+        body=clean_lines(raw)
+        body=re.sub(r'^Шановні споживачі!\s*','',body)
+        body=re.sub(r'^Повідомляємо, що\s*','',body)
+        return 'ЦЕК: відключення електроенергії. '+body
     # A restoration estimate without its own named affected area adds no useful
     # location-specific information. Do not infer that it updates another post.
     if (re.search(r'плануємо відновити електропостачання', raw, re.I)
@@ -387,6 +395,31 @@ def compile_registry(posts, statuses, checked_at):
                 rec['reason'] = 'regional_reconnaissance_link_separate_from_detention_place'
             selected.append(rec)
         records.append(rec)
+    from operational_facts import queue_power_schedule
+    schedule_groups={}
+    for rec in services:
+        data=queue_power_schedule({'channel':rec['source_key'].split('/')[0],
+                                  'text':rec['source_text'],'published_at':rec['published_at']},details=True)
+        if not data:continue
+        rec['service_schedule']=data
+        schedule_groups.setdefault((data['operator'],data['date'],tuple(data['declared']),tuple(data['queues'])),[]).append(rec)
+    for group in schedule_groups.values():
+        group.sort(key=lambda r:r['published_at'])
+        latest=group[-1]
+        if not latest['service_schedule']['is_update']:continue
+        for old in group[:-1]:
+            if old['published_at']<latest['published_at']:
+                old['state']='superseded';old['reason']='complete_operator_schedule_update'
+                old['superseded_by']=latest['id'];old['display']=None
+    selected=[rec for rec in selected if rec['state']!='superseded']
+    from event_brief import locality
+    for rec in selected:
+        if not rec.get('reporting_period') or rec['scope']=='Дніпропетровська область':continue
+        if rec['source_text'].startswith('Всюди минулося без постраждалих'):continue
+        header=next((r for r in selected if r.get('reporting_period')==rec['reporting_period'] and r['scope']=='Дніпропетровська область'),None)
+        if header and not locality(rec['source_text']):
+            context=locality(header['source_text'])
+            if context:rec['scope_context']=context
     from source_claims import prepare_claims, resolve_updates
     prepare_claims(selected)
     resolve_updates(selected)

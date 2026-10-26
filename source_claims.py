@@ -97,14 +97,16 @@ def selected_text(text):
 
 def prepare_claims(records):
     """Freeze the selected source clauses before any coverage resolution."""
-    from event_brief import tidy,locality
+    from event_brief import tidy,locality,regional_fire_completion
     for r in records:
         if r['section']!='2.1' or not r.get('display'):continue
         value=(r['source_text'] if r.get('reporting_period') else
                r.get('selection_input') or tidy(r['display'],r['published_at']))
         r['claims']=select_units(value,r['source_key'],r['published_at'],r.get('reporting_period'),r.get('scope'))
-        place=None
+        place=r.get('scope_context')
         for u in r['claims']:
+            if regional_fire_completion(u['source_text'],value):
+                u['place']=None;place=None;continue
             if re.search(r'\bпередміст(?:і|я)\b',u['source_text'],re.I) and place=='Дніпро':
                 place='Передмістя Дніпра'
             else:
@@ -174,7 +176,7 @@ def claim_plan(registry, report):
                 from operational_prose import concise
                 if all(surface_key(concise(tidy(target,r['published_at']))) in surface_key(paragraph) for target in overlap['targets']):
                     result.append(dict(item,disposition='covered',reason=overlap['reason']));continue
-            if u.get('place'):
+            if u.get('place') and r.get('scope')!='Дніпропетровська область':
                 m=re.search(r'(?m)^'+re.escape(u['place'])+r':\n([^\n]+)',report)
                 body=m[1] if m else ''
             text=tidy(u['source_text'],r['published_at'])

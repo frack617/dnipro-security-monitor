@@ -20,6 +20,8 @@ PATTERNS = dict(PLACE_PATTERNS, **{
 
 
 def locality(text):
+    from brief_editor import normalize_names
+    text=normalize_names(text)
     # A hospital destination is not the location of the attack. Keep the
     # preceding event context through such a sentence.
     text = re.sub(r'(?:до|у|в)\s+(?:обласної\s+)?лікарн\w*\s+(?:у|в)\s+Дніпрі\b', '', text, flags=re.I)
@@ -36,6 +38,8 @@ def date_label(day):
 
 
 def tidy(text, published=None):
+    from brief_editor import REGION_ALIASES
+    for old,new in REGION_ALIASES.items():text=re.sub(r'\b'+old+r'\b',new,text)
     text = re.sub(r'^Повідомлення від \d{2}:\d{2} \d{2}\.\d{2}:\s*|^Повідомлення від \d{2}\.\d{2} \d{2}:\d{2}:\s*','',text)
     text = re.sub(r'\b(області)\s+\1\b',r'\1',text,flags=re.I)
     if published:
@@ -49,10 +53,17 @@ def tidy(text, published=None):
     return text[:1].upper()+text[1:]
 
 
+def regional_fire_completion(sentence,context):
+    if not re.fullmatch(r'Рятувальники(?: ДСНС)? ліквідували всі пожежі(?:, спричинені ворожими ударами)?[.!]?',sentence):return False
+    names={name for name,p in PATTERNS.items() if re.search(p,context,re.I)}
+    if 'Нікопольщина' in names:names.discard('Нікополь')
+    return len(names)>1 and context.startswith('Дніпропетровщина')
+
+
 def split_places(text):
     chunks=[]
     for sentence in sentences(text):
-        multiple=bool(re.search(r'\bрайонах\b',sentence,re.I))
+        multiple=bool(re.search(r'\bрайонах\b',sentence,re.I)) or regional_fire_completion(sentence,text)
         place=None if multiple else locality(sentence)
         if re.search(r'\bпередміст(?:і|я)\b',sentence,re.I) and chunks and chunks[-1][0]=='Дніпро':
             place='Передмістя Дніпра'
@@ -226,7 +237,7 @@ def project_attacks(registry):
         for link in registry['casualty_summary_links']:
             if link['record_id']==r['id']:
                 raw=raw.replace(tidy(link['source_text'],r['published_at']), link['summary_text'])
-        source_place=None if re.search(r'\bрайонах\b',raw,re.I) else locality(raw)
+        source_place=None if re.search(r'\bрайонах\b',raw,re.I) else locality(raw) or r.get('scope_context')
         if r['id'] in covered:
             mapping.append({'covered_record_id':r['id'],'covered_by':covered[r['id']],
                             'reason':'same_day_same_locality_daily_claims_covered'})

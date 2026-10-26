@@ -171,12 +171,14 @@ def current_attack_piece(text, published, start, end):
     # A recap of the completed preceding night, published on the window's
     # start date, is not a newly timed incident after 08:00. An explicit later
     # attack clock/date still follows the incident-anchor path below.
+    if completed_chronological_day_recap(body,published,start):
+        return None,'completed_chronological_previous_day_recap'
     prior_night=(published.date()==start.date() and
-                 re.search(r'Протягом ночі|Упродовж ночі|Цієї ночі',body,re.I))
+                 re.search(r'Протягом ночі|Упродовж ночі|Цієї ночі|З вечора до ранку',body,re.I))
     if prior_night:
-        later_clock=re.search(r'(?:після|о)\s+(0?8|09|1\d|2[0-3])[:.](\d{2})',body,re.I)
+        later_clock=re.search(r'(?:після|о)\s+(0?8|0?9|1\d|2[0-3])(?:[:.](\d{2})|-ї(?: години)?)',body,re.I)
         if later_clock:
-            at=published.replace(hour=int(later_clock[1]),minute=int(later_clock[2]),second=0,microsecond=0)
+            at=published.replace(hour=int(later_clock[1]),minute=int(later_clock[2] or 0),second=0,microsecond=0)
             if at>published or not start<=at<end:
                 return text,'mixed_incident_times_requires_review'
             offset=0
@@ -401,3 +403,75 @@ def has_operational_attack_assertion(text):
     if re.search(r'\b(?:пошкоджено|пошкоджені|пошкоджена|пошкоджений|понівечено|понівечені|понівечена|зруйновано|зруйнований|зруйновані|вигоріла|горів|горіла|травмовано)\b',body,re.I):
         return True
     return bool(re.search(r'(?:виникла|сталася|зайнялася|спалахнула) пожежа|ліквідувал\w*.{0,25}(?:пожеж|загорян)|тіло загибл|під ударом|потерпали',body,re.I))
+
+
+def queue_power_schedule(post, details=False):
+    """A complete operator queue table, with its declared and row intervals.
+
+    Keep both when a row crosses the declared midnight boundary. Never infer
+    that all oblast residents or all addresses belong to this operator.
+    Unrecognised appended consequences decline this bounded formatter.
+    """
+    if post.get('channel','').casefold()!='cek_info':return None
+    body=clean_lines(post.get('text',''))
+    match=re.fullmatch(
+        r'Шановні споживачі! Повідомляємо, що за розпорядженням диспетчерського центру НЕК ["«]Укренерго["»], '
+        r'(\d{1,2}) ('+'|'.join(MONTHS)+r') з (\d{1,2}:\d{2}) до (\d{1,2}:\d{2}) '
+        r'застосовуватимуться відключення наступних черг:\s*(.+?)\s*'
+        r'Попереджаємо, що протягом доби, за розпорядженням НЕК ["«]Укренерго["»], графік може змінюватися[.!]?',body,re.I)
+    is_update=False
+    if match:
+        day_number,month,start_clock,end_clock,table=match.groups()
+    else:
+        updated=re.fullmatch(
+            r'Шановні споживачі! Повідомляємо про зміни у ГПВ з (\d{1,2}:\d{2}) до (\d{1,2}:\d{2}) на '
+            r'(\d{1,2}) ('+'|'.join(MONTHS)+r'), за розпорядженням диспетчерського центру НЕК ["«]Укренерго["»]\s*'
+            r'(.+?)\s*Попереджаємо, що протягом доби, за розпорядженням НЕК ["«]Укренерго["»], графік може змінюватися[.!]?',body,re.I)
+        if not updated:return None
+        start_clock,end_clock,day_number,month,table=updated.groups();is_update=True
+    entries=list(re.finditer(r'Черга (\d+\.\d+)\s+(\d{1,2}:\d{2})\s*[–—-]\s*(\d{1,2}:\d{2})',table,re.I))
+    if not entries or re.sub(r'Черга \d+\.\d+\s+\d{1,2}:\d{2}\s*[–—-]\s*\d{1,2}:\d{2}','',table,flags=re.I).strip():return None
+    def clock(value):
+        h,m=map(int,value.split(':'))
+        if not (0<=h<=24 and 0<=m<60 and (h<24 or m==0)):raise ValueError('clock')
+        return f'{h:02}:{m:02}'
+    try:
+        year=datetime.fromisoformat(post['published_at']).year
+        day=datetime(year,MONTHS.index(month.lower())+1,int(day_number))
+        declared=(clock(start_clock),clock(end_clock));groups={}
+        for entry in entries:
+            interval=(clock(entry[2]),clock(entry[3]))
+            groups.setdefault(interval,[]).append(entry[1])
+        if len({e[1] for e in entries})!=len(entries):return None
+    except (ValueError,KeyError):return None
+    rows=[]
+    for (a,b),queues in groups.items():
+        row='черги '+', '.join(queues)+' — '+a+'–'+b
+        if b<a:row+=' наступної доби'
+        rows.append(row)
+    rendered=('ЦЕК: '+('оновлені ' if is_update else '')+'графіки відключення електроенергії для споживачів оператора на '+day.strftime('%d.%m.%Y')+
+            '; заявлений період '+declared[0]+'–'+declared[1]+'. За таблицею оператора: '+
+            '; '.join(rows)+'. За повідомленням оператора, графік протягом доби може змінюватися.')
+    if details:
+        return dict(text=rendered,date=day.date().isoformat(),declared=list(declared),
+                    queues=sorted(e[1] for e in entries),is_update=is_update,operator='cek_info')
+    return rendered
+
+
+def completed_chronological_day_recap(body,published,start):
+    """Bounded past-tense completed-day chronology on the window start day.
+
+    The last explicit clock is later than publication, hence belongs to the
+    previous day. Require an ordered series linked by 'за кілька годин' and
+    a completed police daily tally; a mere publication date/count never fits.
+    Explicit dates/today/new episodes disable this inference.
+    """
+    if published.date()!=start.date():return False
+    if not (re.search(r'Упродовж доби армія рф завдала',body,re.I) and
+            re.search(r'За кілька годин російські війська повторно вдарили',body,re.I) and
+            re.search(r'Загалом за добу до поліції надійшло \d+ повідомлень',body,re.I)):
+        return False
+    if DATE.search(body) or re.search(r'сьогодні|щойно|після 08:|після 8:|завтра|очікується|планується',body,re.I):return False
+    times=[int(m[1])*60+int(m[2] or 0) for m in re.finditer(r'\b(?:Після|Близько|о) (\d{1,2})(?::(\d{2})|-ї(?: години)?)',body,re.I)]
+    return (len(times)==2 and times[0]<times[1] and times[1]>published.hour*60+published.minute and
+            'ворог знову атакував' in body)

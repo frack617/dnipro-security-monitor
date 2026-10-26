@@ -12,6 +12,7 @@ CATALOG=json.loads((Path(__file__).parent/'reference/communities_dp.json').read_
 ALIASES={'Підгороднянська':'Підгородненська','Підгороднянській':'Підгородненській',
          'Підгороднянської':'Підгородненської','Підгороднянську':'Підгородненську',
          'Підгороднянською':'Підгородненською'}
+REGION_ALIASES={'Нкопольщину':'Нікопольщину'}
 PARENTS={'Дніпро':'Дніпровський район','Передмістя Дніпра':'Дніпровський район',
          'Кривий Ріг':'Криворізький район','Криворіжжя':'Криворізький район',
          'Нікополь':'Нікопольський район','Нікопольщина':'Нікопольський район',
@@ -24,6 +25,7 @@ def key(name):
 
 
 def normalize_names(text):
+    for old,new in REGION_ALIASES.items():text=re.sub(r'\b'+old+r'\b',new,text)
     for old,new in ALIASES.items():
         text=re.sub(r'\b'+old+r'(?=\s+(?:(?:міськ|сільськ|селищн)\w*\s+)?громад)',new,text)
     return text
@@ -131,6 +133,11 @@ def present_projection(registry):
     projection['paragraphs']=[city_prose(smooth(p)) for p in projection['paragraphs']]
     projection['paragraphs']=[p.replace('Криворіжжя та Синельниківський район:\nДСНС також повідомила про пошкодження об’єктів інфраструктури та ліквідацію пожеж.',
         'За спільними даними ДСНС щодо Криворізького та Синельниківського районів, пошкоджено об’єкти інфраструктури; пожежі ліквідовано.') for p in projection['paragraphs']]
+    for r in registry.get('records',[]):
+        for old,new in REGION_ALIASES.items():
+            if re.search(r'\b'+old+r'\b',r['source_text']):
+                corrected.append({'record_ids':[r['id']],'rule':'explicit_region_typo',
+                                  'original':old,'replacement':new,'reference':r.get('source_url')})
     projection['name_normalizations']=corrected
     projection['overview']=overview(registry)
     projection['reference_checked_on']=CATALOG['checked_on']

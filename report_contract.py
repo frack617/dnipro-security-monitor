@@ -11,6 +11,11 @@ def publication_issues(registry, report, statuses, expected_channels=()):
     issues = []
     from casualty_links import duplicate_summary_issues
     issues.extend(duplicate_summary_issues(registry,report))
+    from operational_facts import queue_power_schedule
+    for record in registry.get('records',[]):
+        if record['section']=='1.4' and record.get('display') and record['source_key'].startswith('cek_info/'):
+            expected=queue_power_schedule({'channel':'cek_info','text':record['source_text'],'published_at':record['published_at']})
+            if expected and expected not in report:issues.append('lost_service_schedule')
     if re.findall(r'(?m)^([12]\.[1-4])\.', report) != ['1.1','1.2','2.1','2.2','2.3']:
         issues.append('public_format')
     if re.search(r'Шановні\s+(?:споживачі|мешканці)|Перепрошуємо за тимчасові', report, re.I):
@@ -32,10 +37,10 @@ def publication_issues(registry, report, statuses, expected_channels=()):
         if re.search(r'Повідомлення від|За зведенням на|сьогоднішньої атаки|області області',attack,re.I):
             issues.append('source_feed_prose')
     if projection is not None:
-        from brief_editor import unsupported_incident_clocks,ALIASES
+        from brief_editor import unsupported_incident_clocks,ALIASES,REGION_ALIASES
         if unsupported_incident_clocks(registry,report):
             issues.append('unsupported_incident_clock')
-        if any(old in report for old in ALIASES):
+        if any(old in report for old in (*ALIASES,*REGION_ALIASES)):
             issues.append('unverified_community_spelling')
         if 'За звітний період зафіксовано атаки та їхні наслідки.' in report:
             issues.append('empty_security_overview')
