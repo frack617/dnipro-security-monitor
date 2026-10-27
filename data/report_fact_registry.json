@@ -1,114 +1,26 @@
 {
   "version": 1,
   "window": {
-    "start": "2026-10-25T08:00:00+02:00",
-    "end": "2026-10-26T08:00:00+02:00"
+    "start": "2026-10-26T08:00:00+02:00",
+    "end": "2026-10-27T08:00:00+02:00"
   },
-  "checked_at": "2026-10-26T09:52:53.622956+00:00",
+  "checked_at": "2026-10-27T06:07:03.837062+00:00",
   "records": [
     {
-      "id": "fb80e8152c1785a14e26",
+      "id": "45f7ad2e188420b0c375",
       "section": "2.1",
-      "source_key": "dsns_telegram/78776",
-      "source_url": "https://t.me/dsns_telegram/78776",
-      "published_at": "2026-10-25T06:54:39+00:00",
-      "source_text": "Дніпропетровщина: троє загиблих і 15 постраждалих внаслідок російських атак\nЗ вечора до ранку ворог понад 20 разів атакував три райони області.\nУ Синельниківському районі загинули троє людей, ще 14 дістали поранення, серед них — 11-річна дівчинка. Пошкоджено житлові будинки, магазини та автомобілі.\nНа Нікопольщині поранено чоловіка, пошкоджено приватний будинок.\nУ Дніпрі внаслідок атаки пошкоджено інфраструктуру.\nРятувальники ДСНС ліквідували всі пожежі, спричинені ворожими ударами.",
+      "source_key": "dnipropetrovskaODA/32835",
+      "source_url": "https://t.me/dnipropetrovskaODA/32835",
+      "published_at": "2026-10-26T11:09:44+00:00",
+      "source_text": "Вручив обласні відзнаки працівникам автомобільної та дорожньої галузей Дніпропетровщини. Привітав їх із професійним святом.\nСеред нагороджених – ті, хто забезпечує роботу громадського транспорту, виконує евакуаційні рейси, перевозить необхідні вантажі. І ті, хто ремонтує й відновлює дороги, щоб цей рух не зупинявся.\nДніпропетровщина – потужний логістичний хаб. Лише за перше півріччя автомобільним транспортом в області перевезли майже 22 мільйони пасажирів. Це майже 5% автомобільних пасажирських перевезень країни.\nПопри постійні обстріли, від початку року в регіоні відновили понад 1100 кілометрів дорожнього покриття на 64 автошляхах. Ще на 14 дорогах тривають ремонтні роботи.\nВід стану шляхів залежить, як швидко дістануться до людей медики й рятувальники, чи вчасно надійдуть необхідні вантажі та чи вдасться евакуювати мешканців із небезпеки.\nДякую кожному й кожній за щоденну працю. Завдяки вам область живе, працює та рухається вперед.",
       "scope": null,
-      "casualty_assertions": [
-        3,
-        14,
-        15
-      ],
+      "casualty_assertions": [],
       "numbers": [
-        "15",
-        "20",
-        "14",
-        "11"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "completed_prior_night_recap",
-      "source_refs": [
-        "dsns_telegram/78776"
-      ],
-      "display": null
-    },
-    {
-      "id": "41009e6fc30f26e997d2",
-      "section": "2.1",
-      "source_key": "adm_dp/45237",
-      "source_url": "https://t.me/adm_dp/45237",
-      "published_at": "2026-10-25T09:11:52+00:00",
-      "source_text": "Лише за цей тиждень Росія випустила по Україні близько 1600 керованих авіабомб, 48 ракет різних типів, зокрема балістичних, та майже 2300 ударних дронів. На жаль, майже щодня є загиблі та поранені від цих жорстоких ударів. Увечері внаслідок російських обстрілів Дніпровщини загинуло четверо людей. Мої співчуття рідним і близьким. Ще 22 поранені, серед них 11-річна дівчинка. У Вінниці російський дрон вдарив по багатоповерхівці. Шість людей поранено. У Харкові росіяни спочатку вдарили по будівельному гіпермаркету, а потім завдали цинічного повторного удару по екстрених службах, які прибули на місце. Поранені рятувальники. Були цієї ночі також удари по ТЕС, підстанціях, вугільних шахтах, зерносховищах, торговельних центрах та поштовому терміналу. Є пошкодження у дев’яти областях.\nТак Росія реагує на дипломатію і деізоляцію. І дуже важливо, щоб паралельно з переговорним треком не знижувалася підтримка захисників життя. Потрібно розблокувати вже погоджені європейцями постачання перехоплювачів до «петріотів». Потрібно далі підтримувати українську бойову авіацію для захисту від реактивних «шахедів». Кожен такий оборонний пакет, особливо перед зимою, допомагає зберігати життя. Дякую всім партнерам, які саме так допомагають.",
-      "scope": null,
-      "casualty_assertions": [
-        4,
-        6,
-        22
-      ],
-      "numbers": [
-        "1600",
-        "48",
-        "2300",
         "22",
-        "11"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "completed_prior_night_recap",
-      "source_refs": [
-        "adm_dp/45237"
-      ],
-      "display": null
-    },
-    {
-      "id": "a082eb48698b34222d6f",
-      "section": "2.1",
-      "source_key": "gunpvdp/37438",
-      "source_url": "https://t.me/gunpvdp/37438",
-      "published_at": "2026-10-25T11:08:49+00:00",
-      "source_text": "На Дніпропетровщині внаслідок обстрілів армії рф загинули дві жінки, поранено чоловіка – на місцях працює поліція\nНікопольщина.\nУпродовж доби армія рф завдала понад сотню ударів по цивільних об’єктах і людях у Нікопольському районі. Після 9-ї окупанти обстріляли з артилерії багатоповерхові будинки на береговій лінії Нікополя. Внаслідок атаки смертельні поранення отримала 72-річна жінка. За кілька годин російські війська повторно вдарили по дачних будинках. Загинула 58-річна мешканка райцентру.\nБлизько 23-ї години ворог знову атакував Нікополь — спрямував ударний БпЛА на приватний будинок. Унаслідок удару 50-річний чоловік дістав уламкові поранення та акубаротравму. Його госпіталізували до лікарні у стані середньої тяжкості.\nЗагалом за добу до поліції надійшло 113 повідомлень про обстріли Нікополя, Марганця, Червоногригорівської, Марганецької, Покровської сільської та міської територіальних громад. Поліцейські зафіксували пошкодження інфраструктури, підприємства, гаражів, магазину, авто, приватних і багатоквартирних житлових будинків.\nДніпро.\nВнаслідок атаки понівечена інфраструктура.\nНа місцях тривають слідчі дії. Поліцейські документують наслідки обстрілів та збирають докази воєнних злочинів рф. За вказаними фактами внесено відомості до Єдиного реєстру досудових розслідувань ст. 438 Кримінального кодексу України.\n#поліція_на_війні",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "9",
-        "72",
-        "58",
-        "23",
-        "50",
-        "113",
-        "438"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "completed_chronological_previous_day_recap",
-      "source_refs": [
-        "gunpvdp/37438"
-      ],
-      "display": null
-    },
-    {
-      "id": "e205ffbf3ea7d786edcc",
-      "section": "2.1",
-      "source_key": "adm_dp/45238",
-      "source_url": "https://t.me/adm_dp/45238",
-      "published_at": "2026-10-25T13:44:54+00:00",
-      "source_text": "Уряд спрямував 187,6 млн грн на відновлення 33 багатоквартирних будинків, пошкоджених внаслідок російської агресії у Дніпропетровській, Сумській та Київській областях. Кошти з Фонду ліквідації наслідків збройної агресії надійдуть до місцевих бюджетів.\nФінансування спрямовуємо на відновлення трьох будинків у Кривому Розі, 20 — у Сумах та 10 — на Київщині.\nЦе допоможе понад 4 тисячам мешканців якнайшвидше повернутися у свої домівки.\nВ умовах обмежених бюджетних ресурсів продовжуємо знаходити можливість для реалізації проєктів з відновлення, щоб допомагати людям, чиє житло пошкоджене від російських атак.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "187",
-        "6",
-        "33",
-        "20",
-        "10",
-        "4"
+        "5",
+        "1100",
+        "64",
+        "14"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
@@ -116,49 +28,96 @@
       "state": "excluded",
       "reason": "no_asserted_operational_attack_fact",
       "source_refs": [
-        "adm_dp/45238"
+        "dnipropetrovskaODA/32835"
       ],
       "display": null
     },
     {
-      "id": "53eb7794df791a8d5e73",
+      "id": "ceeb931dab5a5a160970",
+      "section": "1.4",
+      "source_key": "adm_dp/45262",
+      "source_url": "https://t.me/adm_dp/45262",
+      "published_at": "2026-10-26T16:48:44+00:00",
+      "source_text": "Зустрівся зі Спікером Сеймасу Литви Юозасом Олєкасом. Подякував Литовському народу за незмінно міцну й послідовну підтримку України.\nДетально обговорили нашу євроінтеграцію та пріоритети литовського головування в Раді ЄС у першій половині 2027 року. Дуже важливо, щоб до кінця цього року були відкриті решта два переговорні кластери для України, а під час литовського головування ми вже могли закривати переговорні розділи.\nПоінформував пана Спікера про зустрічі в Осло та ситуацію в переговорному треку загалом. Розраховуємо, що тристороння зустріч американської, української та російської команд відбудеться вже на початку листопада.\nДякую Литві за підтримку України.",
+      "scope": null,
+      "casualty_assertions": [],
+      "numbers": [
+        "2027"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "background_without_current_incident",
+      "source_refs": [
+        "adm_dp/45262"
+      ],
+      "display": null
+    },
+    {
+      "id": "e316f5578bc085f9755f",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_url": "https://t.me/dnipropetrovskaODA/32833",
-      "published_at": "2026-10-25T16:30:01+00:00",
-      "source_text": "Одна людина дістала поранень. Понад 40 разів ворог атакував три райони. Бив безпілотниками та артилерією",
+      "source_key": "dnipropetrovskaODA/32849",
+      "source_url": "https://t.me/dnipropetrovskaODA/32849",
+      "published_at": "2026-10-27T05:00:08+00:00",
+      "source_text": "22 ворожі БпЛА знищили наші сили ППО цієї ночі в небі над Дніпропетровщиною.",
+      "scope": null,
+      "casualty_assertions": [],
+      "numbers": [
+        "22"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_asserted_operational_attack_fact",
+      "source_refs": [
+        "dnipropetrovskaODA/32849"
+      ],
+      "display": null
+    },
+    {
+      "id": "8622920f0e6fcb463acd",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_url": "https://t.me/dnipropetrovskaODA/32848",
+      "published_at": "2026-10-26T16:30:00+00:00",
+      "source_text": "Одна людина загинула. Ще 10 дістали поранень. Двоє з них – діти. Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією",
       "scope": "Дніпропетровська область",
       "casualty_assertions": [
-        1
+        1,
+        10
       ],
       "numbers": [
-        "40"
+        "10",
+        "50",
+        "5"
       ],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-25T18:30:00+02:00",
+      "reporting_period": "2026-10-26T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/32833"
+        "dnipropetrovskaODA/32848"
       ],
-      "display": "Обласне зведення на 18:30 25.10.2026: Одна людина дістала поранень. Понад 40 разів ворог атакував три райони. Бив безпілотниками та артилерією.",
+      "display": "Обласне зведення на 18:30 26.10.2026: Одна людина загинула. Ще 10 дістали поранень. Двоє з них – діти. Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією.",
       "claims": [
         {
-          "id": "1e4a3b0308b5786f189e2c4c",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "Одна людина дістала поранень.",
+          "id": "66f586a2e32f86e3d7b41102",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Одна людина загинула.",
           "source_span": {
             "basis": "normalized_selection",
             "start": 0,
-            "end": 29
+            "end": 21
           },
           "numeric_surfaces": [],
           "quantity_roles": {
-            "injured": 1
+            "dead": 1
           },
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
           "scope": "Дніпропетровська область",
           "predicates": [
             "casualty"
@@ -169,20 +128,69 @@
           "place": null
         },
         {
-          "id": "727d7bdb2a6ee6b9380b2b35",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "Понад 40 разів ворог атакував три райони.",
+          "id": "9683f23796fef1f99b754db0",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Ще 10 дістали поранень.",
           "source_span": {
             "basis": "normalized_selection",
-            "start": 30,
-            "end": 71
+            "start": 22,
+            "end": 45
           },
           "numeric_surfaces": [
-            "40"
+            "10"
+          ],
+          "quantity_roles": {
+            "injured": 10
+          },
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Дніпропетровська область",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        },
+        {
+          "id": "bef4eae777038172dfb06afd",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Двоє з них – діти.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 46,
+            "end": 64
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Дніпропетровська область",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        },
+        {
+          "id": "231643a164af0a603df56bcf",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 65,
+            "end": 141
+          },
+          "numeric_surfaces": [
+            "50",
+            "5"
           ],
           "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
           "scope": "Дніпропетровська область",
           "predicates": [
             "attack"
@@ -191,54 +199,32 @@
           "disposition": "required",
           "reason": "source_consequence_or_opaque",
           "place": null
-        },
-        {
-          "id": "cfd63b8bab18badb3633daa2",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "Бив безпілотниками та артилерією",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 72,
-            "end": 104
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
-          "scope": "Дніпропетровська область",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
         }
       ]
     },
     {
-      "id": "174d1d192ae40bb49514",
+      "id": "e0dee9091599c63b5040",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_url": "https://t.me/dnipropetrovskaODA/32833",
-      "published_at": "2026-10-25T16:30:01+00:00",
-      "source_text": "У Дніпрі пошкоджена інфраструктура. У Солонянській громаді Дніпровського району понівечена приватна оселя. У Миколаївській громаді – інфраструктура.",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_url": "https://t.me/dnipropetrovskaODA/32848",
+      "published_at": "2026-10-26T16:30:00+00:00",
+      "source_text": "У Дніпрі пошкоджена інфраструктура.",
       "scope": "Дніпрі",
       "casualty_assertions": [],
       "numbers": [],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-25T18:30:00+02:00",
+      "reporting_period": "2026-10-26T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/32833"
+        "dnipropetrovskaODA/32848"
       ],
-      "display": "У Дніпрі пошкоджена інфраструктура. У Солонянській громаді Дніпровського району понівечена приватна оселя. У Миколаївській громаді – інфраструктура.",
+      "display": "У Дніпрі пошкоджена інфраструктура.",
       "claims": [
         {
-          "id": "91a1431e5661320c68ff33c6",
-          "source_key": "dnipropetrovskaODA/32833",
+          "id": "38ea8c850e5f290a0844d7c1",
+          "source_key": "dnipropetrovskaODA/32848",
           "source_text": "У Дніпрі пошкоджена інфраструктура.",
           "source_span": {
             "basis": "normalized_selection",
@@ -247,8 +233,8 @@
           },
           "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
           "scope": "Дніпрі",
           "predicates": [
             "damage"
@@ -257,156 +243,167 @@
           "disposition": "required",
           "reason": "source_consequence_or_opaque",
           "place": "Дніпро"
-        },
-        {
-          "id": "ce31360dd57353426f25161d",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "У Солонянській громаді Дніпровського району понівечена приватна оселя.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 36,
-            "end": 106
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпровський район"
-        },
-        {
-          "id": "5dd4f4d1edfc9abb4f28f4cf",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "У Миколаївській громаді – інфраструктура.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 107,
-            "end": 148
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпровський район"
         }
       ]
     },
     {
-      "id": "b7e83738f1c28e7f95c2",
+      "id": "2423623d5407dab148a6",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_url": "https://t.me/dnipropetrovskaODA/32833",
-      "published_at": "2026-10-25T16:30:01+00:00",
-      "source_text": "У Синельниківському районі ворог бив по Миколаївській громаді. У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
-      "scope": "Синельниківському районі",
-      "casualty_assertions": [],
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_url": "https://t.me/dnipropetrovskaODA/32848",
+      "published_at": "2026-10-26T16:30:00+00:00",
+      "source_text": "У Павлограді загинула людина. Семеро дістали поранень.. Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані. Стан решти постраждалих лікарі оцінюють як середній.",
+      "scope": "Павлограді",
+      "casualty_assertions": [
+        1,
+        7
+      ],
       "numbers": [
-        "30"
+        "10",
+        "37"
       ],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-25T18:30:00+02:00",
+      "reporting_period": "2026-10-26T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/32833"
+        "dnipropetrovskaODA/32848"
       ],
-      "display": "У Синельниківському районі ворог бив по Миколаївській громаді. У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
+      "display": "У Павлограді загинула людина. Семеро дістали поранень.. Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані. Стан решти постраждалих лікарі оцінюють як середній.",
       "claims": [
         {
-          "id": "20b7a0778f6c3259ac5e0b94",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "У Синельниківському районі ворог бив по Миколаївській громаді.",
+          "id": "5e6e79489964960f00c352d7",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "У Павлограді загинула людина.",
           "source_span": {
             "basis": "normalized_selection",
             "start": 0,
-            "end": 62
+            "end": 29
           },
           "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
-          "scope": "Синельниківському районі",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Синельниківський район"
-        },
-        {
-          "id": "c1885bbb9327ca64b420b488",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 63,
-            "end": 131
+          "quantity_roles": {
+            "dead": 1
           },
-          "numeric_surfaces": [
-            "30"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
-          "scope": "Синельниківському районі",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Павлограді",
           "predicates": [
             "casualty"
           ],
           "certainty": "asserted",
           "disposition": "required",
           "reason": "source_consequence_or_opaque",
-          "place": "Синельниківський район"
+          "place": "Павлоград"
+        },
+        {
+          "id": "0c50df59b2c51d9ddd248b51",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Семеро дістали поранень..",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 30,
+            "end": 55
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {
+            "injured": 7
+          },
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Павлограді",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        },
+        {
+          "id": "feda119a32f06eea67bf697f",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 56,
+            "end": 116
+          },
+          "numeric_surfaces": [
+            "10",
+            "37"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Павлограді",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        },
+        {
+          "id": "5802d619cdf973a851bbbfe5",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Стан решти постраждалих лікарі оцінюють як середній.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 117,
+            "end": 169
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Павлограді",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
         }
       ]
     },
     {
-      "id": "fe29346f733f4487892d",
+      "id": "827b6cb29ad45c6a98db",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_url": "https://t.me/dnipropetrovskaODA/32833",
-      "published_at": "2026-10-25T16:30:01+00:00",
-      "source_text": "На Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах. Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус.",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_url": "https://t.me/dnipropetrovskaODA/32848",
+      "published_at": "2026-10-26T16:30:00+00:00",
+      "source_text": "На Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади. Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки. Одна людина постраждала.",
       "scope": null,
-      "casualty_assertions": [],
+      "casualty_assertions": [
+        1
+      ],
       "numbers": [],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-25T18:30:00+02:00",
+      "reporting_period": "2026-10-26T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/32833"
+        "dnipropetrovskaODA/32848"
       ],
-      "display": "На Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах. Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус.",
+      "display": "На Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади. Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки. Одна людина постраждала.",
       "claims": [
         {
-          "id": "4c198f8b6defbd246c3ca678",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "На Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах.",
+          "id": "0681e1e8e1e14d3d841d0b4a",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "На Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади.",
           "source_span": {
             "basis": "normalized_selection",
             "start": 0,
-            "end": 136
+            "end": 108
           },
           "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
           "scope": null,
           "predicates": [
             "fire"
@@ -417,18 +414,18 @@
           "place": "Нікопольщина"
         },
         {
-          "id": "6058d61523ff9d4a6fff3c5a",
-          "source_key": "dnipropetrovskaODA/32833",
-          "source_text": "Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус.",
+          "id": "6975bd6c18c2bddb70c0c962",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки.",
           "source_span": {
             "basis": "normalized_selection",
-            "start": 137,
-            "end": 220
+            "start": 109,
+            "end": 186
           },
           "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-10-25T16:30:01+00:00",
-          "reporting_period": "2026-10-25T18:30:00+02:00",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
           "scope": null,
           "predicates": [
             "damage"
@@ -437,46 +434,234 @@
           "disposition": "required",
           "reason": "source_consequence_or_opaque",
           "place": "Нікопольщина"
+        },
+        {
+          "id": "0d47efc9a0e8e0a27398c1b7",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Одна людина постраждала.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 187,
+            "end": 211
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {
+            "injured": 1
+          },
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": null,
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Нікопольщина"
         }
       ]
     },
     {
-      "id": "89ed3c82e6455d16c718",
+      "id": "c1aa7c70cfe581c4ac4e",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_url": "https://t.me/dnipropetrovskaODA/32834",
-      "published_at": "2026-10-26T05:30:05+00:00",
-      "source_text": "Понад 10 разів ворог атакував Нікопольщину безпілотниками",
-      "scope": "Дніпропетровська область",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_url": "https://t.me/dnipropetrovskaODA/32848",
+      "published_at": "2026-10-26T16:30:00+00:00",
+      "source_text": "У Криворізькому районі противник цілив по Зеленодольській громаді. Понівечені житловий будинок та заклад освіти.",
+      "scope": "Криворізькому районі",
       "casualty_assertions": [],
-      "numbers": [
-        "10"
-      ],
+      "numbers": [],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-26T07:30:00+02:00",
+      "reporting_period": "2026-10-26T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/32834"
+        "dnipropetrovskaODA/32848"
       ],
-      "display": "Обласне зведення на 07:30 26.10.2026: Понад 10 разів ворог атакував Нікопольщину безпілотниками.",
+      "display": "У Криворізькому районі противник цілив по Зеленодольській громаді. Понівечені житловий будинок та заклад освіти.",
       "claims": [
         {
-          "id": "8cd2b96cc0dc030c0d2074e6",
-          "source_key": "dnipropetrovskaODA/32834",
-          "source_text": "Понад 10 разів ворог атакував Нікопольщину безпілотниками",
+          "id": "c06d38ff033aa0d9064567b3",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "У Криворізькому районі противник цілив по Зеленодольській громаді.",
           "source_span": {
             "basis": "normalized_selection",
             "start": 0,
-            "end": 57
+            "end": 66
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Криворізькому районі",
+          "predicates": [
+            "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Криворіжжя"
+        },
+        {
+          "id": "2053bef82daa513d89b4c321",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Понівечені житловий будинок та заклад освіти.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 67,
+            "end": 112
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Криворізькому районі",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Криворіжжя"
+        }
+      ]
+    },
+    {
+      "id": "6813d3eb1779485ed245",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_url": "https://t.me/dnipropetrovskaODA/32848",
+      "published_at": "2026-10-26T16:30:00+00:00",
+      "source_text": "У Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка. Вони госпіталізовані у стані середньої тяжкості.",
+      "scope": "Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка",
+      "casualty_assertions": [],
+      "numbers": [
+        "62",
+        "56"
+      ],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-10-26T18:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/32848"
+      ],
+      "display": "У Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка. Вони госпіталізовані у стані середньої тяжкості.",
+      "claims": [
+        {
+          "id": "c8de95e30c629cc448418678",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "У Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 93
           },
           "numeric_surfaces": [
-            "10"
+            "62",
+            "56"
           ],
           "quantity_roles": {},
-          "published_at": "2026-10-26T05:30:05+00:00",
-          "reporting_period": "2026-10-26T07:30:00+02:00",
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        },
+        {
+          "id": "f0c594b6cfa658f3528e596c",
+          "source_key": "dnipropetrovskaODA/32848",
+          "source_text": "Вони госпіталізовані у стані середньої тяжкості.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 94,
+            "end": 142
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T16:30:00+00:00",
+          "reporting_period": "2026-10-26T18:30:00+02:00",
+          "scope": "Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        }
+      ]
+    },
+    {
+      "id": "a7da84b2c6f114b69c71",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_url": "https://t.me/dnipropetrovskaODA/32850",
+      "published_at": "2026-10-27T05:30:02+00:00",
+      "source_text": "Троє людей дістали поранень. Понад 40 разів ворог атакував п’ять районів. Бив безпілотниками та авіабомбами",
+      "scope": "Дніпропетровська область",
+      "casualty_assertions": [
+        3
+      ],
+      "numbers": [
+        "40"
+      ],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-10-27T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/32850"
+      ],
+      "display": "Обласне зведення на 07:30 27.10.2026: Троє людей дістали поранень. Понад 40 разів ворог атакував п’ять районів. Бив безпілотниками та авіабомбами.",
+      "claims": [
+        {
+          "id": "60ef130d8ee3bcd0d91086f2",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Троє людей дістали поранень.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 28
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {
+            "injured": 3
+          },
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Дніпропетровська область",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        },
+        {
+          "id": "42d3792e52d15d6f7822e784",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Понад 40 разів ворог атакував п’ять районів.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 29,
+            "end": 73
+          },
+          "numeric_surfaces": [
+            "40"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
           "scope": "Дніпропетровська область",
           "predicates": [
             "attack"
@@ -484,116 +669,24 @@
           "certainty": "asserted",
           "disposition": "required",
           "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        }
-      ]
-    },
-    {
-      "id": "9a61a071c86f0569c1c9",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_url": "https://t.me/dnipropetrovskaODA/32834",
-      "published_at": "2026-10-26T05:30:05+00:00",
-      "source_text": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля.",
-      "scope": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах",
-      "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-26T07:30:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "adm_dp/45240",
-        "dnipropetrovskaODA/32834"
-      ],
-      "display": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля.",
-      "scope_context": "Нікопольщина",
-      "claims": [
-        {
-          "id": "0cf584b1126f74f446859ac5",
-          "source_key": "dnipropetrovskaODA/32834",
-          "source_text": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 79
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-10-26T05:30:05+00:00",
-          "reporting_period": "2026-10-26T07:30:00+02:00",
-          "scope": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах",
-          "predicates": [
-            "fire",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
+          "place": null
         },
         {
-          "id": "0d78305145da1f93a21ef0ca",
-          "source_key": "dnipropetrovskaODA/32834",
-          "source_text": "Понівечені багатоповерхівка та адмінбудівля.",
+          "id": "a88db41d0326a1ec37ef9bd6",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Бив безпілотниками та авіабомбами",
           "source_span": {
             "basis": "normalized_selection",
-            "start": 80,
-            "end": 124
+            "start": 74,
+            "end": 107
           },
           "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-10-26T05:30:05+00:00",
-          "reporting_period": "2026-10-26T07:30:00+02:00",
-          "scope": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах",
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Дніпропетровська область",
           "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        }
-      ]
-    },
-    {
-      "id": "4506c00d9b461991959c",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_url": "https://t.me/dnipropetrovskaODA/32834",
-      "published_at": "2026-10-26T05:30:05+00:00",
-      "source_text": "Всюди минулося без постраждалих.",
-      "scope": "Всюди минулося без",
-      "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-26T07:30:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "adm_dp/45240",
-        "dnipropetrovskaODA/32834"
-      ],
-      "display": "За цим зведенням (станом на 07:30 26.10.2026), постраждалих немає.",
-      "claims": [
-        {
-          "id": "6c1e02d9a713af58b33d95a8",
-          "source_key": "dnipropetrovskaODA/32834",
-          "source_text": "Всюди минулося без постраждалих.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 32
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-10-26T05:30:05+00:00",
-          "reporting_period": "2026-10-26T07:30:00+02:00",
-          "scope": "Всюди минулося без",
-          "predicates": [
-            "casualty"
+            "opaque"
           ],
           "certainty": "asserted",
           "disposition": "required",
@@ -603,45 +696,248 @@
       ]
     },
     {
-      "id": "c140a04f6968d113d58b",
+      "id": "33b63e9ff3445e8093d9",
       "section": "2.1",
-      "source_key": "adm_dp/45240",
-      "source_url": "https://t.me/adm_dp/45240",
-      "published_at": "2026-10-26T05:30:15+00:00",
-      "source_text": "Понад 10 разів ворог атакував Нкопольщину безпілотниками",
-      "scope": "Дніпропетровська область",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_url": "https://t.me/dnipropetrovskaODA/32850",
+      "published_at": "2026-10-27T05:30:02+00:00",
+      "source_text": "У Дніпрі пошкоджена інфраструктура.",
+      "scope": "Дніпрі",
       "casualty_assertions": [],
-      "numbers": [
-        "10"
-      ],
+      "numbers": [],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-26T07:30:00+02:00",
-      "state": "conflict",
-      "reason": "different_same_bulletin_scope",
+      "reporting_period": "2026-10-27T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
       "source_refs": [
-        "adm_dp/45240"
+        "dnipropetrovskaODA/32850"
       ],
-      "display": "Обласне зведення на 07:30 26.10.2026: Понад 10 разів ворог атакував Нкопольщину безпілотниками.",
+      "display": "У Дніпрі пошкоджена інфраструктура.",
       "claims": [
         {
-          "id": "2e0f28d4b58c2682aa336324",
-          "source_key": "adm_dp/45240",
-          "source_text": "Понад 10 разів ворог атакував Нкопольщину безпілотниками",
+          "id": "d36213375150f0f73a1cdf55",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "У Дніпрі пошкоджена інфраструктура.",
           "source_span": {
             "basis": "normalized_selection",
             "start": 0,
-            "end": 56
+            "end": 35
           },
-          "numeric_surfaces": [
-            "10"
-          ],
+          "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-10-26T05:30:15+00:00",
-          "reporting_period": "2026-10-26T07:30:00+02:00",
-          "scope": "Дніпропетровська область",
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Дніпрі",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Дніпро"
+        }
+      ]
+    },
+    {
+      "id": "cdea29c2e5743e0cd075",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_url": "https://t.me/dnipropetrovskaODA/32850",
+      "published_at": "2026-10-27T05:30:02+00:00",
+      "source_text": "У Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах. Понівечені багатоквартирні та приватні будинки, автівки. Сталися пожежі. У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років. 27-річна жінка лікується амбулаторно.",
+      "scope": "Синельниківському районі",
+      "casualty_assertions": [],
+      "numbers": [
+        "55",
+        "77",
+        "27"
+      ],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-10-27T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/32850"
+      ],
+      "display": "У Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах. Понівечені багатоквартирні та приватні будинки, автівки. Сталися пожежі. У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років. 27-річна жінка лікується амбулаторно.",
+      "claims": [
+        {
+          "id": "f90a4f801878fd580859add7",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "У Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 106
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Синельниківському районі",
           "predicates": [
             "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        },
+        {
+          "id": "ada322e0144502ebc72bf303",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Понівечені багатоквартирні та приватні будинки, автівки.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 107,
+            "end": 163
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Синельниківському районі",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        },
+        {
+          "id": "d23a2adef91a786d90d1d3e8",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Сталися пожежі.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 164,
+            "end": 179
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Синельниківському районі",
+          "predicates": [
+            "fire"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        },
+        {
+          "id": "926b0d1c47b3106481aa64b1",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 180,
+            "end": 248
+          },
+          "numeric_surfaces": [
+            "55",
+            "77"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Синельниківському районі",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        },
+        {
+          "id": "d99043872636cd62b2fa2384",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "27-річна жінка лікується амбулаторно.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 249,
+            "end": 286
+          },
+          "numeric_surfaces": [
+            "27"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Синельниківському районі",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        }
+      ]
+    },
+    {
+      "id": "b195a1cb36f3875c462c",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_url": "https://t.me/dnipropetrovskaODA/32850",
+      "published_at": "2026-10-27T05:30:02+00:00",
+      "source_text": "На Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади. Пошкоджений приватний будинок.",
+      "scope": "Нікопольщині",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-10-27T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/32850"
+      ],
+      "display": "На Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади. Пошкоджений приватний будинок.",
+      "claims": [
+        {
+          "id": "aa116db02fe59aae3366896e",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "На Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 90
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Нікопольщині",
+          "predicates": [
+            "fire"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Нікопольщина"
+        },
+        {
+          "id": "ef741952595a11db5bf31498",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Пошкоджений приватний будинок.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 91,
+            "end": 121
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Нікопольщині",
+          "predicates": [
+            "damage"
           ],
           "certainty": "asserted",
           "disposition": "required",
@@ -651,209 +947,210 @@
       ]
     },
     {
-      "id": "5773e79ce92405cad6bc",
+      "id": "35e093a328a02a06f05a",
       "section": "2.1",
-      "source_key": "adm_dp/45240",
-      "source_url": "https://t.me/adm_dp/45240",
-      "published_at": "2026-10-26T05:30:15+00:00",
-      "source_text": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля.",
-      "scope": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_url": "https://t.me/dnipropetrovskaODA/32850",
+      "published_at": "2026-10-27T05:30:02+00:00",
+      "source_text": "У Павлоградському районі росіяни атакували Богданівську та Троїцьку громади. Понівечені приватна оселя, інфраструктура.",
+      "scope": "Павлоградському районі",
       "casualty_assertions": [],
       "numbers": [],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-26T07:30:00+02:00",
-      "state": "mirror",
-      "reason": "verbatim_subset_same_bulletin",
+      "reporting_period": "2026-10-27T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
       "source_refs": [
-        "adm_dp/45240"
+        "dnipropetrovskaODA/32850"
       ],
-      "display": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля."
+      "display": "У Павлоградському районі росіяни атакували Богданівську та Троїцьку громади. Понівечені приватна оселя, інфраструктура.",
+      "claims": [
+        {
+          "id": "99047ece21314315055ca405",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "У Павлоградському районі росіяни атакували Богданівську та Троїцьку громади.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 76
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Павлоградському районі",
+          "predicates": [
+            "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        },
+        {
+          "id": "c7c62354556c4ebb5bfbd85f",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "Понівечені приватна оселя, інфраструктура.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 77,
+            "end": 119
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Павлоградському районі",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        }
+      ]
     },
     {
-      "id": "339ad819349b64b9fca2",
+      "id": "7d34c7bdae296215f939",
       "section": "2.1",
-      "source_key": "adm_dp/45240",
-      "source_url": "https://t.me/adm_dp/45240",
-      "published_at": "2026-10-26T05:30:15+00:00",
-      "source_text": "Всюди минулося без постраждалих.",
-      "scope": "Всюди минулося без",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_url": "https://t.me/dnipropetrovskaODA/32850",
+      "published_at": "2026-10-27T05:30:02+00:00",
+      "source_text": "У Кам’янському районі росіяни цілили по Верхівцевській громаді.",
+      "scope": "Кам’янському районі",
       "casualty_assertions": [],
       "numbers": [],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-10-26T07:30:00+02:00",
-      "state": "mirror",
-      "reason": "verbatim_subset_same_bulletin",
+      "reporting_period": "2026-10-27T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
       "source_refs": [
-        "adm_dp/45240"
+        "dnipropetrovskaODA/32850"
       ],
-      "display": "За цим зведенням (станом на 07:30 26.10.2026), постраждалих немає."
+      "display": "У Кам’янському районі росіяни цілили по Верхівцевській громаді.",
+      "claims": [
+        {
+          "id": "5dab938eb2b97b4fbd60f066",
+          "source_key": "dnipropetrovskaODA/32850",
+          "source_text": "У Кам’янському районі росіяни цілили по Верхівцевській громаді.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 63
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-27T05:30:02+00:00",
+          "reporting_period": "2026-10-27T07:30:00+02:00",
+          "scope": "Кам’янському районі",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Кам’янський район"
+        }
+      ]
     },
     {
-      "id": "680c0f4e5f0ea9198d73",
+      "id": "bdedc81cefffbd9693a0",
       "section": "1.4",
-      "source_key": "cek_info/4278",
-      "source_url": "https://t.me/cek_info/4278",
-      "published_at": "2026-10-25T21:59:33+00:00",
-      "source_text": "📢\nШановні споживачі! Повідомляємо, що за розпорядженням диспетчерського центру НЕК \"Укренерго\", 26 ЖОВТНЯ з 7:00 до 24:00 застосовуватимуться відключення наступних черг:\n🔹\nЧерга 1.1\n21:30-00:30\n🔹\nЧерга 1.2\n21:30-00:30\n🔹\nЧерга 2.1\n11:00-14:30\n🔹\nЧерга 2.2\n11:00-14:30\n🔹\nЧерга 4.1\n14:30-18:00\n🔹\nЧерга 4.2\n14:30-18:00\n🔹\nЧерга 5.1\n07:00-11:00\n🔹\nЧерга 5.2\n07:00-11:00\n🔹\nЧерга 6.1\n18:00-21:30\n🔹\nЧерга 6.2\n18:00-21:30\nПопереджаємо, що протягом доби, за розпорядженням НЕК \"Укренерго\", графік може змінюватися\n‼️",
-      "scope": null,
+      "source_key": "cek_info/4282",
+      "source_url": "https://t.me/cek_info/4282",
+      "published_at": "2026-10-26T07:22:37+00:00",
+      "source_text": "📢\nШановні споживачі м. ДНІПРО\n‼️\nПовідомляємо, що будинки за адресами:\nпр-т. Богдана Хмельницького: 126А, 132А, переводяться до графіка черги 1.1,\nа будинки за адресами:\nпр-т. Богдана Хмельницького: 118, 120, 122, 126, 128, 130, 132, переводяться до графіка черги 1.2.\nДякуємо за розуміння та перепрошуємо за тимчасові незручності\n‼️",
+      "scope": "Шановні споживачі м",
       "casualty_assertions": [],
       "numbers": [
-        "26",
-        "7",
-        "00",
-        "24",
-        "00",
         "1",
         "1",
-        "21",
-        "30-00",
-        "30",
+        "118",
+        "120",
+        "122",
+        "126",
+        "128",
+        "130",
+        "132",
         "1",
-        "2",
-        "21",
-        "30-00",
-        "30",
-        "2",
-        "1",
-        "11",
-        "00-14",
-        "30",
-        "2",
-        "2",
-        "11",
-        "00-14",
-        "30",
-        "4",
-        "1",
-        "14",
-        "30-18",
-        "00",
-        "4",
-        "2",
-        "14",
-        "30-18",
-        "00",
-        "5",
-        "1",
-        "07",
-        "00-11",
-        "00",
-        "5",
-        "2",
-        "07",
-        "00-11",
-        "00",
-        "6",
-        "1",
-        "18",
-        "00-21",
-        "30",
-        "6",
-        "2",
-        "18",
-        "00-21",
-        "30"
+        "2"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
       "reporting_period": null,
-      "state": "superseded",
-      "reason": "complete_operator_schedule_update",
+      "state": "excluded",
+      "reason": "no_current_location_specific_information",
       "source_refs": [
-        "cek_info/4278"
+        "cek_info/4282"
       ],
-      "display": null,
-      "service_schedule": {
-        "text": "ЦЕК: графіки відключення електроенергії для споживачів оператора на 26.10.2026; заявлений період 07:00–24:00. За таблицею оператора: черги 1.1, 1.2 — 21:30–00:30 наступної доби; черги 2.1, 2.2 — 11:00–14:30; черги 4.1, 4.2 — 14:30–18:00; черги 5.1, 5.2 — 07:00–11:00; черги 6.1, 6.2 — 18:00–21:30. За повідомленням оператора, графік протягом доби може змінюватися.",
-        "date": "2026-10-26",
-        "declared": [
-          "07:00",
-          "24:00"
-        ],
-        "queues": [
-          "1.1",
-          "1.2",
-          "2.1",
-          "2.2",
-          "4.1",
-          "4.2",
-          "5.1",
-          "5.2",
-          "6.1",
-          "6.2"
-        ],
-        "is_update": false,
-        "operator": "cek_info"
-      },
-      "superseded_by": "ebb793ae87b25dcc50e6"
+      "display": null
     },
     {
-      "id": "ebb793ae87b25dcc50e6",
+      "id": "2205f26ea13c5b728a33",
       "section": "1.4",
-      "source_key": "cek_info/4280",
-      "source_url": "https://t.me/cek_info/4280",
-      "published_at": "2026-10-25T22:12:17+00:00",
-      "source_text": "📢\nШановні споживачі! Повідомляємо про зміни у ГПВ з 7:00 до 24:00 на 26 ЖОВТНЯ, за розпорядженням диспетчерського центру НЕК \"Укренерго\"\n‼️\n🔹\nЧерга 1.1\n21:30-00:00\n🔹\nЧерга 1.2\n21:30-00:00\n🔹\nЧерга 2.1\n11:00-14:30\n🔹\nЧерга 2.2\n11:00-14:30\n🔹\nЧерга 4.1\n14:30-18:00\n🔹\nЧерга 4.2\n14:30-18:00\n🔹\nЧерга 5.1\n07:00-11:00\n🔹\nЧерга 5.2\n07:00-11:00\n🔹\nЧерга 6.1\n18:00-21:30\n🔹\nЧерга 6.2\n18:00-21:30\nПопереджаємо, що протягом доби, за розпорядженням НЕК \"Укренерго\", графік може змінюватися\n‼️",
+      "source_key": "cek_info/4283",
+      "source_url": "https://t.me/cek_info/4283",
+      "published_at": "2026-10-26T09:59:13+00:00",
+      "source_text": "📢\nШановні споживачі м. ПАВЛОГРАД\n‼️\nПовідомляємо, що будинки споживачів за адресами:\nвул. Паркова: 10;\nвул. Тетяни Федерової: 1-9 (непарні);\nвул. Дніпровська: 400, 587-595 (непарні), повертаються до звичайних графіків відключень ГПВ.\nДякуємо за розуміння та перепрошуємо за тимчасові незручності!",
+      "scope": "Шановні споживачі м",
+      "casualty_assertions": [],
+      "numbers": [
+        "10",
+        "1-9",
+        "400",
+        "587-595"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_current_location_specific_information",
+      "source_refs": [
+        "cek_info/4283"
+      ],
+      "display": null
+    },
+    {
+      "id": "5f843146ff98c20daf00",
+      "section": "1.4",
+      "source_key": "gunpvdp/37461",
+      "source_url": "https://t.me/gunpvdp/37461",
+      "published_at": "2026-10-26T10:04:21+00:00",
+      "source_text": "🚓\nНацполіція представила власний досвід кримінального аналізу в умовах війни на міжнародному форумі INTERPOL I-GAIN\nДнями в Ліоні (Франція) відбувся перший Глобальний форум кримінальної розвідки INTERPOL (I-GAIN Global Criminal Intelligence Forum), який об’єднав 100 фахівців із 54 держав світу. Досвід розвитку кримінального аналізу Національної поліції України представив начальник Департаменту кримінального аналізу генерал поліції третього рангу\nРоман Бутко\n.\n▫️\nВізит організований у рамках програми I FORCE Інтерполу.\nНачальник Департаменту кримінального аналізу Нацполіції Роман Бутко став одним зі спікерів міжнародної панельної дискусії, з виступом\n«Criminal Intelligence Analysis in a Changing Security Environment»\n.\nУ рамках міжнародного форуму начальник Департаменту кримінального аналізу поділився досвідом протидії гібридним загрозам в умовах війни, висвітлив роль кримінального аналізу під час розслідування диверсій, підпалів та інших злочинів, пов’язаних зі збройною агресією рф.\nНа конкретних прикладах генерал поліції третього рангу продемонстрував учасникам форуму, як війна вплинула на зміну маршрутів транскордонної злочинної діяльності та актуалізувала необхідність спільного реагування на загрози для України і держав Європейського Союзу.\nПротягом 2023–2026 років підрозділи кримінального аналізу Нацполіції України опрацювали понад дві тисячі запитів від іноземних правоохоронних органів.\n▫️\nЗа результатами міжнародного форуму досягнуто домовленостей щодо подальшого розвитку служби кримінального аналізу та поглиблення співпраці з міжнародними партнерами.\n👮\nFacebook\n|\nX\n|\nInstagram\n|\nTikTok",
       "scope": null,
       "casualty_assertions": [],
       "numbers": [
-        "7",
-        "00",
-        "24",
-        "00",
-        "26",
-        "1",
-        "1",
-        "21",
-        "30-00",
-        "00",
-        "1",
-        "2",
-        "21",
-        "30-00",
-        "00",
-        "2",
-        "1",
-        "11",
-        "00-14",
-        "30",
-        "2",
-        "2",
-        "11",
-        "00-14",
-        "30",
-        "4",
-        "1",
-        "14",
-        "30-18",
-        "00",
-        "4",
-        "2",
-        "14",
-        "30-18",
-        "00",
-        "5",
-        "1",
-        "07",
-        "00-11",
-        "00",
-        "5",
-        "2",
-        "07",
-        "00-11",
-        "00",
-        "6",
-        "1",
-        "18",
-        "00-21",
-        "30",
-        "6",
-        "2",
-        "18",
-        "00-21",
-        "30"
+        "100",
+        "54",
+        "2023–2026"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_current_location_specific_information",
+      "source_refs": [
+        "gunpvdp/37461"
+      ],
+      "display": null
+    },
+    {
+      "id": "2f65ab71eedb4fa3b472",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/32846",
+      "source_url": "https://t.me/dnipropetrovskaODA/32846",
+      "published_at": "2026-10-26T14:05:31+00:00",
+      "source_text": "Уже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані.\nДві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу.\n#russiaisaterroriststate",
+      "scope": "Уже семеро поранених через атаку росіян на Павлоград",
+      "casualty_assertions": [
+        7
+      ],
+      "numbers": [
+        "10",
+        "37"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
@@ -861,47 +1158,172 @@
       "state": "included",
       "reason": null,
       "source_refs": [
-        "cek_info/4280"
+        "dnipropetrovskaODA/32846"
       ],
-      "display": "ЦЕК: оновлені графіки відключення електроенергії для споживачів оператора на 26.10.2026; заявлений період 07:00–24:00. За таблицею оператора: черги 1.1, 1.2 — 21:30–00:00 наступної доби; черги 2.1, 2.2 — 11:00–14:30; черги 4.1, 4.2 — 14:30–18:00; черги 5.1, 5.2 — 07:00–11:00; черги 6.1, 6.2 — 18:00–21:30. За повідомленням оператора, графік протягом доби може змінюватися.",
-      "service_schedule": {
-        "text": "ЦЕК: оновлені графіки відключення електроенергії для споживачів оператора на 26.10.2026; заявлений період 07:00–24:00. За таблицею оператора: черги 1.1, 1.2 — 21:30–00:00 наступної доби; черги 2.1, 2.2 — 11:00–14:30; черги 4.1, 4.2 — 14:30–18:00; черги 5.1, 5.2 — 07:00–11:00; черги 6.1, 6.2 — 18:00–21:30. За повідомленням оператора, графік протягом доби може змінюватися.",
-        "date": "2026-10-26",
-        "declared": [
-          "07:00",
-          "24:00"
-        ],
-        "queues": [
-          "1.1",
-          "1.2",
-          "2.1",
-          "2.2",
-          "4.1",
-          "4.2",
-          "5.1",
-          "5.2",
-          "6.1",
-          "6.2"
-        ],
-        "is_update": true,
-        "operator": "cek_info"
-      }
+      "display": "Уже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані. Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
+      "selection_input": "Уже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані. Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
+      "selection_method": "conservative_operational_clauses",
+      "claims": [
+        {
+          "id": "03b0ee5f0103fec15c92f257",
+          "source_key": "dnipropetrovskaODA/32846",
+          "source_text": "Уже семеро поранених через атаку росіян на Павлоград.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 53
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {
+            "injured": 7
+          },
+          "published_at": "2026-10-26T14:05:31+00:00",
+          "reporting_period": null,
+          "scope": "Уже семеро поранених через атаку росіян на Павлоград",
+          "predicates": [
+            "casualty",
+            "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        },
+        {
+          "id": "f62934dd7b2d0bedc8a565b5",
+          "source_key": "dnipropetrovskaODA/32846",
+          "source_text": "П’ятеро з них госпіталізовані.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 54,
+            "end": 84
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T14:05:31+00:00",
+          "reporting_period": null,
+          "scope": "Уже семеро поранених через атаку росіян на Павлоград",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        },
+        {
+          "id": "5d94d49732135d2a643fe43d",
+          "source_key": "dnipropetrovskaODA/32846",
+          "source_text": "Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 85,
+            "end": 143
+          },
+          "numeric_surfaces": [
+            "10",
+            "37"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T14:05:31+00:00",
+          "reporting_period": null,
+          "scope": "Уже семеро поранених через атаку росіян на Павлоград",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        },
+        {
+          "id": "094c0e9c4502064bf1e7575d",
+          "source_key": "dnipropetrovskaODA/32846",
+          "source_text": "Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 144,
+            "end": 212
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-10-26T14:05:31+00:00",
+          "reporting_period": null,
+          "scope": "Уже семеро поранених через атаку росіян на Павлоград",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        }
+      ],
+      "claim_decisions": [
+        {
+          "source_text": "Уже семеро поранених через атаку росіян на Павлоград.",
+          "disposition": "rendered",
+          "place": "Павлоград",
+          "reason": "uncovered_source_clause"
+        },
+        {
+          "source_text": "П’ятеро з них госпіталізовані.",
+          "disposition": "rendered",
+          "place": "Павлоград",
+          "reason": "uncovered_source_clause"
+        },
+        {
+          "source_text": "Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані.",
+          "disposition": "rendered",
+          "place": "Павлоград",
+          "reason": "uncovered_source_clause"
+        },
+        {
+          "source_text": "Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
+          "disposition": "rendered",
+          "place": "Павлоград",
+          "reason": "uncovered_source_clause"
+        }
+      ],
+      "resolved_chunks": [
+        [
+          "Павлоград",
+          "Уже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані. Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу."
+        ]
+      ]
     },
     {
-      "id": "ff13e26bc44b7f330068",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/15287",
-      "source_url": "https://t.me/DniproCityOfficial/15287",
-      "published_at": "2026-10-26T05:26:58+00:00",
-      "source_text": "Сьогодні у Дніпрі діють зміни у русі громадського транспорту\n🚋\nтрамваї №1\nзакінчать свою роботу раніше.\n❗️\nОстанні відправлення від кінцевих зупинок відбудуться:\n📍\nвід Залізничного вокзалу о 21:46;\n📍\nвід Університету науки і технологій о 21:38.\n🚧\nЗміни пов’язані з ремонтом трамвайної колії на перехресті просп. Дмитра Яворницького – вул. Сергія Єфремова.\n🚃\nУ зв’язку з ремонтом колії на Старому мосту\nпризупиняється рух трамваїв № 6 та № 9.\n🚌\nНа час виконання робіт замість них\nпрацюватимуть автобуси №6К та №9К\n. Деталі —\nтут\n.\n❗️\nКінцева зупинка\nавтобусів №23\nперенесена на пл. Успенську.\n🛑\nЧерез тимчасове перекриття проїзної частини по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації.\n🚌\nСхеми перекриття та об'їзду автобусів\n.\nУсі інші маршрути громадського транспорту працюють у штатному режимі.\n🚎\nРозклад руху\nелектротранспорту на сайті\n.",
-      "scope": "Сьогодні у Дніпрі діють зміни у русі громадського транспорту трамваї №1 закінчать свою роботу раніше",
+      "id": "24f5b47c83e517ed560c",
+      "section": "1.4",
+      "source_key": "dnipropetrovskaODA/32847",
+      "source_url": "https://t.me/dnipropetrovskaODA/32847",
+      "published_at": "2026-10-26T15:47:27+00:00",
+      "source_text": "Дніпро вже пережив два повних блекаути. Вперше місто було знеструмлене у 2022-му. Вдруге – у січні, коли ворог завдав масованого удару по енергетичній інфраструктурі України.\nНад відновленням електропостачання енергетики та інші служби тоді працювали цілодобово. Спершу заживлювали критичну інфраструктуру, повертали до осель людей опалення та воду.\nДо можливих тривалих знеструмлень обласний центр готується і сьогодні. Оновлюють котли, встановлюють енергоощадні насоси та джерела резервного живлення для котелень, утеплюють багатоповерхівки.\nУ громаді кажуть: жодне велике місто неможливо втримати самими лише генераторами. Але маючи досвід попередніх зим та алгоритми взаємодії, у разі повного блекауту всі служби працюватимуть, щоб якнайшвидше відновлювати електропостачання та роботу міської інфраструктури.\nБільше про підготовку міста до зими - у відео.",
+      "scope": "Дніпро вже пережив два повних блекаути",
       "casualty_assertions": [],
       "numbers": [
-        "1",
-        "21",
-        "46",
-        "21",
-        "38",
+        "2022"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_current_location_specific_information",
+      "source_refs": [
+        "dnipropetrovskaODA/32847"
+      ],
+      "display": null
+    },
+    {
+      "id": "bffe33a222596d22e113",
+      "section": "1.2",
+      "source_key": "DniproCityOfficial/15307",
+      "source_url": "https://t.me/DniproCityOfficial/15307",
+      "published_at": "2026-10-27T05:26:58+00:00",
+      "source_text": "Сьогодні у Дніпрі діють зміни у русі громадського транспорту\n🚃\nУ зв’язку з ремонтом колії на Старому мосту\nпризупиняється рух трамваїв № 6 та № 9.\n🚌\nНа час виконання робіт замість них\nпрацюватимуть автобуси №6К та №9К\n. Деталі —\nтут\n.\n❗️\nКінцева зупинка\nавтобусів №23\nперенесена на пл. Успенську.\n🛑\nЧерез тимчасове перекриття проїзної частини по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації.\n🚌\nСхеми перекриття та об'їзду автобусів\n.\nУсі інші маршрути громадського транспорту працюють у штатному режимі.\n🚎\nРозклад руху\nелектротранспорту на сайті\n.",
+      "scope": null,
+      "casualty_assertions": [],
+      "numbers": [
         "6",
         "9",
         "23"
@@ -912,53 +1334,7 @@
       "state": "service_input",
       "reason": null,
       "source_refs": [
-        "DniproCityOfficial/15287"
-      ],
-      "display": null
-    },
-    {
-      "id": "0ee6d4c4fcf97684f59b",
-      "section": "1.4",
-      "source_key": "DniproCityOfficial/15288",
-      "source_url": "https://t.me/DniproCityOfficial/15288",
-      "published_at": "2026-10-26T05:36:17+00:00",
-      "source_text": "❗️\nУВАГА\n❗️\nГрафіки відключення світла 26 ЖОВТНЯ для споживачів ДТЕК\n❗️\nУВАГА\n❗️\nГрафіки відключення світла 26 ЖОВТНЯ для споживачів ДТЕК",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "26",
-        "26"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_current_location_specific_information",
-      "source_refs": [
-        "DniproCityOfficial/15288"
-      ],
-      "display": null
-    },
-    {
-      "id": "025c75423c7df08f5376",
-      "section": "1.4",
-      "source_key": "cek_info/4281",
-      "source_url": "https://t.me/cek_info/4281",
-      "published_at": "2026-10-26T05:48:21+00:00",
-      "source_text": "📢\nШановні мешканці м. ВІЛЬНОГІРСЬК\n‼️\nПовідомляємо, що юридичні споживачі:\nТОВ «ВАЙТЛІНК», ТОВ \"ЛАЙФСЕЛЛ\", Вільногірський РТС КРРТ, АТ «Укртелеком»,\nФОП \"Давидова\", КП \"Жилкомсервіс\" свердловина та АТ ОГ РС переводяться до графіка черги 4.2.\nДякуємо за розуміння та перепрошуємо за тимчасові незручності\n‼️",
-      "scope": "Шановні мешканці м",
-      "casualty_assertions": [],
-      "numbers": [
-        "4",
-        "2"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_current_location_specific_information",
-      "source_refs": [
-        "cek_info/4281"
+        "DniproCityOfficial/15307"
       ],
       "display": null
     }
@@ -966,9 +1342,11 @@
   "diagnostics": [
     {
       "reason": "source_conflict",
-      "sources": [
-        "dnipropetrovskaODA/32834",
-        "adm_dp/45240"
+      "detail": "unknown_community_name",
+      "name": "Верхівцевській",
+      "place": "Кам’янський район",
+      "record_ids": [
+        "7d34c7bdae296215f939"
       ]
     }
   ],
@@ -977,21 +1355,24 @@
       "У перевірених джерелах є повідомлення про атаки або їхні наслідки. Деталі наведено у пункті 2.1."
     ],
     "1.2": [
-      "26 жовтня у Дніпрі діють зміни у русі громадського транспорту: трамваї за анонсом закінчать роботу раніше. Зміни пов’язані з ремонтом трамвайної колії на перехресті просп. Дмитра Яворницького – вул. Сергія Єфремова. У зв’язку з ремонтом колії на Старому мосту призупиняється рух трамваїв. На час виконання робіт замість них працюватимуть автобуси. Тимчасово перекрито проїзну частину по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації."
+      "27 жовтня у Дніпрі діють зміни у русі громадського транспорту: У зв’язку з ремонтом колії на Старому мосту призупиняється рух трамваїв. На час виконання робіт замість них працюватимуть автобуси. Тимчасово перекрито проїзну частину по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації."
     ],
     "1.3": [],
-    "1.4": [
-      "ЦЕК: оновлені графіки відключення електроенергії для споживачів оператора на 26.10.2026; заявлений період 07:00–24:00. За таблицею оператора: черги 1.1, 1.2 — 21:30–00:00 наступної доби; черги 2.1, 2.2 — 11:00–14:30; черги 4.1, 4.2 — 14:30–18:00; черги 5.1, 5.2 — 07:00–11:00; черги 6.1, 6.2 — 18:00–21:30. За повідомленням оператора, графік протягом доби може змінюватися."
-    ],
+    "1.4": [],
     "2.1": [
-      "Обласне зведення на 18:30 25.10.2026: Одна людина дістала поранень. Понад 40 разів ворог атакував три райони. Бив безпілотниками та артилерією.",
-      "У Дніпрі пошкоджена інфраструктура. У Солонянській громаді Дніпровського району понівечена приватна оселя. У Миколаївській громаді – інфраструктура.",
-      "У Синельниківському районі ворог бив по Миколаївській громаді. У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
-      "На Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах. Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус.",
-      "Обласне зведення на 07:30 26.10.2026: Понад 10 разів ворог атакував Нікопольщину безпілотниками.",
-      "Обласне зведення на 07:30 26.10.2026: Понад 10 разів ворог атакував Нкопольщину безпілотниками.",
-      "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля.",
-      "За цим зведенням (станом на 07:30 26.10.2026), постраждалих немає."
+      "Уже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані. Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
+      "Обласне зведення на 18:30 26.10.2026: Одна людина загинула. Ще 10 дістали поранень. Двоє з них – діти. Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією.",
+      "У Дніпрі пошкоджена інфраструктура.",
+      "У Павлограді загинула людина. Семеро дістали поранень.. Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані. Стан решти постраждалих лікарі оцінюють як середній.",
+      "На Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади. Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки. Одна людина постраждала.",
+      "У Криворізькому районі противник цілив по Зеленодольській громаді. Понівечені житловий будинок та заклад освіти.",
+      "У Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка. Вони госпіталізовані у стані середньої тяжкості.",
+      "Обласне зведення на 07:30 27.10.2026: Троє людей дістали поранень. Понад 40 разів ворог атакував п’ять районів. Бив безпілотниками та авіабомбами.",
+      "У Дніпрі пошкоджена інфраструктура.",
+      "У Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах. Понівечені багатоквартирні та приватні будинки, автівки. Сталися пожежі. У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років. 27-річна жінка лікується амбулаторно.",
+      "На Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади. Пошкоджений приватний будинок.",
+      "У Павлоградському районі росіяни атакували Богданівську та Троїцьку громади. Понівечені приватна оселя, інфраструктура.",
+      "У Кам’янському районі росіяни цілили по Верхівцевській громаді."
     ],
     "2.2": [],
     "2.3": [],
@@ -1004,109 +1385,150 @@
   "casualty_summary_links": [],
   "public_projection": {
     "paragraphs": [
-      "Денне зведення за 25 жовтня (станом на 18:30): Одна людина дістала поранень. Понад 40 разів ворог атакував три райони. Бив безпілотниками та артилерією.",
-      "Ранкове зведення за 26 жовтня (станом на 07:30): Понад 10 разів ворог атакував Нікопольщину безпілотниками. За цим зведенням, постраждалих немає.",
-      "Ранкове зведення за 26 жовтня (станом на 07:30): Понад 10 разів ворог атакував Нікопольщину безпілотниками.",
-      "Дніпро:\n25 жовтня у Дніпрі пошкоджена інфраструктура.",
-      "Дніпровський район:\n25 жовтня у Солонянській громаді Дніпровського району понівечена приватна оселя. У Миколаївській громаді – інфраструктура.",
-      "Синельниківський район:\n25 жовтня у Синельниківському районі ворог бив по Миколаївській громаді. У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
-      "Нікопольщина:\n25 жовтня на Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах. Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус. За ранковими даними 26 жовтня: Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля."
+      "Денне зведення за 26 жовтня (станом на 18:30): Одна людина загинула. Ще 10 дістали поранень. Двоє з них – діти. Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією.",
+      "Ранкове зведення за 27 жовтня (станом на 07:30): Троє людей дістали поранень. Понад 40 разів ворог атакував п’ять районів. Бив безпілотниками та авіабомбами.",
+      "Павлоград:\nУже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані. Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу. 26 жовтня у Павлограді загинула людина. Семеро дістали поранень. Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані. Стан решти постраждалих лікарі оцінюють як середній.",
+      "Дніпро:\n26 жовтня у Дніпрі пошкоджена інфраструктура. За ранковими даними 27 жовтня, у Дніпрі пошкоджена інфраструктура.",
+      "Нікопольщина:\n26 жовтня на Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади. Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки. Одна людина постраждала. За ранковими даними 27 жовтня, на Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади. Пошкоджений приватний будинок.",
+      "Криворіжжя:\n26 жовтня у Криворізькому районі противник цілив по Зеленодольській громаді. Понівечені житловий будинок та заклад освіти.",
+      "Синельниківський район:\n26 жовтня у Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка. Вони госпіталізовані у стані середньої тяжкості. За ранковими даними 27 жовтня, у Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах. Понівечені багатоквартирні та приватні будинки, автівки. Сталися пожежі. У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років. 27-річна жінка лікується амбулаторно.",
+      "Інші підтверджені наслідки:\nЗа ранковими даними 27 жовтня, у Павлоградському районі росіяни атакували Богданівську та Троїцьку громади. Понівечені приватна оселя, інфраструктура.",
+      "Кам’янський район:\nЗа ранковими даними 27 жовтня, у Кам’янському районі росіяни цілили по Верхівцевській громаді."
     ],
     "provenance": [
       {
-        "text": "Денне зведення за 25 жовтня (станом на 18:30): Одна людина дістала поранень. Понад 40 разів ворог атакував три райони. Бив безпілотниками та артилерією.",
+        "text": "Уже семеро поранених через атаку росіян на Павлоград. П’ятеро з них госпіталізовані. Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані. Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
         "record_ids": [
-          "53eb7794df791a8d5e73"
+          "2f65ab71eedb4fa3b472"
         ],
-        "reporting_period": "2026-10-25T18:30:00+02:00",
+        "reporting_period": null,
+        "place": "Павлоград"
+      },
+      {
+        "text": "Денне зведення за 26 жовтня (станом на 18:30): Одна людина загинула. Ще 10 дістали поранень. Двоє з них – діти. Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією.",
+        "record_ids": [
+          "8622920f0e6fcb463acd"
+        ],
+        "reporting_period": "2026-10-26T18:30:00+02:00",
         "place": "Область"
       },
       {
         "text": "У Дніпрі пошкоджена інфраструктура.",
         "record_ids": [
-          "174d1d192ae40bb49514"
+          "e0dee9091599c63b5040"
         ],
-        "reporting_period": "2026-10-25T18:30:00+02:00",
+        "reporting_period": "2026-10-26T18:30:00+02:00",
         "place": "Дніпро"
       },
       {
-        "text": "У Солонянській громаді Дніпровського району понівечена приватна оселя. У Миколаївській громаді – інфраструктура.",
+        "text": "У Павлограді загинула людина. Семеро дістали поранень. Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані. Стан решти постраждалих лікарі оцінюють як середній.",
         "record_ids": [
-          "174d1d192ae40bb49514"
+          "2423623d5407dab148a6"
         ],
-        "reporting_period": "2026-10-25T18:30:00+02:00",
-        "place": "Дніпровський район"
+        "reporting_period": "2026-10-26T18:30:00+02:00",
+        "place": "Павлоград"
       },
       {
-        "text": "У Синельниківському районі ворог бив по Миколаївській громаді. У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
+        "text": "На Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади. Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки. Одна людина постраждала.",
         "record_ids": [
-          "b7e83738f1c28e7f95c2"
+          "827b6cb29ad45c6a98db"
         ],
-        "reporting_period": "2026-10-25T18:30:00+02:00",
+        "reporting_period": "2026-10-26T18:30:00+02:00",
+        "place": "Нікопольщина"
+      },
+      {
+        "text": "У Криворізькому районі противник цілив по Зеленодольській громаді. Понівечені житловий будинок та заклад освіти.",
+        "record_ids": [
+          "c1aa7c70cfe581c4ac4e"
+        ],
+        "reporting_period": "2026-10-26T18:30:00+02:00",
+        "place": "Криворіжжя"
+      },
+      {
+        "text": "У Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка. Вони госпіталізовані у стані середньої тяжкості.",
+        "record_ids": [
+          "6813d3eb1779485ed245"
+        ],
+        "reporting_period": "2026-10-26T18:30:00+02:00",
         "place": "Синельниківський район"
       },
       {
-        "text": "На Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах. Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус.",
+        "text": "Ранкове зведення за 27 жовтня (станом на 07:30): Троє людей дістали поранень. Понад 40 разів ворог атакував п’ять районів. Бив безпілотниками та авіабомбами.",
         "record_ids": [
-          "fe29346f733f4487892d"
+          "a7da84b2c6f114b69c71"
         ],
-        "reporting_period": "2026-10-25T18:30:00+02:00",
-        "place": "Нікопольщина"
-      },
-      {
-        "text": "Ранкове зведення за 26 жовтня (станом на 07:30): Понад 10 разів ворог атакував Нікопольщину безпілотниками. За цим зведенням, постраждалих немає.",
-        "record_ids": [
-          "89ed3c82e6455d16c718",
-          "4506c00d9b461991959c"
-        ],
-        "reporting_period": "2026-10-26T07:30:00+02:00",
+        "reporting_period": "2026-10-27T07:30:00+02:00",
         "place": "Область"
       },
       {
-        "text": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах. Понівечені багатоповерхівка та адмінбудівля.",
+        "text": "У Дніпрі пошкоджена інфраструктура.",
         "record_ids": [
-          "9a61a071c86f0569c1c9"
+          "33b63e9ff3445e8093d9"
         ],
-        "reporting_period": "2026-10-26T07:30:00+02:00",
+        "reporting_period": "2026-10-27T07:30:00+02:00",
+        "place": "Дніпро"
+      },
+      {
+        "text": "У Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах. Понівечені багатоквартирні та приватні будинки, автівки. Сталися пожежі. У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років. 27-річна жінка лікується амбулаторно.",
+        "record_ids": [
+          "cdea29c2e5743e0cd075"
+        ],
+        "reporting_period": "2026-10-27T07:30:00+02:00",
+        "place": "Синельниківський район"
+      },
+      {
+        "text": "На Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади. Пошкоджений приватний будинок.",
+        "record_ids": [
+          "b195a1cb36f3875c462c"
+        ],
+        "reporting_period": "2026-10-27T07:30:00+02:00",
         "place": "Нікопольщина"
       },
       {
-        "text": "Ранкове зведення за 26 жовтня (станом на 07:30): Понад 10 разів ворог атакував Нікопольщину безпілотниками.",
+        "text": "У Павлоградському районі росіяни атакували Богданівську та Троїцьку громади. Понівечені приватна оселя, інфраструктура.",
         "record_ids": [
-          "c140a04f6968d113d58b"
+          "35e093a328a02a06f05a"
         ],
-        "reporting_period": "2026-10-26T07:30:00+02:00",
-        "place": "Область"
-      }
-    ],
-    "conflicts": [],
-    "name_normalizations": [
+        "reporting_period": "2026-10-27T07:30:00+02:00",
+        "place": null
+      },
       {
+        "text": "У Кам’янському районі росіяни цілили по Верхівцевській громаді.",
         "record_ids": [
-          "c140a04f6968d113d58b"
+          "7d34c7bdae296215f939"
         ],
-        "rule": "explicit_region_typo",
-        "original": "Нкопольщину",
-        "replacement": "Нікопольщину",
-        "reference": "https://t.me/adm_dp/45240"
+        "reporting_period": "2026-10-27T07:30:00+02:00",
+        "place": "Кам’янський район"
       }
     ],
-    "overview": "Офіційні джерела повідомили про атаки та їхні наслідки у Дніпрі, а також у громадах Дніпровського, Нікопольського, Синельниківського районів. Є поранені. Пошкоджено житло та інфраструктуру.",
+    "conflicts": [
+      {
+        "reason": "source_conflict",
+        "detail": "unknown_community_name",
+        "name": "Верхівцевській",
+        "place": "Кам’янський район",
+        "record_ids": [
+          "7d34c7bdae296215f939"
+        ]
+      }
+    ],
+    "name_normalizations": [],
+    "overview": "Офіційні джерела повідомили про атаки та їхні наслідки у Дніпрі, Павлограді, а також у громадах Кам’янського, Криворізького, Нікопольського, Павлоградського, Синельниківського районів. Є загиблі та поранені. Пошкоджено житло, інфраструктуру та автомобілі.",
     "reference_checked_on": "2026-10-24"
   },
   "budget_plan": {
     "limit": 500,
-    "initial_words": 364,
-    "final_words": 364,
+    "initial_words": 442,
+    "final_words": 442,
     "operations": [],
     "status": "fits"
   },
   "claim_plan": [
     {
-      "claim_id": "1e4a3b0308b5786f189e2c4c",
-      "record_id": "53eb7794df791a8d5e73",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "Одна людина дістала поранень.",
+      "claim_id": "66f586a2e32f86e3d7b41102",
+      "record_id": "8622920f0e6fcb463acd",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Одна людина загинула.",
       "place": null,
       "predicates": [
         "casualty"
@@ -1115,22 +1537,22 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "727d7bdb2a6ee6b9380b2b35",
-      "record_id": "53eb7794df791a8d5e73",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "Понад 40 разів ворог атакував три райони.",
+      "claim_id": "9683f23796fef1f99b754db0",
+      "record_id": "8622920f0e6fcb463acd",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Ще 10 дістали поранень.",
       "place": null,
       "predicates": [
-        "attack"
+        "casualty"
       ],
       "disposition": "rendered",
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "cfd63b8bab18badb3633daa2",
-      "record_id": "53eb7794df791a8d5e73",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "Бив безпілотниками та артилерією",
+      "claim_id": "bef4eae777038172dfb06afd",
+      "record_id": "8622920f0e6fcb463acd",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Двоє з них – діти.",
       "place": null,
       "predicates": [
         "opaque"
@@ -1139,9 +1561,21 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "91a1431e5661320c68ff33c6",
-      "record_id": "174d1d192ae40bb49514",
-      "source_key": "dnipropetrovskaODA/32833",
+      "claim_id": "231643a164af0a603df56bcf",
+      "record_id": "8622920f0e6fcb463acd",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Понад 50 разів ворог атакував 5 районів області безпілотниками та артилерією",
+      "place": null,
+      "predicates": [
+        "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "38ea8c850e5f290a0844d7c1",
+      "record_id": "e0dee9091599c63b5040",
+      "source_key": "dnipropetrovskaODA/32848",
       "source_text": "У Дніпрі пошкоджена інфраструктура.",
       "place": "Дніпро",
       "predicates": [
@@ -1151,47 +1585,11 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "ce31360dd57353426f25161d",
-      "record_id": "174d1d192ae40bb49514",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "У Солонянській громаді Дніпровського району понівечена приватна оселя.",
-      "place": "Дніпровський район",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "5dd4f4d1edfc9abb4f28f4cf",
-      "record_id": "174d1d192ae40bb49514",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "У Миколаївській громаді – інфраструктура.",
-      "place": "Дніпровський район",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "20b7a0778f6c3259ac5e0b94",
-      "record_id": "b7e83738f1c28e7f95c2",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "У Синельниківському районі ворог бив по Миколаївській громаді.",
-      "place": "Синельниківський район",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "c1885bbb9327ca64b420b488",
-      "record_id": "b7e83738f1c28e7f95c2",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "У стані середньої тяжкості до лікарні доправили 30-річного чоловіка.",
-      "place": "Синельниківський район",
+      "claim_id": "5e6e79489964960f00c352d7",
+      "record_id": "2423623d5407dab148a6",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "У Павлограді загинула людина.",
+      "place": "Павлоград",
       "predicates": [
         "casualty"
       ],
@@ -1199,10 +1597,46 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "4c198f8b6defbd246c3ca678",
-      "record_id": "fe29346f733f4487892d",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "На Нікопольщині цілили по райцентру, Марганецькій, Мозолевській, Мирівській, Томаківській, Червоногригорівській та Покровській громадах.",
+      "claim_id": "0c50df59b2c51d9ddd248b51",
+      "record_id": "2423623d5407dab148a6",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Семеро дістали поранень..",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "feda119a32f06eea67bf697f",
+      "record_id": "2423623d5407dab148a6",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Двоє 10-річних дівчаток та 37-річна жінка - у тяжкому стані.",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "5802d619cdf973a851bbbfe5",
+      "record_id": "2423623d5407dab148a6",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Стан решти постраждалих лікарі оцінюють як середній.",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "0681e1e8e1e14d3d841d0b4a",
+      "record_id": "827b6cb29ad45c6a98db",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "На Нікопольщині під ударом були райцентр, Покровська, Марганецька, Червоногригорівська та Мирівська громади.",
       "place": "Нікопольщина",
       "predicates": [
         "fire"
@@ -1211,10 +1645,10 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "6058d61523ff9d4a6fff3c5a",
-      "record_id": "fe29346f733f4487892d",
-      "source_key": "dnipropetrovskaODA/32833",
-      "source_text": "Пошкоджені приватні будинки, інфраструктура, сільгосптехніка, пасажирський автобус.",
+      "claim_id": "6975bd6c18c2bddb70c0c962",
+      "record_id": "827b6cb29ad45c6a98db",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Пошкоджені приватні будинки, складське приміщення, інфраструктура та автівки.",
       "place": "Нікопольщина",
       "predicates": [
         "damage"
@@ -1223,11 +1657,23 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "8cd2b96cc0dc030c0d2074e6",
-      "record_id": "89ed3c82e6455d16c718",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_text": "Понад 10 разів ворог атакував Нікопольщину безпілотниками",
+      "claim_id": "0d47efc9a0e8e0a27398c1b7",
+      "record_id": "827b6cb29ad45c6a98db",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Одна людина постраждала.",
       "place": "Нікопольщина",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "c06d38ff033aa0d9064567b3",
+      "record_id": "c1aa7c70cfe581c4ac4e",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "У Криворізькому районі противник цілив по Зеленодольській громаді.",
+      "place": "Криворіжжя",
       "predicates": [
         "attack"
       ],
@@ -1235,24 +1681,11 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "0cf584b1126f74f446859ac5",
-      "record_id": "9a61a071c86f0569c1c9",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_text": "Цілив по райцентру, Марганецькій, Червоногригорівській та Покровській громадах.",
-      "place": "Нікопольщина",
-      "predicates": [
-        "fire",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "0d78305145da1f93a21ef0ca",
-      "record_id": "9a61a071c86f0569c1c9",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_text": "Понівечені багатоповерхівка та адмінбудівля.",
-      "place": "Нікопольщина",
+      "claim_id": "2053bef82daa513d89b4c321",
+      "record_id": "c1aa7c70cfe581c4ac4e",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Понівечені житловий будинок та заклад освіти.",
+      "place": "Криворіжжя",
       "predicates": [
         "damage"
       ],
@@ -1260,33 +1693,250 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "6c1e02d9a713af58b33d95a8",
-      "record_id": "4506c00d9b461991959c",
-      "source_key": "dnipropetrovskaODA/32834",
-      "source_text": "Всюди минулося без постраждалих.",
+      "claim_id": "c8de95e30c629cc448418678",
+      "record_id": "6813d3eb1779485ed245",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "У Межівській громаді на Синельниківщині поранень дістали 62-річний чоловік та 56-річна жінка.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "f0c594b6cfa658f3528e596c",
+      "record_id": "6813d3eb1779485ed245",
+      "source_key": "dnipropetrovskaODA/32848",
+      "source_text": "Вони госпіталізовані у стані середньої тяжкості.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "60ef130d8ee3bcd0d91086f2",
+      "record_id": "a7da84b2c6f114b69c71",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Троє людей дістали поранень.",
       "place": null,
       "predicates": [
         "casualty"
       ],
       "disposition": "rendered",
-      "reason": "explicit_no_casualties_in_same_bulletin_period"
+      "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "2e0f28d4b58c2682aa336324",
-      "record_id": "c140a04f6968d113d58b",
-      "source_key": "adm_dp/45240",
-      "source_text": "Понад 10 разів ворог атакував Нкопольщину безпілотниками",
-      "place": "Нікопольщина",
+      "claim_id": "42d3792e52d15d6f7822e784",
+      "record_id": "a7da84b2c6f114b69c71",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Понад 40 разів ворог атакував п’ять районів.",
+      "place": null,
       "predicates": [
         "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "a88db41d0326a1ec37ef9bd6",
+      "record_id": "a7da84b2c6f114b69c71",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Бив безпілотниками та авіабомбами",
+      "place": null,
+      "predicates": [
+        "opaque"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "d36213375150f0f73a1cdf55",
+      "record_id": "33b63e9ff3445e8093d9",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "У Дніпрі пошкоджена інфраструктура.",
+      "place": "Дніпро",
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "f90a4f801878fd580859add7",
+      "record_id": "cdea29c2e5743e0cd075",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "У Синельниківському районі ворог завдав ударів по Шахтарській Васильківській та Петропавлівській громадах.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "ada322e0144502ebc72bf303",
+      "record_id": "cdea29c2e5743e0cd075",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Понівечені багатоквартирні та приватні будинки, автівки.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "d23a2adef91a786d90d1d3e8",
+      "record_id": "cdea29c2e5743e0cd075",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Сталися пожежі.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "fire"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "926b0d1c47b3106481aa64b1",
+      "record_id": "cdea29c2e5743e0cd075",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "У стані середньої тяжкості до лікарні доправили жінок 55 і 77 років.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "d99043872636cd62b2fa2384",
+      "record_id": "cdea29c2e5743e0cd075",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "27-річна жінка лікується амбулаторно.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "opaque"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "aa116db02fe59aae3366896e",
+      "record_id": "b195a1cb36f3875c462c",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "На Нікопольщині потерпали райцентр, Марганецька, Мирівська та Червоногригорівська громади.",
+      "place": "Нікопольщина",
+      "predicates": [
+        "fire"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "ef741952595a11db5bf31498",
+      "record_id": "b195a1cb36f3875c462c",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Пошкоджений приватний будинок.",
+      "place": "Нікопольщина",
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "99047ece21314315055ca405",
+      "record_id": "35e093a328a02a06f05a",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "У Павлоградському районі росіяни атакували Богданівську та Троїцьку громади.",
+      "place": null,
+      "predicates": [
+        "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "c7c62354556c4ebb5bfbd85f",
+      "record_id": "35e093a328a02a06f05a",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "Понівечені приватна оселя, інфраструктура.",
+      "place": null,
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "5dab938eb2b97b4fbd60f066",
+      "record_id": "7d34c7bdae296215f939",
+      "source_key": "dnipropetrovskaODA/32850",
+      "source_text": "У Кам’янському районі росіяни цілили по Верхівцевській громаді.",
+      "place": "Кам’янський район",
+      "predicates": [
+        "opaque"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "03b0ee5f0103fec15c92f257",
+      "record_id": "2f65ab71eedb4fa3b472",
+      "source_key": "dnipropetrovskaODA/32846",
+      "source_text": "Уже семеро поранених через атаку росіян на Павлоград.",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty",
+        "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "f62934dd7b2d0bedc8a565b5",
+      "record_id": "2f65ab71eedb4fa3b472",
+      "source_key": "dnipropetrovskaODA/32846",
+      "source_text": "П’ятеро з них госпіталізовані.",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "5d94d49732135d2a643fe43d",
+      "record_id": "2f65ab71eedb4fa3b472",
+      "source_key": "dnipropetrovskaODA/32846",
+      "source_text": "Дві 10-річні дівчинки та 37-річна жінка - у тяжкому стані.",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "094c0e9c4502064bf1e7575d",
+      "record_id": "2f65ab71eedb4fa3b472",
+      "source_key": "dnipropetrovskaODA/32846",
+      "source_text": "Медики постійно поруч із пораненими, надають усю необхідну допомогу.",
+      "place": "Павлоград",
+      "predicates": [
+        "casualty"
       ],
       "disposition": "rendered",
       "reason": "verbatim_or_morphological_rendering"
     }
   ],
   "publication_issues": [],
-  "run_id": "40302920545",
-  "report_sha256": "8fc06dd9dd2f34cc8775af6a57269433367022e7cb895d8251a3eb96c963dda5",
+  "run_id": "40459138614",
+  "report_sha256": "ea159dfcf409fde2e0529d1b3025c27423e19fdbed8dab1d2f685d94713dc073",
   "review": {
     "state": "local_conflict",
     "requests": 0,
