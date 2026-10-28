@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-28T13:57:02.080558+00:00",
-  "previous_checked_at": "2026-10-28T13:27:42.975439+00:00",
-  "collection_gap_minutes": 29.3,
+  "checked_at": "2026-10-28T14:27:06.740456+00:00",
+  "previous_checked_at": "2026-10-28T13:57:02.080558+00:00",
+  "collection_gap_minutes": 30.1,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-27T08:00:00+02:00",
@@ -18,7 +18,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 12,
@@ -34,12 +34,12 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 6,
+      "posts_found": 5,
       "oldest_collected_at": "2026-10-25T15:34:43+00:00",
-      "newest_collected_at": "2026-10-28T13:05:42+00:00"
+      "newest_collected_at": "2026-10-28T13:58:40+00:00"
     },
     "SBUkr": {
       "ok": true,
@@ -50,12 +50,12 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 7,
+      "posts_found": 8,
       "oldest_collected_at": "2026-10-26T08:30:03+00:00",
-      "newest_collected_at": "2026-10-28T11:00:06+00:00"
+      "newest_collected_at": "2026-10-28T14:00:03+00:00"
     },
     "DniproCityOfficial": {
       "ok": true,
@@ -66,12 +66,12 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 9,
-      "oldest_collected_at": "2026-10-25T14:01:58+00:00",
-      "newest_collected_at": "2026-10-28T12:38:28+00:00"
+      "posts_found": 10,
+      "oldest_collected_at": "2026-10-25T15:04:58+00:00",
+      "newest_collected_at": "2026-10-28T14:22:30+00:00"
     },
     "gunpvdp": {
       "ok": true,
@@ -82,7 +82,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 7,
@@ -98,7 +98,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 20,
@@ -114,7 +114,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
@@ -130,12 +130,12 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-10-28T13:57:02.080558+00:00",
+      "coverage_until": "2026-10-28T14:27:06.740456+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 15,
+      "posts_found": 11,
       "oldest_collected_at": "2026-10-25T16:30:01+00:00",
-      "newest_collected_at": "2026-10-28T11:40:09+00:00"
+      "newest_collected_at": "2026-10-28T13:57:04+00:00"
     }
   }
 }
