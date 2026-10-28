@@ -1,7 +1,6 @@
 {
   "initialized": true,
   "alerted_keys": [
-    "DniproCityOfficial/15274",
     "DniproCityOfficial/15300",
     "DniproCityOfficial/15308",
     "DniproCityOfficial/15335",
@@ -44,14 +43,13 @@
     "dnipropetrovskaODA/32869",
     "dnipropetrovskaODA/32870",
     "dsns_telegram/78930",
-    "gunpvdp/37438",
     "gunpvdp/37456",
     "gunpvdp/37461",
     "gunpvdp/37509",
     "gunpvdp/37530"
   ],
   "last_daily_report": "2026-10-28",
-  "last_alert_scan_at": "2026-10-28T10:42:17.397761+00:00",
+  "last_alert_scan_at": "2026-10-28T11:11:59.196631+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-28",
