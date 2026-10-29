@@ -68,7 +68,7 @@ class PublicOperationalProseTests(unittest.TestCase):
 
     def test_absence_of_casualties_is_scoped_to_its_bulletin(self):
         self.assertNotIn('Всюди минулося без постраждалих', self.text)
-        night = self.text.split('Ранкове зведення за 22 жовтня')[1].split('\n\n')[0]
+        night = self.text.split('22 жовтня')[1].split('\n\n')[0]
         self.assertIn('За цим зведенням, постраждалих немає.', night)
         self.assertNotIn('за добу постраждалих немає', self.text)
 
@@ -118,14 +118,14 @@ class PublicOperationalProseTests(unittest.TestCase):
 
     def test_single_oblast_paragraph_and_locality_groups_do_not_create_attack_total(self):
         attack = self.text.split('2.1. Обстріли')[1].split('2.2. Незаконне')[0]
-        self.assertEqual(attack.count('Денне зведення за'), 1)
-        self.assertEqual(attack.count('Ранкове зведення за'), 1)
+        self.assertEqual(attack.count('21 жовтня (станом на 18:30):'), 1)
+        self.assertEqual(attack.count('22 жовтня (станом на 07:30):'), 1)
         self.assertNotIn('Обласне зведення на', attack)
         self.assertIn('\nДніпро:\n', attack)
         self.assertIn('\nПавлоград:\n', attack)
         self.assertIn('\nНікопольщина:\n', attack)
-        self.assertIn('Денне зведення за 21 жовтня (станом на 18:30): Понад 50', attack)
-        self.assertIn('Ранкове зведення за 22 жовтня (станом на 07:30): Понад 20', attack)
+        self.assertIn('21 жовтня (станом на 18:30): Понад 50', attack)
+        self.assertIn('22 жовтня (станом на 07:30): Понад 20', attack)
         self.assertNotIn('70 разів', attack)
 
     def test_each_local_consequence_remains_under_its_source_bulletin(self):

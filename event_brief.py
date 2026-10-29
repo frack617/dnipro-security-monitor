@@ -254,7 +254,7 @@ def project_attacks(registry):
         if at and r['scope']=='Дніпропетровська область':
             dt=datetime.fromisoformat(at)
             label=('Денне зведення' if dt.hour>=12 else 'Ранкове зведення')
-            text=f'{label} за {date_label(dt)} (станом на {dt:%H:%M}): '+tidy(r['source_text']).rstrip('.')+'.'
+            text=f'{date_label(dt)} (станом на {dt:%H:%M}): '+tidy(r['source_text']).rstrip('.')+'.'
             headers.append(text)
             mapping.append({'text':text,'record_ids':[r['id']],'reporting_period':at,'place':'Область'})
             continue
@@ -319,9 +319,6 @@ def project_attacks(registry):
                 refs+=daily_details[r['id']]['source_ids']
             add(place,at,body,refs)
     result=list(headers)
-    if registry['casualty_summary_links']:
-        from casualty_links import TOTALS_NOTE
-        result.append(TOTALS_NOTE)
     for place,periods in groups.items():
         pieces=[]
         for period,values in periods.items():
@@ -359,7 +356,7 @@ def casualty_roles(text):
 
 
 def damage_atoms(text):
-    patterns={'home':r'приватн\w* (?:будин|осел)|житлов\w* будин',
+    patterns={'garage':r'гараж', 'store':r'магазин', 'gas_station':r'заправ', 'home':r'приватн\w* (?:будин|осел)|житлов\w* будин',
               'infrastructure':r'інфраструктур','enterprise':r'підприємств',
               'cars':r'автів|автомобіл','trucks':r'вантажів',
               'admin':r'адмін(?:істративн\w*\s+)?будів|адміністративн\w* будів',

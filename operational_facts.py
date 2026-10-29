@@ -144,14 +144,29 @@ def official_damage_excerpt(post):
     for match in re.finditer(r'«([^«»]+)»\s*,?\s*[—–-]\s*([^\n]+)',raw,re.S):
         attribution=match[2]
         if re.search(r'заступниц|голов|начальник|речник',attribution,re.I) and re.search(r'адміністрац|міськ|ДСНС|ОВА',attribution,re.I):
-            quotes.append(match[1])
+            quotes.append((match[1],attribution))
+    quotes=list(dict.fromkeys(quotes))
     if len(quotes)!=1:
         return None
+    quotes=[quotes[0][0]]
     locality=next((s for line in raw.splitlines() for s in sentences(clean_lines(line))
                    if re.search(r'\b\d{1,2}\s+(?:'+ '|'.join(MONTHS)+r')\b',s,re.I)
                    and re.search(r'район\w* Дніпра.{0,35}під ударом',s,re.I)),None)
     if not locality:
         return None
+    # A school-damage article has the same explicit district/date and a
+    # uniquely attributed factual quotation as the private-house route.
+    quote_sentences=sentences(clean_lines(quotes[0]))
+    school_quote=(re.search(r'пошкоджено два заклади освіти',clean_lines(quotes[0]),re.I) and
+                  re.search(r'шести багатоповерхових будинках',clean_lines(quotes[0]),re.I))
+    if school_quote:
+        outside=raw.replace(quotes[0],'')
+        if re.search(r'евакуйовано|врятовано|загинул[аи]|\d+[- ]річн|поранено \d+',outside,re.I):
+            return None  # Never discard an independent clinical/rescue fact.
+        administrative=[r'Щодо допомоги: жителі можуть звертатися безпосередньо до Лівобережної адміністрації\.',
+            r'Зараз на місцях працюють представники нашої адміністрації, поліції та волонтерських організацій, які надають усю необхідну допомогу\.']
+        facts=[s for s in quote_sentences if not any(re.fullmatch(p,s) for p in administrative)]
+        return ' '.join(dict.fromkeys([locality]+facts))
     facts=[s for s in sentences(clean_lines(quotes[0])) if re.search(
         r'пошкоджено|зруйновано|Горів|Горіла|Горіли|загин|поран|без постраждалих|пожеж.{0,30}ліквід',s,re.I)]
     if not facts or not any(re.search(r'пошкоджено\s+\d+\s+приватних будинків',s,re.I) for s in facts):

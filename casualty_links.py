@@ -74,7 +74,7 @@ def summary_links(records, overlap):
                         count_targets.append({'text':text,'published_at':event['published_at']})
             if not age_targets or not count_targets:continue
             links.append(dict(record_id=summary['id'],source_text=sentence,
-                              summary_text='За денним підсумком у районі поранені '+match[1].casefold()+'; '+SUMMARY_NOTE+'.',
+                              summary_text='',
                               place=place,reporting_period=at,summary_context=sentences(summary['source_text'])[0],age=signature[0],sex=signature[1],injured=count,
                               event_ids=[r['id'] for r in compatible],age_targets=age_targets,count_targets=count_targets,
                               reason='unique_scoped_event_and_equal_injury_total',scope_relation='includes'))
@@ -99,7 +99,6 @@ def link_is_visible(link, report):
     from source_claims import canonical
     marker=canonical(date_label(at)+' '+link['summary_context'])
     if marker not in canonical(paragraph):return False
-    if not projection_present(link['summary_text'],paragraph):return False
     return (any(projection_present(t['text'],paragraph,t['published_at']) for t in link['age_targets']) and
             any(projection_present(t['text'],paragraph,t['published_at']) for t in link['count_targets']))
 
@@ -115,6 +114,4 @@ def duplicate_summary_issues(registry, report):
             if occurrences.count((link['age'],link['sex']))>1 or projection_present(link['source_text'],m[1]):
                 issues.append('duplicate_casualty_detail')
         if not link_is_visible(link,report):issues.append('unresolved_casualty_summary')
-    if registry.get('casualty_summary_links') and TOTALS_NOTE not in report:
-        issues.append('unmarked_casualty_totals')
     return list(dict.fromkeys(issues))

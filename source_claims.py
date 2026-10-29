@@ -30,6 +30,12 @@ def canonical(text):
 def boilerplate(text):
     """Never match a prefix: an additional consequence makes the clause stay."""
     patterns = [
+        r'(?:Дніпровський|Кам[’\x27]янський|Синельниківський|Нікопольський|Павлоградський) район[.!]?',
+        r'Павлоград[.!]?', r'Деталі[.!]?',
+        r'Перебувайте у безпечних місцях[.!]?',
+        r'Медики постійно поруч із пораненими, надають усю необхідну допомогу[.!]?',
+        r'На місці представники райадміністрації, міські служби, доєднуються благодійники[.!]?',
+
         r'Наслідки уточнюємо[.!]?',
         r'Загроза для міста зберігається[.!]?',
         r'Залишайтеся у безпечних місцях до відбою повітряної тривоги[.!]?',
@@ -149,6 +155,11 @@ def claim_plan(registry, report):
             own=next((d for d in decisions if canonical(d['source_text'])==canonical(u['source_text'])
                       and d['disposition'] in {'covered','superseded'}),None)
             if own and own.get('target_id') in by_id:
+                if own.get('reason')=='unique_medical_detail_copied_to_daily_scope':
+                    from casualty_links import projection_present
+                    if not projection_present(u['source_text'],report,r['published_at']):
+                        result.append(dict(item,disposition='unresolved',reason='copied_detail_missing_from_public_text'))
+                        continue
                 result.append(dict(item,**{k:v for k,v in own.items() if k!='source_text'}));continue
             if r.get('warehouse_target') in by_id:
                 from operational_facts import warehouse_generic_statement
@@ -167,7 +178,7 @@ def claim_plan(registry, report):
             if r.get('reporting_period') and (r.get('scope')=='Дніпропетровська область' or
                 re.fullmatch(r'Всюди минулося без постраждалих[.!]?',u['source_text'],re.I)):
                 at=datetime.fromisoformat(r['reporting_period'])
-                marker='за '+date_label(at)+f' (станом на {at:%H:%M}):'
+                marker=date_label(at)+f' (станом на {at:%H:%M}):'
                 body=next((p for p in report.split('\n\n') if marker.casefold() in p.casefold()),'')
             overlap=next((p for p in registry.get('clause_projection_proofs',[]) if p['record_id']==r['id'] and canonical(p['source_text'])==canonical(u['source_text'])),None)
             if overlap:
@@ -212,6 +223,7 @@ def damage_signature(text):
     for p in [r'об[’ʼ\x27]єкт\w* інфраструктур\w*',r'приватн\w* (?:будин\w*|осел\w*)',
               r'житлов\w* будин\w*',r'багатоквартирн\w* будин\w*',
               r'адміністративн\w* будівл\w*',r'адмінбудівл\w*',r'інфраструктур\w*',
+              r'гараж\w*',r'складськ\w* приміщенн\w*',r'магазин\w*',r'(?:авто)?заправ\w*',
               r'підприємств\w*',r'вантажівк\w*',r'автівк\w*',r'автомобіл\w*']:
         rest=re.sub(p,'',rest,flags=re.I)
     if re.sub(r'\b(?:і|й|та)\b|[,\s]','',rest):return None
@@ -220,7 +232,7 @@ def damage_signature(text):
 
 def medical_ages(text):
     ages=set(re.findall(r'\b(\d+)-річн',text))
-    for match in re.finditer(r'(?:чоловіки|хлопець|дівчина)\s+([\d, іта]+)\s+рок',text,re.I):
+    for match in re.finditer(r'(?:чоловік(?:и|а|ів)?|жін(?:ки|ок|ка|ку)|хлопець|дівчина)\s+([\d, іта]+)\s+рок',text,re.I):
         ages.update(re.findall(r'\d+',match[1]))
     return ages
 
@@ -229,16 +241,16 @@ def medical_role_counts(text):
     """Typed clinical quantities; hospitalized is not total injured."""
     from report_rules import NUMBER,number_value
     found={}
-    patterns={'hospitalized':r'(?:у|в) лікарні|госпіталізован\w*',
+    patterns={'hospitalized':r'(?:у|в|до) лікарні|госпіталізован\w*',
               'severe':r'(?:у|в) (?:важк\w*|тяжк\w*) стан\w*',
               'outpatient':r'(?:на )?амбулаторн\w* (?:лікуван\w*)?'}
     for role,pattern in patterns.items():
-        for m in re.finditer(r'\b('+NUMBER+r')\s+(?:(?:люд\w*|поранен\w*|постраждал\w*|осіб)\s+)?(?:перебувають\s+)?(?:'+pattern+r')',text,re.I):
+        for m in re.finditer(r'\b('+NUMBER+r')\s+(?:(?:люд\w*|поранен\w*|постражда\w*|осіб)\s+)?(?:перебувають\s+)?(?:'+pattern+r')',text,re.I):
             found[role]=max(found.get(role,0),number_value(m[1].casefold()))
     enumerated={}
     for s in sentences(text):
         n=len(re.findall(r'\b\d+-річн',s))
-        for m in re.finditer(r'(?:чоловіки|хлопець|дівчина)\s+([\d, іта]+)\s+рок',s,re.I):
+        for m in re.finditer(r'(?:чоловік(?:и|а|ів)?|жін(?:ки|ок|ка|ку)|хлопець|дівчина)\s+([\d, іта]+)\s+рок',s,re.I):
             n+=len(re.findall(r'\d+',m[1]))
         if not n:continue
         for role,pattern in patterns.items():
@@ -275,6 +287,8 @@ def clause_coverage(clause, target):
     damage=damage_signature(clause)
     damaged=set().union(*(__import__('event_brief').damage_atoms(s) for s in sentences(target)
                          if re.search(r'пошкодж|понівеч|зруйн',s,re.I)))
+    if damage and re.search(r'житлов\w* будин',clause,re.I) and not re.search(r'приватн',clause,re.I) and 'apartment' in damaged:
+        damaged.add('home')
     if damage and damage<=damaged:
         # Geography is checked by the caller. Explicit numeric damage is not
         # eligible for category coverage.
@@ -282,13 +296,13 @@ def clause_coverage(clause, target):
     # Medical clauses have a closed grammatical vocabulary, so a sentence
     # about a child plus an unfamiliar outcome cannot vanish as "casualties".
     words=re.findall(r'[а-яіїєґ’ʼ\x27]+|\d+',clause.casefold())
-    allowed=re.compile(r'^(?:\d+|'+NUMBER+r'|люд\w*|людин\w*|осіб|людей|постраждал\w*|'
-        r'поранен\w*|поранень|діста\w*|через|атаку|атак\w*|ворож\w*|росіян|'
+    allowed=re.compile(r'^(?:\d+|'+NUMBER+r'|люд\w*|людин\w*|осіб|людей|постражда\w*|'
+        r'поранен\w*|поранень|діста\w*|отрим\w*|через|який|яка|що|внаслідок|унаслідок|удару|по|атаку|атак\w*|ворож\w*|росіян|'
         r'на|у|в|і|й|та|а|також|ще|вже|до|зросла|кількість|семи|них|серед|'
-        r'чоловік\w*|чоловіки|чоловіка|жін\w*|хлопець|хлопці|дівчин\w*|дитин\w*|'
+        r'чоловік\w*|чоловіки|чоловіка|жін\w*|хлопець|хлопці|дівчин\w*|дівчат\w*|дитин\w*|неповнолітн\w*|підліт\w*|'
         r'років|роки|річн\w*|лікарні|лікарню|лікарів|ліку\w*|госпіталізован\w*|'
         r'перебува\w*|знаходиться|він|вона|вони|стан\w*|важк\w*|тяжк\w*|середньої|'
-        r'медики|оцінюють|як|під|наглядом|амбулаторно|загинул\w*|зараз|'
+        r'медики|оцінюють|його|як|під|наглядом|амбулаторно|загинул\w*|зараз|'
         r'дніпр\w*|крив\w*|ріг|розі|рогу|нікопол\w*|павлоград\w*)$',re.I)
     # Named communities are not a generic patient group. The exact age
     # enumeration is already covered by full-clause equality above.
@@ -305,7 +319,7 @@ def clause_coverage(clause, target):
         if 'injured' in roles and final.get('injured',0)<roles['injured']:
             # A detailed day's patient enumeration replaces a preliminary
             # count without creating or publishing an inferred new total.
-            if not re.search(r'госпіталізован|лікарні',target,re.I) or len(medical_ages(target))<2:return None
+            if not re.search(r'госпіталізован|лікарні|амбулаторн',target,re.I) or len(medical_ages(target))<2:return None
         if not roles and not re.search(r'поран|постраждал|лікарні',target,re.I):return None
         return 'earlier_medical_update_in_daily_scope'
     # A bare attack announcement adds no object, weapon, clock or quantity
@@ -351,7 +365,7 @@ def resolve_updates(records):
                (r['source_key'] in verified_recap_keys or
                 bool(re.search(r'документують наслідки|протягом дня|наслідки ворожих атак',original,re.I))))
         targets=[b for b in daily if datetime.fromisoformat(b['reporting_period']).date()==published.date()
-                 and (datetime.fromisoformat(b['reporting_period'])>=published or recap)]
+                 and (datetime.fromisoformat(b['reporting_period'])>=published or recap or r.get('source_recap_day'))]
         if not targets:continue
         original_parts=split_places(original)
         initial=original_parts[0][0] if original_parts else None
@@ -383,6 +397,7 @@ def resolve_updates(records):
         r['claim_decisions']=decisions
         if chunks:
             r['resolved_chunks']=chunks
+            if initial and not r.get('scope_context'):r['scope_context']=initial
             r['display']=' '.join(t for _,t in chunks)
         else:
             r['state']='supplement';r['reason']='all_source_clauses_covered_by_dated_daily_scope';r['display']=None

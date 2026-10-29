@@ -9,6 +9,12 @@ from pathlib import Path
 
 def publication_issues(registry, report, statuses, expected_channels=()):
     issues = []
+    # Editorial warnings never suppress delivery; they expose broken public prose.
+    from source_claims import canonical
+    for heading,body in re.findall(r'(?m)^([^\n:]+):\n([^\n]+)',report):
+        if canonical(heading)==canonical(body):issues.append('empty_geographic_body')
+    if re.search(r'Як курсуватиме транспорт|О котрій будуть|App Store|Google Play|(?m:^: внаслідок)',report):
+        issues.append('raw_navigation_or_procedural_text')
     from casualty_links import duplicate_summary_issues
     issues.extend(duplicate_summary_issues(registry,report))
     from operational_facts import queue_power_schedule
@@ -70,7 +76,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json','scoped_updates.py'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

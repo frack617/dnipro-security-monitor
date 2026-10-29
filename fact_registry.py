@@ -73,6 +73,7 @@ def make_record(post, section, text, *, scope=None, period=None, state='included
         'incident_time': None, 'incident_time_status': 'not_established',
         'reporting_period': period, 'state': state, 'reason': reason,
         'source_refs': [key], 'display': None,
+        'source_recap_day': post.get('source_recap_day', False),
     }
 
 
@@ -205,6 +206,7 @@ def transport_display(posts, end):
     raw = re.sub(r'У зв[’\x27]язку з цим трамваї прямуватимуть.*?до кінцевої зупинки трамвая\.', '', raw, flags=re.I)
     raw = re.sub(r'Обмеження пов[’\x27]язане з ремонтними роботами на трамвайній колії в районі (вул\. [^.]+)\.',r'Причина — ремонт колії біля \1.',raw)
     raw = re.sub(r'Крім того, трамваї за анонсом закінчать роботу раніше\. Зміни пов[’\x27]язані з ремонтом трамвайної колії по (вул\. [^.]+)\.',r'Через ремонт колії по \1 трамваї завершать роботу раніше.',raw)
+    raw=raw.replace('Як курсуватиме транспорт -','').replace('О котрій будуть','')
     raw = re.sub(r'\s+', ' ', raw).strip()
     if re.search(r'обмеж|перекрит|призупин|ремонт', raw, re.I):
         pass
@@ -260,12 +262,34 @@ def compile_registry(posts, statuses, checked_at):
                                    temporary_power_schedule)
     expanded = []
     for post in candidates:
-        # Explicit geographic blocks of non-OVA summaries remain independent.
+        # Read a full recap BEFORE geographic splitting: its night/date header
+        # governs every block, not just the first record produced from it.
+        if (post.get('channel','').casefold() in {'gunpvdp','dsns_telegram'}
+                and re.search(r'Протягом ночі|Упродовж ночі|Цієї ночі|З вечора до ранку',post['text'],re.I)):
+            published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
+            filtered, reason = current_attack_piece(post['text'],published,start,end)
+            if filtered is None:
+                records.append(make_record(post,'2.1',post['text'],state='excluded',reason=reason))
+                continue
+            if filtered != post['text']:
+                records.append(make_record(post,'2.1',post['text'],state='excluded',reason=reason))
+                post = dict(post,text=filtered)
+        if (post.get('channel','').casefold()=='dsns_telegram' and
+                re.search(r'Упродовж дня|Протягом дня',post['text'],re.I)):
+            post=dict(post,source_recap_day=True)
         pieces = re.split(r'[▪●]\ufe0f?', post['text'])
         if len(pieces) > 1 and post.get('channel','').lower() not in (BULLETIN_CHANNELS | {'sbukr', 'dsns_telegram'}):
+            published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
+            mixed_morning = (post.get('channel','').casefold()=='gunpvdp'
+                and published.date()==start.date() and published.hour<12
+                and any(re.search(r'сьогодні\s+вранці',p,re.I) for p in pieces[1:]))
             for i, piece in enumerate(pieces[1:]):
                 if piece.strip():
-                    expanded.append(dict(post, text=piece.strip(), source_block=i+1))
+                    # An explicitly current block never redates its neighbours.
+                    explicit = bool(re.search(r'сьогодні|щойно|після\s+0?8[:.]',piece,re.I)
+                                    or DATE.search(piece))
+                    expanded.append(dict(post,text=piece.strip(),source_block=i+1,
+                        source_time_uncertain=bool(mixed_morning and not explicit)))
         else:
             expanded.append(post)
     for post in regional_segments(expanded, records):
@@ -285,6 +309,10 @@ def compile_registry(posts, statuses, checked_at):
             records.append(make_record(post,section,post['text'],state='excluded',reason='prevention_without_asserted_event'))
             continue
         text = post['text']
+        if section == '2.1' and post.get('source_time_uncertain'):
+            records.append(make_record(post,section,text,state='review',
+                reason='mixed_police_block_incident_date_unproven'))
+            continue
         if section == '2.1' and not bulletin_header(post):
             from operational_facts import has_operational_attack_assertion
             if not has_operational_attack_assertion(text):
@@ -426,6 +454,8 @@ def compile_registry(posts, statuses, checked_at):
     from source_claims import prepare_claims, resolve_updates
     prepare_claims(selected)
     resolve_updates(selected)
+    from scoped_updates import resolve_scoped_updates
+    resolve_scoped_updates(selected)
     selected = consolidate_warehouse_details(selected)
     transport_text, expired = transport_display(transport, end)
     for rec in records:

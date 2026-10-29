@@ -36,7 +36,7 @@ class CasualtySummaryTests(unittest.TestCase):
         self.assertEqual(len(r['casualty_summary_links']),1)
         self.assertEqual(len(re.findall(r'14-річ',t)),1)
         for fact in ['14-річного хлопчика','обласної лікарні Дніпра','Його стан тяжкий',
-                     '46-річний чоловік у тяжкому стані','описаний вище випадок уже враховано',TOTALS_NOTE]:
+                     '46-річний чоловік у тяжкому стані']:
             self.assertIn(fact,t)
         self.assertEqual(publication_issues(r,t,{}),[])
         self.assertFalse([c for c in r['claim_plan'] if c['disposition']=='unresolved'])
@@ -72,13 +72,13 @@ class CasualtySummaryTests(unittest.TestCase):
     def test_ready_text_gate_rejects_repeat_even_when_it_is_paraphrased(self):
         r,t=render();old=r['casualty_summary_links'][0]['source_text']
         for duplicate in [old,'У районі також постраждав 14-річний хлопець.']:
-            changed=t.replace('описаний вище випадок уже враховано.', 'описаний вище випадок уже враховано. '+duplicate)
+            changed=t.replace('Нікопольщина:\n', 'Нікопольщина:\n'+duplicate+' ')
             self.assertIn('duplicate_casualty_detail',publication_issues(r,changed,{}))
 
     def test_reference_without_age_or_hospital_fact_cannot_cover_original(self):
         r,t=render()
         for phrase in ['14-річного хлопчика госпіталізували до обласної лікарні Дніпра.',
-                       'Його стан тяжкий.','описаний вище випадок уже враховано.']:
+                       'Його стан тяжкий.']:
             self.assertIn(phrase,t)
             self.assertIn('lost_source_claim',publication_issues(r,t.replace(phrase,''),{}))
         wrong_date=t.replace('24 жовтня на Нікопольщині','23 жовтня на Нікопольщині')
@@ -88,14 +88,15 @@ class CasualtySummaryTests(unittest.TestCase):
         r,t=render()
         for fact in ['Понад 60','Понад 20','14 дорослих і дитина','14 дістали поранень','травмовані 12']:
             self.assertIn(fact,t)
-        self.assertIn('unmarked_casualty_totals',publication_issues(r,t.replace(TOTALS_NOTE,''),{}))
+        self.assertNotIn(TOTALS_NOTE,t)
+        self.assertEqual(publication_issues(r,t,{}),[])
 
     def test_duplicate_is_flagged_for_human_review_without_suppressing_delivery(self):
         import collector as c
         real_render=render_registry
         def inject(registry):
-            return real_render(registry).replace('описаний вище випадок уже враховано.',
-                'описаний вище випадок уже враховано. У районі постраждав 14-річний хлопець.')
+            return real_render(registry).replace('Нікопольщина:\n',
+                'Нікопольщина:\nУ районі постраждав 14-річний хлопець. ')
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
             with patch.object(c,'DATA_DIR',root),patch.object(c,'MORNING_REPORT_FILE',root/'morning_report.md'), \

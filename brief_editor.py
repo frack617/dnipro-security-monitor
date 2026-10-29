@@ -12,7 +12,10 @@ CATALOG=json.loads((Path(__file__).parent/'reference/communities_dp.json').read_
 ALIASES={'Підгороднянська':'Підгородненська','Підгороднянській':'Підгородненській',
          'Підгороднянської':'Підгородненської','Підгороднянську':'Підгородненську',
          'Підгороднянською':'Підгородненською'}
-REGION_ALIASES={'Нкопольщину':'Нікопольщину'}
+REGION_ALIASES={'Нкопольщину':'Нікопольщину',
+    'Верхівцевська':'Верхівцівська','Верхівцевській':'Верхівцівській',
+    'Верхівцевської':'Верхівцівської','Верхівцевську':'Верхівцівську',
+    'Верхівцевською':'Верхівцівською'}
 PARENTS={'Дніпро':'Дніпровський район','Передмістя Дніпра':'Дніпровський район',
          'Кривий Ріг':'Криворізький район','Криворіжжя':'Криворізький район',
          'Нікополь':'Нікопольський район','Нікопольщина':'Нікопольський район',
@@ -130,7 +133,7 @@ def present_projection(registry):
         if original!=changed:
             corrected.append({'record_ids':item.get('record_ids',[]),'rule':'verified_community_spelling',
                               'reference':'https://pidgorodne.otg.dp.gov.ua/'})
-    projection['paragraphs']=[city_prose(smooth(p)) for p in projection['paragraphs']]
+    projection['paragraphs']=[city_prose(smooth(p)).replace('За ранковими даними ','') for p in projection['paragraphs']]
     projection['paragraphs']=[p.replace('Криворіжжя та Синельниківський район:\nДСНС також повідомила про пошкодження об’єктів інфраструктури та ліквідацію пожеж.',
         'За спільними даними ДСНС щодо Криворізького та Синельниківського районів, пошкоджено об’єкти інфраструктури; пожежі ліквідовано.') for p in projection['paragraphs']]
     for r in registry.get('records',[]):
