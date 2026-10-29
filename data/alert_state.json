@@ -41,6 +41,7 @@
     "adm_dp/45384",
     "adm_dp/45394",
     "adm_dp/45397",
+    "adm_dp/45406",
     "borys_filatovv/3758",
     "borys_filatovv/3775",
     "borys_filatovv/3776",
@@ -88,7 +89,7 @@
     "gunpvdp/37557"
   ],
   "last_daily_report": "2026-10-29",
-  "last_alert_scan_at": "2026-10-29T18:47:00.873865+00:00",
+  "last_alert_scan_at": "2026-10-29T19:16:59.679614+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-29",
