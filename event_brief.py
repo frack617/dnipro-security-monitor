@@ -254,7 +254,7 @@ def project_attacks(registry):
         if at and r['scope']=='Дніпропетровська область':
             dt=datetime.fromisoformat(at)
             label=('Денне зведення' if dt.hour>=12 else 'Ранкове зведення')
-            text=f'{date_label(dt)} (станом на {dt:%H:%M}): '+tidy(r['source_text']).rstrip('.')+'.'
+            text=f'{date_label(dt)} (станом на {dt:%H:%M}): '+tidy(r.get('public_header_body',r['source_text']),r['published_at']).rstrip('.')+'.'
             headers.append(text)
             mapping.append({'text':text,'record_ids':[r['id']],'reporting_period':at,'place':'Область'})
             continue

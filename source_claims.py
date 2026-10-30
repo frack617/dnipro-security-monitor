@@ -60,18 +60,20 @@ def boilerplate(text):
         r'Робота на місці атаки триває[.!]?',
         r'Поліція продовжує працювати на місцях ворожих атак, фіксувати руйнування та надавати необхідну допомогу громадянам[.!]?',
     ]
-    return any(re.fullmatch(p,text,re.I) for p in patterns)
+    from editorial_selection import formula
+    return formula(text) or any(re.fullmatch(p,text,re.I) for p in patterns)
 
 
 def select_units(text, source_key='', published_at=None, reporting_period=None, scope=None):
     units=[];offset=0
     # Remove only standalone editorial headings before sentence tokenisation;
     # a heading sharing a line with a concrete fact cannot match boilerplate.
-    lines=[line for line in text.splitlines() if not boilerplate(clean_lines(line))]
+    from editorial_selection import selection_lines
+    lines=[line for line in selection_lines(text) if not boilerplate(clean_lines(line))]
     for i in range(len(lines)-1):
         if (len(lines[i].strip())>15 and not re.search(r'[.!?:;]$',lines[i].strip()) and
             (re.match(r'\d{1,2}\s+[а-яіїєґ]+\s+(?:ворог|росіяни)\b',lines[i+1].strip(),re.I) or
-             re.match(r'(?:Внаслідок|Унаслідок|Сьогодні)\b',lines[i+1].strip()))):
+             re.match(r'(?:Внаслідок|Унаслідок|Сьогодні|Увечері|Вранці|Після атаки)\b',lines[i+1].strip()))):
             lines[i]+='.'
     body=' '.join(lines)
     body=clean_lines(body)
@@ -154,6 +156,22 @@ def claim_plan(registry, report):
             decisions=r.get('claim_decisions',[])+r.get('assessment_history',[])
             own=next((d for d in decisions if canonical(d['source_text'])==canonical(u['source_text'])
                       and d['disposition'] in {'covered','superseded'}),None)
+            if own and own.get('target_id') in by_id and own.get('reason','').startswith('incident_'):
+                from casualty_links import projection_present
+                from incident_updates import death_count
+                match=re.search(r'(?m)^Дніпро:\n([^\n]+)',report)
+                incident_body=match[1] if match else ''
+                if own['reason'] in {'incident_station_death_update','incident_station_counts_update'}:
+                    count=death_count(own.get('evidence',''))
+                    valid=bool(count is not None and death_count(incident_body)==count)
+                    if own.get('expected_injured'):
+                        valid=valid and bool(re.search(r'вже '+str(own['expected_injured'])+r' поранених через атаку росіян на залізничний вокзал',incident_body,re.I))
+                elif own['reason']=='incident_clinical_snapshot_update':
+                    valid=all(projection_present(e,incident_body,r['published_at']) for e in own['evidence_fragments'])
+                else:
+                    valid=projection_present(own.get('evidence',u['source_text']),incident_body,r['published_at'])
+                result.append(dict(item,disposition=own['disposition'] if valid else 'unresolved',reason=own['reason'] if valid else 'incident_update_missing_from_public_text',target_id=own['target_id']))
+                continue
             if own and own.get('target_id') in by_id:
                 if own.get('reason')=='unique_medical_detail_copied_to_daily_scope':
                     from casualty_links import projection_present

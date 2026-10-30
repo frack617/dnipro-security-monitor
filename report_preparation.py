@@ -13,7 +13,7 @@ def deduplicate_source_body(text):
     changed = True
     while changed:
         changed = False
-        for width in range(len(lines) // 2, 2, -1):
+        for width in range(len(lines) // 2, 0, -1):
             for start in range(len(lines) - 2 * width + 1):
                 block = lines[start:start + width]
                 if (block == lines[start + width:start + 2 * width]

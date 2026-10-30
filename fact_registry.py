@@ -133,6 +133,10 @@ def merge_mirrors(records, diagnostics):
 
 def service_display(post, end):
     raw = post.get('text', '')
+    from operational_notices import service_notice
+    asserted = service_notice(post)
+    if asserted:
+        return asserted
     from operational_facts import temporary_power_schedule, dated_power_interruption, queue_power_schedule
     schedule = queue_power_schedule(post) or dated_power_interruption(post) or temporary_power_schedule(post)
     if schedule:
@@ -169,7 +173,8 @@ def service_display(post, end):
     day = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
     if re.search(r'повідомлено про знеструмлення', text, re.I):
         text = f'Повідомлення від {day:%d.%m}: '+text
-    return text
+    from source_claims import selected_text
+    return selected_text(text)
 
 
 def transport_display(posts, end):
@@ -183,11 +188,20 @@ def transport_display(posts, end):
         # current travel restrictions. Persistent undated closures survive.
         expired = (day and day < end.date() and
                    re.search(r'сьогодні|відновлюється рух|збільшено кількість|закінчать свою роботу раніше|(?:з|до)\s+\d{1,2}:\d{2}', text, re.I))
+        from operational_notices import notice_kind
+        expired = expired or bool(day and day < end.date() and notice_kind(text)=='1.2')
         if expired:
             excluded.append(post)
         else:
             current.append(post)
-    raw = brief_transport(current, as_of=end.date()) if current else EMPTY
+    from operational_notices import emergency_transport
+    urgent = [(p, emergency_transport(p)) for p in current]
+    ordinary = [p for p, value in urgent if not value]
+    raw = brief_transport(ordinary, as_of=end.date()) if ordinary else EMPTY
+    if raw == EMPTY:
+        raw = ''
+    notices = [value for p, value in urgent if value]
+    raw = ' '.join(notices + ([raw] if raw else [])) or EMPTY
     if raw == EMPTY:
         return raw, excluded
     # Approved public simplifications are applied after exact route recovery.
@@ -297,11 +311,18 @@ def compile_registry(posts, statuses, checked_at):
         if reason:
             records.append(make_record(post, '1.4', post['text'], state='excluded', reason=reason))
             continue
+        from operational_notices import notice_kind
         section = post.get('source_section') or c.classify_post(post)
+        notice = notice_kind(post['text'])
+        from operational_facts import has_operational_attack_assertion
+        if notice and (section != '2.1' or notice == '1.2' or not has_operational_attack_assertion(post['text'])):
+            section = notice
         if post.get('security_operation_text'):
             section = '2.2'
         if section == '2.1' and temporary_power_schedule(post):
             section = '1.4'
+        if not section and REGIONAL.search(post['text']) and re.search(r'\bВже \d+ поранених через ворожий удар|До \d+ зросла кількість (?:загиблих|поранених)|кількість загиблих.{0,90}зросла до \d+',post['text'],re.I):
+            section = '2.1'
         if not section:
             continue
         from operational_facts import prevention_without_event
@@ -453,10 +474,15 @@ def compile_registry(posts, statuses, checked_at):
             if context:rec['scope_context']=context
     from source_claims import prepare_claims, resolve_updates
     prepare_claims(selected)
-    resolve_updates(selected)
+    from incident_updates import resolve_incident_updates
+    resolve_incident_updates(selected, diagnostics)
+    resolve_updates([r for r in selected if r.get('display')])
     from scoped_updates import resolve_scoped_updates
     resolve_scoped_updates(selected)
     selected = consolidate_warehouse_details(selected)
+    for post in transport:
+        if re.search(r'всіх трамвайних та тролейбусних маршрутів зупинено', post['text'], re.I) and re.search(r'тролейбуси з автономним ходом', post['text'], re.I):
+            diagnostics.append({'reason': 'source_conflict', 'detail': 'contradictory_route_status_in_one_notice', 'sources': [post['key']]})
     transport_text, expired = transport_display(transport, end)
     for rec in records:
         if rec['source_key'] in {p['key'] for p in expired}:
