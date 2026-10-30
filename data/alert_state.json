@@ -93,6 +93,7 @@
     "dnipropetrovskaODA/32954",
     "dnipropetrovskaODA/32955",
     "dnipropetrovskaODA/32956",
+    "dnipropetrovskaODA/32963",
     "dsns_telegram/79085",
     "dsns_telegram/79114",
     "dsns_telegram/79138",
@@ -104,7 +105,7 @@
     "gunpvdp/37577"
   ],
   "last_daily_report": "2026-10-30",
-  "last_alert_scan_at": "2026-10-30T12:27:03.931422+00:00",
+  "last_alert_scan_at": "2026-10-30T12:57:22.400138+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-30",
