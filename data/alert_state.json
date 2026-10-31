@@ -101,10 +101,12 @@
     "gunpvdp/37557",
     "gunpvdp/37577",
     "gunpvdp/37594",
-    "gunpvdp/37599"
+    "gunpvdp/37599",
+    "gunpvdp/37624",
+    "gunpvdp/37633"
   ],
   "last_daily_report": "2026-10-31",
-  "last_alert_scan_at": "2026-10-31T10:07:25.045870+00:00",
+  "last_alert_scan_at": "2026-10-31T10:37:03.912374+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-10-31",
