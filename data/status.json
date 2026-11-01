@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-11-01T13:09:49.622405+00:00",
-  "previous_checked_at": "2026-11-01T13:02:23.125730+00:00",
-  "collection_gap_minutes": 7.4,
+  "checked_at": "2026-11-01T13:37:20.295873+00:00",
+  "previous_checked_at": "2026-11-01T13:09:49.622405+00:00",
+  "collection_gap_minutes": 27.5,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-10-31T08:00:00+02:00",
@@ -18,11 +18,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
-      "oldest_collected_at": "2026-10-29T13:12:42+00:00",
+      "oldest_collected_at": "2026-10-29T15:13:16+00:00",
       "newest_collected_at": "2026-11-01T12:48:48+00:00"
     },
     "dsns_telegram": {
@@ -34,11 +34,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 8,
-      "oldest_collected_at": "2026-10-29T13:25:49+00:00",
+      "oldest_collected_at": "2026-10-29T14:06:55+00:00",
       "newest_collected_at": "2026-11-01T12:51:28+00:00"
     },
     "SBUkr": {
@@ -50,7 +50,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
@@ -66,12 +66,12 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 12,
-      "oldest_collected_at": "2026-10-29T13:31:02+00:00",
-      "newest_collected_at": "2026-11-01T10:32:29+00:00"
+      "oldest_collected_at": "2026-10-29T14:17:03+00:00",
+      "newest_collected_at": "2026-11-01T13:12:01+00:00"
     },
     "gunpvdp": {
       "ok": true,
@@ -82,7 +82,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 5,
@@ -98,11 +98,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 20,
-      "oldest_collected_at": "2026-10-29T13:17:20+00:00",
+      "oldest_collected_at": "2026-10-29T17:55:10+00:00",
       "newest_collected_at": "2026-10-31T12:02:16+00:00"
     },
     "borys_filatovv": {
@@ -114,11 +114,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 13,
-      "oldest_collected_at": "2026-10-29T13:13:46+00:00",
+      "oldest_collected_at": "2026-10-29T16:02:24+00:00",
       "newest_collected_at": "2026-11-01T12:22:08+00:00"
     },
     "dnipropetrovskaODA": {
@@ -130,11 +130,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-01T13:09:49.622405+00:00",
+      "coverage_until": "2026-11-01T13:37:20.295873+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
-      "oldest_collected_at": "2026-10-29T13:12:33+00:00",
+      "oldest_collected_at": "2026-10-29T16:19:59+00:00",
       "newest_collected_at": "2026-11-01T12:29:41+00:00"
     }
   }
