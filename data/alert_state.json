@@ -58,7 +58,6 @@
     "dsns_telegram/79350",
     "dsns_telegram/79364",
     "dsns_telegram/79429",
-    "gunpvdp/37599",
     "gunpvdp/37624",
     "gunpvdp/37633",
     "gunpvdp/37647",
@@ -66,7 +65,7 @@
     "gunpvdp/37657"
   ],
   "last_daily_report": "2026-11-02",
-  "last_alert_scan_at": "2026-11-02T15:17:23.838531+00:00",
+  "last_alert_scan_at": "2026-11-02T15:47:23.236405+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-02",
