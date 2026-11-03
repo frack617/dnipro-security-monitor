@@ -3,8 +3,8 @@
   "alerted_keys": [
     "DniproCityOfficial/15531",
     "DniproCityOfficial/15544",
+    "DniproCityOfficial/15598",
     "SBUkr/18994",
-    "adm_dp/45458",
     "adm_dp/45459",
     "adm_dp/45460",
     "adm_dp/45469",
@@ -22,9 +22,10 @@
     "adm_dp/45529",
     "adm_dp/45530",
     "adm_dp/45543",
+    "adm_dp/45544",
     "borys_filatovv/3789",
+    "borys_filatovv/3795",
     "cek_info/4298",
-    "dnipropetrovskaODA/32972",
     "dnipropetrovskaODA/32973",
     "dnipropetrovskaODA/32974",
     "dnipropetrovskaODA/32991",
@@ -45,6 +46,7 @@
     "dnipropetrovskaODA/33049",
     "dnipropetrovskaODA/33061",
     "dnipropetrovskaODA/33062",
+    "dnipropetrovskaODA/33063",
     "dsns_telegram/79318",
     "dsns_telegram/79325",
     "dsns_telegram/79350",
@@ -57,7 +59,7 @@
     "gunpvdp/37657"
   ],
   "last_daily_report": "2026-11-02",
-  "last_alert_scan_at": "2026-11-03T05:07:24.911452+00:00",
+  "last_alert_scan_at": "2026-11-03T05:37:22.625452+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-02",
