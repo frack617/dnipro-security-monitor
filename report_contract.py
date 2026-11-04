@@ -26,11 +26,9 @@ def publication_issues(registry, report, statuses, expected_channels=()):
             expected=emergency_transport({'text':record['source_text']})
             if expected and canonical(expected) not in canonical(report):
                 issues.append('lost_current_transport_notice')
-    from operational_facts import queue_power_schedule
-    for record in registry.get('records',[]):
-        if record['section']=='1.4' and record.get('display') and record['source_key'].startswith('cek_info/'):
-            expected=queue_power_schedule({'channel':'cek_info','text':record['source_text'],'published_at':record['published_at']})
-            if expected and expected not in report:issues.append('lost_service_schedule')
+    from brief_policy import public_utilities, POWER_SUMMARY
+    if POWER_SUMMARY in public_utilities(registry) and POWER_SUMMARY not in report:
+        issues.append('lost_service_schedule')
     if re.findall(r'(?m)^([12]\.[1-4])\.', report) != ['1.1','1.2','2.1','2.2','2.3']:
         issues.append('public_format')
     if re.search(r'Шановні\s+(?:споживачі|мешканці)|Перепрошуємо за тимчасові', report, re.I):
@@ -85,7 +83,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json','scoped_updates.py','incident_updates.py','operational_notices.py','editorial_selection.py','report_preparation.py'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json','scoped_updates.py','incident_updates.py','operational_notices.py','editorial_selection.py','report_preparation.py','brief_policy.py','daily_assessments.py'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

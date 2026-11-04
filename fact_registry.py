@@ -41,14 +41,21 @@ def public_place(text):
 
 def bulletin_header(post):
     blocks = re.split(r'[▪●]\ufe0f?', post.get('text', ''))
-    if post.get('channel', '').lower() not in BULLETIN_CHANNELS or len(blocks) < 3:
+    if post.get('channel', '').lower() not in BULLETIN_CHANNELS or len(blocks) < 2:
         return None
     header = clean_lines(blocks[0])
     date = DATE.search(header)
     time = TIME.search(header)
-    if not date or not time or 'Дніпропетровщина' not in header:
-        return None
     published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
+    if not date or not time or 'Дніпропетровщина' not in header:
+        # OVA also publishes a headerless evening day summary. Its own
+        # publication clock defines the synopsis slot, never an attack time.
+        if (not date and len(blocks) >= 3 and published.hour == 18
+                and 25 <= published.minute <= 35
+                and re.search(r'Понад \d+ разів ворог атакував', header, re.I)
+                and CASUALTY.search(header)):
+            return published.replace(second=0,microsecond=0), header, blocks[1:]
+        return None
     try:
         at = datetime(published.year, MONTHS.index(date[2].lower())+1, int(date[1]),
                       int(time[1]), int(time[2]), tzinfo=KYIV)
@@ -251,14 +258,17 @@ def regional_segments(posts, audit):
             if NONLOCAL.search(post['text']) and REGIONAL.search(post['text']):
                 audit.append(make_record(post, '1.4', post['text'], state='review', reason='mixed_national_prose'))
             else:
-                yield post
+                from event_brief import locality
+                yield dict(post, source_scope_context=locality(post['text'].splitlines()[0]))
             continue
         region_header=bool(REGIONAL.search(pieces[0]) and not NONLOCAL.search(post['text']))
         attack_context=region_header and bool(re.search(r'атак|обстріл|удар',post['text'],re.I))
         for index, piece in enumerate(pieces):
             if (region_header or REGIONAL.search(piece)) and not NONLOCAL.search(piece):
+                from event_brief import locality
                 yield dict(post, text=piece.strip(), source_block=index,
                            source_region='Дніпропетровська область' if region_header else None,
+                           source_scope_context=locality(post['text'].splitlines()[0]) if region_header else None,
                            source_section='2.1' if attack_context else None)
             elif piece.strip():
                 audit.append(make_record(post, '1.4', piece.strip(), state='excluded', reason='outside_or_uncertain_region_block'))
@@ -276,6 +286,12 @@ def compile_registry(posts, statuses, checked_at):
                                    temporary_power_schedule)
     expanded = []
     for post in candidates:
+        published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
+        if (post.get('channel','').casefold()=='gunpvdp' and published.date()==start.date()
+                and published.hour<12 and re.search(r'За добу до чергових частин|Загалом за добу до поліції',post['text'],re.I)
+                and not DATE.search(post['text']) and not re.search(r'сьогодні|щойно',post['text'],re.I)):
+            records.append(make_record(post,'2.1',post['text'],state='review',reason='undated_police_completed_day_recap'))
+            continue
         # Read a full recap BEFORE geographic splitting: its night/date header
         # governs every block, not just the first record produced from it.
         if (post.get('channel','').casefold() in {'gunpvdp','dsns_telegram'}
@@ -296,7 +312,7 @@ def compile_registry(posts, statuses, checked_at):
             published = datetime.fromisoformat(post['published_at']).astimezone(KYIV)
             mixed_morning = (post.get('channel','').casefold()=='gunpvdp'
                 and published.date()==start.date() and published.hour<12
-                and any(re.search(r'сьогодні\s+вранці',p,re.I) for p in pieces[1:]))
+                and any(re.search(r'сьогодні(?:,|\s+вранці)|\b\d{1,2}-\d{1,2} (?:'+'|'.join(MONTHS)+r')',p,re.I) for p in pieces[1:]))
             for i, piece in enumerate(pieces[1:]):
                 if piece.strip():
                     # An explicitly current block never redates its neighbours.
@@ -365,12 +381,26 @@ def compile_registry(posts, statuses, checked_at):
             intro['incident_time_status'] = 'regional_bulletin_period'
             bulletins.append(intro)
             for block in blocks:
+                # A native bulletin can put two geographies under one bullet.
+                # Keep each paragraph's actual parent instead of placing a
+                # named neighbouring community under the first city's heading.
+                pieces = re.split(r'\n(?=У [А-ЯІЇЄҐ][а-яіїєґ’\x27-]+ громаді\s+(?:пошкодж|понівеч|ворог|противник))',block)
+                if len(pieces)>1:
+                    blocks.extend(pieces[1:])
+                    block=pieces[0]
                 raw = clean_lines(block)
                 rec = make_record(post, section, raw, scope=public_place(raw), period=period)
                 rec['display'] = shorter_attack(raw)
                 if re.fullmatch(r'Всюди минулося без постраждалих[.!]?', raw, re.I):
                     rec['display'] = f'За цим зведенням (станом на {at:%H:%M %d.%m.%Y}), постраждалих немає.'
                 rec['incident_time_status'] = 'regional_bulletin_period'
+                from brief_editor import CATALOG, key
+                community=re.match(r'У ([А-ЯІЇЄҐ][а-яіїєґ’\x27-]+) громаді',raw)
+                if community:
+                    parents={r['district'] for r in CATALOG['communities'] if key(r['name'])==key(community[1])}
+                    from event_brief import locality
+                    if len(parents)==1 and not locality(raw):
+                        rec['scope_context']=next(iter(parents))
                 bulletins.append(rec)
         else:
             ordinary.append((post, section))
@@ -381,6 +411,8 @@ def compile_registry(posts, statuses, checked_at):
     for post, section in ordinary:
         text = post['text']
         rec = make_record(post, section, text, scope=public_place(text))
+        if post.get('source_scope_context'):
+            rec['scope_context']=post['source_scope_context']
         if section == '2.1':
             # A morning attack on the start date, described later without a
             # clock, may predate 08:00. Matching anchors strengthen the reason
@@ -439,7 +471,8 @@ def compile_registry(posts, statuses, checked_at):
             from fallback_report import clean_event
             attribution = ('За даними СБУ, ' if post.get('channel','').casefold() == 'sbukr' else
                            'За даними поліції, ' if post.get('channel','').casefold() == 'gunpvdp' else '')
-            event_text = post.get('security_operation_text') or clean_event(post)
+            from brief_policy import weapons_excerpt
+            event_text = (weapons_excerpt(text) if section=='2.2' else None) or post.get('security_operation_text') or clean_event(post)
             if post.get('security_operation_text'):
                 event_text = event_text[:1].lower()+event_text[1:]
             rec['display'] = 'Повідомлення від '+datetime.fromisoformat(post['published_at']).astimezone(KYIV).strftime('%d.%m %H:%M')+': '+attribution+event_text
@@ -479,6 +512,8 @@ def compile_registry(posts, statuses, checked_at):
     resolve_updates([r for r in selected if r.get('display')])
     from scoped_updates import resolve_scoped_updates
     resolve_scoped_updates(selected)
+    from daily_assessments import resolve_completed_city_assessments
+    resolve_completed_city_assessments(selected,diagnostics)
     selected = consolidate_warehouse_details(selected)
     for post in transport:
         if re.search(r'всіх трамвайних та тролейбусних маршрутів зупинено', post['text'], re.I) and re.search(r'тролейбуси з автономним ходом', post['text'], re.I):
@@ -524,7 +559,8 @@ def render_registry(registry):
     sections = registry['sections']
     from event_brief import tidy
     from brief_editor import transport_prose
-    general = [registry['public_projection']['overview']] + [transport_prose(t) for t in sections['1.2']] + list(sections['1.4'])
+    from brief_policy import public_utilities
+    general = [registry['public_projection']['overview']] + [transport_prose(t) for t in sections['1.2']] + public_utilities(registry)
     general = [t.replace('змінено підчерги для окремих адрес', 'змінено підчерги електропостачання для окремих адрес') for t in general]
     public = {'1.1': general, '1.2': sections['1.3'], '2.1': public_attack_paragraphs(registry),
               '2.2': [tidy(t) for t in sections['2.2']+sections['2.3']], '2.3': [tidy(t) for t in sections['2.4']]}

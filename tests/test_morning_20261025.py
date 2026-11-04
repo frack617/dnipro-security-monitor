@@ -65,8 +65,9 @@ class Morning25Tests(unittest.TestCase):
         self.assertEqual(locality('До 12 зросла кількість поранених через атаку росіян на Синельникове.'),'Синельникове')
         r,t=prepare();city=paragraph(t,'Дніпро');syn=paragraph(t,'Синельникове')
         self.assertNotIn('12',city);self.assertNotIn('14-річ',city);self.assertNotIn('46-річ',city)
-        for term in ['12','п’ятеро','Дві жінки','оперують','обласної лікарні Дніпра','близько 19-ї','п’ятиповерховий','магазин','автомобілі','ліквідовані','мобільний штаб']:
+        for term in ['12','п’ятеро','Дві жінки','оперують','обласної лікарні Дніпра','близько 19-ї','п’ятиповерховий','магазин','автомобілі','ліквідовані']:
             self.assertIn(term,syn)
+        self.assertNotIn('мобільний штаб',syn)
         other='У Павлограді пошкоджено будинок. Постраждалого доправили до лікарні у Дніпрі.'
         self.assertEqual([p for p,_ in split_places(other)],['Павлоград'])
 

@@ -565,6 +565,9 @@ def classify_post(post):
         return None
     if contains_any(text, MINING_TERMS):
         return "2.3"
+    from brief_policy import weapons_excerpt
+    if weapons_excerpt(text) and contains_any(text, ENFORCEMENT_TERMS):
+        return "2.2"
     if contains_any(text, UXO_TERMS) and contains_any(text, DISCOVERY_TERMS):
         return "2.4"
     if contains_any(text, NON_WEAPON_CRIME_TERMS):

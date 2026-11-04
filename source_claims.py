@@ -61,7 +61,8 @@ def boilerplate(text):
         r'Поліція продовжує працювати на місцях ворожих атак, фіксувати руйнування та надавати необхідну допомогу громадянам[.!]?',
     ]
     from editorial_selection import formula
-    return formula(text) or any(re.fullmatch(p,text,re.I) for p in patterns)
+    from brief_policy import administrative_clause
+    return administrative_clause(text) or formula(text) or any(re.fullmatch(p,text,re.I) for p in patterns)
 
 
 def select_units(text, source_key='', published_at=None, reporting_period=None, scope=None):
@@ -173,6 +174,14 @@ def claim_plan(registry, report):
                 result.append(dict(item,disposition=own['disposition'] if valid else 'unresolved',reason=own['reason'] if valid else 'incident_update_missing_from_public_text',target_id=own['target_id']))
                 continue
             if own and own.get('target_id') in by_id:
+                if own.get('reason') in {'completed_city_summary_count','completed_city_count_fragment'}:
+                    from casualty_links import projection_present
+                    target=by_id[own['target_id']]
+                    valid=projection_present(tidy(target['display'],target['published_at']),report,target['published_at'])
+                    if own.get('retained_fragment'):
+                        valid=valid and projection_present(own['retained_fragment'],report,r['published_at'])
+                    result.append(dict(item,disposition='superseded' if valid else 'unresolved',reason=own['reason'] if valid else 'completed_summary_not_visible',target_id=own['target_id']))
+                    continue
                 if own.get('reason')=='unique_medical_detail_copied_to_daily_scope':
                     from casualty_links import projection_present
                     if not projection_present(u['source_text'],report,r['published_at']):
@@ -290,6 +299,9 @@ def clause_coverage(clause, target):
     from event_brief import casualty_roles
     from report_rules import NUMBER
     if sentence_coverage(clause,target):return 'equivalent_full_clause'
+    update=re.search(r'До (\d+) зросла кількість поранених',clause,re.I)
+    if update and (casualty_roles(target) or {}).get('injured',0)<int(update[1]):
+        return None  # Patient enumerations are not an asserted total.
     absence=r'(?:На щастя, (?:люди|мешканці) не постраждали|Обійшлося без постраждалих)\.'
     if re.fullmatch(absence,clause,re.I) and re.search(r'без постраждалих|не постраждали',target,re.I):
         return 'same_scope_explicit_absence_of_casualties'
@@ -377,7 +389,7 @@ def resolve_updates(records):
         if (r['section']!='2.1' or r.get('reporting_period') or not r.get('display') or
             r['state'] not in {'included'} or r.get('warehouse_target') or r['id'] in protected):continue
         original=clean_lines(r['source_text'])
-        if re.search(r'\b(?:о|близько|після|до)\s+\d{1,2}[:.]\d{2}|знову|повторн|ще одн\w* атак',original,re.I):continue
+        if re.search(r'\b(?:о|близько|після|до)\s+\d{1,2}[:.]\d{2}|знову|повторн|(?:ще одн|друг|інш)\w* атак',original,re.I):continue
         published=datetime.fromisoformat(r['published_at']).astimezone(ZoneInfo('Europe/Kyiv'))
         recap=(r['source_key'].split('/')[0].casefold() in {'gunpvdp','dsns_telegram'} and
                (r['source_key'] in verified_recap_keys or

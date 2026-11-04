@@ -46,7 +46,7 @@ def tidy(text, published=None):
         day = datetime.fromisoformat(published).astimezone(KYIV).date()
         text = re.sub(r'сьогоднішньої атаки', 'атаки '+date_label(day),text,flags=re.I)
         text = re.sub(r'\bсьогодні\b',date_label(day),text,flags=re.I)
-    text=re.sub(r'\bЩойно\s+', '',text)
+    text=re.sub(r'\bЩойно\s+([а-яіїєґ])', lambda m:m[1].upper(),text)
     text=re.sub(r'\bзараз\s+', '',text)
     text=re.sub(r'\.\.(?=\s|$)', '.',text)
     text=text.strip()
@@ -225,6 +225,8 @@ def project_attacks(registry):
     for r in records:
         at=r.get('reporting_period')
         raw=tidy(r['display'],r['published_at'])
+        if r.get('scope_context'):
+            raw=re.sub(r'^:\s+(?=\d)', '',raw)
         # Agency attribution matters when clinical assessments differ. It
         # is not permission to collapse patients or choose one assessment.
         if r['source_key'].split('/')[0].casefold()=='dnipropetrovskaoda':

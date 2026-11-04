@@ -73,6 +73,8 @@ def temporary_power_schedule(post):
 
 def background_reason(text):
     body = clean_lines(text)
+    if re.search(r'Фото[_\s]тижня',text[:100],re.I) and re.search(r'цього тижня|цьогоріч|минул',text,re.I):
+        return 'historical_photo_retrospective'
     if (PREPAREDNESS.search(body[:650]) or
         re.search(r'радий вітати.{0,100}(?:посла|посол)|наша зустріч|предметом розмови', body, re.I)):
         if not CURRENT_IMPACT.search(body):

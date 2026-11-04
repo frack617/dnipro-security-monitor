@@ -50,7 +50,10 @@ class Morning26Tests(unittest.TestCase):
         self.assertIn('може змінюватися',t)
         self.assertNotIn('Шановні',t);self.assertNotIn('всій області',t)
         r,report=render()
-        for changed in [report.replace('21:30–00:00','21:30–00:30'),report.replace('1.1, 1.2','1.1')]:
+        from brief_policy import POWER_SUMMARY
+        self.assertIn(POWER_SUMMARY,report)
+        self.assertNotIn('21:30–00:00',report)
+        for changed in [report.replace(POWER_SUMMARY,'')]:
             self.assertIn('lost_service_schedule',publication_issues(r,changed,{}))
 
     def test_later_complete_update_supersedes_initial_table_in_audit(self):
@@ -60,8 +63,10 @@ class Morning26Tests(unittest.TestCase):
         self.assertEqual(old['state'],'superseded');self.assertIsNone(old['display'])
         self.assertEqual(old['superseded_by'],new['id'])
         self.assertIn('21:30-00:30',old['source_text'])
-        self.assertIn('21:30–00:00',t);self.assertNotIn('21:30–00:30',t)
-        self.assertEqual(t.count('заявлений період 07:00–24:00'),1)
+        self.assertIn('21:30–00:00',new['display'])
+        self.assertNotIn('21:30–00:30',t)
+        self.assertNotIn('заявлений період',t)
+        self.assertEqual(t.count('Для споживачів ЦЕК'),1)
         self.assertEqual(publication_issues(r,t,{}),[])
 
     def test_partial_or_different_date_update_does_not_erase_full_schedule(self):
@@ -73,7 +78,8 @@ class Morning26Tests(unittest.TestCase):
             r,t=render([initial,candidate])
             old=next(x for x in r['records'] if x['source_key']=='cek_info/4278')
             self.assertNotEqual(old['state'],'superseded')
-            self.assertIn('21:30–00:30',t)
+            self.assertIn('21:30–00:30',old['display'])
+            self.assertNotIn('21:30–00:30',t)
 
     def test_unknown_extra_service_consequence_is_not_discarded(self):
         p=post('cek_info/4278');p['text']+=' Аварія пошкодила резервний кабель на вул. Центральній.'
