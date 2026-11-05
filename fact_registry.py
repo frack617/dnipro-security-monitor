@@ -606,6 +606,8 @@ def render_registry(registry):
             return prefix+'; '.join(titles[k]+': '+', '.join(v) for k,v in groups.items())+suffix
         result = re.sub(r'(?m)^(.+: (?:тимчасово )?змінено підчерги(?: електропостачання)? для окремих адрес: )([^\n;]+)( — підчерга \d+\.\d+\.)$',compact_queue,result)
     from brief_budget import fit_layout
+    from detail_policy import clean_detail_prose
+    result = clean_detail_prose(result)
     result,registry['budget_plan']=fit_layout(result)
     from source_claims import claim_plan
     registry['claim_plan']=claim_plan(registry,result)

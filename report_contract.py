@@ -51,6 +51,13 @@ def publication_issues(registry, report, statuses, expected_channels=()):
             issues.append('source_feed_prose')
     if projection is not None:
         from brief_editor import unsupported_incident_clocks,ALIASES,REGION_ALIASES
+        from detail_policy import unsupported_object_types, missing_detail_formula
+        from fallback_report import sentences
+        issues.extend(unsupported_object_types(attack, [r['source_text'] for r in registry.get('records', [])
+            if r['section']=='2.1' and r['state'] not in {'excluded','review','mirror'}
+            and (r.get('display') or r['state']=='supplement')]))
+        if any(missing_detail_formula(s) for line in report.splitlines() for s in sentences(line)):
+            issues.append('missing_detail_commentary')
         if unsupported_incident_clocks(registry,report):
             issues.append('unsupported_incident_clock')
         if any(old in report for old in (*ALIASES,*REGION_ALIASES)):
@@ -83,7 +90,7 @@ def review_input_digest(registry, report):
                'review_settings':settings}
     digest = hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode())
     for name in ('collector.py','fact_registry.py','operational_facts.py',
-                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json','scoped_updates.py','incident_updates.py','operational_notices.py','editorial_selection.py','report_preparation.py','brief_policy.py','daily_assessments.py'):
+                 'fallback_report.py','core_review.py','report_contract.py','event_brief.py','brief_editor.py','source_claims.py','brief_budget.py','operational_prose.py','casualty_links.py','reference/communities_dp.json','scoped_updates.py','incident_updates.py','operational_notices.py','editorial_selection.py','report_preparation.py','brief_policy.py','daily_assessments.py','detail_policy.py'):
         digest.update((Path(__file__).parent/name).read_bytes())
     return digest.hexdigest()
 

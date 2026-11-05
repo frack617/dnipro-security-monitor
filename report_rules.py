@@ -488,6 +488,8 @@ def source_problems(report, posts):
     ):
         if re.search(pattern, services) and not re.search(pattern, section14):
             problems.append("missing service fact: " + label)
+    from detail_policy import unsupported_object_types
+    problems.extend(unsupported_object_types(report_section(report, '2.1'), [p.get('text', '') for p in attacks]))
     return list(dict.fromkeys(problems))
 
 

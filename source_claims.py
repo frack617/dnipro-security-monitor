@@ -62,7 +62,8 @@ def boilerplate(text):
     ]
     from editorial_selection import formula
     from brief_policy import administrative_clause
-    return administrative_clause(text) or formula(text) or any(re.fullmatch(p,text,re.I) for p in patterns)
+    from detail_policy import missing_detail_formula
+    return missing_detail_formula(text) or administrative_clause(text) or formula(text) or any(re.fullmatch(p,text,re.I) for p in patterns)
 
 
 def select_units(text, source_key='', published_at=None, reporting_period=None, scope=None):
