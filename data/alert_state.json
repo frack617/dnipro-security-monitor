@@ -41,7 +41,6 @@
     "borys_filatovv/3798",
     "borys_filatovv/3814",
     "borys_filatovv/3818",
-    "dnipropetrovskaODA/33067",
     "dnipropetrovskaODA/33068",
     "dnipropetrovskaODA/33074",
     "dnipropetrovskaODA/33075",
@@ -79,15 +78,15 @@
     "gunpvdp/37776",
     "gunpvdp/37791"
   ],
-  "last_daily_report": "2026-11-05",
-  "last_alert_scan_at": "2026-11-06T05:42:09.921476+00:00",
+  "last_daily_report": "2026-11-06",
+  "last_alert_scan_at": "2026-11-06T06:07:25.882480+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
-    "date": "2026-11-05",
-    "report_sha256": "da3a689841052215a19d1061ddecc7da6bce229c0dbb2876d970d562c8f9bfa6",
-    "run_id": "41977672458",
-    "confirmed_parts": 2,
-    "confirmed_at": "2026-11-05T06:02:37.346448+00:00"
+    "date": "2026-11-06",
+    "report_sha256": "a427732eddfec840f64030f87ae58717ec76a2d94b4dac9c6adbfbdfce3f256f",
+    "run_id": "42172363929",
+    "confirmed_parts": 3,
+    "confirmed_at": "2026-11-06T06:07:31.508660+00:00"
   },
   "daily_report_block_notice": "2026-10-26"
 }
