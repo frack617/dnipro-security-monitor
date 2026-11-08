@@ -68,15 +68,15 @@
     "gunpvdp/37878",
     "gunpvdp/37881"
   ],
-  "last_daily_report": "2026-11-07",
-  "last_alert_scan_at": "2026-11-08T05:49:09.511979+00:00",
+  "last_daily_report": "2026-11-08",
+  "last_alert_scan_at": "2026-11-08T06:02:39.799621+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
-    "date": "2026-11-07",
-    "report_sha256": "81c82a4c009b0b5b3b3d5faa1249e40d302021f53f9fcec1edf708f4be8c7954",
-    "run_id": "42345162594",
-    "confirmed_parts": 2,
-    "confirmed_at": "2026-11-07T06:02:35.113953+00:00"
+    "date": "2026-11-08",
+    "report_sha256": "ff49321c42dbefdc79525d3486a57d96c87784c58747cfa8032079592c9279a9",
+    "run_id": "42453041918",
+    "confirmed_parts": 1,
+    "confirmed_at": "2026-11-08T06:02:43.521865+00:00"
   },
   "daily_report_block_notice": "2026-10-26"
 }
