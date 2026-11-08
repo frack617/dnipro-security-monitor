@@ -7,7 +7,6 @@
     "DniproCityOfficial/15886",
     "DniproCityOfficial/15894",
     "SBUkr/19018",
-    "adm_dp/45685",
     "adm_dp/45687",
     "adm_dp/45688",
     "adm_dp/45689",
@@ -72,7 +71,7 @@
     "gunpvdp/37881"
   ],
   "last_daily_report": "2026-11-08",
-  "last_alert_scan_at": "2026-11-08T14:12:18.969280+00:00",
+  "last_alert_scan_at": "2026-11-08T14:42:31.133328+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-08",
