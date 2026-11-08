@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-11-08T17:12:21.656181+00:00",
-  "previous_checked_at": "2026-11-08T16:42:24.161026+00:00",
-  "collection_gap_minutes": 30.0,
+  "checked_at": "2026-11-08T17:42:32.567329+00:00",
+  "previous_checked_at": "2026-11-08T17:12:21.656181+00:00",
+  "collection_gap_minutes": 30.2,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-11-07T08:00:00+02:00",
@@ -18,7 +18,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 6,
@@ -30,16 +30,16 @@
       "coverage": {
         "pages_read": 1,
         "boundary_reached": true,
-        "requested_cutoff": "2026-11-08T13:20:02+00:00",
+        "requested_cutoff": "2026-11-08T14:51:50+00:00",
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 7,
+      "posts_found": 8,
       "oldest_collected_at": "2026-11-05T17:51:38+00:00",
-      "newest_collected_at": "2026-11-08T16:51:50+00:00"
+      "newest_collected_at": "2026-11-08T17:27:37+00:00"
     },
     "SBUkr": {
       "ok": true,
@@ -50,7 +50,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 12,
@@ -66,7 +66,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 5,
@@ -82,11 +82,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 5,
-      "oldest_collected_at": "2026-11-05T17:23:26+00:00",
+      "oldest_collected_at": "2026-11-05T18:00:16+00:00",
       "newest_collected_at": "2026-11-08T12:09:47+00:00"
     },
     "cek_info": {
@@ -98,7 +98,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 20,
@@ -114,7 +114,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 9,
@@ -130,7 +130,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-08T17:12:21.656181+00:00",
+      "coverage_until": "2026-11-08T17:42:32.567329+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 6,
