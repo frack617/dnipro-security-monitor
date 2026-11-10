@@ -26,6 +26,7 @@
     "adm_dp/45881",
     "adm_dp/45882",
     "adm_dp/45887",
+    "adm_dp/45910",
     "borys_filatovv/3823",
     "cek_info/4341",
     "dnipropetrovskaODA/33192",
@@ -53,7 +54,7 @@
     "gunpvdp/37892"
   ],
   "last_daily_report": "2026-11-10",
-  "last_alert_scan_at": "2026-11-10T11:39:56.619456+00:00",
+  "last_alert_scan_at": "2026-11-10T12:07:33.460587+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-10",
