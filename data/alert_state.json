@@ -40,15 +40,14 @@
     "dnipropetrovskaODA/33286",
     "dnipropetrovskaODA/33307",
     "dnipropetrovskaODA/33308",
+    "dnipropetrovskaODA/33310",
     "dsns_telegram/80146",
     "gunpvdp/37954",
     "gunpvdp/37958"
   ],
   "last_daily_report": "2026-11-13",
-  "last_alert_scan_at": "2026-11-13T10:47:29.929545+00:00",
-  "pending_alert_keys": [
-    "dnipropetrovskaODA/33310"
-  ],
+  "last_alert_scan_at": "2026-11-13T11:47:33.386564+00:00",
+  "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-13",
     "report_sha256": "efd51b17ae2badd65f50e2c8c68b57bf3d32fd69115fcf721c39d23c32d69a14",
