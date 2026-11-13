@@ -5,7 +5,6 @@
     "DniproCityOfficial/16008",
     "DniproCityOfficial/16045",
     "SBUkr/19038",
-    "adm_dp/45887",
     "adm_dp/45910",
     "adm_dp/45917",
     "adm_dp/45926",
@@ -47,7 +46,9 @@
   ],
   "last_daily_report": "2026-11-13",
   "last_alert_scan_at": "2026-11-13T10:47:29.929545+00:00",
-  "pending_alert_keys": [],
+  "pending_alert_keys": [
+    "dnipropetrovskaODA/33310"
+  ],
   "last_daily_delivery": {
     "date": "2026-11-13",
     "report_sha256": "efd51b17ae2badd65f50e2c8c68b57bf3d32fd69115fcf721c39d23c32d69a14",
