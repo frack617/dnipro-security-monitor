@@ -1,8 +1,6 @@
 {
   "initialized": true,
   "alerted_keys": [
-    "adm_dp/46033",
-    "adm_dp/46034",
     "adm_dp/46037",
     "adm_dp/46044",
     "adm_dp/46076",
@@ -21,7 +19,6 @@
     "adm_dp/46144",
     "adm_dp/46145",
     "adm_dp/46146",
-    "borys_filatovv/3831",
     "cek_info/4405",
     "dnipropetrovskaODA/33308",
     "dnipropetrovskaODA/33310",
@@ -45,7 +42,7 @@
     "gunpvdp/38035"
   ],
   "last_daily_report": "2026-11-15",
-  "last_alert_scan_at": "2026-11-15T18:47:10.245401+00:00",
+  "last_alert_scan_at": "2026-11-15T19:17:31.994353+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-15",
