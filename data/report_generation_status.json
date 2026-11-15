@@ -1,35 +1,33 @@
 {
-  "checked_at": "2026-11-14T06:02:26.232410+00:00",
-  "report_date": "2026-11-14",
-  "run_id": "43564295469",
-  "report_sha256": "b053821702927d38a7f41c5c09456496729c4550eb62cc47da714b56cd12e5a0",
+  "checked_at": "2026-11-15T06:02:08.223786+00:00",
+  "report_date": "2026-11-15",
+  "run_id": "43683564155",
+  "report_sha256": "5a4bd8cf20bbfdb9bba0f3fd8330381a2c015f66627d1d53a6c9e88100852305",
   "report_kind": "source_core",
   "author_failure_type": null,
-  "prepared_posts": 20,
-  "report_words": 411,
+  "prepared_posts": 18,
+  "report_words": 470,
   "sending_enabled": true,
   "length_policy": "advisory",
   "editorial_warnings": [],
   "budget_plan": {
     "limit": 500,
-    "initial_words": 394,
-    "final_words": 394,
+    "initial_words": 470,
+    "final_words": 470,
     "operations": [],
     "status": "fits"
   },
   "review": {
-    "state": "local_contract",
+    "state": "disabled",
     "requests": 0,
     "provider": null,
     "issues": []
   },
-  "review_required": true,
+  "review_required": false,
   "delivery_policy": "draft_then_human_review",
   "report_kind_detail": "source_core",
-  "review_input_sha256": "3f75426427ebf50fa3d31e622a9aabce384c19257b3e4d398ffe5ca4634c6f27",
-  "publication_issues": [
-    "raw_address_to_readers"
-  ],
+  "review_input_sha256": "fd1a625f108b5d32faf5a29cce2ef953f62696c017bc0c17369c821657b70ff9",
+  "publication_issues": [],
   "coverage_complete": true,
   "delivery_state": "confirmed"
 }
