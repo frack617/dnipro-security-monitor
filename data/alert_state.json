@@ -21,6 +21,7 @@
     "adm_dp/46150",
     "adm_dp/46151",
     "adm_dp/46152",
+    "adm_dp/46153",
     "cek_info/4405",
     "dnipropetrovskaODA/33310",
     "dnipropetrovskaODA/33320",
@@ -43,11 +44,12 @@
     "dnipropetrovskaODA/33373",
     "dnipropetrovskaODA/33374",
     "dnipropetrovskaODA/33375",
+    "dnipropetrovskaODA/33376",
     "gunpvdp/37991",
     "gunpvdp/38035"
   ],
   "last_daily_report": "2026-11-16",
-  "last_alert_scan_at": "2026-11-16T06:02:22.777672+00:00",
+  "last_alert_scan_at": "2026-11-16T06:32:21.266411+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-16",
