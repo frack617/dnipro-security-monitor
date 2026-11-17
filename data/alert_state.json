@@ -93,7 +93,9 @@
   ],
   "last_daily_report": "2026-11-17",
   "last_alert_scan_at": "2026-11-17T19:52:29.323132+00:00",
-  "pending_alert_keys": [],
+  "pending_alert_keys": [
+    "adm_dp/46276"
+  ],
   "last_daily_delivery": {
     "date": "2026-11-17",
     "report_sha256": "e05549a5a4b7bfe5cdabdf66c9a020ff1ab4f8c81700d146a3b519c2b4f27513",
