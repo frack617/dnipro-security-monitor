@@ -42,6 +42,7 @@
     "adm_dp/46250",
     "adm_dp/46254",
     "adm_dp/46258",
+    "adm_dp/46276",
     "borys_filatovv/3840",
     "borys_filatovv/3849",
     "borys_filatovv/3850",
@@ -92,10 +93,8 @@
     "gunpvdp/38122"
   ],
   "last_daily_report": "2026-11-17",
-  "last_alert_scan_at": "2026-11-17T19:52:29.323132+00:00",
-  "pending_alert_keys": [
-    "adm_dp/46276"
-  ],
+  "last_alert_scan_at": "2026-11-17T20:52:20.806717+00:00",
+  "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-17",
     "report_sha256": "e05549a5a4b7bfe5cdabdf66c9a020ff1ab4f8c81700d146a3b519c2b4f27513",
