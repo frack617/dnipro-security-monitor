@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-11-18T17:32:10.363703+00:00",
-  "previous_checked_at": "2026-11-18T17:02:33.244353+00:00",
-  "collection_gap_minutes": 29.6,
+  "checked_at": "2026-11-18T18:02:25.476278+00:00",
+  "previous_checked_at": "2026-11-18T17:32:10.363703+00:00",
+  "collection_gap_minutes": 30.3,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-11-17T08:00:00+02:00",
@@ -18,23 +18,23 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 6,
+      "posts_found": 7,
       "oldest_collected_at": "2026-11-15T19:00:34+00:00",
-      "newest_collected_at": "2026-11-18T16:30:04+00:00"
+      "newest_collected_at": "2026-11-18T17:50:16+00:00"
     },
     "dsns_telegram": {
       "ok": true,
       "coverage": {
         "pages_read": 2,
         "boundary_reached": true,
-        "requested_cutoff": "2026-11-18T14:55:22+00:00",
+        "requested_cutoff": "2026-11-18T15:30:24+00:00",
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 6,
@@ -50,7 +50,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-11-13T23:17:26.847604+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 11,
@@ -60,18 +60,18 @@
     "DniproCityOfficial": {
       "ok": true,
       "coverage": {
-        "pages_read": 2,
+        "pages_read": 1,
         "boundary_reached": true,
-        "requested_cutoff": "2026-11-18T14:27:01+00:00",
+        "requested_cutoff": "2026-11-18T15:03:57+00:00",
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
-      "posts_found": 13,
-      "oldest_collected_at": "2026-11-15T17:35:01+00:00",
-      "newest_collected_at": "2026-11-18T17:03:57+00:00"
+      "posts_found": 5,
+      "oldest_collected_at": "2026-11-15T20:45:53+00:00",
+      "newest_collected_at": "2026-11-18T17:48:01+00:00"
     },
     "gunpvdp": {
       "ok": true,
@@ -82,7 +82,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
@@ -98,7 +98,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 20,
@@ -114,7 +114,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
@@ -130,7 +130,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-18T17:32:10.363703+00:00",
+      "coverage_until": "2026-11-18T18:02:25.476278+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 9,
