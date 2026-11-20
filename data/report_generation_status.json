@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-19T06:02:32.485355+00:00",
-  "report_date": "2026-11-19",
-  "run_id": "44469172133",
-  "report_sha256": "dad875e78ee3c65c8f1d393ec187702f5054c0744920a4213ec7daf3b545593a",
+  "checked_at": "2026-11-20T06:02:20.813243+00:00",
+  "report_date": "2026-11-20",
+  "run_id": "44684892693",
+  "report_sha256": "babe2e88b0bdf7b45099753db3e30d3f53a10bf90d0a9631284fa8870be4098c",
   "report_kind": "source_core",
   "author_failure_type": null,
-  "prepared_posts": 16,
-  "report_words": 656,
+  "prepared_posts": 33,
+  "report_words": 867,
   "sending_enabled": true,
   "length_policy": "advisory",
   "editorial_warnings": [
@@ -14,8 +14,8 @@
   ],
   "budget_plan": {
     "limit": 500,
-    "initial_words": 659,
-    "final_words": 639,
+    "initial_words": 870,
+    "final_words": 850,
     "operations": [
       "short_editorial_overview",
       "compact_editorial_geography",
@@ -32,9 +32,8 @@
   "review_required": true,
   "delivery_policy": "draft_then_human_review",
   "report_kind_detail": "source_core",
-  "review_input_sha256": "5c357f5d8b3c627fb2ed4bda868cf2879e844b32b3bf4f0bddf69d220c4aef84",
+  "review_input_sha256": "608e04f6337e25f972188799b569b9a1f33faa339947e38bc4426560f14e7d65",
   "publication_issues": [
-    "raw_navigation_or_procedural_text",
     "lost_source_claim"
   ],
   "coverage_complete": true,
