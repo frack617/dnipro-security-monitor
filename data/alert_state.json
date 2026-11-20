@@ -27,6 +27,7 @@
     "adm_dp/46379",
     "adm_dp/46380",
     "adm_dp/46381",
+    "adm_dp/46398",
     "cek_info/4425",
     "dnipropetrovskaODA/33427",
     "dnipropetrovskaODA/33431",
@@ -48,7 +49,6 @@
     "dsns_telegram/80761",
     "dsns_telegram/80886",
     "dsns_telegram/81016",
-    "gunpvdp/38113",
     "gunpvdp/38122",
     "gunpvdp/38150",
     "gunpvdp/38158",
@@ -59,7 +59,7 @@
     "gunpvdp/38204"
   ],
   "last_daily_report": "2026-11-20",
-  "last_alert_scan_at": "2026-11-20T13:37:35.335380+00:00",
+  "last_alert_scan_at": "2026-11-20T14:07:11.961568+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-20",
