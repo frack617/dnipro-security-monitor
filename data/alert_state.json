@@ -60,10 +60,11 @@
     "gunpvdp/38193",
     "gunpvdp/38194",
     "gunpvdp/38204",
-    "gunpvdp/38232"
+    "gunpvdp/38232",
+    "gunpvdp/38250"
   ],
   "last_daily_report": "2026-11-20",
-  "last_alert_scan_at": "2026-11-20T22:27:10.984060+00:00",
+  "last_alert_scan_at": "2026-11-20T22:57:32.462621+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-20",
