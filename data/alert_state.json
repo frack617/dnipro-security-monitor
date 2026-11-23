@@ -49,12 +49,13 @@
     "dsns_telegram/81200",
     "dsns_telegram/81271",
     "dsns_telegram/81369",
+    "dsns_telegram/81384",
     "gunpvdp/38250",
     "gunpvdp/38264",
     "gunpvdp/38274"
   ],
   "last_daily_report": "2026-11-23",
-  "last_alert_scan_at": "2026-11-23T17:17:22.319127+00:00",
+  "last_alert_scan_at": "2026-11-23T17:47:12.173084+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-23",
