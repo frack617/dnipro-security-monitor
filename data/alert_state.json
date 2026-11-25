@@ -51,15 +51,15 @@
     "dsns_telegram/81464",
     "gunpvdp/38331"
   ],
-  "last_daily_report": "2026-11-24",
-  "last_alert_scan_at": "2026-11-25T05:32:08.497166+00:00",
+  "last_daily_report": "2026-11-25",
+  "last_alert_scan_at": "2026-11-25T06:02:10.397072+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
-    "date": "2026-11-24",
-    "report_sha256": "53350b43a4928ed8036b79dad1467705a50d2e7c9b5db758be53486f3ed779af",
-    "run_id": "45337386466",
+    "date": "2026-11-25",
+    "report_sha256": "f1c47ca36494e00e37cd2a863e605bbffd97c8a5197df55551256464b53e1000",
+    "run_id": "45557587565",
     "confirmed_parts": 2,
-    "confirmed_at": "2026-11-24T06:02:12.410103+00:00"
+    "confirmed_at": "2026-11-25T06:02:16.373871+00:00"
   },
   "daily_report_block_notice": "2026-10-26"
 }
