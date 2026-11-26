@@ -1,271 +1,71 @@
 {
   "version": 1,
   "window": {
-    "start": "2026-11-24T08:00:00+02:00",
-    "end": "2026-11-25T08:00:00+02:00"
+    "start": "2026-11-25T08:00:00+02:00",
+    "end": "2026-11-26T08:00:00+02:00"
   },
-  "checked_at": "2026-11-25T06:02:10.397072+00:00",
+  "checked_at": "2026-11-26T06:02:33.197324+00:00",
   "records": [
     {
-      "id": "fab1c6103f90468c8104",
+      "id": "3a876682bcccb382fe88",
       "section": "2.1",
-      "source_key": "adm_dp/46539",
-      "source_url": "https://t.me/adm_dp/46539",
-      "published_at": "2026-11-24T07:46:07+00:00",
-      "source_text": "Маєте вдома зарядну станцію? Пам’ятайте, цей потужний пристрій вимагає правильного та безпечного використання.\nНавіть дрібні помилки можуть легко вивести з ладу станцію чи створити небезпечну ситуацію.\nГортайте карусель, щоб перевірити, чи правильно ви користуєтесь станцією і підготувати її до можливих відключень електроенергії.\nНадсилайте допис рідним, друзям чи в сусідський чат — подбайте про безпеку інших\n💡\nЗберігайте! Нехай важливі правила завжди будуть під рукою.\n📌\nБільше корисної інформації  шукайте на національній безпековій вебплатформі «101: Простір безпеки для дітей, батьків та освітян»\nза посиланням.\nМатеріали підготували ДСНС спільно з Кабінетом Міністрів України та ЮНІСЕФ у межах урядової кампанії «Зимова підтримка».\nБільше перевірених порад на сайті — «єОпора».",
+      "source_key": "adm_dp/46608",
+      "source_url": "https://t.me/adm_dp/46608",
+      "published_at": "2026-11-25T08:30:19+00:00",
+      "source_text": "⚡️\nБрифінг першого заступника Міністра енергетики України Артема Некрасова щодо оперативної ситуації в енергосистемі станом на 25 листопада\n➡️\nЦієї ночі та вранці росія знову атакувала об’єкти енергетики. Під ударом опинилися електростанції, підстанції систем передачі та розподілу електроенергії. Внаслідок атак зафіксовано нові знеструмлення\nу Дніпропетровській, Донецькій, Запорізькій, Одеській та Харківській областях.\n➡️\nУ всіх постраждалих регіонах тривають ремонтні та відновлювальні роботи. Водночас повторні атаки ворога та постійні повітряні тривоги суттєво ускладнюють їх проведення і затримують відновлення електропостачання.\n➡️\nВнаслідок ворожих обстрілів\nтимчасово окупована Запорізька АЕС втратила зовнішнє живлення\nта перейшла на живлення від дизель-генераторів. Це вже 17-та від початку року втрата зовнішнього живлення станції.\n➡️\nНайскладнішою на ранок залишається ситуація у Запорізькій та Дніпропетровській областях.\nВнаслідок ворожих атак пошкоджено значну кількість важливих для електропостачання регіонів енергооб’єктів. Щоб уникнути аварій через перевантаження обладнання, додатково застосовуються\nмережеві обмеження.\nЕнергетики працюють над відновленням електропостачання.\n➡️\nПротягом 25 листопада у більшості регіонів України діють\nграфіки погодинних відключень\nелектроенергії, а\nдля промисловості — графіки обмеження потужності.\nСтежте за актуальними повідомленнями операторів систем розподілу у своїх регіонах.\n➡️\nДякуємо енергетикам, які попри небезпеку, холод і втому щодня та щоночі працюють, аби в українських домівках було світло!\n‼️\nВ Україні працює портал єОпора — єдиний інформаційний ресурс із практичними порадами та актуальною інформацією про підготовку до зими, державну підтримку та допомогу населенню. Детальніше про програму — за посиланням:\nhttps://eopora.gov.ua/\n🔼\nБільше про оперативну ситуацію в енергосистемі — у брифінгу першого заступника Міністра енергетики України Артема Некрасова.",
       "scope": null,
       "casualty_assertions": [],
       "numbers": [
-        "101"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_asserted_operational_attack_fact",
-      "source_refs": [
-        "adm_dp/46539"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "158d1aa123bbc1cf6012",
-      "section": "1.4",
-      "source_key": "gunpvdp/38323",
-      "source_url": "https://t.me/gunpvdp/38323",
-      "published_at": "2026-11-24T08:59:54+00:00",
-      "source_text": "🦮\nКінологи Дніпропетровщини разом зі своїми чотирилапими помічниками отримали відзнаки на всеукраїнській кінологічній церемонії\nЦьогоріч нагороди у шести номінаціях отримали шість кінологічних пар Національної поліції.\nУ номінації «Собака спеціального призначення» відзначили бійця спецпідрозділу КОРД Дніпропетровщини на псевдо Рекс та його чотирилапого напарника Макса. Протягом року вони здійснили близько 12 виїздів. Собака допомагав поліцейському виконувати службові завдання, які вимагали витривалості, дисципліни та злагодженої роботи.\nЩе одну відзнаку отримав поліцейський кінологічного центру ГУНП в Дніпропетровській області. У номінації «Пошук вибухових речовин, зброї та боєприпасів» нагородили молодшого інспектора-кінолога Віктора Кононенка та його напарника - бельгійську вівчарку Марса.\nКінологічна пара регулярно несе службу на блокпостах Павлограда. Чотирилапий помічник перевіряє транспорт і допомагає виявляти небезпечні предмети.\n🔗\nДеталі",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "12"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "ceremony_without_asserted_operational_consequence",
-      "source_refs": [
-        "gunpvdp/38323"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "da3cf165f0dca46dc685",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33557",
-      "source_url": "https://t.me/dnipropetrovskaODA/33557",
-      "published_at": "2026-11-24T09:00:11+00:00",
-      "source_text": "Зустрівся з Постійною заступницею Посла Німеччини в Україні Катрін Бухгольц.\nНімеччина – один із ключових партнерів області. Співпрацюємо з федеральною землею Північний Рейн-Вестфалія, організаціями THW і GIZ. Реалізуємо важливі проєкти. Громади Дніпропетровщини мають 12 партнерств із німецькими містами.\nРозповів про поточну ситуацію в області. Ворог продовжує атакувати інфраструктуру регіону. Головний пріоритет – енергостійкість. Потрібні генератори, трансформатори, інше оснащення для підприємств водо- і теплопостачання, лікарень, місць тимчасового проживання переселенців.\nОкрема тема – підтримка людей, які через війну залишили свої домівки. На Дніпропетровщині – майже 500 тисяч ВПО. Вони потребують житла, роботи, доступних медичних і інших послуг.\nБачимо перспективи й у розвитку економічних зв'язків. Готові співпрацювати у відновленні інфраструктури, налагоджувати контакти між підприємствами наших регіонів.\n🇺🇦\n🇩🇪\nДякую німецьким партнерам за підтримку України й Дніпропетровщини.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "12",
-        "500"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_asserted_operational_attack_fact",
-      "source_refs": [
-        "dnipropetrovskaODA/33557"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "ce88556bffad95bd22bc",
-      "section": "2.1",
-      "source_key": "gunpvdp/38331",
-      "source_url": "https://t.me/gunpvdp/38331",
-      "published_at": "2026-11-24T10:22:08+00:00",
-      "source_text": "Поліцейські працюють на місцях влучань, документують наслідки ворожих атак, збирають речові докази військових рф. Відомості про воєнні злочини внесено до Єдиного реєстру досудових розслідувань за ч. 1 та ч. 2 ст. 438 Кримінального кодексу України.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "1",
-        "2",
-        "438"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_asserted_operational_attack_fact",
-      "source_refs": [
-        "gunpvdp/38331"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "f15061b3b81805cbbe69",
-      "section": "1.4",
-      "source_key": "SBUkr/19132",
-      "source_url": "https://t.me/SBUkr/19132",
-      "published_at": "2026-11-24T11:00:36+00:00",
-      "source_text": "СБУ викрила ще 4-х ворожих агітаторів: серед них фігурант, який виступав на російських концертах під час окупації Херсона\nСлужба безпеки викрила ще чотирьох агітаторів рашизму у різних регіонах України. Зловмисники виправдовували збройну агресію рф, підтримували захоплення українських територій та вихваляли збройні угруповання країни-агресора.\n🔹\nТак, у Херсоні викрито колишнього театрального музиканта, який відкрито підтримував рф, а під час окупації міста брав участь у пропагандистських концертах на підтримку кремлівського режиму.\nВстановлено, що у травні 2022 року він долучився до одного з таких заходів, організованих гауляйтером Сальдо, а в серпні виступав на концерті з нагоди дня прапора рф.\nПісля звільнення Херсона фігурант залишився у місті та продовжив «підігравати» ворожій пропаганді. Для цього він писав вірші, в яких героїзував рашистів, а потім передавав «твори» для трансляції в ефірах російського радіо.\nТакож у портовому місті затримано ворожу агітаторку, яка з анонімних акаунтів у Телеграмі закликала рф збільшити кількість ударів керованими авіабомбами по Херсону та посилити репресії на лівобережжі регіону.\nКрім цього, фігурантка «вимагала» від командування збройних угруповань рашистів захопити обласний центр і жорстоко переслідувати учасників руху опору.\n🔹\nУ Харкові затримано громадянина росії, який тривалий час проживає в обласному центрі і вихваляє збройні угруповання рф.\nЗадокументовано, як він публікував у чатах соцмереж власні дописи, в яких виправдовував воєнні злочини російської армії і захоплення частини території України.\n🔹\nУ Дніпропетровській області викрито ще одну фігурантку. Нею виявилася продавчиня одного з ринків Павлоградського району, яка виправдовувала захоплення території Донеччини і чекала на окупацію всього сходу України.\nПро це вона неодноразово писала в чатах проросійських Телеграм-каналів. Крім цього, у таких дописах авторка намагалася встановити контакт з адміністраторами прокремлівських інформресурсів.\nІніційовані Службою безпеки експертизи підтвердили факти інформаційно-підривної діяльності фігурантів в інтересах країни-агресора.\nСлідчі Служби безпеки повідомили затриманим про підозру відповідно до вчинених злочинів за трьома статтями Кримінального кодексу України:",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "4",
-        "2022"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "outside_or_uncertain_region_block",
-      "source_refs": [
-        "SBUkr/19132"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "50424da1558474dc9838",
-      "section": "1.4",
-      "source_key": "SBUkr/19132",
-      "source_url": "https://t.me/SBUkr/19132",
-      "published_at": "2026-11-24T11:00:36+00:00",
-      "source_text": "чч. 1, 2 ст. 110 (посягання на територіальну цілісність і недоторканність України);",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "1",
-        "2",
-        "110"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "outside_or_uncertain_region_block",
-      "source_refs": [
-        "SBUkr/19132"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "72ecda276f38f481ce72",
-      "section": "1.4",
-      "source_key": "SBUkr/19132",
-      "source_url": "https://t.me/SBUkr/19132",
-      "published_at": "2026-11-24T11:00:36+00:00",
-      "source_text": "ч. 6 ст. 111-1 (колабораційна діяльність);",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "6",
-        "111-1"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "outside_or_uncertain_region_block",
-      "source_refs": [
-        "SBUkr/19132"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "52d93a9f9b15c3a41b05",
-      "section": "1.4",
-      "source_key": "SBUkr/19132",
-      "source_url": "https://t.me/SBUkr/19132",
-      "published_at": "2026-11-24T11:00:36+00:00",
-      "source_text": "чч. 1, 2, 3 ст. 436-2 (виправдовування, визнання правомірною, заперечення збройної агресії рф проти України, глорифікація її учасників).\nЗловмисникам загрожує до 12 років позбавлення волі.\nКомплексні заходи проводили співробітники ГУ СБУ в Донецькій та Луганській областях, Дніпропетровській області, а також в Харківській та Херсонській областях за процесуального керівництва Харківської, Дніпропетровської та Херсонської обласних прокуратур.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "1",
-        "2",
-        "3",
-        "436-2",
-        "12"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "outside_or_uncertain_region_block",
-      "source_refs": [
-        "SBUkr/19132"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "f88963cf6c479f7bdcfd",
-      "section": "2.1",
-      "source_key": "adm_dp/46562",
-      "source_url": "https://t.me/adm_dp/46562",
-      "published_at": "2026-11-24T15:12:59+00:00",
-      "source_text": "Виклики у нас із вами абсолютно спільні зараз – це захист людей, захист інфраструктури, енергетики, логістики й максимально оперативне відновлення. Росіяни зосереджені на щоденних ударних операціях, і наслідки цього терору всі бачать, весь світ. Україна сформувала необхідні запаси обладнання, у нас є пакети підтримки від партнерів для швидкого відновлення. Важливо, щоб робота з відновлення була дійсно швидкою і щоб була повна та справжня взаємодія між урядовими структурами, обласними, місцевими владами та всіма енергетичними компаніями – державним і приватним сектором.\nНерідко буває, що при перевірці виявляється проблем та незробленого значно більше, ніж іде у звітах із регіонів. Це неприйнятно. Важливо, щоб інформація була чесною і щоб люди в кожному регіоні, в кожній громаді, навіть там, де це складно через постійні обстріли, – щоб люди отримували необхідну підтримку.\nЗі звернення до учасників засідання Конгресу місцевих та регіональних влад. (2/3)",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "2",
-        "3"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_asserted_operational_attack_fact",
-      "source_refs": [
-        "adm_dp/46562"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "e57c33dfde9400084b45",
-      "section": "1.4",
-      "source_key": "adm_dp/46571",
-      "source_url": "https://t.me/adm_dp/46571",
-      "published_at": "2026-11-24T16:35:16+00:00",
-      "source_text": "Регіональний молодіжний форум «PRO РОЗВИТОК Дніпропетровщини» об’єднав близько 200 молодих людей з усієї області.\nВідкрив форум начальник Дніпропетровської ОВА Олександр Ганжа. Він розповів про молодіжну програму STARt LEAD. За нею молодь проходить стажування в обласній державній адміністрації, знайомиться з роботою її структурних підрозділів і здобуває практичний досвід.\n«Ми розпочали великий проєкт STARt LEAD. Він є інноваційним і флагманським. Завдяки вам, вашій підтримці і вашим бажанням ми продовжимо STARt LEAD наступного року»,\n– зазначив Олександр Ганжа.\nПід час форуму учасники обговорили діяльність Регіонального молодіжного конгресу, роботу молодіжних рад на різних рівнях, поділилися напрацюваннями та планами.\nДніпро цьогоріч отримав статус Молодіжної столиці України. На\nДніпропетровщині діють 62 молодіжні ради та 27 молодіжних центрів і просторів.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "200",
-        "62",
-        "27"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "background_without_current_incident",
-      "source_refs": [
-        "adm_dp/46571"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "65f9f23a74fd1c3d38ac",
-      "section": "2.1",
-      "source_key": "adm_dp/46582",
-      "source_url": "https://t.me/adm_dp/46582",
-      "published_at": "2026-11-24T16:45:37+00:00",
-      "source_text": "В умовах постійних російських обстрілів та знеструмлень продовжуємо посилювати енергетичну стійкість нашого регіону.\nДніпропетровщині допомагають у цьому міжнародні партнери.\nЗа сприяння ЮНІСЕФ, для потреб області залучено 44 дизельні генератори загальною потужністю майже 11 МВт для 10 комунальних підприємств.\nОбладнання забезпечуватиме роботу підприємств тепло, -водопостачання та водовідведення у Дніпрі, Кривому Розі, Павлограді, Самарі, Слобожанській та Солонянській громадах.\nДо допомоги долучились й Сполучені Штати Америки, які передали 23 генератори, Велика Британія надала 17 генераторів. Ще 4 генератори надійшли від партнерів зі Швеції, Норвегії, Європейської Комісії та приватних донорів.\nДякуємо нашим партнерам за підтримку. Разом працюємо над тим, щоб навіть у найскладніших умовах жителі області мали тепло, світло і воду.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "44",
-        "11",
-        "10",
-        "23",
+        "25",
         "17",
-        "4"
+        "25"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "completed_prior_night_recap",
+      "source_refs": [
+        "adm_dp/46608"
+      ],
+      "display": null,
+      "source_recap_day": false
+    },
+    {
+      "id": "fc14a41dff01f2c46af5",
+      "section": "1.4",
+      "source_key": "dnipropetrovskaODA/33597",
+      "source_url": "https://t.me/dnipropetrovskaODA/33597",
+      "published_at": "2026-11-25T14:09:16+00:00",
+      "source_text": "Провів засідання регіональної комісії з питань ТЕБ та НС. Долучилися правоохоронці, рятувальники, енергетики і керівники профільних департаментів ОВА\nАварійні бригади цілодобово працюють над поверненням світла. Повітряні тривоги та загроза повторних атак сповільнюють ремонти\nШколи, лікарні, соціальні заклади мають генератори. Доручив збільшити запаси палива, щоб вони могли працювати під час тривалих знеструмлень\nОкремо комісія ухвалила важливе рішення – 12 підприємств області не відключатимуть від електропостачання за графіками погодинних відключень\nВорожі удари залишили без світла житлові будинки та частину об’єктів критичної інфраструктури. Наше завдання – якнайшвидше відновити пошкоджене та забезпечувати стабільну роботу служб і закладів, від яких залежить життя людей",
+      "scope": null,
+      "casualty_assertions": [],
+      "numbers": [
+        "12"
+      ],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "preparedness_or_meeting_without_current_impact",
+      "source_refs": [
+        "dnipropetrovskaODA/33597"
+      ],
+      "display": null,
+      "source_recap_day": false
+    },
+    {
+      "id": "b7997381559381167e7e",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33609",
+      "source_url": "https://t.me/dnipropetrovskaODA/33609",
+      "published_at": "2026-11-25T18:35:35+00:00",
+      "source_text": "Ситуація з електропостачанням на Дніпропетровщині залишається вкрай складною. Розумію невдоволення людей і те, наскільки важко зараз залишатися без світла.\nАле важливо пам'ятати: причина проблем – це російські атаки на нашу енергетичну інфраструктуру. Ворог намагається залишити нас без електрики, тепла та води.\nЗараз понад 100 бригад і більш ніж 300 енергетиків цілодобово працюють над відновленням електропостачання. Часто — під загрозою повторних обстрілів.\nРобимо все можливе, щоб стабілізувати ситуацію.\nДякую енергетикам за роботу, а мешканцям – за витримку.",
+      "scope": null,
+      "casualty_assertions": [],
+      "numbers": [
+        "100",
+        "300"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
@@ -273,343 +73,63 @@
       "state": "excluded",
       "reason": "no_asserted_operational_attack_fact",
       "source_refs": [
-        "adm_dp/46582"
+        "dnipropetrovskaODA/33609"
       ],
       "display": null,
       "source_recap_day": false
     },
     {
-      "id": "75f6ce7728489c98d251",
+      "id": "0b47bf52588dc694207a",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_url": "https://t.me/dnipropetrovskaODA/33568",
-      "published_at": "2026-11-24T16:40:05+00:00",
-      "source_text": "Через ворожі обстріли поранено 6 людей. Майже 30 разів ворог атакував обласний центр та два райони. Застосовував безпілотники та артилерію",
-      "scope": "Дніпропетровська область",
-      "casualty_assertions": [
-        6
-      ],
-      "numbers": [
-        "6",
-        "30"
-      ],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-24T18:40:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33568"
-      ],
-      "display": "Обласне зведення на 18:40 24.11.2026: Через ворожі обстріли поранено 6 людей. Майже 30 разів ворог атакував обласний центр та два райони. Застосовував безпілотники та артилерію.",
-      "source_recap_day": false,
-      "claims": [
-        {
-          "id": "8f5f75c86cf1b0422d9e041b",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "Через ворожі обстріли поранено 6 людей.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 39
-          },
-          "numeric_surfaces": [
-            "6"
-          ],
-          "quantity_roles": {
-            "injured": 6
-          },
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Дніпропетровська область",
-          "predicates": [
-            "casualty",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "a788d316ed847dd7ec416453",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "Майже 30 разів ворог атакував обласний центр та два райони.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 40,
-            "end": 99
-          },
-          "numeric_surfaces": [
-            "30"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Дніпропетровська область",
-          "predicates": [
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "133f0314a239bca1cffdfe45",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "Застосовував безпілотники та артилерію",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 100,
-            "end": 138
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Дніпропетровська область",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        }
-      ]
-    },
-    {
-      "id": "c8de2a6dc6cad1e50ff3",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_url": "https://t.me/dnipropetrovskaODA/33568",
-      "published_at": "2026-11-24T16:40:05+00:00",
-      "source_text": "У Дніпрі постраждали шестеро людини. Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура.",
-      "scope": "Дніпрі",
-      "casualty_assertions": [
-        6
-      ],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-24T18:40:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33568"
-      ],
-      "display": "У Дніпрі постраждали шестеро людини. Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура.",
-      "source_recap_day": false,
-      "claims": [
-        {
-          "id": "40d9979cefd515cc03d2248e",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "У Дніпрі постраждали шестеро людини.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 36
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {
-            "injured": 6
-          },
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "casualty"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "6b4b7756f1b2f3049e8903be",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 37,
-            "end": 106
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        }
-      ]
-    },
-    {
-      "id": "0460435a3c496b9191ae",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_url": "https://t.me/dnipropetrovskaODA/33568",
-      "published_at": "2026-11-24T16:40:05+00:00",
-      "source_text": "У Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади. Пошкоджені багатоквартирні будинки і легковий автомобіль.",
+      "source_key": "dnipropetrovskaODA/33610",
+      "source_url": "https://t.me/dnipropetrovskaODA/33610",
+      "published_at": "2026-11-26T05:00:00+00:00",
+      "source_text": "10 ворожих БпЛА збили наші сили ППО цієї ночі в небі над Дніпропетровщиною.",
       "scope": null,
       "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-24T18:40:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33568"
+      "numbers": [
+        "10"
       ],
-      "display": "У Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади. Пошкоджені багатоквартирні будинки і легковий автомобіль.",
-      "source_recap_day": false,
-      "claims": [
-        {
-          "id": "6f9bba0cc2ce1da722779df3",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "У Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 120
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": null,
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        },
-        {
-          "id": "9afda7ae4e2cc6af1c656d02",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "Пошкоджені багатоквартирні будинки і легковий автомобіль.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 121,
-            "end": 178
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": null,
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        }
-      ]
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_asserted_operational_attack_fact",
+      "source_refs": [
+        "dnipropetrovskaODA/33610"
+      ],
+      "display": null,
+      "source_recap_day": false
     },
     {
-      "id": "62527388d05807900672",
+      "id": "0ef73197652cd6e59986",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_url": "https://t.me/dnipropetrovskaODA/33568",
-      "published_at": "2026-11-24T16:40:05+00:00",
-      "source_text": "У Павлоградському районі противник цілив по Богданівській та Вербківській громадах. Зруйновано господарчу споруду.",
-      "scope": "Павлоградському районі",
-      "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-24T18:40:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33568"
-      ],
-      "display": "У Павлоградському районі противник цілив по Богданівській та Вербківській громадах. Зруйновано господарчу споруду.",
-      "source_recap_day": false,
-      "claims": [
-        {
-          "id": "241a1c53788e8c5859eb995f",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "У Павлоградському районі противник цілив по Богданівській та Вербківській громадах.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 83
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Павлоградському районі",
-          "predicates": [
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "bd0156a78852f557426db478",
-          "source_key": "dnipropetrovskaODA/33568",
-          "source_text": "Зруйновано господарчу споруду.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 84,
-            "end": 114
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T16:40:05+00:00",
-          "reporting_period": "2026-11-24T18:40:00+02:00",
-          "scope": "Павлоградському районі",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        }
-      ]
-    },
-    {
-      "id": "7bd0c14bffa7d1dfba5a",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_url": "https://t.me/dnipropetrovskaODA/33581",
-      "published_at": "2026-11-25T05:30:06+00:00",
-      "source_text": "Одна людина дістала поранень. Ворог атакував три райони безпілотниками",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_url": "https://t.me/dnipropetrovskaODA/33607",
+      "published_at": "2026-11-25T16:30:24+00:00",
+      "source_text": "Одна людина дістала поранень. Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією",
       "scope": "Дніпропетровська область",
       "casualty_assertions": [
         1
       ],
-      "numbers": [],
+      "numbers": [
+        "20",
+        "3"
+      ],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-25T07:30:00+02:00",
+      "reporting_period": "2026-11-25T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/33581"
+        "dnipropetrovskaODA/33607"
       ],
-      "display": "Обласне зведення на 07:30 25.11.2026: Одна людина дістала поранень. Ворог атакував три райони безпілотниками.",
+      "display": "Обласне зведення на 18:30 25.11.2026: Одна людина дістала поранень. Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією.",
       "source_recap_day": false,
       "claims": [
         {
-          "id": "036ddc5ac89939a99421db3c",
-          "source_key": "dnipropetrovskaODA/33581",
+          "id": "c57e79849bf25e625765b19a",
+          "source_key": "dnipropetrovskaODA/33607",
           "source_text": "Одна людина дістала поранень.",
           "source_span": {
             "basis": "normalized_selection",
@@ -620,8 +140,8 @@
           "quantity_roles": {
             "injured": 1
           },
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
           "scope": "Дніпропетровська область",
           "predicates": [
             "casualty"
@@ -632,18 +152,21 @@
           "place": null
         },
         {
-          "id": "8dc27c7f8d1395f124395772",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "Ворог атакував три райони безпілотниками",
+          "id": "e19fa5ca02a65b8646969145",
+          "source_key": "dnipropetrovskaODA/33607",
+          "source_text": "Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією",
           "source_span": {
             "basis": "normalized_selection",
             "start": 30,
-            "end": 70
+            "end": 97
           },
-          "numeric_surfaces": [],
+          "numeric_surfaces": [
+            "20",
+            "3"
+          ],
           "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
           "scope": "Дніпропетровська область",
           "predicates": [
             "attack"
@@ -656,179 +179,41 @@
       ]
     },
     {
-      "id": "0482c0388f3e9f175ec4",
+      "id": "c01f9a179e7624d0e201",
       "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_url": "https://t.me/dnipropetrovskaODA/33581",
-      "published_at": "2026-11-25T05:30:06+00:00",
-      "source_text": "У Дніпрі пошкоджені інфраструктура та автівка. Постраждав 42-річний чоловік. Він лікується амбулаторно.",
-      "scope": "Дніпрі",
-      "casualty_assertions": [
-        1
-      ],
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_url": "https://t.me/dnipropetrovskaODA/33607",
+      "published_at": "2026-11-25T16:30:24+00:00",
+      "source_text": "У Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади. Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка. 42-річний чоловік лікується амбулаторно.",
+      "scope": "Нікопольському районі",
+      "casualty_assertions": [],
       "numbers": [
         "42"
       ],
       "incident_time": null,
       "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-25T07:30:00+02:00",
+      "reporting_period": "2026-11-25T18:30:00+02:00",
       "state": "included",
       "reason": null,
       "source_refs": [
-        "dnipropetrovskaODA/33581"
+        "dnipropetrovskaODA/33607"
       ],
-      "display": "У Дніпрі пошкоджені інфраструктура та автівка. Постраждав 42-річний чоловік. Він лікується амбулаторно.",
+      "display": "У Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади. Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка. 42-річний чоловік лікується амбулаторно.",
       "source_recap_day": false,
       "claims": [
         {
-          "id": "bd25e0c2280c2c74bdc3fed3",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "У Дніпрі пошкоджені інфраструктура та автівка.",
+          "id": "f290e8e9ca8743691af3b477",
+          "source_key": "dnipropetrovskaODA/33607",
+          "source_text": "У Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади.",
           "source_span": {
             "basis": "normalized_selection",
             "start": 0,
-            "end": 46
+            "end": 108
           },
           "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "72b3a91c20620272b6519c99",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "Постраждав 42-річний чоловік.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 47,
-            "end": 76
-          },
-          "numeric_surfaces": [
-            "42"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "b169d233bc3e70a86ff9df44",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "Він лікується амбулаторно.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 77,
-            "end": 103
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
-          "scope": "Дніпрі",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        }
-      ]
-    },
-    {
-      "id": "ff0d5a59e0f50754ba10",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_url": "https://t.me/dnipropetrovskaODA/33581",
-      "published_at": "2026-11-25T05:30:06+00:00",
-      "source_text": "У Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі.",
-      "scope": "Зеленодольській громаді на Криворіжжі",
-      "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-25T07:30:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33581"
-      ],
-      "display": "У Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі.",
-      "source_recap_day": false,
-      "claims": [
-        {
-          "id": "d24939f008112dc3eba1e0f2",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "У Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 74
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
-          "scope": "Зеленодольській громаді на Криворіжжі",
-          "predicates": [
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Криворіжжя"
-        }
-      ]
-    },
-    {
-      "id": "49032ffcb7ee527b3971",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_url": "https://t.me/dnipropetrovskaODA/33581",
-      "published_at": "2026-11-25T05:30:06+00:00",
-      "source_text": "У Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади. Понівечені приватна оселя та автівка.",
-      "scope": "Нікопольському районі",
-      "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "regional_bulletin_period",
-      "reporting_period": "2026-11-25T07:30:00+02:00",
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33581"
-      ],
-      "display": "У Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади. Понівечені приватна оселя та автівка.",
-      "source_recap_day": false,
-      "claims": [
-        {
-          "id": "30f3df71021e43ac31cebd88",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "У Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 110
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
           "scope": "Нікопольському районі",
           "predicates": [
             "fire"
@@ -839,18 +224,18 @@
           "place": "Нікопольщина"
         },
         {
-          "id": "dcda9f443c2db17c8ecb8f87",
-          "source_key": "dnipropetrovskaODA/33581",
-          "source_text": "Понівечені приватна оселя та автівка.",
+          "id": "0e6d7e285cd04c24e0247b3e",
+          "source_key": "dnipropetrovskaODA/33607",
+          "source_text": "Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка.",
           "source_span": {
             "basis": "normalized_selection",
-            "start": 111,
-            "end": 148
+            "start": 109,
+            "end": 217
           },
           "numeric_surfaces": [],
           "quantity_roles": {},
-          "published_at": "2026-11-25T05:30:06+00:00",
-          "reporting_period": "2026-11-25T07:30:00+02:00",
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
           "scope": "Нікопольському районі",
           "predicates": [
             "damage"
@@ -859,21 +244,483 @@
           "disposition": "required",
           "reason": "source_consequence_or_opaque",
           "place": "Нікопольщина"
+        },
+        {
+          "id": "32e8a101e987601110039ab5",
+          "source_key": "dnipropetrovskaODA/33607",
+          "source_text": "42-річний чоловік лікується амбулаторно.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 218,
+            "end": 258
+          },
+          "numeric_surfaces": [
+            "42"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
+          "scope": "Нікопольському районі",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Нікопольщина"
         }
       ]
     },
     {
-      "id": "2ec2a0a373dc9fbdfc4e",
-      "section": "1.4",
-      "source_key": "DniproCityOfficial/16579",
-      "source_url": "https://t.me/DniproCityOfficial/16579",
-      "published_at": "2026-11-24T06:02:01+00:00",
-      "source_text": "❗️\nШТОРМОВИЙ ВІТЕР\n❗️\n24 листопада у м. Дніпро та області прогнозуються пориви вітру - інформує ДРЦГМ.\n🌬\nШвидкість вітру 15-20 м/с\n🟡\nРівень небезпечності - жовтий\n🤍\nБудьте уважні та обережні",
-      "scope": "ШТОРМОВИЙ ВІТЕР 24 листопада у м",
+      "id": "0be3cd63ad481755126c",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_url": "https://t.me/dnipropetrovskaODA/33607",
+      "published_at": "2026-11-25T16:30:24+00:00",
+      "source_text": "У Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі.",
+      "scope": "Зеленодольській громаді Криворізького району",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-25T18:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33607"
+      ],
+      "display": "У Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "665851a6e86cc8322db6e829",
+          "source_key": "dnipropetrovskaODA/33607",
+          "source_text": "У Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 77
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
+          "scope": "Зеленодольській громаді Криворізького району",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Криворіжжя"
+        }
+      ]
+    },
+    {
+      "id": "5394ca46d9abb060f440",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_url": "https://t.me/dnipropetrovskaODA/33607",
+      "published_at": "2026-11-25T16:30:24+00:00",
+      "source_text": "У Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
+      "scope": "Верхньодніпровській громаді Кам'янського району",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-25T18:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33607"
+      ],
+      "display": "У Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "056508754b1b36e372255a87",
+          "source_key": "dnipropetrovskaODA/33607",
+          "source_text": "У Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 76
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-25T16:30:24+00:00",
+          "reporting_period": "2026-11-25T18:30:00+02:00",
+          "scope": "Верхньодніпровській громаді Кам'янського району",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Кам’янський район"
+        }
+      ]
+    },
+    {
+      "id": "be41313d2668d8781172",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_url": "https://t.me/dnipropetrovskaODA/33611",
+      "published_at": "2026-11-26T05:30:01+00:00",
+      "source_text": "Одна людина дістала поранень. Майже 20 разів ворог атакував чотири райони безпілотниками",
+      "scope": "Дніпропетровська область",
+      "casualty_assertions": [
+        1
+      ],
+      "numbers": [
+        "20"
+      ],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-26T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33611"
+      ],
+      "display": "Обласне зведення на 07:30 26.11.2026: Одна людина дістала поранень. Майже 20 разів ворог атакував чотири райони безпілотниками.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "807a2976a96d816a5975473b",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "Одна людина дістала поранень.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 29
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {
+            "injured": 1
+          },
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Дніпропетровська область",
+          "predicates": [
+            "casualty"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        },
+        {
+          "id": "a81bd23a559e834230c52391",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "Майже 20 разів ворог атакував чотири райони безпілотниками",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 30,
+            "end": 88
+          },
+          "numeric_surfaces": [
+            "20"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Дніпропетровська область",
+          "predicates": [
+            "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": null
+        }
+      ]
+    },
+    {
+      "id": "0bed1fddadcd868a3b4e",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_url": "https://t.me/dnipropetrovskaODA/33611",
+      "published_at": "2026-11-26T05:30:01+00:00",
+      "source_text": "У Павлограді пошкоджені заправка та торгівельний центр.",
+      "scope": "Павлограді",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-26T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33611"
+      ],
+      "display": "У Павлограді пошкоджені заправка та торгівельний центр.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "ede30198283e8e068799d09c",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "У Павлограді пошкоджені заправка та торгівельний центр.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 55
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Павлограді",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Павлоград"
+        }
+      ]
+    },
+    {
+      "id": "5e7ee4b9068e23bd0906",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_url": "https://t.me/dnipropetrovskaODA/33611",
+      "published_at": "2026-11-26T05:30:01+00:00",
+      "source_text": "У Кривому Розі противник поцілив по складській будівлі та магазину. У Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+      "scope": "Кривому Розі",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-26T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33611"
+      ],
+      "display": "У Кривому Розі противник поцілив по складській будівлі та магазину. У Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "d0cbdcb2518f2e15489baeb2",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "У Кривому Розі противник поцілив по складській будівлі та магазину.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 67
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Кривому Розі",
+          "predicates": [
+            "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Кривий Ріг"
+        },
+        {
+          "id": "bae1fd0e3326773b5bb99fb6",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "У Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 68,
+            "end": 132
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Кривому Розі",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Криворіжжя"
+        }
+      ]
+    },
+    {
+      "id": "8345227b025256e97ed3",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_url": "https://t.me/dnipropetrovskaODA/33611",
+      "published_at": "2026-11-26T05:30:01+00:00",
+      "source_text": "У Нікопольському районі потерпали райцентр та Марганецька громада. Постраждав 46-річний чоловік. Він лікується амбулаторно.",
+      "scope": "Нікопольському районі",
+      "casualty_assertions": [
+        1
+      ],
+      "numbers": [
+        "46"
+      ],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-26T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33611"
+      ],
+      "display": "У Нікопольському районі потерпали райцентр та Марганецька громада. Постраждав 46-річний чоловік. Він лікується амбулаторно.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "98391c2fae8e253061ae34cf",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "У Нікопольському районі потерпали райцентр та Марганецька громада.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 66
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Нікопольському районі",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Нікопольщина"
+        },
+        {
+          "id": "12cdab94c0e1ef52c3c5df54",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "Постраждав 46-річний чоловік.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 67,
+            "end": 96
+          },
+          "numeric_surfaces": [
+            "46"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Нікопольському районі",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Нікопольщина"
+        },
+        {
+          "id": "5c791da9e2301de7c229eac7",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "Він лікується амбулаторно.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 97,
+            "end": 123
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Нікопольському районі",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Нікопольщина"
+        }
+      ]
+    },
+    {
+      "id": "68498ac03509c6d6b13d",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_url": "https://t.me/dnipropetrovskaODA/33611",
+      "published_at": "2026-11-26T05:30:01+00:00",
+      "source_text": "У Миколаївській громаді Синельниківського району пошкоджене агропідприємство. Сталася пожежа.",
+      "scope": "Миколаївській громаді Синельниківського району",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "regional_bulletin_period",
+      "reporting_period": "2026-11-26T07:30:00+02:00",
+      "state": "included",
+      "reason": null,
+      "source_refs": [
+        "dnipropetrovskaODA/33611"
+      ],
+      "display": "У Миколаївській громаді Синельниківського району пошкоджене агропідприємство. Сталася пожежа.",
+      "source_recap_day": false,
+      "claims": [
+        {
+          "id": "b06688c90d6413132a8cb806",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "У Миколаївській громаді Синельниківського району пошкоджене агропідприємство.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 77
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Миколаївській громаді Синельниківського району",
+          "predicates": [
+            "damage"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        },
+        {
+          "id": "90dcd5d7d5718521eb19272a",
+          "source_key": "dnipropetrovskaODA/33611",
+          "source_text": "Сталася пожежа.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 78,
+            "end": 93
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-26T05:30:01+00:00",
+          "reporting_period": "2026-11-26T07:30:00+02:00",
+          "scope": "Миколаївській громаді Синельниківського району",
+          "predicates": [
+            "fire"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Синельниківський район"
+        }
+      ]
+    },
+    {
+      "id": "92267ff39d2c70b14d2b",
+      "section": "2.1",
+      "source_key": "dnipropetrovskaODA/33582",
+      "source_url": "https://t.me/dnipropetrovskaODA/33582",
+      "published_at": "2026-11-25T06:22:08+00:00",
+      "source_text": "❗️\nУ лікарні померла 58-річна жінка, яка зазнала поранень під час\nобстрілу Кривого Рогу.\nЗа її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати.\nЩирі співчуття рідним та близьким.",
+      "scope": "лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу",
       "casualty_assertions": [],
       "numbers": [
-        "24",
-        "15-20"
+        "58"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
@@ -881,241 +728,123 @@
       "state": "included",
       "reason": null,
       "source_refs": [
-        "DniproCityOfficial/16579"
+        "dnipropetrovskaODA/33582"
       ],
-      "display": "24 листопада у м. Дніпро та області прогнозувалися пориви вітру. Швидкість вітру 15-20 м/с Рівень небезпечності - жовтий",
-      "source_recap_day": false
+      "display": "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу. За її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати.",
+      "source_recap_day": false,
+      "selection_input": "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу. За її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати.",
+      "selection_method": "conservative_operational_clauses",
+      "claims": [
+        {
+          "id": "bc6fa79021edcdfd5f8591ea",
+          "source_key": "dnipropetrovskaODA/33582",
+          "source_text": "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 0,
+            "end": 85
+          },
+          "numeric_surfaces": [
+            "58"
+          ],
+          "quantity_roles": {},
+          "published_at": "2026-11-25T06:22:08+00:00",
+          "reporting_period": null,
+          "scope": "лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу",
+          "predicates": [
+            "casualty",
+            "attack"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Кривий Ріг"
+        },
+        {
+          "id": "d0b7fb31672189721d8c17cb",
+          "source_key": "dnipropetrovskaODA/33582",
+          "source_text": "За її життя до останнього боролися лікарі.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 86,
+            "end": 128
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-25T06:22:08+00:00",
+          "reporting_period": null,
+          "scope": "лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу",
+          "predicates": [
+            "opaque"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Кривий Ріг"
+        },
+        {
+          "id": "e8772b0ce7ce0a29754ad583",
+          "source_key": "dnipropetrovskaODA/33582",
+          "source_text": "Але на жаль її життя не вдалося врятувати.",
+          "source_span": {
+            "basis": "normalized_selection",
+            "start": 129,
+            "end": 171
+          },
+          "numeric_surfaces": [],
+          "quantity_roles": {},
+          "published_at": "2026-11-25T06:22:08+00:00",
+          "reporting_period": null,
+          "scope": "лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу",
+          "predicates": [
+            "rescue"
+          ],
+          "certainty": "asserted",
+          "disposition": "required",
+          "reason": "source_consequence_or_opaque",
+          "place": "Кривий Ріг"
+        }
+      ],
+      "claim_decisions": [
+        {
+          "source_text": "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу.",
+          "disposition": "rendered",
+          "place": "Кривий Ріг",
+          "reason": "uncovered_source_clause"
+        },
+        {
+          "source_text": "За її життя до останнього боролися лікарі.",
+          "disposition": "rendered",
+          "place": "Кривий Ріг",
+          "reason": "uncovered_source_clause"
+        },
+        {
+          "source_text": "Але на жаль її життя не вдалося врятувати.",
+          "disposition": "rendered",
+          "place": "Кривий Ріг",
+          "reason": "uncovered_source_clause"
+        }
+      ],
+      "resolved_chunks": [
+        [
+          "Кривий Ріг",
+          "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу. За її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати."
+        ]
+      ],
+      "scope_context": "Кривий Ріг"
     },
     {
-      "id": "e1008360c67b3cf17180",
+      "id": "af241e56d1c5b5dccaae",
       "section": "1.2",
-      "source_key": "DniproCityOfficial/16580",
-      "source_url": "https://t.me/DniproCityOfficial/16580",
-      "published_at": "2026-11-24T06:14:44+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 8:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 8:00 рух організовано:\n🚃\nТрамваї:\n№ 11, 12, 15, 16, 17, 18 - призупинено.\n№ 1К (3 од.): пл. Вокзальна - вул. Центральна № 5 (6 од.) – курсує за повним маршрутом\n№ 14(2 од.) курсує за повним маршрутом № 19 (2 од.) курсує: пл. Старомостова- пл. Новокодацька\n🚎\nТролейбуси:\n№6 (5 од.), №7 (2 од.), №12 (4 од.), кільце «А» (1 од.) - за маршрутом №5(2 од.): вул. Незалежності - пр. Поля (низ)\n№9 (4 од.) пл. Соборна- пр. Б. Хмельницького № 1,2,3,4,8,10, 11, 14,15,16, 17, 19, 20, кільце «Б» - призупинено\n🚇\nМетрополітен працює за графіком вихідного дня.",
-      "scope": "Робота електротранспорту Дніпра станом на 8",
+      "source_key": "DniproCityOfficial/16645",
+      "source_url": "https://t.me/DniproCityOfficial/16645",
+      "published_at": "2026-11-25T10:12:36+00:00",
+      "source_text": "‼️\nОперативна інформація щодо роботи громадського транспорту: у Дніпрі тимчасово змінили рух автобусів шести маршрутів\n‼️\n🚧\nЧерез перекриття руху транспорту на просп. І. Мазепи автобуси тимчасово курсують зі змінами:\n🚌\n№157А за скороченим маршрутом до вул. Авіаційної;\n🚌\n№75К за схемою просп. І. Мазепи - вул. Повітрофлотська - вул. О. Кошиця - просп. Металургів - вул. Карла Роде, далі за маршрутом;\n🚌\n№90 по вул. Київській - вул. Криворізькій - вул. Робочій - просп. Л. Українки - просп. С. Нігояна - вул. Львівська, далі за маршрутом;\n🚌\n№156: просп. І. Мазепи - вул. Повітрофлотська - вул. О. Кошиця - вул. Київська, далі за маршрутом;\n🚌\n№156А - за скороченою схемою до перехрестя просп. С. Нігояна - просп. І. Мазепи;\n🚌\n№146А та №146Б обʼїжджають по вул. Авіаційній/вул. Повітрофлотській - вул. О. Кошиця, далі за маршрутом.\n⚠️\nСхеми обʼїзду є орієнтовними і можуть змінюватися в залежності від ситуації на дорогах. На просп. І. Мазепи та прилеглих вулицях спостерігаються затори, тому можливі збільшення інтервалів руху автобусів.",
+      "scope": "Оперативна інформація щодо роботи громадського транспорту",
       "casualty_assertions": [],
       "numbers": [
-        "8",
-        "00",
-        "8",
-        "00",
-        "11",
-        "12",
-        "15",
-        "16",
-        "17",
-        "18",
-        "3",
-        "5",
-        "6",
-        "14",
-        "2",
-        "19",
-        "2",
-        "6",
-        "5",
-        "7",
-        "2",
-        "12",
-        "4",
-        "1",
-        "5",
-        "2",
-        "9",
-        "4",
-        "1",
-        "2",
-        "3",
-        "4",
-        "8",
-        "10",
-        "11",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16580"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "73d2428c10c04a8d59f1",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16585",
-      "source_url": "https://t.me/DniproCityOfficial/16585",
-      "published_at": "2026-11-24T07:56:00+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 10:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 10:00 рух організовано:\n🚃\nТрамвай\n:\n№ 1К (5 од.) пл. Вокзальна – вул. Центральна № 5 (5 од.) курсує за повним маршрутом\n№ 14 (2 од.) курсує за повним маршрутом № 19 (2 од.) пл. Старомостова – пл. Новокодацька\n№ 11, 12, 15, 16, 17, 18 – рух призупинено\n🚎\nТролейбус\n:\n№ 6 (5 од.), № 7 (2 од.), № 12 (4 од.), кільце «А» (1 од.) – курсують за повним маршрутом\n№ 5 (2 од.) вул. Незалежності – просп. Лесі Україники\n№ 9 (4 од.) пл. Соборна – просп. Богдана Хмельницького (в районі вул. Незалежності)\nдодатково ще 1 од. кільце «А» курсує за маршрутом: пл. Героїв Майдану – пл. Соборна – УДУНТ\n№ 1, 2, 3, 4, 8, 10, 11, 14, 15, 16, 17, 19, 20, кільце «Б» – рух призупинено",
-      "scope": "Робота електротранспорту Дніпра станом на 10",
-      "casualty_assertions": [],
-      "numbers": [
-        "10",
-        "00",
-        "10",
-        "00",
-        "5",
-        "5",
-        "5",
-        "14",
-        "2",
-        "19",
-        "2",
-        "11",
-        "12",
-        "15",
-        "16",
-        "17",
-        "18",
-        "6",
-        "5",
-        "7",
-        "2",
-        "12",
-        "4",
-        "1",
-        "5",
-        "2",
-        "9",
-        "4",
-        "1",
-        "1",
-        "2",
-        "3",
-        "4",
-        "8",
-        "10",
-        "11",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16585"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "6bb713b8f960cab34c4e",
-      "section": "2.4",
-      "source_key": "adm_dp/46547",
-      "source_url": "https://t.me/adm_dp/46547",
-      "published_at": "2026-11-24T07:59:41+00:00",
-      "source_text": "Дніпропетровщина зазнає атак безпілотниками різних типів. Вони можуть нести не лише основну бойову частину, а й додаткові боєприпаси – протитанкові міни, касетні елементи та FPV-квадрокоптери.\nСеред найпоширеніших безпілотників літакового типу, які атакують область, – «Герань-2» та «Герань-4». Вони оснащуються різними типами вибухових частин, зокрема механічними та електронними підривачами. Перші можуть зберігати працездатність тривалий час, навіть якщо боєприпас пролежав на землі роками.\n«Поки вони повністю не зруйнуються, наприклад, від вологи, можуть зберігати свою працездатність. Такі вибухові частини можуть бути небезпечними десятки років.»\n, – розповів старший інспектор управління вибухотехнічної служби ГУНП в Дніпропетровській області Станіслав Крамаренко.\nУ разі виявлення небезпечного предмета необхідно повідомити поліцію за номером 102.\nЗ початку цього року вибухотехніки ГУНП в Дніпропетровській області 4264 рази виїжджали на виклики - знешкодили 1431 вибуховий предмет.",
-      "scope": "Дніпропетровщина зазнає атак безпілотниками різних типів",
-      "casualty_assertions": [],
-      "numbers": [
-        "2",
-        "4",
-        "102",
-        "4264",
-        "1431"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "adm_dp/46547"
-      ],
-      "display": "Повідомлення від 24.11 09:59: Дніпропетровщина зазнає атак безпілотниками різних типів. Вони можуть нести не лише основну бойову частину, а й додаткові боєприпаси – протитанкові міни, касетні елементи та FPV-квадрокоптери. Серед найпоширеніших безпілотників літакового типу, які атакують область, – «Герань-2» та «Герань-4». Вони оснащуються різними типами вибухових частин, зокрема механічними та електронними підривачами. Перші можуть зберігати працездатність тривалий час, навіть якщо боєприпас пролежав на землі роками. «Поки вони повністю не зруйнуються, наприклад, від вологи, можуть зберігати свою працездатність. Такі вибухові частини можуть бути небезпечними десятки років.», – розповів старший інспектор управління вибухотехнічної служби ГУНП в Дніпропетровській області Станіслав Крамаренко. У разі виявлення небезпечного предмета необхідно повідомити поліцію за номером 102. З початку цього року вибухотехніки ГУНП в Дніпропетровській області 4264 рази виїжджали на виклики - знешкодили 1431 вибуховий предмет.",
-      "source_recap_day": false
-    },
-    {
-      "id": "b005508647dc1cb9fdf9",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16587",
-      "source_url": "https://t.me/DniproCityOfficial/16587",
-      "published_at": "2026-11-24T09:04:57+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 11:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 11:00 рух організовано:\n🚃\nТрамвай:\n№ 1К (5 од.) пл. Вокзальна – вул. Центральна № 5 (5 од.) Трубний завод – вул. Виконкомівська\n№ 14 (2 од.) Трубний завод – пл. Вокзальна\n№ 11, 12, 15, 16, 17, 18, 19 – рух призупинено\n🚎\nТролейбус:\n№ 6 (5 од.), № 7 (2 од.), № 12 (4 од.), кільце «А» (1 од.) – курсують за повним маршрутом\n№ 5 (2 од.) вул. Незалежності – просп. Лесі Україники\n№ 9 (4 од.) пл. Соборна – просп. Богдана Хмельницького (в районі вул. Незалежності)\nдодатково ще 1 од. кільце «А» курсує за маршрутом: пл. Героїв Майдану – пл. Соборна – УДУНТ\n№ 1, 2, 3, 4, 8, 10, 11, 14, 15, 16, 17, 19, 20, кільце «Б» – рух призупинено",
-      "scope": "Робота електротранспорту Дніпра станом на 11",
-      "casualty_assertions": [],
-      "numbers": [
-        "11",
-        "00",
-        "11",
-        "00",
-        "5",
-        "5",
-        "5",
-        "14",
-        "2",
-        "11",
-        "12",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "6",
-        "5",
-        "7",
-        "2",
-        "12",
-        "4",
-        "1",
-        "5",
-        "2",
-        "9",
-        "4",
-        "1",
-        "1",
-        "2",
-        "3",
-        "4",
-        "8",
-        "10",
-        "11",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16587"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "e8a62027ccd09f6372fb",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16588",
-      "source_url": "https://t.me/DniproCityOfficial/16588",
-      "published_at": "2026-11-24T09:17:28+00:00",
-      "source_text": "❗️\nУВАГА\n❗️\nТролейбус №9\nпризупинив роботу.\nТролейбус №8\n(4 од.) курсує: вул. Незалежності - завод Металовиробів",
-      "scope": "УВАГА Тролейбус №9 призупинив роботу",
-      "casualty_assertions": [],
-      "numbers": [
-        "9",
-        "8",
-        "4"
+        "90",
+        "156"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
@@ -1123,1465 +852,97 @@
       "state": "service_input",
       "reason": null,
       "source_refs": [
-        "DniproCityOfficial/16588"
+        "DniproCityOfficial/16645"
       ],
       "display": null,
       "source_recap_day": false
     },
     {
-      "id": "08269b3b8bad5e107f54",
+      "id": "153bd50b0cefe2acfd16",
       "section": "1.4",
-      "source_key": "adm_dp/46558",
-      "source_url": "https://t.me/adm_dp/46558",
-      "published_at": "2026-11-24T10:13:03+00:00",
-      "source_text": "🔐\nПосилюйте кіберзахист держави: шукаємо експертів у міністерства та органи влади\nПід час повномасштабної війни державні сервіси та інфраструктура щодня стикаються з кіберзагрозами. Щоб системи працювали стабільно за будь-яких умов, разом із Держспецзв’язку формуємо команди кіберзахисту в держсекторі — міністерствах, обласних адміністраціях й органах влади.\nКого шукаємо:\n👤\nCISO — керівник підрозділу інформаційної безпеки та кіберзахисту. Формуватиме стратегію кіберзахисту, політики безпеки та керуватиме командою;\n👤\nкерівник сектору з питань кіберзахисту. Відповідатиме за щоденний захист інформаційно-комунікаційних систем;\n👤\nголовний спеціаліст із кіберзахисту. Моніторитиме загрози, шукатиме вразливості та реагуватиме на кіберінциденти.\nМаєте досвід у сфері інформаційної безпеки або кіберзахисту, вмієте запобігати кіберзагрозам та готові до викликів державного рівня? Знайомтеся з вакансіями та подавайте CV за посиланням\n👉🏻\nhttps://cybercareer.thedigital.gov.ua",
-      "scope": "Посилюйте кіберзахист держави",
+      "source_key": "dnipropetrovskaODA/33584",
+      "source_url": "https://t.me/dnipropetrovskaODA/33584",
+      "published_at": "2026-11-25T11:06:40+00:00",
+      "source_text": "Ситуація зі світлом особливо складна у містах Дніпро, Самар та Павлоград. Енергетики працюють над відновленням електропостачання.\nПід час знеструмлень мешканці Дніпропетровщини можуть скористатися Пунктами незламності. В області їх майже 1500.\nТут можна зарядити гаджети, скористатися інтернетом, зігрітися та випити гарячі напої. Усі пункти забезпечені генераторами.\nНа Дніпропетровщині – 61 опорний пункт, де, у разі знеструмлення понад 48 годин, люди можуть переночувати.\nПонад 300 Пунктів незламності розташовані в укриттях та підвальних приміщеннях.\nПерелік найближчих пунктів можна знайти\nна сайті Дніпропетровської ОВА\nабо у застосунку «Дія».\nЗ початку листопада Пункти незламності в області відвідали майже 21 тисяча людей.",
+      "scope": "Ситуація зі світлом особливо складна у містах Дніпро, Самар та Павлоград",
       "casualty_assertions": [],
-      "numbers": [],
+      "numbers": [
+        "1500",
+        "61",
+        "48",
+        "300",
+        "21"
+      ],
       "incident_time": null,
       "incident_time_status": "not_established",
       "reporting_period": null,
       "state": "excluded",
       "reason": "no_current_location_specific_information",
       "source_refs": [
-        "adm_dp/46558"
+        "dnipropetrovskaODA/33584"
       ],
       "display": null,
       "source_recap_day": false
     },
     {
-      "id": "dc8c6b693d538d4f0241",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16589",
-      "source_url": "https://t.me/DniproCityOfficial/16589",
-      "published_at": "2026-11-24T11:06:43+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 12:40\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 12:40 рух організовано:\n🚃\nТрамвай:\n№ 1, 5, 11, 12, 14, 15, 16, 17, 18, 19 – рух призупинено\n🚎\nТролейбус:\n№ 6, № 7 – курсують за повним маршрутом\n№ 8 вул. Незалежності – завод Металовиробів\n№ 1, 2, 3, 4, 5, 9, 10, 11, 14, 15, 16, 17, 19, 20, кільце «А», кільце «Б» – рух призупинено\nТролейбус № 12 за скороченим маршрутом: ж/м Перемога-6 – Інститут фізкультури",
-      "scope": "Робота електротранспорту Дніпра станом на 12",
+      "id": "a64ef9e15c9f9a1bd13c",
+      "section": "1.4",
+      "source_key": "gunpvdp/38365",
+      "source_url": "https://t.me/gunpvdp/38365",
+      "published_at": "2026-11-25T12:22:36+00:00",
+      "source_text": "Про повагу, підтримку та особисті кордони: у Кам`янському поліцейські навчають школярів протидіяти насильству\nЯк розпізнати неприйнятну поведінку, чому не можна замовчувати образи й погрози та куди звертатися по допомогу - про це правоохоронці  говорять з учнями під час тематичних зустрічей.\n25 листопада, в межах міжнародної кампанії «\n1️⃣\n6️⃣\nднів проти насильства», поліцейські Служби освітньої безпеки розпочали в навчальних закладах міста цикл занять, присвячених протидії насильству.\nПрацівники поліції розповідають школярам про насильство та його види. Пояснюють, як розпізнати неприйнятну поведінку, захищати власні кордони та не залишатися осторонь, якщо хтось потребує допомоги.\nОкрему увагу приділяють темі домашнього насильства. Правоохоронці наголошують: це не приватна справа родини, а порушення прав людини, її гідності та безпеки.\nПоліцейські й надалі проводитимуть такі заняття, адже важливо, щоб кожна дитина знала свої права, розуміла цінність поваги до інших і пам’ятала: насильству немає виправдання, а просити про допомогу – не соромно.\nДеталі\n📎",
+      "scope": "Про повагу, підтримку та особисті кордони",
       "casualty_assertions": [],
       "numbers": [
-        "12",
-        "40",
-        "12",
-        "40",
+        "25",
         "1",
-        "5",
-        "11",
-        "12",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "6",
-        "7",
-        "8",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "9",
-        "10",
-        "11",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20",
-        "12",
         "6"
       ],
       "incident_time": null,
       "incident_time_status": "not_established",
       "reporting_period": null,
       "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16589"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "dc2c6b5a63a910177e2b",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16590",
-      "source_url": "https://t.me/DniproCityOfficial/16590",
-      "published_at": "2026-11-24T11:34:02+00:00",
-      "source_text": "‼️\nДо уваги пасажирів\n‼️\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу\nпризупинено рух тролейбусів № 7.",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "7"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16590"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "bdc5931e0b85f2250b5a",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16599",
-      "source_url": "https://t.me/DniproCityOfficial/16599",
-      "published_at": "2026-11-24T12:02:56+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 14:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\n🕰\nНа 14:00\n🚃\nТрамвай:\n№ 1,5,11,12,14,15,16, 17,18,19 - рух призупинено\n🚎\nТролейбус:\n№3 (3 од.), №5 (3 од.), №6(5 од.) - за маршрутом.\n№5 (3 од.): вул. Незалежності - пр. Поля(низ)\n№8 (4 од.): вул. Незалежності- завод Меловиробів\n№ 1,2,4,8,10, 11, 14,15,16, 17, 19, 20, кільце «Б» «А»- призупинені\n🚇\nМетрополітен\nпрацює за графіком вихідного дня.\nℹ️\nДепартамент транспорту та транспортної інфраструктури Дніпровської міськради",
-      "scope": "Робота електротранспорту Дніпра станом на 14",
-      "casualty_assertions": [],
-      "numbers": [
-        "14",
-        "00",
-        "14",
-        "00",
-        "1",
-        "5",
-        "11",
-        "12",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "3",
-        "3",
-        "5",
-        "3",
-        "6",
-        "5",
-        "5",
-        "3",
-        "8",
-        "4",
-        "1",
-        "2",
-        "4",
-        "8",
-        "10",
-        "11",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16599"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "d021c26f204071181813",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33565",
-      "source_url": "https://t.me/dnipropetrovskaODA/33565",
-      "published_at": "2026-11-24T13:37:12+00:00",
-      "source_text": "‼️\nВорог атакував Дніпро.\nПопередньо, пошкоджений багатоповерховий будинок.\nІнформацію щодо постраждалих уточнюємо.",
-      "scope": "Ворог атакував Дніпро",
-      "casualty_assertions": [],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33565"
-      ],
-      "display": "Попередньо, пошкоджений багатоповерховий будинок.",
-      "source_recap_day": false,
-      "selection_input": "Ворог атакував Дніпро. Попередньо, пошкоджений багатоповерховий будинок.",
-      "selection_method": "conservative_operational_clauses",
-      "claims": [
-        {
-          "id": "6a894b7cdfd8f584cc4d6500",
-          "source_key": "dnipropetrovskaODA/33565",
-          "source_text": "Ворог атакував Дніпро.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 22
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T13:37:12+00:00",
-          "reporting_period": null,
-          "scope": "Ворог атакував Дніпро",
-          "predicates": [
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "4a2a9bb30c7f558f046fdbed",
-          "source_key": "dnipropetrovskaODA/33565",
-          "source_text": "Попередньо, пошкоджений багатоповерховий будинок.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 23,
-            "end": 72
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T13:37:12+00:00",
-          "reporting_period": null,
-          "scope": "Ворог атакував Дніпро",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "preliminary",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        }
-      ],
-      "claim_decisions": [
-        {
-          "source_text": "Ворог атакував Дніпро.",
-          "disposition": "covered",
-          "target_id": "c8de2a6dc6cad1e50ff3",
-          "place": "Дніпро",
-          "reason": "bare_attack_in_daily_local_scope"
-        },
-        {
-          "source_text": "Попередньо, пошкоджений багатоповерховий будинок.",
-          "disposition": "rendered",
-          "place": "Дніпро",
-          "reason": "uncovered_source_clause"
-        }
-      ],
-      "resolved_chunks": [
-        [
-          "Дніпро",
-          "Попередньо, пошкоджений багатоповерховий будинок."
-        ]
-      ],
-      "scope_context": "Дніпро"
-    },
-    {
-      "id": "196f33c03eff713655dc",
-      "section": "2.1",
-      "source_key": "dnipropetrovskaODA/33566",
-      "source_url": "https://t.me/dnipropetrovskaODA/33566",
-      "published_at": "2026-11-24T14:05:27+00:00",
-      "source_text": "❗️\nЩонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.\nМедики надають їм усю необхідну допомогу.\n#russiaisaterroriststate",
-      "scope": "Щонайменше четверо людей",
-      "casualty_assertions": [
-        4
-      ],
-      "numbers": [],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dnipropetrovskaODA/33566"
-      ],
-      "display": "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
-      "source_recap_day": false,
-      "selection_input": "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
-      "selection_method": "conservative_operational_clauses",
-      "claims": [
-        {
-          "id": "1e5aa8d347e8bfe72320c1e8",
-          "source_key": "dnipropetrovskaODA/33566",
-          "source_text": "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 71
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {
-            "injured": 4
-          },
-          "published_at": "2026-11-24T14:05:27+00:00",
-          "reporting_period": null,
-          "scope": "Щонайменше четверо людей",
-          "predicates": [
-            "casualty",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        }
-      ],
-      "claim_decisions": [
-        {
-          "source_text": "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
-          "disposition": "rendered",
-          "place": "Дніпро",
-          "reason": "uncovered_source_clause"
-        }
-      ],
-      "resolved_chunks": [
-        [
-          "Дніпро",
-          "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру."
-        ]
-      ],
-      "scope_context": "Дніпро"
-    },
-    {
-      "id": "3461ca0a38712183c876",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16613",
-      "source_url": "https://t.me/DniproCityOfficial/16613",
-      "published_at": "2026-11-24T14:41:08+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 16:30\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 16:30\n🚃\nТрамвай:\n№ 1 (4 од.) пл. Вокзальна – вул. Центральна № 5 (3 од.) Трубний завод – вул. Виконкомівська\n№ 14 (2 од.) Трубний завод – пл. Вокзальна\n№ 11,12,15,16,17,18,19 - рух призупинено\n🚎\nТролейбус:\n№3 (1 од.), №6 (5 од.), №7 (2 од.) курсують за повними маршрутами\nЗі змінами:\n№5 (3 од.) вул. Незалежності – просп. Лесі Українки\n№8 (4 од.) вул. Незалежності – завод Меловиробів\n№ 10/12 (4 од.) ж/м Перемога-6 – пл. Соборна\nКільце «А» та «Б» вул. Короленко – Залізничний вокзал – вул. Робоча – вул. Незалежності – Депо 2.\n№ 1,2,4,9,11,14,15,16,17,19,20 - призупинені.\n🚇\nМетрополітен\nпрацює за графіком вихідного дня.\nℹ️\nДепартамент транспорту та транспортної інфраструктури Дніпровської міськради",
-      "scope": "Робота електротранспорту Дніпра станом на 16",
-      "casualty_assertions": [],
-      "numbers": [
-        "16",
-        "30",
-        "16",
-        "30",
-        "1",
-        "4",
-        "5",
-        "3",
-        "14",
-        "2",
-        "11",
-        "12",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "3",
-        "1",
-        "6",
-        "5",
-        "7",
-        "2",
-        "5",
-        "3",
-        "8",
-        "4",
-        "10",
-        "12",
-        "4",
-        "6",
-        "2",
-        "1",
-        "2",
-        "4",
-        "9",
-        "11",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16613"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "75e0add068030bf87f93",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16614",
-      "source_url": "https://t.me/DniproCityOfficial/16614",
-      "published_at": "2026-11-24T16:20:47+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 18:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 18:00\n🚃\nТрамвай\n:\n№ 11,12,15,16, 17,18,19 - рух призупинено\nЗа змінениминапрямками: №1К (4 од.) пл. Вокзальна- вул. Центральна №5 (3 од.) Трубний завод - вул. Виконкомівська №14 (2 од.) пл. Вокзальна- Трубний завод\n🚎\nТролейбус\n:\n№6 (5 од.), №7 (1 од.) курсує за маршрутами\n№ 1,2,3,4,5,8,9, 11,12, 14,15,16, 17, 19, 20, кільце «Б» «А»- призупинено\n🚇\nМетрополітен\nпрацює за графіком вихідного дня.\nℹ️\nДепартамент транспорту та транспортної інфраструктури Дніпровської міськради",
-      "scope": "Робота електротранспорту Дніпра станом на 18",
-      "casualty_assertions": [],
-      "numbers": [
-        "18",
-        "00",
-        "18",
-        "00",
-        "11",
-        "12",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "4",
-        "5",
-        "3",
-        "14",
-        "2",
-        "6",
-        "5",
-        "7",
-        "1",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "8",
-        "9",
-        "11",
-        "12",
-        "14",
-        "15",
-        "16",
-        "17",
-        "19",
-        "20"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16614"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "48a1c7470c4372177f32",
-      "section": "1.4",
-      "source_key": "dnipropetrovskaODA/33569",
-      "source_url": "https://t.me/dnipropetrovskaODA/33569",
-      "published_at": "2026-11-24T17:14:09+00:00",
-      "source_text": "Зібрав військових, правоохоронців, надзвичайників та голів районів на Раду оборони.\nГоворили про безпекову ситуацію та нові виклики.\n📌\nЕвакуація.\nЗ небезпечних територій області виїжджають до 20 мешканців на добу. Це люди, які раніше відмовлялися залишати свої оселі. Готуємося евакуювати 183 людини з сіл Новокиївка, Добра Надія та Іллінка на Нікопольщині. Загалом з небезпечних територій області вже евакуювалися понад 70 тисяч людей.\n📌\nПункти незламності.\nНа Дніпропетровщині їх працює майже 1500. Доручив головам районів максимально доносити до людей, де у разі знеструмлення вони можуть зарядити гаджети, зігрітися та скористатися Інтернетом.\n📌\nФортифікації.\nУсі оборонні споруди в області зводимо за графіком та у координації з військовими.\nНаголосив, що Рада оборони – це не формальне зібрання. Тут кожен може висловити свою думку з різних питань і разом ми шукатимемо вірне рішення. Дякую усім за злагоджену роботу.",
-      "scope": "Зібрав військових, правоохоронців, надзвичайників та голів районів на Раду оборони",
-      "casualty_assertions": [],
-      "numbers": [
-        "20",
-        "183",
-        "70",
-        "1500"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
       "reason": "no_current_location_specific_information",
       "source_refs": [
-        "dnipropetrovskaODA/33569"
+        "gunpvdp/38365"
       ],
       "display": null,
       "source_recap_day": false
     },
     {
-      "id": "c27d992704d0b50d8db3",
-      "section": "2.1",
-      "source_key": "DniproCityOfficial/16625",
-      "source_url": "https://t.me/DniproCityOfficial/16625",
-      "published_at": "2026-11-24T17:24:01+00:00",
-      "source_text": "У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим\nНадвечір 24 листопада Дніпро зазнав чергової атаки з боку рф. Є пошкодження в Шевченківському районі міста. На місці розгорнуто міський штаб ліквідації аварії. Також розгорнуто і пункт обігріву.\n🚧\nТриває ліквідація наслідків. На місці працюють профільні служби. У роботі — комунальники, благодійники. Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району.\n«Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку. Загалом станом на зараз відомо про пошкодження семи житлових будинків та однієї школи. Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін.\n📋\nВласникам пошкодженого житла необхідно звернутися до районних адміністрацій для фіксації руйнувань та подання заяв на відшкодування збитків.\n📱\nМешканці, чиє майно постраждало, можуть подавати заявки щодо пошкодження і\nв застосунку «єДніпро».\nУ вкладці «Сервіси» треба обрати графу «Соціальні послуги» та натиснути кнопку «Пошкоджене майно». Завантажити застосунок можна за посиланнями:\n🍎\nApp Store\n▶️\nGoogle Play\n🤝\nУсі заявки обробляють відповідні міські служби та Комунальна установа «Центр психосоціальної підтримки населення «Дотик» Дніпровської міської ради, яка забезпечує супровід, логістику та взаємодію між гуманітарними організаціями й партнерами, щоб кожен мешканець, який потребує допомоги, зміг її вчасно отримати.\n📍\nАдміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб. 328. Телефон для довідок: (093) 606-95-85.\n☎️\nНомер єдиної гарячої лінії міста Дніпра\n1530.\n🔌\nНагадуємо, у Дніпрі на базі комунальних закладів діють\n89 пунктів незламності.\nТам можна зігрітися, зарядити гаджети тощо. Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра.\n🗺\nЯк знайти потрібний пункт?\n1️⃣\nПерейдіть\nна сайт.\n2️⃣\nВідкрийте розділ «Фільтри».\n3️⃣\nОберіть категорію «Пункти незламності».\n4️⃣\nЗа потреби оберіть район міста, щоб звузити пошук.\n5️⃣\nНатисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-      "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-      "casualty_assertions": [
-        4
-      ],
-      "numbers": [
-        "24",
-        "24",
-        "12",
-        "70",
-        "328",
-        "093",
-        "606-95",
-        "85",
-        "1530",
-        "89",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "DniproCityOfficial/16625"
-      ],
-      "display": "Повідомлення від 19:24 24.11: У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф. Є пошкодження в Шевченківському районі міста. Також розгорнуто і пункт обігріву. Триває ліквідація наслідків. На місці працюють профільні служби. У роботі — комунальники, благодійники. Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку. Загалом станом на зараз відомо про пошкодження семи житлових будинків та однієї школи. Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро». Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб. 328. 1530. Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо. Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра. Як знайти потрібний пункт? 1 Перейдіть на сайт. 2 Відкрийте розділ «Фільтри». 3 4 За потреби оберіть район міста, щоб звузити пошук. 5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-      "source_recap_day": false,
-      "selection_input": "У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф. Є пошкодження в Шевченківському районі міста. Також розгорнуто і пункт обігріву. Триває ліквідація наслідків. На місці працюють профільні служби. У роботі — комунальники, благодійники. Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку. Загалом станом на зараз відомо про пошкодження семи житлових будинків та однієї школи. Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро». Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб. 328. 1530. Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо. Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра. Як знайти потрібний пункт? 1 Перейдіть на сайт. 2 Відкрийте розділ «Фільтри». 3 4 За потреби оберіть район міста, щоб звузити пошук. 5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-      "selection_method": "conservative_operational_clauses",
-      "claims": [
-        {
-          "id": "fac7ae3d43cb4e8fc182a9b0",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 193
-          },
-          "numeric_surfaces": [
-            "24",
-            "24"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "casualty",
-            "damage",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "188a17b1afb3bf5251fa79c2",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Є пошкодження в Шевченківському районі міста.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 194,
-            "end": 239
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "28134c485cdb65339852ce01",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Також розгорнуто і пункт обігріву.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 240,
-            "end": 274
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "b6564128e4d00693a890d74d",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Триває ліквідація наслідків.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 275,
-            "end": 303
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "4da9d5a0d0507efbac1252ac",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "На місці працюють профільні служби.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 304,
-            "end": 339
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "d4dd30eea9463af220c1d0d9",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "У роботі — комунальники, благодійники.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 340,
-            "end": 378
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "5bea5d2ece511188cde6fbeb",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 379,
-            "end": 573
-          },
-          "numeric_surfaces": [
-            "12"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "damage",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "b442e0ae0beb5346a73cadd0",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Загалом станом на зараз відомо про пошкодження семи житлових будинків та однієї школи.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 574,
-            "end": 660
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "a33ab47b05f319aa22eeb9ab",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро».",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 661,
-            "end": 833
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {
-            "injured": 4
-          },
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "casualty"
-          ],
-          "certainty": "preliminary",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "32af7f38cdab9262626e1a68",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 834,
-            "end": 974
-          },
-          "numeric_surfaces": [
-            "70"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "7f1450203c024e7ff236afe5",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "328.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 975,
-            "end": 979
-          },
-          "numeric_surfaces": [
-            "328"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "bfe9e3d50ca0544079361d49",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "1530.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 980,
-            "end": 985
-          },
-          "numeric_surfaces": [
-            "1530"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "e5fb260c9b5d0a3d6dabfc77",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 986,
-            "end": 1084
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "a4a4ea02f5d46acf447b7a12",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 1085,
-            "end": 1184
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "53d8f993a31a8a312b615da4",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "Як знайти потрібний пункт?",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 1185,
-            "end": 1211
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "a47415843d0ea5502d217ff7",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "1 Перейдіть на сайт.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 1212,
-            "end": 1232
-          },
-          "numeric_surfaces": [
-            "1"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "f50c843db0476aa43199b316",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "2 Відкрийте розділ «Фільтри».",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 1233,
-            "end": 1262
-          },
-          "numeric_surfaces": [
-            "2"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "8ebaefb13ead0213e63cb551",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "3 4 За потреби оберіть район міста, щоб звузити пошук.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 1263,
-            "end": 1317
-          },
-          "numeric_surfaces": [
-            "3",
-            "4"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "rescue"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        },
-        {
-          "id": "3d8ecb937ac2967d22c8077d",
-          "source_key": "DniproCityOfficial/16625",
-          "source_text": "5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 1318,
-            "end": 1394
-          },
-          "numeric_surfaces": [
-            "5"
-          ],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:24:01+00:00",
-          "reporting_period": null,
-          "scope": "Дніпрі внаслідок ворожого обстрілу 24 листопада",
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": null
-        }
-      ]
-    },
-    {
-      "id": "dce060299fde0277ee7c",
-      "section": "1.2",
-      "source_key": "DniproCityOfficial/16635",
-      "source_url": "https://t.me/DniproCityOfficial/16635",
-      "published_at": "2026-11-24T17:35:21+00:00",
-      "source_text": "‼️\nДо уваги пасажирів\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту,\nроботу трамвайних та тролейбусних маршрутів призупинено.",
-      "scope": null,
+      "id": "211803ee9af05a13ba06",
+      "section": "1.4",
+      "source_key": "dnipropetrovskaODA/33596",
+      "source_url": "https://t.me/dnipropetrovskaODA/33596",
+      "published_at": "2026-11-25T13:02:35+00:00",
+      "source_text": "Під знеструмлення у Павлограді потрапляють й об’єкти критичної інфраструктури. Зокрема, «Павлоградтеплоенерго».\nПідприємство, як і усі об’єкти критичної інфраструктури області, обладнали додатковими генераторами. Таким чином, подаємо тепло в оселі мешканців й під час тривалих знеструмлень. Однак, для стабільної роботи і обслуговування обладнання, генератори потрібно зупиняти на короткі проміжки часу.\nВ цілому, ситуація з теплом у місті стабільна. Усі ризики мінімізовані.",
+      "scope": "Під знеструмлення у Павлограді потрапляють й об’єкти критичної інфраструктури",
       "casualty_assertions": [],
       "numbers": [],
       "incident_time": null,
       "incident_time_status": "not_established",
       "reporting_period": null,
       "state": "excluded",
-      "reason": "expired_transport_notice",
-      "source_refs": [
-        "DniproCityOfficial/16635"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "e34bee94000f6a7016c3",
-      "section": "2.1",
-      "source_key": "dsns_telegram/81464",
-      "source_url": "https://t.me/dsns_telegram/81464",
-      "published_at": "2026-11-24T17:46:47+00:00",
-      "source_text": "#Дніпропетровщина\n: внаслідок російських атак постраждали 6 людей\nПротягом дня ворог атакував Дніпро та два райони області.\nУнаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури.\nНа Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль.\nУ Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.\n🆘\nСайт\n•\nFb\n•\nX\n•\nIG\n•\nYT\n•\nTT",
-      "scope": null,
-      "casualty_assertions": [
-        6
-      ],
-      "numbers": [
-        "6",
-        "6"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "dsns_telegram/81464"
-      ],
-      "display": ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області. Унаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури. На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль. У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-      "source_recap_day": true,
-      "selection_input": ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області. Унаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури. На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль. У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-      "selection_method": "conservative_operational_clauses",
-      "claims": [
-        {
-          "id": "c0462225c13beac860dcd8b7",
-          "source_key": "dsns_telegram/81464",
-          "source_text": ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 0,
-            "end": 105
-          },
-          "numeric_surfaces": [
-            "6"
-          ],
-          "quantity_roles": {
-            "injured": 6
-          },
-          "published_at": "2026-11-24T17:46:47+00:00",
-          "reporting_period": null,
-          "scope": null,
-          "predicates": [
-            "casualty",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "fc5909d50b14d49cde360b9d",
-          "source_key": "dsns_telegram/81464",
-          "source_text": "Унаслідок обстрілів у обласному центрі постраждали 6 людей.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 106,
-            "end": 165
-          },
-          "numeric_surfaces": [
-            "6"
-          ],
-          "quantity_roles": {
-            "injured": 6
-          },
-          "published_at": "2026-11-24T17:46:47+00:00",
-          "reporting_period": null,
-          "scope": null,
-          "predicates": [
-            "casualty",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "ac208db01d56a12d1c0c00e0",
-          "source_key": "dsns_telegram/81464",
-          "source_text": "Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 166,
-            "end": 264
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:46:47+00:00",
-          "reporting_period": null,
-          "scope": null,
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Дніпро"
-        },
-        {
-          "id": "ec316166eb264d86a2dfb557",
-          "source_key": "dsns_telegram/81464",
-          "source_text": "На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 265,
-            "end": 384
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:46:47+00:00",
-          "reporting_period": null,
-          "scope": null,
-          "predicates": [
-            "opaque"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        },
-        {
-          "id": "a8b0ed2c551e8e4b0bd6ceab",
-          "source_key": "dsns_telegram/81464",
-          "source_text": "Пошкоджено багатоквартирні будинки й легковий автомобіль.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 385,
-            "end": 442
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:46:47+00:00",
-          "reporting_period": null,
-          "scope": null,
-          "predicates": [
-            "damage"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        },
-        {
-          "id": "19f7be71b3a7a1f884d1ba20",
-          "source_key": "dsns_telegram/81464",
-          "source_text": "У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-          "source_span": {
-            "basis": "normalized_selection",
-            "start": 443,
-            "end": 558
-          },
-          "numeric_surfaces": [],
-          "quantity_roles": {},
-          "published_at": "2026-11-24T17:46:47+00:00",
-          "reporting_period": null,
-          "scope": null,
-          "predicates": [
-            "damage",
-            "attack"
-          ],
-          "certainty": "asserted",
-          "disposition": "required",
-          "reason": "source_consequence_or_opaque",
-          "place": "Нікопольщина"
-        }
-      ],
-      "claim_decisions": [
-        {
-          "source_text": ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області.",
-          "disposition": "rendered",
-          "place": "Дніпро",
-          "reason": "uncovered_source_clause"
-        },
-        {
-          "source_text": "Унаслідок обстрілів у обласному центрі постраждали 6 людей.",
-          "disposition": "rendered",
-          "place": "Дніпро",
-          "reason": "uncovered_source_clause"
-        },
-        {
-          "source_text": "Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури.",
-          "disposition": "rendered",
-          "place": "Дніпро",
-          "reason": "uncovered_source_clause"
-        },
-        {
-          "source_text": "На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади.",
-          "disposition": "rendered",
-          "place": "Нікопольщина",
-          "reason": "uncovered_source_clause"
-        },
-        {
-          "source_text": "Пошкоджено багатоквартирні будинки й легковий автомобіль.",
-          "disposition": "rendered",
-          "place": "Нікопольщина",
-          "reason": "uncovered_source_clause"
-        },
-        {
-          "source_text": "У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-          "disposition": "rendered",
-          "place": "Нікопольщина",
-          "reason": "uncovered_source_clause"
-        }
-      ],
-      "resolved_chunks": [
-        [
-          "Дніпро",
-          ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області. Унаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури."
-        ],
-        [
-          "Нікопольщина",
-          "На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль. У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду."
-        ]
-      ],
-      "scope_context": "Дніпро"
-    },
-    {
-      "id": "cd93773d6b8de3668186",
-      "section": "1.4",
-      "source_key": "cek_info/4478",
-      "source_url": "https://t.me/cek_info/4478",
-      "published_at": "2026-11-24T21:32:26+00:00",
-      "source_text": "📢\nШановні споживачі\n‼️\nПовідомляємо, що за розпорядженням диспетчерського центру НЕК \"Укренерго\", 25 ЛИСТОПАДА з 00:00 до 24:00 застосовуватимуться відключення наступних черг:\n🔹\nЧерга 1.1\n01:30-08:30\n12:00-19:00\n22:30-24:00\n🔹\nЧерга 1.2\n01:30-08:30\n12:00-19:00\n22:30-24:00\n🔹\nЧерга 2.1\n01:30-08:30\n12:00-19:00\n22:30-24:00\n🔹\nЧерга 2.2\n01:30-08:30\n12:00-19:00\n22:30-24:00\n🔹\nЧерга 3.1\n00:00-01:30\n05:00-12:00\n16:00-22:30\n🔹\nЧерга 3.2\n00:00-01:30\n05:00-12:00\n16:00-22:30\n🔹\nЧерга 4.1\n00:00-01:30\n05:00-12:00\n16:00-22:30\n🔹\nЧерга 4.2\n00:00-01:30\n05:00-12:00\n16:00-22:30\n🔹\nЧерга 5.1\n00:00-05:00\n08:30-16:00\n19:00-24:00\n🔹\nЧерга 5.2\n00:00-05:00\n08:30-16:00\n19:00-24:00\n🔹\nЧерга 6.1\n00:00-05:00\n08:30-16:00\n19:00-24:00\n🔹\nЧерга 6.2\n00:00-05:00\n08:30-16:00\n19:00-24:00\nПопереджаємо, що протягом доби, за розпорядженням НЕК \"Укренерго\", графік може змінюватися\n‼️",
-      "scope": null,
-      "casualty_assertions": [],
-      "numbers": [
-        "25",
-        "00",
-        "00",
-        "24",
-        "00",
-        "1",
-        "1",
-        "01",
-        "30-08",
-        "30",
-        "12",
-        "00-19",
-        "00",
-        "22",
-        "30-24",
-        "00",
-        "1",
-        "2",
-        "01",
-        "30-08",
-        "30",
-        "12",
-        "00-19",
-        "00",
-        "22",
-        "30-24",
-        "00",
-        "2",
-        "1",
-        "01",
-        "30-08",
-        "30",
-        "12",
-        "00-19",
-        "00",
-        "22",
-        "30-24",
-        "00",
-        "2",
-        "2",
-        "01",
-        "30-08",
-        "30",
-        "12",
-        "00-19",
-        "00",
-        "22",
-        "30-24",
-        "00",
-        "3",
-        "1",
-        "00",
-        "00-01",
-        "30",
-        "05",
-        "00-12",
-        "00",
-        "16",
-        "00-22",
-        "30",
-        "3",
-        "2",
-        "00",
-        "00-01",
-        "30",
-        "05",
-        "00-12",
-        "00",
-        "16",
-        "00-22",
-        "30",
-        "4",
-        "1",
-        "00",
-        "00-01",
-        "30",
-        "05",
-        "00-12",
-        "00",
-        "16",
-        "00-22",
-        "30",
-        "4",
-        "2",
-        "00",
-        "00-01",
-        "30",
-        "05",
-        "00-12",
-        "00",
-        "16",
-        "00-22",
-        "30",
-        "5",
-        "1",
-        "00",
-        "00-05",
-        "00",
-        "08",
-        "30-16",
-        "00",
-        "19",
-        "00-24",
-        "00",
-        "5",
-        "2",
-        "00",
-        "00-05",
-        "00",
-        "08",
-        "30-16",
-        "00",
-        "19",
-        "00-24",
-        "00",
-        "6",
-        "1",
-        "00",
-        "00-05",
-        "00",
-        "08",
-        "30-16",
-        "00",
-        "19",
-        "00-24",
-        "00",
-        "6",
-        "2",
-        "00",
-        "00-05",
-        "00",
-        "08",
-        "30-16",
-        "00",
-        "19",
-        "00-24",
-        "00"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "included",
-      "reason": null,
-      "source_refs": [
-        "cek_info/4478"
-      ],
-      "display": "ЦЕК: відключення електроенергії. Шановні споживачі Повідомляємо, що за розпорядженням диспетчерського центру НЕК \"Укренерго\", 25 ЛИСТОПАДА з 00:00 до 24:00 застосовуватимуться відключення наступних черг: Черга 1.1 01:30-08:30 12:00-19:00 22:30-24:00 Черга 1.2 01:30-08:30 12:00-19:00 22:30-24:00 Черга 2.1 01:30-08:30 12:00-19:00 22:30-24:00 Черга 2.2 01:30-08:30 12:00-19:00 22:30-24:00 Черга 3.1 00:00-01:30 05:00-12:00 16:00-22:30 Черга 3.2 00:00-01:30 05:00-12:00 16:00-22:30 Черга 4.1 00:00-01:30 05:00-12:00 16:00-22:30 Черга 4.2 00:00-01:30 05:00-12:00 16:00-22:30 Черга 5.1 00:00-05:00 08:30-16:00 19:00-24:00 Черга 5.2 00:00-05:00 08:30-16:00 19:00-24:00 Черга 6.1 00:00-05:00 08:30-16:00 19:00-24:00 Черга 6.2 00:00-05:00 08:30-16:00 19:00-24:00 Попереджаємо, що протягом доби, за розпорядженням НЕК \"Укренерго\", графік може змінюватися",
-      "source_recap_day": false
-    },
-    {
-      "id": "c1f7e109ae6b1e29d692",
-      "section": "1.4",
-      "source_key": "cek_info/4479",
-      "source_url": "https://t.me/cek_info/4479",
-      "published_at": "2026-11-24T22:04:48+00:00",
-      "source_text": "📢\nШановні мешканці м. ПАВЛОГРАД\n‼️\nГПВ на 25 ЛИСТОПАДА для споживачів міста, які тимчасово вимикаються за окремим графіком:\n📌\n2.2 черга:\n✔️\n09:00 - 14:00;\n✔️\n19:00 - 24:00.\n📌\n6.2 черга:\n✔️\n04:00 - 09:00;\n✔️\n14:00 -19:00.\nДякуємо за розуміння та вибачаємося за тимчасові незручності\n‼️",
-      "scope": "Шановні мешканці м",
-      "casualty_assertions": [],
-      "numbers": [
-        "25",
-        "2",
-        "2",
-        "09",
-        "00",
-        "14",
-        "00",
-        "19",
-        "00",
-        "24",
-        "00",
-        "6",
-        "2",
-        "04",
-        "00",
-        "09",
-        "00",
-        "14",
-        "00",
-        "19",
-        "00"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
       "reason": "no_current_location_specific_information",
       "source_refs": [
-        "cek_info/4479"
+        "dnipropetrovskaODA/33596"
       ],
       "display": null,
       "source_recap_day": false
     },
     {
-      "id": "7d197a3f35722451d3a7",
-      "section": "1.4",
-      "source_key": "cek_info/4480",
-      "source_url": "https://t.me/cek_info/4480",
-      "published_at": "2026-11-24T22:41:31+00:00",
-      "source_text": "📢\nШановні мешканці м. ПАВЛОГРАД\n‼️\nПовідомляємо про зміни у ГПВ на 25 ЛИСТОПАДА для споживачів міста, які тимчасово вимикаються за окремим графіком:\n📌\n2.2 черга:\n✔️\n04:00 - 09:00;\n✔️\n14:00 - 19:00.\n📌\n6.2 черга:\n✔️\n00:00 - 04:00;\n✔️\n09:00 - 14:00;\n✔️\n19:00 - 24:00.",
-      "scope": "Шановні мешканці м",
-      "casualty_assertions": [],
-      "numbers": [
-        "25",
-        "2",
-        "2",
-        "04",
-        "00",
-        "09",
-        "00",
-        "14",
-        "00",
-        "19",
-        "00",
-        "6",
-        "2",
-        "00",
-        "00",
-        "04",
-        "00",
-        "09",
-        "00",
-        "14",
-        "00",
-        "19",
-        "00",
-        "24",
-        "00"
-      ],
-      "incident_time": null,
-      "incident_time_status": "not_established",
-      "reporting_period": null,
-      "state": "excluded",
-      "reason": "no_current_location_specific_information",
-      "source_refs": [
-        "cek_info/4480"
-      ],
-      "display": null,
-      "source_recap_day": false
-    },
-    {
-      "id": "343c0fe16d9d71b97bc5",
+      "id": "0ca6ff633e3255346912",
       "section": "1.2",
-      "source_key": "DniproCityOfficial/16639",
-      "source_url": "https://t.me/DniproCityOfficial/16639",
-      "published_at": "2026-11-25T05:15:57+00:00",
-      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 07:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 07:00\nТрамвай:\n№ 11,12,15,16, 17,18,19- рух призупинено\nЗа змінним напрямках: 1К (4 од) пл.Вокзальна- вул.Центральна. 5 (3од) Трубний з-д. вул.Виконкомівська 14( 3од) пл.Вокзальна- Трубний з-д\nТролейбус:\n7(2 од) курсує по маршруту\n№ 1,2,4,5,6,8,9,10, 11,12, 14,15,16, 17, 19, 20,21 кільце «Б» «А»- призупинено\n🚇\nМетрополітен працює за графіком вихідного дня.",
-      "scope": "Робота електротранспорту Дніпра станом на 07",
+      "source_key": "DniproCityOfficial/16661",
+      "source_url": "https://t.me/DniproCityOfficial/16661",
+      "published_at": "2026-11-25T17:10:35+00:00",
+      "source_text": "‼️\nРобота електротранспорту Дніпра станом на 19:00\n‼️\n🚃\n🚎\nЧерез знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено.\nНа 19:00\nТрамвай:\n№ 11,12,15,16, 17,18,19- рух призупинено\nЗа змінним напрямках: 1К (5 од) пл.Вокзальна- вул.Центральна. 5 (5од) Трубний з-д. вул.Виконкомівська 14( 2од) пл.Вокзальна- Трубний з-д\nТролейбус:\nТролейбус №3 ( 2од.) , № 7 (2 од) курсують за маршрутом\n№ 1,2,4,5,6,8,9,10, 11,12, 14,15,16, 17, 19, 20,21, кільце «Б», «А»- призупинено\n🚇\nМетрополітен працює за графіком вихідного дня.",
+      "scope": "Робота електротранспорту Дніпра станом на 19",
       "casualty_assertions": [],
       "numbers": [
-        "07",
+        "19",
         "00",
-        "07",
+        "19",
         "00",
         "11",
         "12",
@@ -2590,9 +951,10 @@
         "17",
         "18",
         "19",
-        "4",
+        "5",
         "5",
         "14",
+        "3",
         "7",
         "2",
         "1",
@@ -2616,20 +978,62 @@
       "incident_time": null,
       "incident_time_status": "not_established",
       "reporting_period": null,
-      "state": "service_input",
-      "reason": null,
+      "state": "excluded",
+      "reason": "expired_transport_notice",
       "source_refs": [
-        "DniproCityOfficial/16639"
+        "DniproCityOfficial/16661"
       ],
       "display": null,
       "source_recap_day": false
     },
     {
-      "id": "dd8e35ed7d7accab246b",
+      "id": "4e27fd8abf92baefa7e8",
+      "section": "1.4",
+      "source_key": "adm_dp/46660",
+      "source_url": "https://t.me/adm_dp/46660",
+      "published_at": "2026-11-25T17:33:11+00:00",
+      "source_text": "Всюди, де були російські удари, зараз працюють ремонтні бригади, енергетичні компанії. Найбільш складно зараз в Дніпрі, на Дніпровщині, також в Запоріжжі. Необхідне обладнання, сили для відновлення всюди є, і це дуже важливо. Ремонти доводиться переривати через загрозу нових і нових ударів, але наші люди роблять часто просто неможливі, неймовірні речі і працюють так, як потрібно, щоб повернути електрику людям.\nУ росіян тактика незмінна: вони бʼють саме по лініях та по мережах, по підстанціях бʼють, щоб ускладнити передачу електрики від генерації. Ремонтуємо. І на кожен удар ми будемо Росії відповідати – і відповідати будемо достойно.\nХочу подякувати хлопцям із Сил спеціальних операцій Збройних Сил України. Нашими дронами сьогодні уразили російський військовий аеродром. Саме той, з якого їхня авіація злітає, щоб ламати життя в Україні. Зараз ми уточнюємо, які саме збитки отримали росіяни цього разу. Продовжимо завдавати наших їм відповідей. Російська авіація, російські військові кораблі та судна, які транспортують російську зброю, – наші абсолютно законні цілі.",
+      "scope": "Всюди, де були російські удари, зараз працюють ремонтні бригади, енергетичні компанії",
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_current_location_specific_information",
+      "source_refs": [
+        "adm_dp/46660"
+      ],
+      "display": null,
+      "source_recap_day": false
+    },
+    {
+      "id": "7ae4d7bd9964a203aa79",
+      "section": "1.4",
+      "source_key": "DniproCityOfficial/16665",
+      "source_url": "https://t.me/DniproCityOfficial/16665",
+      "published_at": "2026-11-25T19:01:36+00:00",
+      "source_text": "‼️\nРоботу трамвайних та тролейбусних маршрутів повністю призупинено\n‼️\n🚃\n🚎\nВ зв’язку із знеструмленням тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів повністю призупинено.\nПро відновлення руху електротранспорту буде повідомлено додатково.\n🚇\nМетрополітен працює за графіком вихідного дня.\nℹ️\nДепартамент транспорту та транспортної інфраструктури Дніпровської міськради",
+      "scope": null,
+      "casualty_assertions": [],
+      "numbers": [],
+      "incident_time": null,
+      "incident_time_status": "not_established",
+      "reporting_period": null,
+      "state": "excluded",
+      "reason": "no_current_location_specific_information",
+      "source_refs": [
+        "DniproCityOfficial/16665"
+      ],
+      "display": null,
+      "source_recap_day": false
+    },
+    {
+      "id": "e27efa92fde7e8f2ff33",
       "section": "1.2",
-      "source_key": "DniproCityOfficial/16640",
-      "source_url": "https://t.me/DniproCityOfficial/16640",
-      "published_at": "2026-11-25T05:27:01+00:00",
+      "source_key": "DniproCityOfficial/16668",
+      "source_url": "https://t.me/DniproCityOfficial/16668",
+      "published_at": "2026-11-26T05:27:01+00:00",
       "source_text": "Сьогодні у Дніпрі діють зміни у русі громадського транспорту\n⛔️\nПерекриють рух по вул. Західний шлях через будівництво водоводу. У зв’язку з цим\nдіятимуть тимчасові зміни у русі громадського та приватного транспорту\n.\n🚃\nУ зв’язку з ремонтом колії на Старому мосту призупиняється рух трамваїв № 6 та № 9.\n🚌\nНа час виконання робіт замість них працюватимуть автобуси №6К та №9К. Деталі —\nтут\n.\n❗️\nКінцева зупинка автобусів №23 перенесена на пл. Успенську.\n🛑\nЧерез тимчасове перекриття проїзної частини по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації.\n🚌\nСхеми перекриття та об’їзду автобусів\n.\n❗️\nПро відновлення роботи електротранспорту буде повідомлено додатково після відновлення живлення тягових підстанцій з боку постачальників електроенергії.",
       "scope": "Сьогодні у Дніпрі діють зміни у русі громадського транспорту Перекриють рух по вул",
       "casualty_assertions": [],
@@ -2644,220 +1048,153 @@
       "state": "service_input",
       "reason": null,
       "source_refs": [
-        "DniproCityOfficial/16640"
+        "DniproCityOfficial/16668"
       ],
       "display": null,
       "source_recap_day": false
     }
   ],
-  "diagnostics": [
-    {
-      "reason": "source_conflict",
-      "detail": "community_district_mismatch",
-      "name": "Богданівську",
-      "place": "Нікопольщина",
-      "record_ids": [
-        "e34bee94000f6a7016c3"
-      ]
-    },
-    {
-      "reason": "source_conflict",
-      "detail": "community_district_mismatch",
-      "name": "Вербківську",
-      "place": "Нікопольщина",
-      "record_ids": [
-        "e34bee94000f6a7016c3"
-      ]
-    }
-  ],
+  "diagnostics": [],
   "sections": {
     "1.1": [
       "У перевірених джерелах є повідомлення про атаки або їхні наслідки. Деталі наведено у пункті 2.1."
     ],
     "1.2": [
-      "Дніпро: Робота електротранспорту Дніпра станом на 07:00 Через знеструмлення тягових підстанцій, які живлять контактну мережу електротранспорту, роботу трамвайних та тролейбусних маршрутів частково призупинено. На 07:00 Трамвай: № 11,12,15,16, 17,18,19- рух призупинено За змінним напрямках: 1К (4 од) пл.Вокзальна- вул.Центральна. 5 (3од) Трубний з-д. вул.Виконкомівська 14( 3од) пл.Вокзальна- Трубний з-д Тролейбус: 7(2 од) курсує по маршруту № 1,2,4,5,6,8,9,10, 11,12, 14,15,16, 17, 19, 20,21 кільце «Б» «А»- призупинено Метрополітен працює за графіком вихідного дня. УВАГА Тролейбус призупинив роботу. Тролейбус (4 од.) курсує: вул. Незалежності - завод Металовиробів. 25 листопада у Дніпрі діють зміни у русі громадського транспорту: Перекриють рух по вул. Західний шлях через будівництво водоводу. У зв’язку з цим діятимуть тимчасові зміни у русі громадського та приватного транспорту. У зв’язку з ремонтом колії на Старому мосту призупиняється рух трамваїв. На час виконання робіт замість них працюватимуть автобуси. Тимчасово перекрито проїзну частину по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації. Про відновлення роботи електротранспорту буде повідомлено додатково після відновлення живлення тягових підстанцій з боку постачальників електроенергії."
+      "Оперативна інформація щодо роботи громадського транспорту: у Дніпрі тимчасово змінили рух автобусів шести маршрутів Через перекриття руху транспорту на просп. І. Мазепи автобуси тимчасово курсують зі змінами: №157А за скороченим маршрутом до вул. Авіаційної; №75К за схемою просп. І. Мазепи - вул. Повітрофлотська - вул. О. Кошиця - просп. Металургів - вул. Карла Роде, далі за маршрутом; №90 по вул. Київській - вул. Криворізькій - вул. Робочій - просп. Л. Українки - просп. С. Нігояна - вул. Львівська, далі за маршрутом; №156: просп. І. Мазепи - вул. Повітрофлотська - вул. О. Кошиця - вул. Київська, далі за маршрутом; №156А - за скороченою схемою до перехрестя просп. С. Нігояна - просп. І. Мазепи; №146А та №146Б обʼїжджають по вул. Авіаційній/вул. Повітрофлотській - вул. О. Кошиця, далі за маршрутом. Схеми обʼїзду є орієнтовними і можуть змінюватися в залежності від ситуації на дорогах. На просп. І. Мазепи та прилеглих вулицях спостерігаються затори, тому можливі збільшення інтервалів руху автобусів. 26 листопада у Дніпрі діють зміни у русі громадського транспорту: Перекриють рух по вул. Західний шлях через будівництво водоводу. У зв’язку з цим діятимуть тимчасові зміни у русі громадського та приватного транспорту. У зв’язку з ремонтом колії на Старому мосту призупиняється рух трамваїв. На час виконання робіт замість них працюватимуть автобуси. Тимчасово перекрито проїзну частину по вул. Королеви Єлизавети II на ділянці від вул. Харківської до вул. Європейської для виконання робіт з ремонту мережі зливової каналізації. Про відновлення роботи електротранспорту буде повідомлено додатково після відновлення живлення тягових підстанцій з боку постачальників електроенергії."
     ],
     "1.3": [],
-    "1.4": [
-      "24 листопада у м. Дніпро та області прогнозувалися пориви вітру. Швидкість вітру 15-20 м/с Рівень небезпечності - жовтий",
-      "ЦЕК: відключення електроенергії. Шановні споживачі Повідомляємо, що за розпорядженням диспетчерського центру НЕК \"Укренерго\", 25 ЛИСТОПАДА з 00:00 до 24:00 застосовуватимуться відключення наступних черг: Черга 1.1 01:30-08:30 12:00-19:00 22:30-24:00 Черга 1.2 01:30-08:30 12:00-19:00 22:30-24:00 Черга 2.1 01:30-08:30 12:00-19:00 22:30-24:00 Черга 2.2 01:30-08:30 12:00-19:00 22:30-24:00 Черга 3.1 00:00-01:30 05:00-12:00 16:00-22:30 Черга 3.2 00:00-01:30 05:00-12:00 16:00-22:30 Черга 4.1 00:00-01:30 05:00-12:00 16:00-22:30 Черга 4.2 00:00-01:30 05:00-12:00 16:00-22:30 Черга 5.1 00:00-05:00 08:30-16:00 19:00-24:00 Черга 5.2 00:00-05:00 08:30-16:00 19:00-24:00 Черга 6.1 00:00-05:00 08:30-16:00 19:00-24:00 Черга 6.2 00:00-05:00 08:30-16:00 19:00-24:00 Попереджаємо, що протягом доби, за розпорядженням НЕК \"Укренерго\", графік може змінюватися"
-    ],
+    "1.4": [],
     "2.1": [
-      "Попередньо, пошкоджений багатоповерховий будинок.",
-      "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
-      "Повідомлення від 19:24 24.11: У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф. Є пошкодження в Шевченківському районі міста. Також розгорнуто і пункт обігріву. Триває ліквідація наслідків. На місці працюють профільні служби. У роботі — комунальники, благодійники. Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку. Загалом станом на зараз відомо про пошкодження семи житлових будинків та однієї школи. Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро». Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб. 328. 1530. Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо. Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра. Як знайти потрібний пункт? 1 Перейдіть на сайт. 2 Відкрийте розділ «Фільтри». 3 4 За потреби оберіть район міста, щоб звузити пошук. 5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-      ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області. Унаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури. На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль. У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-      "Обласне зведення на 18:40 24.11.2026: Через ворожі обстріли поранено 6 людей. Майже 30 разів ворог атакував обласний центр та два райони. Застосовував безпілотники та артилерію.",
-      "У Дніпрі постраждали шестеро людини. Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура.",
-      "У Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади. Пошкоджені багатоквартирні будинки і легковий автомобіль.",
-      "У Павлоградському районі противник цілив по Богданівській та Вербківській громадах. Зруйновано господарчу споруду.",
-      "Обласне зведення на 07:30 25.11.2026: Одна людина дістала поранень. Ворог атакував три райони безпілотниками.",
-      "У Дніпрі пошкоджені інфраструктура та автівка. Постраждав 42-річний чоловік. Він лікується амбулаторно.",
-      "У Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі.",
-      "У Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади. Понівечені приватна оселя та автівка."
+      "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу. За її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати.",
+      "Обласне зведення на 18:30 25.11.2026: Одна людина дістала поранень. Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією.",
+      "У Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади. Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка. 42-річний чоловік лікується амбулаторно.",
+      "У Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі.",
+      "У Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
+      "Обласне зведення на 07:30 26.11.2026: Одна людина дістала поранень. Майже 20 разів ворог атакував чотири райони безпілотниками.",
+      "У Павлограді пошкоджені заправка та торгівельний центр.",
+      "У Кривому Розі противник поцілив по складській будівлі та магазину. У Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+      "У Нікопольському районі потерпали райцентр та Марганецька громада. Постраждав 46-річний чоловік. Він лікується амбулаторно.",
+      "У Миколаївській громаді Синельниківського району пошкоджене агропідприємство. Сталася пожежа."
     ],
     "2.2": [],
     "2.3": [],
-    "2.4": [
-      "Повідомлення від 24.11 09:59: Дніпропетровщина зазнає атак безпілотниками різних типів. Вони можуть нести не лише основну бойову частину, а й додаткові боєприпаси – протитанкові міни, касетні елементи та FPV-квадрокоптери. Серед найпоширеніших безпілотників літакового типу, які атакують область, – «Герань-2» та «Герань-4». Вони оснащуються різними типами вибухових частин, зокрема механічними та електронними підривачами. Перші можуть зберігати працездатність тривалий час, навіть якщо боєприпас пролежав на землі роками. «Поки вони повністю не зруйнуються, наприклад, від вологи, можуть зберігати свою працездатність. Такі вибухові частини можуть бути небезпечними десятки років.», – розповів старший інспектор управління вибухотехнічної служби ГУНП в Дніпропетровській області Станіслав Крамаренко. У разі виявлення небезпечного предмета необхідно повідомити поліцію за номером 102. З початку цього року вибухотехніки ГУНП в Дніпропетровській області 4264 рази виїжджали на виклики - знешкодили 1431 вибуховий предмет."
-    ]
+    "2.4": []
   },
   "failed_sources": [],
   "coverage_unproven": false,
-  "review_required": true,
+  "review_required": false,
   "clause_projection_proofs": [],
   "casualty_summary_links": [],
   "public_projection": {
     "paragraphs": [
-      "24 листопада (станом на 18:40): Через ворожі обстріли поранено 6 людей. Майже 30 разів ворог атакував обласний центр та два райони. Застосовував безпілотники та артилерію.",
-      "25 листопада (станом на 07:30): Одна людина дістала поранень. Ворог атакував три райони безпілотниками.",
-      "Дніпро:\nПопередньо, пошкоджений багатоповерховий будинок. Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру. У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф. Є пошкодження в Шевченківському районі міста. Також розгорнуто і пункт обігріву. Триває ліквідація наслідків. На місці працюють профільні служби. У роботі — комунальники, благодійники. Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку. Загалом станом на відомо про пошкодження семи житлових будинків та однієї школи. Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро». Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб. 328. 1530. Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо. : внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області. Унаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури. 24 листопада у Дніпрі постраждали шестеро людини. Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура. 25 листопада, у Дніпрі пошкоджені інфраструктура та автівка. Постраждав 42-річний чоловік. Він лікується амбулаторно.",
-      "Нікопольщина:\n24 листопада у Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади. Пошкоджені багатоквартирні будинки і легковий автомобіль. На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль. У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду. 25 листопада, у Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади. Понівечені приватна оселя та автівка.",
-      "Інші підтверджені наслідки:\n24 листопада у Павлоградському районі противник цілив по Богданівській та Вербківській громадах. Зруйновано господарчу споруду. Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра. Як знайти потрібний пункт? 1 Перейдіть на сайт. 2 Відкрийте розділ «Фільтри». 3 4 За потреби оберіть район міста, щоб звузити пошук. 5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-      "Криворіжжя:\n25 листопада, у Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі."
+      "25 листопада (станом на 18:30): Одна людина дістала поранень. Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією.",
+      "26 листопада (станом на 07:30): Одна людина дістала поранень. Майже 20 разів ворог атакував чотири райони безпілотниками.",
+      "Кривий Ріг:\nУ лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу. За її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати. 26 листопада, у Кривому Розі противник поцілив по складській будівлі та магазину.",
+      "Нікопольщина:\n25 листопада у Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади. Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка. 42-річний чоловік лікується амбулаторно. 26 листопада, у Нікопольському районі потерпали райцентр та Марганецька громада. Постраждав 46-річний чоловік. Він лікується амбулаторно.",
+      "Криворіжжя:\n25 листопада у Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі. 26 листопада, у Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+      "Кам’янський район:\n25 листопада у Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
+      "Павлоград:\n26 листопада, у Павлограді пошкоджені заправка та торгівельний центр.",
+      "Синельниківський район:\n26 листопада, у Миколаївській громаді Синельниківського району пошкоджене агропідприємство. Сталася пожежа."
     ],
     "provenance": [
       {
-        "text": "Попередньо, пошкоджений багатоповерховий будинок.",
+        "text": "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу. За її життя до останнього боролися лікарі. Але на жаль її життя не вдалося врятувати.",
         "record_ids": [
-          "d021c26f204071181813"
+          "92267ff39d2c70b14d2b"
         ],
         "reporting_period": null,
-        "place": "Дніпро"
+        "place": "Кривий Ріг"
       },
       {
-        "text": "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
+        "text": "25 листопада (станом на 18:30): Одна людина дістала поранень. Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією.",
         "record_ids": [
-          "196f33c03eff713655dc"
+          "0ef73197652cd6e59986"
         ],
-        "reporting_period": null,
-        "place": "Дніпро"
-      },
-      {
-        "text": "24 листопада (станом на 18:40): Через ворожі обстріли поранено 6 людей. Майже 30 разів ворог атакував обласний центр та два райони. Застосовував безпілотники та артилерію.",
-        "record_ids": [
-          "75f6ce7728489c98d251"
-        ],
-        "reporting_period": "2026-11-24T18:40:00+02:00",
+        "reporting_period": "2026-11-25T18:30:00+02:00",
         "place": "Область"
       },
       {
-        "text": "У Дніпрі постраждали шестеро людини. Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура.",
+        "text": "У Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади. Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка. 42-річний чоловік лікується амбулаторно.",
         "record_ids": [
-          "c8de2a6dc6cad1e50ff3"
+          "c01f9a179e7624d0e201"
         ],
-        "reporting_period": "2026-11-24T18:40:00+02:00",
-        "place": "Дніпро"
-      },
-      {
-        "text": "У Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади. Пошкоджені багатоквартирні будинки і легковий автомобіль.",
-        "record_ids": [
-          "0460435a3c496b9191ae"
-        ],
-        "reporting_period": "2026-11-24T18:40:00+02:00",
+        "reporting_period": "2026-11-25T18:30:00+02:00",
         "place": "Нікопольщина"
       },
       {
-        "text": "У Павлоградському районі противник цілив по Богданівській та Вербківській громадах. Зруйновано господарчу споруду.",
+        "text": "У Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі.",
         "record_ids": [
-          "62527388d05807900672"
+          "0be3cd63ad481755126c"
         ],
-        "reporting_period": "2026-11-24T18:40:00+02:00",
-        "place": null
-      },
-      {
-        "text": "У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф. Є пошкодження в Шевченківському районі міста. Також розгорнуто і пункт обігріву. Триває ліквідація наслідків. На місці працюють профільні служби. У роботі — комунальники, благодійники. Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку. Загалом станом на відомо про пошкодження семи житлових будинків та однієї школи. Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро». Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб. 328. 1530. Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо.",
-        "record_ids": [
-          "c27d992704d0b50d8db3"
-        ],
-        "reporting_period": null,
-        "place": "Дніпро"
-      },
-      {
-        "text": "Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра. Як знайти потрібний пункт? 1 Перейдіть на сайт. 2 Відкрийте розділ «Фільтри». 3 4 За потреби оберіть район міста, щоб звузити пошук. 5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-        "record_ids": [
-          "c27d992704d0b50d8db3"
-        ],
-        "reporting_period": null,
-        "place": null
-      },
-      {
-        "text": ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області. Унаслідок обстрілів у обласному центрі постраждали 6 людей. Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури.",
-        "record_ids": [
-          "e34bee94000f6a7016c3"
-        ],
-        "reporting_period": null,
-        "place": "Дніпро"
-      },
-      {
-        "text": "На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади. Пошкоджено багатоквартирні будинки й легковий автомобіль. У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-        "record_ids": [
-          "e34bee94000f6a7016c3"
-        ],
-        "reporting_period": null,
-        "place": "Нікопольщина"
-      },
-      {
-        "text": "25 листопада (станом на 07:30): Одна людина дістала поранень. Ворог атакував три райони безпілотниками.",
-        "record_ids": [
-          "7bd0c14bffa7d1dfba5a"
-        ],
-        "reporting_period": "2026-11-25T07:30:00+02:00",
-        "place": "Область"
-      },
-      {
-        "text": "У Дніпрі пошкоджені інфраструктура та автівка. Постраждав 42-річний чоловік. Він лікується амбулаторно.",
-        "record_ids": [
-          "0482c0388f3e9f175ec4"
-        ],
-        "reporting_period": "2026-11-25T07:30:00+02:00",
-        "place": "Дніпро"
-      },
-      {
-        "text": "У Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі.",
-        "record_ids": [
-          "ff0d5a59e0f50754ba10"
-        ],
-        "reporting_period": "2026-11-25T07:30:00+02:00",
+        "reporting_period": "2026-11-25T18:30:00+02:00",
         "place": "Криворіжжя"
       },
       {
-        "text": "У Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади. Понівечені приватна оселя та автівка.",
+        "text": "У Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
         "record_ids": [
-          "49032ffcb7ee527b3971"
+          "5394ca46d9abb060f440"
         ],
-        "reporting_period": "2026-11-25T07:30:00+02:00",
-        "place": "Нікопольщина"
-      }
-    ],
-    "conflicts": [
-      {
-        "reason": "source_conflict",
-        "detail": "community_district_mismatch",
-        "name": "Богданівську",
-        "place": "Нікопольщина",
-        "record_ids": [
-          "e34bee94000f6a7016c3"
-        ]
+        "reporting_period": "2026-11-25T18:30:00+02:00",
+        "place": "Кам’янський район"
       },
       {
-        "reason": "source_conflict",
-        "detail": "community_district_mismatch",
-        "name": "Вербківську",
-        "place": "Нікопольщина",
+        "text": "26 листопада (станом на 07:30): Одна людина дістала поранень. Майже 20 разів ворог атакував чотири райони безпілотниками.",
         "record_ids": [
-          "e34bee94000f6a7016c3"
-        ]
+          "be41313d2668d8781172"
+        ],
+        "reporting_period": "2026-11-26T07:30:00+02:00",
+        "place": "Область"
+      },
+      {
+        "text": "У Павлограді пошкоджені заправка та торгівельний центр.",
+        "record_ids": [
+          "0bed1fddadcd868a3b4e"
+        ],
+        "reporting_period": "2026-11-26T07:30:00+02:00",
+        "place": "Павлоград"
+      },
+      {
+        "text": "У Кривому Розі противник поцілив по складській будівлі та магазину.",
+        "record_ids": [
+          "5e7ee4b9068e23bd0906"
+        ],
+        "reporting_period": "2026-11-26T07:30:00+02:00",
+        "place": "Кривий Ріг"
+      },
+      {
+        "text": "У Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+        "record_ids": [
+          "5e7ee4b9068e23bd0906"
+        ],
+        "reporting_period": "2026-11-26T07:30:00+02:00",
+        "place": "Криворіжжя"
+      },
+      {
+        "text": "У Нікопольському районі потерпали райцентр та Марганецька громада. Постраждав 46-річний чоловік. Він лікується амбулаторно.",
+        "record_ids": [
+          "8345227b025256e97ed3"
+        ],
+        "reporting_period": "2026-11-26T07:30:00+02:00",
+        "place": "Нікопольщина"
+      },
+      {
+        "text": "У Миколаївській громаді Синельниківського району пошкоджене агропідприємство. Сталася пожежа.",
+        "record_ids": [
+          "68498ac03509c6d6b13d"
+        ],
+        "reporting_period": "2026-11-26T07:30:00+02:00",
+        "place": "Синельниківський район"
       }
     ],
+    "conflicts": [],
     "name_normalizations": [],
-    "overview": "Офіційні джерела повідомили про атаки та їхні наслідки у Дніпрі, а також у громадах Криворізького, Нікопольського, Павлоградського районів. Є поранені. Пошкоджено житло, інфраструктуру та автомобілі.",
+    "overview": "Офіційні джерела повідомили про атаки та їхні наслідки у Кривому Розі, Павлограді, а також у громадах Кам’янського, Криворізького, Нікопольського, Синельниківського районів. Є поранені. Пошкоджено житло, підприємства та інфраструктуру.",
     "reference_checked_on": "2026-10-24"
   },
   "budget_plan": {
     "limit": 500,
-    "initial_words": 828,
-    "final_words": 808,
+    "initial_words": 522,
+    "final_words": 502,
     "operations": [
       "short_editorial_overview",
       "compact_editorial_geography",
@@ -2867,118 +1204,9 @@
   },
   "claim_plan": [
     {
-      "claim_id": "8f5f75c86cf1b0422d9e041b",
-      "record_id": "75f6ce7728489c98d251",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "Через ворожі обстріли поранено 6 людей.",
-      "place": null,
-      "predicates": [
-        "casualty",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "a788d316ed847dd7ec416453",
-      "record_id": "75f6ce7728489c98d251",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "Майже 30 разів ворог атакував обласний центр та два райони.",
-      "place": null,
-      "predicates": [
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "133f0314a239bca1cffdfe45",
-      "record_id": "75f6ce7728489c98d251",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "Застосовував безпілотники та артилерію",
-      "place": null,
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "40d9979cefd515cc03d2248e",
-      "record_id": "c8de2a6dc6cad1e50ff3",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "У Дніпрі постраждали шестеро людини.",
-      "place": "Дніпро",
-      "predicates": [
-        "casualty"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "6b4b7756f1b2f3049e8903be",
-      "record_id": "c8de2a6dc6cad1e50ff3",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "Пошкоджено три багатоповерхівки, автівки, транспортна інфраструктура.",
-      "place": "Дніпро",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "6f9bba0cc2ce1da722779df3",
-      "record_id": "0460435a3c496b9191ae",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "У Нікопольському районі під ударами перебували міста Марганець і Нікополь, Покровська, Мирівська та Марганецька громади.",
-      "place": "Нікопольщина",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "9afda7ae4e2cc6af1c656d02",
-      "record_id": "0460435a3c496b9191ae",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "Пошкоджені багатоквартирні будинки і легковий автомобіль.",
-      "place": "Нікопольщина",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "241a1c53788e8c5859eb995f",
-      "record_id": "62527388d05807900672",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "У Павлоградському районі противник цілив по Богданівській та Вербківській громадах.",
-      "place": null,
-      "predicates": [
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "bd0156a78852f557426db478",
-      "record_id": "62527388d05807900672",
-      "source_key": "dnipropetrovskaODA/33568",
-      "source_text": "Зруйновано господарчу споруду.",
-      "place": null,
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "036ddc5ac89939a99421db3c",
-      "record_id": "7bd0c14bffa7d1dfba5a",
-      "source_key": "dnipropetrovskaODA/33581",
+      "claim_id": "c57e79849bf25e625765b19a",
+      "record_id": "0ef73197652cd6e59986",
+      "source_key": "dnipropetrovskaODA/33607",
       "source_text": "Одна людина дістала поранень.",
       "place": null,
       "predicates": [
@@ -2988,10 +1216,10 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "8dc27c7f8d1395f124395772",
-      "record_id": "7bd0c14bffa7d1dfba5a",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "Ворог атакував три райони безпілотниками",
+      "claim_id": "e19fa5ca02a65b8646969145",
+      "record_id": "0ef73197652cd6e59986",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_text": "Понад 20 разів ворог атакував 3 райони безпілотниками та артилерією",
       "place": null,
       "predicates": [
         "attack"
@@ -3000,58 +1228,10 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "bd25e0c2280c2c74bdc3fed3",
-      "record_id": "0482c0388f3e9f175ec4",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "У Дніпрі пошкоджені інфраструктура та автівка.",
-      "place": "Дніпро",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "72b3a91c20620272b6519c99",
-      "record_id": "0482c0388f3e9f175ec4",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "Постраждав 42-річний чоловік.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "b169d233bc3e70a86ff9df44",
-      "record_id": "0482c0388f3e9f175ec4",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "Він лікується амбулаторно.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "d24939f008112dc3eba1e0f2",
-      "record_id": "ff0d5a59e0f50754ba10",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "У Зеленодольській громаді на Криворіжжі противник цілив по інфраструктурі.",
-      "place": "Криворіжжя",
-      "predicates": [
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "30f3df71021e43ac31cebd88",
-      "record_id": "49032ffcb7ee527b3971",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "У Нікопольському районі потерпали райцентр, Марганецька, Покровська, Мирівська та Червоногригорівська громади.",
+      "claim_id": "f290e8e9ca8743691af3b477",
+      "record_id": "c01f9a179e7624d0e201",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_text": "У Нікопольському районі потерпали райцентр, Червоногригорівська, Мирівська, Покровська, Марганецька громади.",
       "place": "Нікопольщина",
       "predicates": [
         "fire"
@@ -3060,10 +1240,10 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "dcda9f443c2db17c8ecb8f87",
-      "record_id": "49032ffcb7ee527b3971",
-      "source_key": "dnipropetrovskaODA/33581",
-      "source_text": "Понівечені приватна оселя та автівка.",
+      "claim_id": "0e6d7e285cd04c24e0247b3e",
+      "record_id": "c01f9a179e7624d0e201",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_text": "Пошкоджені два багатоквартирних будинки, приватні будинки, господарчі споруди, сільськогосподарська техніка.",
       "place": "Нікопольщина",
       "predicates": [
         "damage"
@@ -3072,24 +1252,35 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "6a894b7cdfd8f584cc4d6500",
-      "record_id": "d021c26f204071181813",
-      "source_key": "dnipropetrovskaODA/33565",
-      "source_text": "Ворог атакував Дніпро.",
-      "place": "Дніпро",
+      "claim_id": "32e8a101e987601110039ab5",
+      "record_id": "c01f9a179e7624d0e201",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_text": "42-річний чоловік лікується амбулаторно.",
+      "place": "Нікопольщина",
       "predicates": [
-        "attack"
+        "opaque"
       ],
-      "disposition": "covered",
-      "target_id": "c8de2a6dc6cad1e50ff3",
-      "reason": "bare_attack_in_daily_local_scope"
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "4a2a9bb30c7f558f046fdbed",
-      "record_id": "d021c26f204071181813",
-      "source_key": "dnipropetrovskaODA/33565",
-      "source_text": "Попередньо, пошкоджений багатоповерховий будинок.",
-      "place": "Дніпро",
+      "claim_id": "665851a6e86cc8322db6e829",
+      "record_id": "0be3cd63ad481755126c",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_text": "У Зеленодольській громаді Криворізького району ворог гатив по інфраструктурі.",
+      "place": "Криворіжжя",
+      "predicates": [
+        "opaque"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "056508754b1b36e372255a87",
+      "record_id": "5394ca46d9abb060f440",
+      "source_key": "dnipropetrovskaODA/33607",
+      "source_text": "У Верхньодніпровській громаді Кам'янського району понівечена інфраструктура.",
+      "place": "Кам’янський район",
       "predicates": [
         "damage"
       ],
@@ -3097,123 +1288,11 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "1e5aa8d347e8bfe72320c1e8",
-      "record_id": "196f33c03eff713655dc",
-      "source_key": "dnipropetrovskaODA/33566",
-      "source_text": "Щонайменше четверо людей постраждали внаслідок ворожої атаки по Дніпру.",
-      "place": "Дніпро",
-      "predicates": [
-        "casualty",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "fac7ae3d43cb4e8fc182a9b0",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "У Дніпрі внаслідок ворожого обстрілу 24 листопада пошкоджені житлові будинки в Шевченківському районі: куди звертатися постраждалим Надвечір 24 листопада Дніпро зазнав чергової атаки з боку рф.",
-      "place": "Дніпро",
-      "predicates": [
-        "casualty",
-        "damage",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "188a17b1afb3bf5251fa79c2",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Є пошкодження в Шевченківському районі міста.",
-      "place": "Дніпро",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "28134c485cdb65339852ce01",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Також розгорнуто і пункт обігріву.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "b6564128e4d00693a890d74d",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Триває ліквідація наслідків.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "4da9d5a0d0507efbac1252ac",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "На місці працюють профільні служби.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "d4dd30eea9463af220c1d0d9",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "У роботі — комунальники, благодійники.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "5bea5d2ece511188cde6fbeb",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Також працює комісія з обстеження пошкодженого майна адміністрації Шевченківського району. «Унаслідок атаки ворожого «шахеда» у районі пошкоджено верхній поверх 12-поверхового житлового будинку.",
-      "place": "Дніпро",
-      "predicates": [
-        "damage",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "b442e0ae0beb5346a73cadd0",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Загалом станом на зараз відомо про пошкодження семи житлових будинків та однієї школи.",
-      "place": "Дніпро",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "a33ab47b05f319aa22eeb9ab",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Також попередньо повідомляють про чотирьох постраждалих», – зазначив голова адміністрації Шевченківського району Дніпровської міськради Олег Дюткін. в застосунку «єДніпро».",
-      "place": "Дніпро",
+      "claim_id": "807a2976a96d816a5975473b",
+      "record_id": "be41313d2668d8781172",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "Одна людина дістала поранень.",
+      "place": null,
       "predicates": [
         "casualty"
       ],
@@ -3221,71 +1300,59 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "32af7f38cdab9262626e1a68",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Завантажити застосунок можна за посиланнями: App Store Google Play Адміністрація Шевченківського району: вул. Михайла Грушевського, 70, каб.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "7f1450203c024e7ff236afe5",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "328.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "bfe9e3d50ca0544079361d49",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "1530.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "e5fb260c9b5d0a3d6dabfc77",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Нагадуємо, у Дніпрі на базі комунальних закладів діють Там можна зігрітися, зарядити гаджети тощо.",
-      "place": "Дніпро",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "a4a4ea02f5d46acf447b7a12",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Переглянути розташування відповідних локацій у різних районах міста можна на Відкритій мапі Дніпра.",
+      "claim_id": "a81bd23a559e834230c52391",
+      "record_id": "be41313d2668d8781172",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "Майже 20 разів ворог атакував чотири райони безпілотниками",
       "place": null,
       "predicates": [
-        "opaque"
+        "attack"
       ],
       "disposition": "rendered",
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "53d8f993a31a8a312b615da4",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "Як знайти потрібний пункт?",
-      "place": null,
+      "claim_id": "ede30198283e8e068799d09c",
+      "record_id": "0bed1fddadcd868a3b4e",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "У Павлограді пошкоджені заправка та торгівельний центр.",
+      "place": "Павлоград",
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "d0cbdcb2518f2e15489baeb2",
+      "record_id": "5e7ee4b9068e23bd0906",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "У Кривому Розі противник поцілив по складській будівлі та магазину.",
+      "place": "Кривий Ріг",
+      "predicates": [
+        "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "bae1fd0e3326773b5bb99fb6",
+      "record_id": "5e7ee4b9068e23bd0906",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "У Новопільській громаді на Криворіжжі понівечена інфраструктура.",
+      "place": "Криворіжжя",
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "98391c2fae8e253061ae34cf",
+      "record_id": "8345227b025256e97ed3",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "У Нікопольському районі потерпали райцентр та Марганецька громада.",
+      "place": "Нікопольщина",
       "predicates": [
         "opaque"
       ],
@@ -3293,11 +1360,11 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "a47415843d0ea5502d217ff7",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "1 Перейдіть на сайт.",
-      "place": null,
+      "claim_id": "12cdab94c0e1ef52c3c5df54",
+      "record_id": "8345227b025256e97ed3",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "Постраждав 46-річний чоловік.",
+      "place": "Нікопольщина",
       "predicates": [
         "opaque"
       ],
@@ -3305,11 +1372,11 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "f50c843db0476aa43199b316",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "2 Відкрийте розділ «Фільтри».",
-      "place": null,
+      "claim_id": "5c791da9e2301de7c229eac7",
+      "record_id": "8345227b025256e97ed3",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "Він лікується амбулаторно.",
+      "place": "Нікопольщина",
       "predicates": [
         "opaque"
       ],
@@ -3317,112 +1384,72 @@
       "reason": "verbatim_or_morphological_rendering"
     },
     {
-      "claim_id": "8ebaefb13ead0213e63cb551",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "3 4 За потреби оберіть район міста, щоб звузити пошук.",
-      "place": null,
+      "claim_id": "b06688c90d6413132a8cb806",
+      "record_id": "68498ac03509c6d6b13d",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "У Миколаївській громаді Синельниківського району пошкоджене агропідприємство.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "damage"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "90dcd5d7d5718521eb19272a",
+      "record_id": "68498ac03509c6d6b13d",
+      "source_key": "dnipropetrovskaODA/33611",
+      "source_text": "Сталася пожежа.",
+      "place": "Синельниківський район",
+      "predicates": [
+        "fire"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "bc6fa79021edcdfd5f8591ea",
+      "record_id": "92267ff39d2c70b14d2b",
+      "source_key": "dnipropetrovskaODA/33582",
+      "source_text": "У лікарні померла 58-річна жінка, яка зазнала поранень під час обстрілу Кривого Рогу.",
+      "place": "Кривий Ріг",
+      "predicates": [
+        "casualty",
+        "attack"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "d0b7fb31672189721d8c17cb",
+      "record_id": "92267ff39d2c70b14d2b",
+      "source_key": "dnipropetrovskaODA/33582",
+      "source_text": "За її життя до останнього боролися лікарі.",
+      "place": "Кривий Ріг",
+      "predicates": [
+        "opaque"
+      ],
+      "disposition": "rendered",
+      "reason": "verbatim_or_morphological_rendering"
+    },
+    {
+      "claim_id": "e8772b0ce7ce0a29754ad583",
+      "record_id": "92267ff39d2c70b14d2b",
+      "source_key": "dnipropetrovskaODA/33582",
+      "source_text": "Але на жаль її життя не вдалося врятувати.",
+      "place": "Кривий Ріг",
       "predicates": [
         "rescue"
       ],
       "disposition": "rendered",
       "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "3d8ecb937ac2967d22c8077d",
-      "record_id": "c27d992704d0b50d8db3",
-      "source_key": "DniproCityOfficial/16625",
-      "source_text": "5 Натисніть на позначку обраного об’єкту для перегляду доступної інформації.",
-      "place": null,
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "c0462225c13beac860dcd8b7",
-      "record_id": "e34bee94000f6a7016c3",
-      "source_key": "dsns_telegram/81464",
-      "source_text": ": внаслідок російських атак постраждали 6 людей Протягом дня ворог атакував Дніпро та два райони області.",
-      "place": "Дніпро",
-      "predicates": [
-        "casualty",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "fc5909d50b14d49cde360b9d",
-      "record_id": "e34bee94000f6a7016c3",
-      "source_key": "dsns_telegram/81464",
-      "source_text": "Унаслідок обстрілів у обласному центрі постраждали 6 людей.",
-      "place": "Дніпро",
-      "predicates": [
-        "casualty",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "ac208db01d56a12d1c0c00e0",
-      "record_id": "e34bee94000f6a7016c3",
-      "source_key": "dsns_telegram/81464",
-      "source_text": "Пошкоджено три багатоповерхові житлові будинки, автомобілі та об’єкти транспортної інфраструктури.",
-      "place": "Дніпро",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "ec316166eb264d86a2dfb557",
-      "record_id": "e34bee94000f6a7016c3",
-      "source_key": "dsns_telegram/81464",
-      "source_text": "На Нікопольщині під ударом перебували міста Марганець і Нікополь, а також Покровська, Мирівська та Марганецька громади.",
-      "place": "Нікопольщина",
-      "predicates": [
-        "opaque"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "a8b0ed2c551e8e4b0bd6ceab",
-      "record_id": "e34bee94000f6a7016c3",
-      "source_key": "dsns_telegram/81464",
-      "source_text": "Пошкоджено багатоквартирні будинки й легковий автомобіль.",
-      "place": "Нікопольщина",
-      "predicates": [
-        "damage"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
-    },
-    {
-      "claim_id": "19f7be71b3a7a1f884d1ba20",
-      "record_id": "e34bee94000f6a7016c3",
-      "source_key": "dsns_telegram/81464",
-      "source_text": "У Павлоградському районі окупанти обстріляли Богданівську та Вербківську громади, зруйнувавши господарську споруду.",
-      "place": "Нікопольщина",
-      "predicates": [
-        "damage",
-        "attack"
-      ],
-      "disposition": "rendered",
-      "reason": "verbatim_or_morphological_rendering"
     }
   ],
-  "publication_issues": [
-    "raw_navigation_or_procedural_text"
-  ],
-  "run_id": "45557587565",
-  "report_sha256": "f1c47ca36494e00e37cd2a863e605bbffd97c8a5197df55551256464b53e1000",
+  "publication_issues": [],
+  "run_id": "45765369927",
+  "report_sha256": "af4a3550a9a4f73977c47f7751f693ba8f37d3bb74a99dc72599bf8f923e7e97",
   "review": {
-    "state": "local_contract",
+    "state": "disabled",
     "requests": 0,
     "provider": null,
     "issues": []
