@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-11-27T17:52:33.785954+00:00",
-  "previous_checked_at": "2026-11-27T17:22:11.957697+00:00",
-  "collection_gap_minutes": 30.4,
+  "checked_at": "2026-11-27T18:22:24.200589+00:00",
+  "previous_checked_at": "2026-11-27T17:52:33.785954+00:00",
+  "collection_gap_minutes": 29.8,
   "report_window": {
     "timezone": "Europe/Kyiv",
     "start": "2026-11-26T08:00:00+02:00",
@@ -14,11 +14,11 @@
       "coverage": {
         "pages_read": 1,
         "boundary_reached": true,
-        "requested_cutoff": "2026-11-27T14:29:47+00:00",
+        "requested_cutoff": "2026-11-27T15:38:36+00:00",
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 9,
@@ -34,11 +34,11 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 3,
-      "oldest_collected_at": "2026-11-24T18:16:11+00:00",
+      "oldest_collected_at": "2026-11-24T18:48:37+00:00",
       "newest_collected_at": "2026-11-27T16:18:31+00:00"
     },
     "SBUkr": {
@@ -50,7 +50,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-11-13T23:17:26.847604+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 8,
@@ -66,7 +66,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 7,
@@ -82,7 +82,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 4,
@@ -94,27 +94,27 @@
       "coverage": {
         "pages_read": 1,
         "boundary_reached": true,
-        "requested_cutoff": "2026-11-27T11:35:23+00:00",
+        "requested_cutoff": "2026-11-27T15:49:19+00:00",
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 20,
       "oldest_collected_at": "2026-11-24T21:32:26+00:00",
-      "newest_collected_at": "2026-11-27T17:49:19+00:00"
+      "newest_collected_at": "2026-11-27T18:20:48+00:00"
     },
     "borys_filatovv": {
       "ok": true,
       "coverage": {
         "pages_read": 1,
         "boundary_reached": true,
-        "requested_cutoff": "2026-11-24T17:52:33.785954+00:00",
+        "requested_cutoff": "2026-11-24T18:22:24.200589+00:00",
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 6,
@@ -130,7 +130,7 @@
         "stop_reason": "time_boundary"
       },
       "coverage_from": "2026-10-17T08:14:10.940103+00:00",
-      "coverage_until": "2026-11-27T17:52:33.785954+00:00",
+      "coverage_until": "2026-11-27T18:22:24.200589+00:00",
       "coverage_complete": true,
       "parser_version": 2,
       "posts_found": 10,
