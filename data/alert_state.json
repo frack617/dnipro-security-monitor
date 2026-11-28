@@ -4,7 +4,6 @@
     "DniproCityOfficial/16683",
     "DniproCityOfficial/16688",
     "DniproCityOfficial/16714",
-    "adm_dp/46635",
     "adm_dp/46658",
     "adm_dp/46659",
     "adm_dp/46661",
@@ -21,7 +20,6 @@
     "adm_dp/46747",
     "adm_dp/46750",
     "adm_dp/46751",
-    "dnipropetrovskaODA/33597",
     "dnipropetrovskaODA/33607",
     "dnipropetrovskaODA/33609",
     "dnipropetrovskaODA/33610",
@@ -45,7 +43,7 @@
     "gunpvdp/38490"
   ],
   "last_daily_report": "2026-11-28",
-  "last_alert_scan_at": "2026-11-28T14:07:32.518843+00:00",
+  "last_alert_scan_at": "2026-11-28T14:37:21.980258+00:00",
   "pending_alert_keys": [],
   "last_daily_delivery": {
     "date": "2026-11-28",
